@@ -1,0 +1,11 @@
+# Recorded datasets this rule is run against (ids from harness/datasets.yaml).
+# Every Entra sign-in record available here. None of them carries a
+# SessionId (see tests/evidence.md), so they cannot produce a match.
+datasets:
+  - splunk-aad-session-cookie-replay
+  - splunk-aad-success-different-ips
+  - splunk-aad-multiple-appids-useragents
+  - splunk-aad-consent-granted
+  - splunk-aad-consent-declined
+  - splunk-aad-consent-blocked
+  - splunk-aad-graph-perm-assigned

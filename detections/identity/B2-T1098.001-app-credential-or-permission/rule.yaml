@@ -1,0 +1,56 @@
+id: cb349719-03af-4918-91d7-4fad782a50c9
+name: Credential, federated credential or high-risk application permission added to an app
+version: 1
+status: test
+severity: Medium
+tier: baseline
+description: >
+  A secret or certificate was added to an application or service
+  principal, a federated identity credential was added to one, or a
+  high-risk Microsoft Graph / Exchange application permission was
+  granted to one. Each gives whoever holds the new credential the app's
+  access without the user who added it.
+log_sources: [entra-audit]
+mapping:
+  attack:
+    techniques: [T1098.001]
+    tactics: [persistence]
+
+# Sentinel only (Scope, CLAUDE.md): the Entra tables exist in Sentinel.
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    AuditLogs: [TimeGenerated, OperationName, Result, TargetResources, InitiatedBy, CorrelationId]
+  query: |
+    let HighRiskAppRoles = dynamic(["mail.read", "mail.readwrite", "mail.send", "full_access_as_app", "files.read.all", "files.readwrite.all", "sites.read.all", "sites.readwrite.all", "sites.fullcontrol.all", "user.readwrite.all", "directory.readwrite.all", "application.readwrite.all", "approleassignment.readwrite.all", "rolemanagement.readwrite.directory", "group.readwrite.all", "groupmember.readwrite.all"]);
+    AuditLogs
+    | where Result =~ "success"
+    | where OperationName has "Certificates and secrets management"
+        or OperationName in~ ("Add service principal credentials", "Update application", "Update service principal", "Add app role assignment to service principal")
+    | mv-apply Target = TargetResources on (
+        mv-apply Prop = Target.modifiedProperties on (
+            summarize New = make_bag(bag_pack(tostring(Prop.displayName), tostring(Prop.newValue))),
+                      Old = make_bag(bag_pack(tostring(Prop.displayName), tostring(Prop.oldValue)))
+        )
+        | extend TargetName = tostring(Target.displayName), TargetType = tostring(Target.type)
+    )
+    // Credentials: KeyDescription lists the key identifiers on the object; a
+    // credential was added when the new list has an entry the old one lacks.
+    | extend NewKeys = set_difference(todynamic(tostring(New.KeyDescription)), todynamic(tostring(Old.KeyDescription)))
+    | extend NewFederated = set_difference(todynamic(tostring(New.FederatedIdentityCredentials)), todynamic(tostring(Old.FederatedIdentityCredentials)))
+    | extend AppRole = tolower(trim(@'"', tostring(New["AppRole.Value"])))
+    | extend Change = case(
+        array_length(NewKeys) > 0, "credential added",
+        array_length(NewFederated) > 0, "federated credential added",
+        OperationName =~ "Add app role assignment to service principal" and set_has_element(HighRiskAppRoles, AppRole), "high-risk application permission granted",
+        "")
+    | where isnotempty(Change)
+    | extend Added = case(Change == "credential added", tostring(NewKeys),
+                          Change == "federated credential added", tostring(NewFederated),
+                          AppRole)
+    | extend Grantee = trim(@'"', tostring(New["ServicePrincipal.DisplayName"]))
+    | project TimeGenerated, Change, OperationName, TargetName, TargetType, Grantee, Added,
+              InitiatedByUser = tostring(InitiatedBy.user.userPrincipalName),
+              InitiatedByApp = tostring(InitiatedBy.app.displayName),
+              InitiatedFromIP = tostring(InitiatedBy.user.ipAddress), CorrelationId

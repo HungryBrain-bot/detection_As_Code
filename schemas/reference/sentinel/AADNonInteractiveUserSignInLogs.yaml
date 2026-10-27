@@ -1,0 +1,183 @@
+# Reference schema for the AADNonInteractiveUserSignInLogs table, with column types. See docs/components/schema-check.md.
+# Column names and types are copied from Microsoft's Azure-Sentinel repository
+# (Sample Data/Tables/AADNonInteractiveUserSignInLogs/metadata.json, "schemaSource": "Microsoft public table schema"),
+# not from a live workspace. The harness creates the Kusto test table from `types`.
+name: AADNonInteractiveUserSignInLogs
+siem: sentinel
+source_url: https://github.com/Azure/Azure-Sentinel/blob/c34840b2688830563130d6dd36e0130d0f672a62/Sample%20Data/Tables/AADNonInteractiveUserSignInLogs/metadata.json
+vendor_page: https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/aadnoninteractiveusersigninlogs
+fetched_on: '2026-10-27'
+provenance: Microsoft Azure-Sentinel repo (MIT) at commit c34840b, file read directly with git (not summarised);
+  85 columns.
+fields:
+- AADTenantId
+- Agent
+- AlternateSignInName
+- AppDisplayName
+- AppId
+- AppOwnerTenantId
+- AppliedEventListeners
+- AuthenticationContextClassReferences
+- AuthenticationDetails
+- AuthenticationMethodsUsed
+- AuthenticationProcessingDetails
+- AuthenticationProtocol
+- AuthenticationRequirement
+- AuthenticationRequirementPolicies
+- AuthenticatorAppLocation
+- AutonomousSystemNumber
+- Category
+- ClientAppUsed
+- ClientCredentialType
+- ClientSessionId
+- ConditionalAccessAudiences
+- ConditionalAccessPolicies
+- ConditionalAccessPoliciesV2
+- ConditionalAccessStatus
+- CorrelationId
+- CreatedDateTime
+- CrossTenantAccessType
+- DeviceDetail
+- DurationMs
+- FederatedCredentialId
+- GlobalSecureAccessIpAddress
+- HomeTenantId
+- HomeTenantName
+- IPAddress
+- Id
+- Identity
+- IncomingTokenType
+- IsInteractive
+- IsRisky
+- IsTenantRestricted
+- IsThroughGlobalSecureAccess
+- Level
+- Location
+- LocationDetails
+- MfaDetail
+- NetworkLocationDetails
+- OperationName
+- OperationVersion
+- OriginalRequestId
+- OriginalTransferMethod
+- ProcessingTimeInMs
+- ResourceDisplayName
+- ResourceGroup
+- ResourceIdentity
+- ResourceOwnerTenantId
+- ResourceServicePrincipalId
+- ResourceTenantId
+- ResultDescription
+- ResultSignature
+- ResultType
+- RiskDetail
+- RiskEventTypes
+- RiskEventTypes_V2
+- RiskLevelAggregated
+- RiskLevelDuringSignIn
+- RiskState
+- ServicePrincipalId
+- SessionId
+- SessionLifetimePolicies
+- SignInEventTypes
+- SignInIdentifierType
+- SourceSystem
+- Status
+- TenantId
+- TimeGenerated
+- TokenIssuerName
+- TokenIssuerType
+- TokenProtectionStatusDetails
+- Type
+- UniqueTokenIdentifier
+- UserAgent
+- UserDisplayName
+- UserId
+- UserPrincipalName
+- UserType
+types:
+  AADTenantId: string
+  Agent: string
+  AlternateSignInName: string
+  AppDisplayName: string
+  AppId: string
+  AppOwnerTenantId: string
+  AppliedEventListeners: dynamic
+  AuthenticationContextClassReferences: string
+  AuthenticationDetails: string
+  AuthenticationMethodsUsed: string
+  AuthenticationProcessingDetails: string
+  AuthenticationProtocol: string
+  AuthenticationRequirement: string
+  AuthenticationRequirementPolicies: string
+  AuthenticatorAppLocation: string
+  AutonomousSystemNumber: string
+  Category: string
+  ClientAppUsed: string
+  ClientCredentialType: string
+  ClientSessionId: string
+  ConditionalAccessAudiences: string
+  ConditionalAccessPolicies: string
+  ConditionalAccessPoliciesV2: dynamic
+  ConditionalAccessStatus: string
+  CorrelationId: string
+  CreatedDateTime: datetime
+  CrossTenantAccessType: string
+  DeviceDetail: string
+  DurationMs: long
+  FederatedCredentialId: string
+  GlobalSecureAccessIpAddress: string
+  HomeTenantId: string
+  HomeTenantName: string
+  IPAddress: string
+  Id: string
+  Identity: string
+  IncomingTokenType: string
+  IsInteractive: bool
+  IsRisky: bool
+  IsTenantRestricted: bool
+  IsThroughGlobalSecureAccess: bool
+  Level: string
+  Location: string
+  LocationDetails: string
+  MfaDetail: string
+  NetworkLocationDetails: string
+  OperationName: string
+  OperationVersion: string
+  OriginalRequestId: string
+  OriginalTransferMethod: string
+  ProcessingTimeInMs: string
+  ResourceDisplayName: string
+  ResourceGroup: string
+  ResourceIdentity: string
+  ResourceOwnerTenantId: string
+  ResourceServicePrincipalId: string
+  ResourceTenantId: string
+  ResultDescription: string
+  ResultSignature: string
+  ResultType: string
+  RiskDetail: string
+  RiskEventTypes: string
+  RiskEventTypes_V2: string
+  RiskLevelAggregated: string
+  RiskLevelDuringSignIn: string
+  RiskState: string
+  ServicePrincipalId: string
+  SessionId: string
+  SessionLifetimePolicies: string
+  SignInEventTypes: string
+  SignInIdentifierType: string
+  SourceSystem: string
+  Status: string
+  TenantId: string
+  TimeGenerated: datetime
+  TokenIssuerName: string
+  TokenIssuerType: string
+  TokenProtectionStatusDetails: string
+  Type: string
+  UniqueTokenIdentifier: string
+  UserAgent: string
+  UserDisplayName: string
+  UserId: string
+  UserPrincipalName: string
+  UserType: string

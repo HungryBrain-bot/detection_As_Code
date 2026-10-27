@@ -1,0 +1,288 @@
+[
+  {
+    "_provenance": "recorded:Splunk attack_data datasets/attack_techniques/T1098.001/azure_ad_service_principal_credentials/azure-audit.log line 1 @ b52ee68",
+    "time": "2023-07-24T16:33:25.1875029Z",
+    "resourceId": "/tenants/fc69e276-e9e8-4af9-9002-1e410d77244e/providers/Microsoft.aadiam",
+    "operationName": "Update application – Certificates and secrets management ",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "fc69e276-e9e8-4af9-9002-1e410d77244e",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "2601:646:a000:200:b0ee:600c:de8a:c7d5",
+    "correlationId": "aa695308-698f-48b9-8934-5c450f141487",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_aa695308-698f-48b9-8934-5c450f141487_316GY_338999962",
+      "category": "ApplicationManagement",
+      "correlationId": "aa695308-698f-48b9-8934-5c450f141487",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Update application – Certificates and secrets management ",
+      "activityDateTime": "2023-07-24T16:33:25.1875029+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Update",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "728989f4-eb3d-45c2-8741-2f2af4e485ce",
+          "displayName": null,
+          "userPrincipalName": "tommyr@splunkresearch.com",
+          "ipAddress": "2601:646:a000:200:b0ee:600c:de8a:c7d5",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "e850aa79-59e7-45d7-b424-98c6596c9adb",
+          "displayName": "test-app",
+          "type": "Application",
+          "modifiedProperties": [
+            {
+              "displayName": "KeyDescription",
+              "oldValue": "[]",
+              "newValue": "[\"[KeyIdentifier=c89fde60-5d1a-412a-ae87-e68728a07d3d,KeyType=Password,KeyUsage=Verify,DisplayName=test-creds]\"]"
+            },
+            {
+              "displayName": "Included Updated Properties",
+              "oldValue": null,
+              "newValue": "\"KeyDescription\""
+            }
+          ],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+        },
+        {
+          "key": "AppId",
+          "value": "c0ada8d5-2a02-492d-94ac-029bb291c6d9"
+        }
+      ]
+    }
+  },
+  {
+    "_provenance": "recorded:Splunk attack_data datasets/attack_techniques/T1098.001/azure_ad_federated_identity_credential/azure-audit.log line 1 @ b52ee68",
+    "time": "2026-06-10T09:14:22.1032456Z",
+    "resourceId": "/tenants/8f3b2a91-6e4d-4b7a-9c1e-2d5f8a3b6c47/providers/Microsoft.aadiam",
+    "operationName": "Update service principal",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "8f3b2a91-6e4d-4b7a-9c1e-2d5f8a3b6c47",
+    "resultSignature": "None",
+    "resultDescription": "None",
+    "durationMs": 0,
+    "callerIpAddress": "185.220.101.47",
+    "correlationId": "9a4c7e12-3f6b-4d8a-b1c5-7e2f9a4d6b83",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_9a4c7e12-3f6b-4d8a-b1c5-7e2f9a4d6b83_ZQ8LK_50231147",
+      "category": "ApplicationManagement",
+      "correlationId": "9a4c7e12-3f6b-4d8a-b1c5-7e2f9a4d6b83",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Update service principal",
+      "activityDateTime": "2026-06-10T09:14:22.1032456+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Update",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "5c7d9e21-4a3b-4f6c-8d1e-2b7a9c4e6f83",
+          "displayName": null,
+          "userPrincipalName": "svc-deploy-admin@splunkresearch.com",
+          "ipAddress": "185.220.101.47",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "3e8f1a24-6b5c-4d7e-9a2f-1c4d8e6b3a97",
+          "displayName": "prod-deployment-sp",
+          "type": "ServicePrincipal",
+          "modifiedProperties": [
+            {
+              "displayName": "FederatedIdentityCredentials",
+              "oldValue": "[]",
+              "newValue": "[{\"name\":\"gh-actions-federated\",\"issuer\":\"https://token.actions.githubusercontent.com\",\"subject\":\"repo:external-contractor/infra-automation:ref:refs/heads/main\",\"audiences\":[\"api://AzureADTokenExchange\"]}]"
+            }
+          ],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "OnPremisesAgent",
+          "value": "None"
+        }
+      ]
+    }
+  },
+  {
+    "_provenance": "recorded:OTRF Security-Datasets datasets/compound/GoldenSAMLADFSMailAccess/AADAuditEvents.Zip line 1 @ d9d40ef",
+    "TenantId": "00000000-0000-0000-0000-000000000000",
+    "SourceSystem": "Azure AD",
+    "TimeGenerated": "2021-08-02T13:29:25.983Z",
+    "ResourceId": "/tenants/00000000-0000-0000-0000-000000000000/providers/Microsoft.aadiam",
+    "OperationName": "Update application – Certificates and secrets management ",
+    "OperationVersion": "1.0",
+    "Category": "ApplicationManagement",
+    "ResultSignature": "None",
+    "CorrelationId": "10065ffb-8199-48bc-8ff5-912cb5b8295a",
+    "Resource": "Microsoft.aadiam",
+    "ResourceGroup": "Microsoft.aadiam",
+    "Level": "4",
+    "AdditionalDetails": "[{\"key\":\"User-Agent\",\"value\":\"Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.17763.1971\"}]",
+    "Id": "Directory_10065ffb-8199-48bc-8ff5-912cb5b8295a_AUMVX_13992832",
+    "InitiatedBy": "{\"user\":{\"id\":\"aead923d-498b-4f64-a66c-2af91447a8b6\",\"displayName\":null,\"userPrincipalName\":\"pgustavo@simulandlabs.com\",\"ipAddress\":null,\"roles\":[]}}",
+    "LoggedByService": "Core Directory",
+    "Result": "success",
+    "TargetResources": "[{\"id\":\"11b49e19-2326-4be6-93cb-7f37439bbd81\",\"displayName\":\"SimuLandApp\",\"type\":\"Application\",\"modifiedProperties\":[{\"displayName\":\"KeyDescription\",\"oldValue\":\"[]\",\"newValue\":\"[\\\"[KeyIdentifier=59eaeebc-8a6b-44a6-9f24-7d55e64420c9,KeyType=Password,KeyUsage=Verify,DisplayName=SimuLandCreds]\\\"]\"},{\"displayName\":\"Included Updated Properties\",\"oldValue\":null,\"newValue\":\"\\\"KeyDescription\\\"\"}],\"administrativeUnits\":[]}]",
+    "AADTenantId": "00000000-0000-0000-0000-000000000000",
+    "ActivityDisplayName": "Update application – Certificates and secrets management ",
+    "ActivityDateTime": "2021-08-02T13:29:25.983Z",
+    "AADOperationType": "Update",
+    "Type": "AuditLogs",
+    "UserAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.17763.1971",
+    "target": "{\"id\":\"11b49e19-2326-4be6-93cb-7f37439bbd81\",\"displayName\":\"SimuLandApp\",\"type\":\"Application\",\"modifiedProperties\":[{\"displayName\":\"KeyDescription\",\"oldValue\":\"[]\",\"newValue\":\"[\\\"[KeyIdentifier=59eaeebc-8a6b-44a6-9f24-7d55e64420c9,KeyType=Password,KeyUsage=Verify,DisplayName=SimuLandCreds]\\\"]\"},{\"displayName\":\"Included Updated Properties\",\"oldValue\":null,\"newValue\":\"\\\"KeyDescription\\\"\"}],\"administrativeUnits\":[]}",
+    "targetDisplayName": "SimuLandApp",
+    "targetId": "11b49e19-2326-4be6-93cb-7f37439bbd81",
+    "targetType": "Application",
+    "keyEvents": "{\"displayName\":\"KeyDescription\",\"oldValue\":\"[]\",\"newValue\":\"[\\\"[KeyIdentifier=59eaeebc-8a6b-44a6-9f24-7d55e64420c9,KeyType=Password,KeyUsage=Verify,DisplayName=SimuLandCreds]\\\"]\"}",
+    "InitiatingUserOrApp": "pgustavo@simulandlabs.com"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "Add service principal credentials: a certificate added to a service principal that already had a secret (old list not empty); target type ServicePrincipal; new correlation id",
+    "time": "2023-07-24T16:33:25.1875029Z",
+    "resourceId": "/tenants/fc69e276-e9e8-4af9-9002-1e410d77244e/providers/Microsoft.aadiam",
+    "operationName": "Add service principal credentials",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "fc69e276-e9e8-4af9-9002-1e410d77244e",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "2601:646:a000:200:b0ee:600c:de8a:c7d5",
+    "correlationId": "3f66693e-d7ca-5570-8347-c4bc33400b0f",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_3f66693e-d7ca-5570-8347-c4bc33400b0f_SAMPLE",
+      "category": "ApplicationManagement",
+      "correlationId": "3f66693e-d7ca-5570-8347-c4bc33400b0f",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Add service principal credentials",
+      "activityDateTime": "2023-07-24T16:33:25.1875029+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Update",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "728989f4-eb3d-45c2-8741-2f2af4e485ce",
+          "displayName": null,
+          "userPrincipalName": "tommyr@splunkresearch.com",
+          "ipAddress": "2601:646:a000:200:b0ee:600c:de8a:c7d5",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "e850aa79-59e7-45d7-b424-98c6596c9adb",
+          "displayName": "test-app",
+          "type": "ServicePrincipal",
+          "modifiedProperties": [
+            {
+              "displayName": "KeyDescription",
+              "oldValue": "[\"[KeyIdentifier=c89fde60-5d1a-412a-ae87-e68728a07d3d,KeyType=Password,KeyUsage=Verify,DisplayName=test-creds]\"]",
+              "newValue": "[\"[KeyIdentifier=c89fde60-5d1a-412a-ae87-e68728a07d3d,KeyType=Password,KeyUsage=Verify,DisplayName=test-creds]\", \"[KeyIdentifier=3f1c2b4a-0d5e-4c6f-9a8b-7e6d5c4b3a21,KeyType=AsymmetricX509Cert,KeyUsage=Verify,DisplayName=CN=backup]\"]"
+            },
+            {
+              "displayName": "Included Updated Properties",
+              "oldValue": null,
+              "newValue": "\"KeyDescription\""
+            }
+          ],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+        },
+        {
+          "key": "AppId",
+          "value": "c0ada8d5-2a02-492d-94ac-029bb291c6d9"
+        }
+      ]
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "Add app role assignment to service principal granting the Graph application permission Mail.ReadWrite; property names (AppRole.Value, ServicePrincipal.DisplayName) from Microsoft's Sentinel rule AzureADRoleManagementPermissionGrant.yaml, not recorded; new correlation id",
+    "time": "2023-07-24T16:33:25.1875029Z",
+    "resourceId": "/tenants/fc69e276-e9e8-4af9-9002-1e410d77244e/providers/Microsoft.aadiam",
+    "operationName": "Add app role assignment to service principal",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "fc69e276-e9e8-4af9-9002-1e410d77244e",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "2601:646:a000:200:b0ee:600c:de8a:c7d5",
+    "correlationId": "f7421846-34a3-5ae8-a9a1-1c7833127618",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_f7421846-34a3-5ae8-a9a1-1c7833127618_SAMPLE",
+      "category": "ApplicationManagement",
+      "correlationId": "f7421846-34a3-5ae8-a9a1-1c7833127618",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Add app role assignment to service principal",
+      "activityDateTime": "2023-07-24T16:33:25.1875029+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Update",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "728989f4-eb3d-45c2-8741-2f2af4e485ce",
+          "displayName": null,
+          "userPrincipalName": "tommyr@splunkresearch.com",
+          "ipAddress": "2601:646:a000:200:b0ee:600c:de8a:c7d5",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "ce7199b4-8f52-46f3-b54b-4fd81de961e2",
+          "displayName": "Microsoft Graph",
+          "type": "ServicePrincipal",
+          "modifiedProperties": [
+            {
+              "displayName": "AppRole.Value",
+              "oldValue": null,
+              "newValue": "\"Mail.ReadWrite\""
+            },
+            {
+              "displayName": "ServicePrincipal.DisplayName",
+              "oldValue": null,
+              "newValue": "\"test-app\""
+            }
+          ]
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+        },
+        {
+          "key": "AppId",
+          "value": "c0ada8d5-2a02-492d-94ac-029bb291c6d9"
+        }
+      ]
+    }
+  }
+]

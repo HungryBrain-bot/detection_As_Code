@@ -5,7 +5,7 @@
 #              validation against the current MITRE ATT&CK bundle
 #   engine-kusto  every push and PR: each rule's Sentinel query run in the
 #              Azure Data Explorer emulator against its samples and the
-#              recorded OTRF datasets (docs/components/engine-tests.md)
+#              recorded datasets (docs/components/engine-tests.md)
 #   customers  lists customer/SIEM pairs from customers/*/customer.yaml
 #   gate       PRs, per customer and SIEM: schema check + log-source gate
 #              in report-only mode, so owning teams get the reminder while

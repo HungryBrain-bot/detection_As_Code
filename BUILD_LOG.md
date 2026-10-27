@@ -127,3 +127,63 @@
   against ATT&CK v20.0 passes.
 - Next: identity rules B1-B3. Needs recorded Entra data with a reuse
   licence; not yet checked.
+
+## 2026-10-27 - Parked: RAG over the attack docs
+
+- Owner asked to record, for the future, a RAG system with evaluation
+  that answers attack and tactic questions from the attack docs (CLI /
+  FastAPI), later also the rules per customer. Not built, not
+  scheduled. Scope, evaluation-first approach and dependency in
+  docs/future/rag-over-attack-docs.md: answers cite their source doc,
+  an eval set (retrieval hit rate, groundedness) comes before code, and
+  it waits until enough rules and attack docs exist.
+
+## 2026-10-27 - Identity rules B1-B3 (Entra ID, Sentinel)
+
+- Owner asked to build the identity rules and to put them in PR #4 with
+  the RAG note.
+- Data found (fetched 2026-10-27): Splunk attack_data (Apache 2.0),
+  nine Entra ID datasets at commit b52ee68 (consent granted, declined
+  and blocked; app secret added; federated credential added; Graph
+  permission added to a manifest; Evilginx2 session cookie replay; two
+  sign-in datasets), Azure Monitor diagnostic format, tenant details
+  replaced by Splunk. OTRF Security-Datasets (MIT): the `AuditLogs`
+  export of the simulated Golden SAML intrusion. Column names and types
+  for the three Entra tables: Microsoft's Azure-Sentinel repo (MIT,
+  `Sample Data/Tables/*/metadata.json` at c34840b), read with git, not
+  through a summarising tool.
+- Reports (fetched 2026-10-27): Proofpoint, OAuth app impersonation,
+  31 July 2025; Microsoft Threat Intelligence, OAuth app misuse,
+  12 December 2023; Microsoft Defender XDR session cookie theft alert
+  playbook, last updated 2 July 2026. No 2025-2026 report naming a
+  group was found for token replay; B3's attack doc says so.
+- Built: harness support for raw and LFS files, the diagnostic-format
+  mapping, typed Entra tables, `_case` positive cases; reference
+  schemas for AuditLogs, SigninLogs, AADNonInteractiveUserSignInLogs;
+  rules B1 (T1528), B2 (T1098.001), B3 (T1550.001 and T1550.004), each
+  with attack doc, rule doc, labelled samples, results and evidence.
+- Results (Kusto emulator): every positive case matched, no negative
+  matched. Recorded data: B1 2 rows, B2 4 rows (one OTRF event exported
+  twice), all attack or lab test; B3 0 rows because no recorded sign-in
+  has a `SessionId`. Each negative was checked to match when the clause
+  it tests is removed.
+- Decisions to review (owner):
+  - B3 maps T1550.004 as well as the scoped T1550.001: the AiTM cookie
+    replay it targets is T1550.004 in ATT&CK v20.0. CLAUDE.md's Scope
+    table now notes it.
+  - B3 alerts on two countries in one session (Microsoft's playbook
+    check). It misses same-country replay, including the recorded
+    Splunk one (both IPs in one ASN and country); two ASNs is the
+    documented, noisier alternative.
+  - B1/B2 `tier: baseline` (AuditLogs is native; the gate still checks
+    it per customer). B3 `tier: targeted` because its false-positive
+    profile could not be measured; not added to `demo`'s include.
+  - B2's app-permission branch and `Add service principal credentials`
+    rest on hand-written samples; property names from Microsoft's own
+    Sentinel rules.
+- Real vs. unverified: ADX engine, not Log Analytics; lab tenants, not
+  production; B3 positives hand-written; no live tenant checked that
+  `SessionId` is filled.
+- Tests: 127 passed; yamllint clean; `dac validate` against ATT&CK
+  v20.0 passes; `python -m harness run --engine kusto` passes for all
+  seven rules.

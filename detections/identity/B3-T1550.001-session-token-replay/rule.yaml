@@ -1,0 +1,44 @@
+id: 1e55b3f5-bb82-456e-ad3b-1624bfd66658
+name: One Entra sign-in session used successfully from two countries
+version: 1
+status: test
+severity: High
+tier: targeted
+description: >
+  Successful interactive or non-interactive sign-ins that share one Entra
+  SessionId but come from more than one country. A session normally
+  stays on one device; the same session in a second country is
+  consistent with a stolen session cookie or refresh token being
+  replayed elsewhere (Microsoft's session cookie theft playbook).
+log_sources: [entra-signin]
+mapping:
+  attack:
+    techniques: [T1550.001, T1550.004]
+    tactics: [lateral-movement]
+
+# Sentinel only (Scope, CLAUDE.md): the Entra tables exist in Sentinel.
+sentinel:
+  query_frequency: PT1H
+  query_period: PT4H
+  required_fields:
+    SigninLogs: [TimeGenerated, ResultType, SessionId, LocationDetails, IPAddress, AutonomousSystemNumber, AppDisplayName, UserAgent, IsInteractive, UserPrincipalName]
+    AADNonInteractiveUserSignInLogs: [TimeGenerated, ResultType, SessionId, LocationDetails, IPAddress, AutonomousSystemNumber, AppDisplayName, UserAgent, IsInteractive, UserPrincipalName]
+  query: |
+    // LocationDetails is dynamic in SigninLogs and a string in
+    // AADNonInteractiveUserSignInLogs, so each table is read with tostring() first.
+    union
+        (SigninLogs | extend Location_ = tostring(LocationDetails)),
+        (AADNonInteractiveUserSignInLogs | extend Location_ = tostring(LocationDetails))
+    | where ResultType == "0"
+    | where isnotempty(SessionId)
+    | extend Country = tostring(parse_json(Location_).countryOrRegion)
+    | where isnotempty(Country)
+    | summarize FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated),
+                Countries = make_set(Country), IPAddresses = make_set(IPAddress),
+                ASNs = make_set(AutonomousSystemNumber), Apps = make_set(AppDisplayName),
+                UserAgents = make_set(UserAgent, 10),
+                InteractiveSignIns = countif(IsInteractive == true), NonInteractiveSignIns = countif(IsInteractive != true)
+        by UserPrincipalName, SessionId
+    | where array_length(Countries) > 1
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, UserPrincipalName, SessionId, Countries, IPAddresses, ASNs, Apps, UserAgents, InteractiveSignIns, NonInteractiveSignIns, FirstSeen, LastSeen

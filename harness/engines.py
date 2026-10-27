@@ -31,7 +31,9 @@ from pathlib import Path
 
 from dac.rules import load_reference_schema
 
-# Column types where the vendor page gives them; everything else is string.
+# Column types for reference schemas without a `types` map (the Windows
+# tables, whose vendor page was read through a summarising tool); everything
+# else in those tables is string.
 TYPED_COLUMNS = {
     "TimeGenerated": "datetime", "EventID": "int", "EventLevel": "int",
     "EventCategory": "int", "_BilledSize": "real",
@@ -54,12 +56,13 @@ def _post(url: str, body: bytes, headers: dict, context=None, timeout=120) -> by
 
 class KustoEngine:
     name = "kusto"
-    tables = ("SecurityEvent", "Event")
+    tables = ("SecurityEvent", "Event", "AuditLogs", "SigninLogs", "AADNonInteractiveUserSignInLogs")
 
     def __init__(self, url: str | None = None, database: str = "NetDefaultDB"):
         self.url = (url or os.environ.get("DAC_KUSTO_URL", "http://localhost:8080")).rstrip("/")
         self.database = database
         self.columns: dict[str, list[str]] = {}
+        self.types: dict[str, dict[str, str]] = {}
 
     def _call(self, path: str, csl: str) -> dict | list:
         body = json.dumps({"db": self.database, "csl": csl}).encode()
@@ -76,8 +79,9 @@ class KustoEngine:
             if schema is None:
                 raise EngineError(f"no reference schema for {table}")
             fields = schema["fields"]
-            self.columns[table] = fields
-            cols = ", ".join(f"['{f}']:{TYPED_COLUMNS.get(f, 'string')}" for f in fields)
+            types = schema.get("types") or {f: TYPED_COLUMNS.get(f, "string") for f in fields}
+            self.columns[table], self.types[table] = fields, types
+            cols = ", ".join(f"['{f}']:{types[f]}" for f in fields)
             self.mgmt(f".drop table ['{table}'] ifexists")
             self.mgmt(f".create table ['{table}'] ({cols})")
 
@@ -91,7 +95,9 @@ class KustoEngine:
                 dropped[table] = extra
             for start in range(0, len(rows), INGEST_CHUNK):
                 chunk = rows[start:start + INGEST_CHUNK]
-                lines = "\n".join(json.dumps({k: v for k, v in r.items() if k in known}) for r in chunk)
+                types = self.types[table]
+                lines = "\n".join(json.dumps({k: coerce(v, types[k]) for k, v in r.items() if k in known})
+                                  for r in chunk)
                 self.mgmt(f".ingest inline into table ['{table}'] with (format='multijson') <|\n{lines}")
         return dropped
 
@@ -214,6 +220,26 @@ class SplunkEngine:
         with urllib.request.urlopen(request, context=self.context, timeout=60) as response:
             content = json.loads(response.read())["entry"][0]["content"]
         return f"Splunk Enterprise {content['version']} (build {content['build']}), XmlWinEventLog extraction from harness/engines.py"
+
+
+def coerce(value, kusto_type: str):
+    """A recorded value in the form the column stores it.
+
+    string column: nested values become JSON text, as Log Analytics stores
+    them where the column is a string (e.g. AADNonInteractiveUserSignInLogs
+    LocationDetails). dynamic column: JSON text is parsed back (Sentinel
+    exports write dynamic columns as text).
+    """
+    if kusto_type == "string" and isinstance(value, (dict, list)):
+        return json.dumps(value, separators=(",", ":"))
+    if kusto_type == "string" and isinstance(value, bool):
+        return str(value).lower()
+    if kusto_type == "dynamic" and isinstance(value, str) and value[:1] in ("[", "{"):
+        try:
+            return json.loads(value)
+        except ValueError:
+            return value
+    return value
 
 
 def epoch(timestamp: str) -> float:

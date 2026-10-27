@@ -1,0 +1,347 @@
+[
+  {
+    "_provenance": "recorded:Splunk attack_data datasets/attack_techniques/T1098.001/azure_ad_federated_identity_credential/azure-audit.log line 2 @ b52ee68",
+    "time": "2026-06-10T09:11:07.7719321Z",
+    "resourceId": "/tenants/8f3b2a91-6e4d-4b7a-9c1e-2d5f8a3b6c47/providers/Microsoft.aadiam",
+    "operationName": "Update service principal",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "8f3b2a91-6e4d-4b7a-9c1e-2d5f8a3b6c47",
+    "resultSignature": "None",
+    "resultDescription": "None",
+    "durationMs": 0,
+    "callerIpAddress": "10.42.6.18",
+    "correlationId": "b1d5f8a3-6c47-4e9d-8f3b-2a916e4d4b7a",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_b1d5f8a3-6c47-4e9d-8f3b-2a916e4d4b7a_ZQ8LK_50231102",
+      "category": "ApplicationManagement",
+      "correlationId": "b1d5f8a3-6c47-4e9d-8f3b-2a916e4d4b7a",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Update service principal",
+      "activityDateTime": "2026-06-10T09:11:07.7719321+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Update",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "displayName": null,
+          "userPrincipalName": "platform-eng@splunkresearch.com",
+          "ipAddress": "10.42.6.18",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "3e8f1a24-6b5c-4d7e-9a2f-1c4d8e6b3a97",
+          "displayName": "prod-deployment-sp",
+          "type": "ServicePrincipal",
+          "modifiedProperties": [
+            {
+              "displayName": "DisplayName",
+              "oldValue": "\"deployment-sp\"",
+              "newValue": "\"prod-deployment-sp\""
+            }
+          ],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": []
+    }
+  },
+  {
+    "_provenance": "recorded:Splunk attack_data datasets/attack_techniques/T1098.003/azure_ad_privileged_graph_perm_assigned/azure_ad_privileged_graph_perm_assigned.log line 4 @ b52ee68",
+    "time": "2024-01-30T15:24:59.2810533Z",
+    "resourceId": "/tenants/75243ab2-44f8-435c-a7a6-b479385df6d4/providers/Microsoft.aadiam",
+    "operationName": "Update application",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "75243ab2-44f8-435c-a7a6-b479385df6d4",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "correlationId": "5e800cf4-1869-4a9c-81c1-55ffa81d7ec1",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_5e800cf4-1869-4a9c-81c1-55ffa81d7ec1_W8TAT_9432874",
+      "category": "ApplicationManagement",
+      "correlationId": "5e800cf4-1869-4a9c-81c1-55ffa81d7ec1",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Update application",
+      "activityDateTime": "2024-01-30T15:24:59.2810533+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Update",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "e4c722ac-3b83-478d-8f52-c388885dc30f",
+          "displayName": null,
+          "userPrincipalName": "user30@splunkresearch.onmicrosoft.com",
+          "ipAddress": "",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "75924835-d844-4947-96ba-18074e997386",
+          "displayName": "STRT_ReadEmail",
+          "type": "Application",
+          "modifiedProperties": [
+            {
+              "displayName": "RequiredResourceAccess",
+              "oldValue": "[{\"ResourceAppId\":\"00000002-0000-0ff1-ce00-000000000000\",\"RequiredAppPermissions\":[{\"EntitlementId\":\"dc890d15-9560-4a4c-9b7f-a736ec74ec40\",\"DirectAccessGrant\":true,\"ImpersonationAccessGrants\":[]}],\"EncodingVersion\":1},{\"ResourceAppId\":\"00000003-0000-0000-c000-000000000000\",\"RequiredAppPermissions\":[{\"EntitlementId\":\"570282fd-fa5c-430d-a7fd-fc8dc98a9dca\",\"DirectAccessGrant\":false,\"ImpersonationAccessGrants\":[20]},{\"EntitlementId\":\"7427e0e9-2fba-42fe-b0c0-848c9e6a8182\",\"DirectAccessGrant\":false,\"ImpersonationAccessGrants\":[20]},{\"EntitlementId\":\"e1fe6dd8-ba31-4d61-89e7-88639da4683d\",\"DirectAccessGrant\":false,\"ImpersonationAccessGrants\":[20]},{\"EntitlementId\":\"810c84a8-4a9e-49e6-bf7d-12d183f40d01\",\"DirectAccessGrant\":true,\"ImpersonationAccessGrants\":[]}],\"EncodingVersion\":1}]",
+              "newValue": "[{\"ResourceAppId\":\"00000002-0000-0ff1-ce00-000000000000\",\"RequiredAppPermissions\":[{\"EntitlementId\":\"dc890d15-9560-4a4c-9b7f-a736ec74ec40\",\"DirectAccessGrant\":true,\"ImpersonationAccessGrants\":[]}],\"EncodingVersion\":1},{\"ResourceAppId\":\"00000003-0000-0000-c000-000000000000\",\"RequiredAppPermissions\":[{\"EntitlementId\":\"570282fd-fa5c-430d-a7fd-fc8dc98a9dca\",\"DirectAccessGrant\":false,\"ImpersonationAccessGrants\":[20]},{\"EntitlementId\":\"7427e0e9-2fba-42fe-b0c0-848c9e6a8182\",\"DirectAccessGrant\":false,\"ImpersonationAccessGrants\":[20]},{\"EntitlementId\":\"e1fe6dd8-ba31-4d61-89e7-88639da4683d\",\"DirectAccessGrant\":false,\"ImpersonationAccessGrants\":[20]},{\"EntitlementId\":\"1bfefb4e-e0b5-418b-a88f-73c46d2cc8e9\",\"DirectAccessGrant\":true,\"ImpersonationAccessGrants\":[]},{\"EntitlementId\":\"06b708a9-e830-4db3-a914-8e69da51d44f\",\"DirectAccessGrant\":true,\"ImpersonationAccessGrants\":[]},{\"EntitlementId\":\"810c84a8-4a9e-49e6-bf7d-12d183f40d01\",\"DirectAccessGrant\":true,\"ImpersonationAccessGrants\":[]},{\"EntitlementId\":\"9e3f62cf-ca93-4989-b6ce-bf83c28f9fe8\",\"DirectAccessGrant\":true,\"ImpersonationAccessGrants\":[]}],\"EncodingVersion\":1}]"
+            },
+            {
+              "displayName": "Included Updated Properties",
+              "oldValue": null,
+              "newValue": "\"RequiredResourceAccess\""
+            }
+          ],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        },
+        {
+          "key": "AppId",
+          "value": "867f0d29-0eab-4017-b691-c4713cc7d7b0"
+        }
+      ]
+    }
+  },
+  {
+    "_provenance": "recorded:OTRF Security-Datasets datasets/compound/GoldenSAMLADFSMailAccess/AADAuditEvents.Zip line 3 @ d9d40ef",
+    "TenantId": "00000000-0000-0000-0000-000000000000",
+    "SourceSystem": "Azure AD",
+    "TimeGenerated": "2021-08-02T13:25:12.246Z",
+    "ResourceId": "/tenants/00000000-0000-0000-0000-000000000000/providers/Microsoft.aadiam",
+    "OperationName": "Update application",
+    "OperationVersion": "1.0",
+    "Category": "ApplicationManagement",
+    "ResultSignature": "None",
+    "CorrelationId": "ae69aa7a-e9b7-4066-84f2-58582994d8cb",
+    "Resource": "Microsoft.aadiam",
+    "ResourceGroup": "Microsoft.aadiam",
+    "Level": "4",
+    "AdditionalDetails": "[{\"key\":\"User-Agent\",\"value\":\"Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.17763.1971\"}]",
+    "Id": "Directory_ae69aa7a-e9b7-4066-84f2-58582994d8cb_7H1JL_8584070",
+    "InitiatedBy": "{\"user\":{\"id\":\"aead923d-498b-4f64-a66c-2af91447a8b6\",\"displayName\":null,\"userPrincipalName\":\"pgustavo@simulandlabs.com\",\"ipAddress\":null,\"roles\":[]}}",
+    "LoggedByService": "Core Directory",
+    "Result": "success",
+    "TargetResources": "[{\"id\":\"11b49e19-2326-4be6-93cb-7f37439bbd81\",\"displayName\":\"SimuLandApp\",\"type\":\"Application\",\"modifiedProperties\":[{\"displayName\":\"RequiredResourceAccess\",\"oldValue\":\"[{\\\"ResourceAppId\\\":\\\"00000003-0000-0000-c000-000000000000\\\",\\\"RequiredAppPermissions\\\":[{\\\"EntitlementId\\\":\\\"e1fe6dd8-ba31-4d61-89e7-88639da4683d\\\",\\\"DirectAccessGrant\\\":false,\\\"ImpersonationAccessGrants\\\":[20]}],\\\"EncodingVersion\\\":1}]\",\"newValue\":\"[{\\\"ResourceAppId\\\":\\\"00000003-0000-0000-c000-000000000000\\\",\\\"RequiredAppPermissions\\\":[{\\\"EntitlementId\\\":\\\"e1fe6dd8-ba31-4d61-89e7-88639da4683d\\\",\\\"DirectAccessGrant\\\":false,\\\"ImpersonationAccessGrants\\\":[20]},{\\\"EntitlementId\\\":\\\"024d486e-b451-40bb-833d-3e66d98c5c73\\\",\\\"DirectAccessGrant\\\":false,\\\"ImpersonationAccessGrants\\\":[20]}],\\\"EncodingVersion\\\":1}]\"},{\"displayName\":\"Included Updated Properties\",\"oldValue\":null,\"newValue\":\"\\\"RequiredResourceAccess\\\"\"}],\"administrativeUnits\":[]}]",
+    "AADTenantId": "00000000-0000-0000-0000-000000000000",
+    "ActivityDisplayName": "Update application",
+    "ActivityDateTime": "2021-08-02T13:25:12.246Z",
+    "AADOperationType": "Update",
+    "Type": "Application",
+    "UserAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.17763.1971",
+    "InitiatingUser": "pgustavo@simulandlabs.com",
+    "ModifiedApplication": "SimuLandApp",
+    "ModifiedApplicationObjectId": "11b49e19-2326-4be6-93cb-7f37439bbd81",
+    "ModifiedPropertyName": "RequiredResourceAccess",
+    "ResourceAppId": "00000003-0000-0000-c000-000000000000"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "credential removed: the new KeyDescription list is a subset of the old one; new correlation id",
+    "time": "2023-07-24T16:33:25.1875029Z",
+    "resourceId": "/tenants/fc69e276-e9e8-4af9-9002-1e410d77244e/providers/Microsoft.aadiam",
+    "operationName": "Update application – Certificates and secrets management ",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "fc69e276-e9e8-4af9-9002-1e410d77244e",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "2601:646:a000:200:b0ee:600c:de8a:c7d5",
+    "correlationId": "0535b2d9-4daf-52d4-846a-03e4ce37f7af",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_0535b2d9-4daf-52d4-846a-03e4ce37f7af_SAMPLE",
+      "category": "ApplicationManagement",
+      "correlationId": "0535b2d9-4daf-52d4-846a-03e4ce37f7af",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Update application – Certificates and secrets management ",
+      "activityDateTime": "2023-07-24T16:33:25.1875029+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Update",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "728989f4-eb3d-45c2-8741-2f2af4e485ce",
+          "displayName": null,
+          "userPrincipalName": "tommyr@splunkresearch.com",
+          "ipAddress": "2601:646:a000:200:b0ee:600c:de8a:c7d5",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "e850aa79-59e7-45d7-b424-98c6596c9adb",
+          "displayName": "test-app",
+          "type": "Application",
+          "modifiedProperties": [
+            {
+              "displayName": "KeyDescription",
+              "oldValue": "[\"[KeyIdentifier=c89fde60-5d1a-412a-ae87-e68728a07d3d,KeyType=Password,KeyUsage=Verify,DisplayName=test-creds]\"]",
+              "newValue": "[]"
+            },
+            {
+              "displayName": "Included Updated Properties",
+              "oldValue": null,
+              "newValue": "\"KeyDescription\""
+            }
+          ],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+        },
+        {
+          "key": "AppId",
+          "value": "c0ada8d5-2a02-492d-94ac-029bb291c6d9"
+        }
+      ]
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "app role assignment of User.Read.All (not in the high-risk list); new correlation id",
+    "time": "2023-07-24T16:33:25.1875029Z",
+    "resourceId": "/tenants/fc69e276-e9e8-4af9-9002-1e410d77244e/providers/Microsoft.aadiam",
+    "operationName": "Add app role assignment to service principal",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "fc69e276-e9e8-4af9-9002-1e410d77244e",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "2601:646:a000:200:b0ee:600c:de8a:c7d5",
+    "correlationId": "8b3b7e58-eceb-5030-a06a-9c2a71db5f30",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_8b3b7e58-eceb-5030-a06a-9c2a71db5f30_SAMPLE",
+      "category": "ApplicationManagement",
+      "correlationId": "8b3b7e58-eceb-5030-a06a-9c2a71db5f30",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Add app role assignment to service principal",
+      "activityDateTime": "2023-07-24T16:33:25.1875029+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Update",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "728989f4-eb3d-45c2-8741-2f2af4e485ce",
+          "displayName": null,
+          "userPrincipalName": "tommyr@splunkresearch.com",
+          "ipAddress": "2601:646:a000:200:b0ee:600c:de8a:c7d5",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "ce7199b4-8f52-46f3-b54b-4fd81de961e2",
+          "displayName": "Microsoft Graph",
+          "type": "ServicePrincipal",
+          "modifiedProperties": [
+            {
+              "displayName": "AppRole.Value",
+              "oldValue": null,
+              "newValue": "\"User.Read.All\""
+            },
+            {
+              "displayName": "ServicePrincipal.DisplayName",
+              "oldValue": null,
+              "newValue": "\"test-app\""
+            }
+          ]
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+        },
+        {
+          "key": "AppId",
+          "value": "c0ada8d5-2a02-492d-94ac-029bb291c6d9"
+        }
+      ]
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "credential add that failed (result failure); new correlation id",
+    "time": "2023-07-24T16:33:25.1875029Z",
+    "resourceId": "/tenants/fc69e276-e9e8-4af9-9002-1e410d77244e/providers/Microsoft.aadiam",
+    "operationName": "Update application – Certificates and secrets management ",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "fc69e276-e9e8-4af9-9002-1e410d77244e",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "2601:646:a000:200:b0ee:600c:de8a:c7d5",
+    "correlationId": "df50fcee-0404-5c12-927f-1d87152c8f4f",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_df50fcee-0404-5c12-927f-1d87152c8f4f_SAMPLE",
+      "category": "ApplicationManagement",
+      "correlationId": "df50fcee-0404-5c12-927f-1d87152c8f4f",
+      "result": "failure",
+      "resultReason": "",
+      "activityDisplayName": "Update application – Certificates and secrets management ",
+      "activityDateTime": "2023-07-24T16:33:25.1875029+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Update",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "728989f4-eb3d-45c2-8741-2f2af4e485ce",
+          "displayName": null,
+          "userPrincipalName": "tommyr@splunkresearch.com",
+          "ipAddress": "2601:646:a000:200:b0ee:600c:de8a:c7d5",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "e850aa79-59e7-45d7-b424-98c6596c9adb",
+          "displayName": "test-app",
+          "type": "Application",
+          "modifiedProperties": [
+            {
+              "displayName": "KeyDescription",
+              "oldValue": "[]",
+              "newValue": "[\"[KeyIdentifier=c89fde60-5d1a-412a-ae87-e68728a07d3d,KeyType=Password,KeyUsage=Verify,DisplayName=test-creds]\"]"
+            },
+            {
+              "displayName": "Included Updated Properties",
+              "oldValue": null,
+              "newValue": "\"KeyDescription\""
+            }
+          ],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+        },
+        {
+          "key": "AppId",
+          "value": "c0ada8d5-2a02-492d-94ac-029bb291c6d9"
+        }
+      ]
+    }
+  }
+]
