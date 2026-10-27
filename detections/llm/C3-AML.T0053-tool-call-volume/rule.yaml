@@ -1,0 +1,61 @@
+id: 868ef8a0-a4c4-4377-a487-84607d5eb6aa
+name: Abnormal tool-call volume or a tool-call loop in one LLM agent conversation
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >-
+  One agent conversation made far more tool calls in the last hour than
+  that agent normally makes in a whole conversation (more than 50 calls
+  and more than three times the agent's 7-day 95th percentile), or called
+  the same tool with the same arguments 20 or more times. Either can mean
+  an agent pushed into a runaway loop or resource abuse by injected
+  instructions, a compromised session driving the agent's tools, or a
+  broken agent burning budget.
+log_sources:
+  - llm-app-log
+mapping:
+  owasp_llm_2025: [LLM06, LLM10]
+  owasp_llm_2026: [LLM03, LLM06]
+  atlas: [AML.T0053, AML.T0034.002]
+llm_telemetry:
+  populated: [OperationName, AppName, AgentName, ConversationId, ToolName, InputText]
+sentinel:
+  query_frequency: PT1H
+  query_period: P7D
+  query: |
+    // C3: tool-call volume or loop per agent conversation (detections/llm/C3-AML.T0053-tool-call-volume/README.md)
+    let window = 1h;
+    let floor_calls = 50;
+    let baseline_factor = 3.0;
+    let loop_repeats = 20;
+    let tool_calls = LLMAppLog_CL
+    | where OperationName == "execute_tool";
+    // Normal size of a conversation for this agent: 95th percentile of tool calls
+    // per conversation over the rest of the 7-day period.
+    let baseline = tool_calls
+    | where TimeGenerated < ago(window)
+    | summarize Calls = count() by AppName, AgentName, ConversationId
+    | summarize BaselineConversations = count(), BaselineP95 = percentile(Calls, 95) by AppName, AgentName;
+    let recent = tool_calls
+    | where TimeGenerated >= ago(window);
+    // The most repeated identical call (same tool, same arguments) per conversation.
+    let loops = recent
+    | summarize Repeats = count() by AppName, AgentName, ConversationId, ToolName, InputText
+    | summarize arg_max(Repeats, ToolName) by AppName, AgentName, ConversationId
+    | project AppName, AgentName, ConversationId, TopRepeats = Repeats, TopRepeatedTool = ToolName;
+    recent
+    | summarize WindowCalls = count(), DistinctTools = dcount(ToolName), Tools = make_set(ToolName, 20),
+                Users = make_set(UserId, 5), FirstCall = min(TimeGenerated), LastCall = max(TimeGenerated)
+                by AppName, AgentName, ConversationId
+    | join kind=leftouter baseline on AppName, AgentName
+    | join kind=leftouter loops on AppName, AgentName, ConversationId
+    | extend Threshold = max_of(todouble(floor_calls), baseline_factor * coalesce(todouble(BaselineP95), 0.0))
+    | extend Reason = case(WindowCalls > Threshold and TopRepeats >= loop_repeats, "volume and loop",
+                           WindowCalls > Threshold, "volume",
+                           TopRepeats >= loop_repeats, "loop", "")
+    | where isnotempty(Reason)
+    | project LastCall, AppName, AgentName, ConversationId, Users, Reason, WindowCalls, Threshold,
+              BaselineP95, BaselineConversations, DistinctTools, Tools, TopRepeatedTool, TopRepeats, FirstCall
+  required_fields:
+    LLMAppLog_CL: [TimeGenerated, AppName, AgentName, ConversationId, UserId, OperationName, ToolName, InputText]
