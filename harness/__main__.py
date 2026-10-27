@@ -127,8 +127,9 @@ def fetch(catalogue: dict) -> None:
 
 def safe_name(path: str) -> str:
     """One flat file name per path ("a/b/c.json" -> "a__b__c.json"); no directory is created from data."""
-    name = path.replace("\\", "/").strip("/").replace("/", "__")
-    if not re.fullmatch(r"[A-Za-z0-9_.-]+", name) or name.startswith("."):
+    parts = path.replace("\\", "/").strip("/").split("/")
+    name = "__".join(parts)
+    if any(p in ("", ".", "..") for p in parts) or not re.fullmatch(r"[A-Za-z0-9_.-]+", name) or name.startswith("."):
         raise SystemExit(f"unsafe dataset path {path!r}")
     return name
 

@@ -1,6 +1,6 @@
 """Command line: python -m dac <command>.
 
-    validate [--attack-bundle FILE]            offline checks on every rule and customer
+    validate [--attack-bundle F] [--atlas-data F]  offline checks on every rule and customer
     customers [--json]                         list customer/SIEM pairs (CI matrix)
     schema-check --customer C --siem S         compare rules' required fields with the SIEM
     gate --customer C --siem S [--report-only] log-source gate; sends reminders
@@ -34,7 +34,8 @@ from .llm_inventory import load_inventory, report as llm_report, validate_invent
 from .rules import (CUSTOMERS_DIR, DETECTIONS_DIR, REPO_ROOT, SIEMS, load_customer, load_customers,
                     load_log_sources, load_rules)
 from .schema_check import OK, check_rule
-from .validate import attack_bundle_version, load_attack_index, validate_all, validate_customers
+from .validate import (attack_bundle_version, load_atlas_index, load_attack_index, validate_all,
+                       validate_customers)
 
 BUILD_DIR = REPO_ROOT / "build"
 REPORTS_DIR = REPO_ROOT / "reports"
@@ -61,7 +62,10 @@ def cmd_validate(args) -> int:
     attack_index = load_attack_index(args.attack_bundle) if args.attack_bundle else None
     if attack_index is None:
         print("note: no --attack-bundle given, ATT&CK IDs not checked against MITRE data")
-    results = validate_all(rules, catalogue, attack_index)
+    atlas_index = load_atlas_index(args.atlas_data) if args.atlas_data else None
+    if atlas_index is None:
+        print("note: no --atlas-data given, ATLAS IDs not checked against MITRE ATLAS data")
+    results = validate_all(rules, catalogue, attack_index, atlas_index)
     inventory_errors = validate_inventory(load_inventory(), catalogue)
     if inventory_errors:
         results["llm_log_inventory.yaml"] = inventory_errors
@@ -227,6 +231,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = sub.add_parser("validate")
     p.add_argument("--attack-bundle", type=Path)
+    p.add_argument("--atlas-data", type=Path, help="atlas-data dist/v6 YAML, e.g. ATLAS-2026.06.yaml")
     p.set_defaults(func=cmd_validate)
 
     p = sub.add_parser("customers")

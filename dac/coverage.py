@@ -141,7 +141,9 @@ def summary_markdown(customer: Customer, statuses: list[RuleStatus], today: dt.d
         mapping = st.rule.data["mapping"]
         tactic = ", ".join(mapping.get("attack", {}).get("tactics", [])) or "-"
         technique = ", ".join(mapping.get("attack", {}).get("techniques", [])
-                              + mapping.get("owasp_llm_2025", []) + mapping.get("atlas", []))
+                              + [f"{i}:2025" for i in mapping.get("owasp_llm_2025", [])]
+                              + [f"{i}:2026" for i in mapping.get("owasp_llm_2026", [])]
+                              + mapping.get("atlas", []))
         detail = (f"active on {', '.join(st.active_on)}" if st.status == ACTIVE
                   else "; ".join(st.reasons))
         lines.append(f"| {tactic} | {technique} | {st.rule.name} | {st.rule.tier} | "
@@ -155,8 +157,8 @@ def summary_markdown(customer: Customer, statuses: list[RuleStatus], today: dt.d
         "in this environment.",
         "- One rule usually detects one or two ways of performing a technique, not every way. "
         "A coloured technique is not a fully covered technique.",
-        "- LLM application rules map to OWASP LLM Top 10 (2025) and MITRE ATLAS, not ATT&CK, and "
-        "appear in the ATLAS layer.",
+        "- LLM application rules map to OWASP LLM Top 10 (2025 and 2026, which number the same "
+        "risks differently) and MITRE ATLAS, not ATT&CK, and appear in the ATLAS layer.",
     ]
     return "\n".join(lines) + "\n"
 

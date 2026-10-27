@@ -38,8 +38,10 @@ Create `rule.yaml` next to it:
 - `log_sources`: IDs from `log_sources.yaml`. If a new source is
   needed, add it there with its owning team, and say so in the PR.
 - Mapping: ATT&CK technique and tactic, checked against the STIX
-  bundle in CI. LLM rules: `owasp_llm_2025` and `atlas`. Follow the
-  `coverage-map` skill.
+  bundle in CI. LLM rules: `owasp_llm_2025`, `owasp_llm_2026` and
+  `atlas`. Follow the `coverage-map` skill.
+- LLM rules: follow the `llm-log-inventory` skill as well. They read
+  `LLMAppLog_CL` only and declare `llm_telemetry.populated`.
 - One block per target SIEM. Sentinel for every rule; `splunk` and
   `secops` only for the four endpoint rules (CLAUDE.md, Scope).
 - SecOps rule name must be `dac_<uuid with underscores>`.
