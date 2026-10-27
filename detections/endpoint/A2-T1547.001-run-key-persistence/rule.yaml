@@ -1,0 +1,70 @@
+id: cbbad913-22f2-49cb-ad4c-85b2370acc24
+name: Registry Run key value set by a process outside installer and Program Files paths
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >
+  Sysmon event 13 (registry value set) on a Run, RunOnce, RunOnceEx,
+  RunServices or Policies\Explorer\Run key, in HKLM or any user hive,
+  where the writing process is not msiexec.exe, not under Program Files
+  and not the Windows Defender platform folder. Installers and installed
+  software write Run keys all the time; a script host or a binary in a
+  user-writable folder doing it is what persistence looks like.
+log_sources: [windows-registry-set]
+mapping:
+  attack:
+    techniques: [T1547.001]
+    tactics: [persistence, privilege-escalation]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    Event: [TimeGenerated, Source, EventID, EventData, Computer, UserName]
+  query: |
+    Event
+    | where Source == "Microsoft-Windows-Sysmon" and EventID == 13
+    | extend Data = parse_xml(EventData).DataItem.EventData.Data
+    | mv-apply d = Data on (summarize Fields = make_bag(bag_pack(tostring(d["@Name"]), tostring(d["#text"]))))
+    | extend EventType = tostring(Fields.EventType), Image = tostring(Fields.Image),
+        TargetObject = tostring(Fields.TargetObject), Details = tostring(Fields.Details)
+    | where EventType == "SetValue"
+    | where TargetObject matches regex @"(?i)\\Software\\(Wow6432Node\\)?Microsoft\\Windows\\CurrentVersion\\(Run|RunOnce|RunOnceEx|RunServices|RunServicesOnce|Policies\\Explorer\\Run)\\"
+    | where not(Image matches regex @"(?i)^C:\\Windows\\(System32|SysWOW64)\\msiexec\.exe$")
+    | where not(Image matches regex @"(?i)^C:\\Program Files( \(x86\))?\\")
+    | where not(Image matches regex @"(?i)^C:\\ProgramData\\Microsoft\\Windows Defender\\Platform\\")
+    | project TimeGenerated, Computer, UserName, Image, TargetObject, Details
+
+splunk:
+  cron_schedule: "0 * * * *"
+  earliest_time: -60m
+  required_fields:
+    "XmlWinEventLog:Microsoft-Windows-Sysmon/Operational": [EventCode, EventType, Image, TargetObject, Details, host]
+  search: |
+    index=wineventlog source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=13 EventType=SetValue
+    | where match(TargetObject, "(?i)\\\\Software\\\\(Wow6432Node\\\\)?Microsoft\\\\Windows\\\\CurrentVersion\\\\(Run|RunOnce|RunOnceEx|RunServices|RunServicesOnce|Policies\\\\Explorer\\\\Run)\\\\")
+    | where NOT match(Image, "(?i)^C:\\\\Windows\\\\(System32|SysWOW64)\\\\msiexec\\.exe$")
+        AND NOT match(Image, "(?i)^C:\\\\Program Files( \\(x86\\))?\\\\")
+        AND NOT match(Image, "(?i)^C:\\\\ProgramData\\\\Microsoft\\\\Windows Defender\\\\Platform\\\\")
+    | table _time host Image TargetObject Details
+
+secops:
+  required_fields:
+    WINDOWS_SYSMON: [metadata.event_type, metadata.log_type, target.registry.registry_key, principal.process.file.full_path]
+  rule_text: |
+    rule dac_cbbad913_22f2_49cb_ad4c_85b2370acc24 {
+      meta:
+        author = "detection-as-code"
+        description = "Registry Run key value set by a process outside installer and Program Files paths (T1547.001)"
+        severity = "Medium"
+      events:
+        $e.metadata.event_type = "REGISTRY_MODIFICATION"
+        $e.metadata.log_type = "WINDOWS_SYSMON"
+        re.regex($e.target.registry.registry_key, `(?i)\\Software\\(Wow6432Node\\)?Microsoft\\Windows\\CurrentVersion\\(Run|RunOnce|RunOnceEx|RunServices|RunServicesOnce|Policies\\Explorer\\Run)(\\|$)`)
+        not re.regex($e.principal.process.file.full_path, `(?i)^C:\\Windows\\(System32|SysWOW64)\\msiexec\.exe$`)
+        not re.regex($e.principal.process.file.full_path, `(?i)^C:\\Program Files( \(x86\))?\\`)
+        not re.regex($e.principal.process.file.full_path, `(?i)^C:\\ProgramData\\Microsoft\\Windows Defender\\Platform\\`)
+      condition:
+        $e
+    }

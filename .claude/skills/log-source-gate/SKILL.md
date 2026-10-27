@@ -26,7 +26,7 @@ Only record a confirmation the owning team actually gave. Never create
 one to get a pipeline green: that defeats the gate.
 
 1. Ask the team to check the source in that SIEM (for example,
-   "rows in SysmonEvent with EventID 1 in the last 24h").
+   "rows in Event with Source Microsoft-Windows-Sysmon and EventID 1 in the last 24h").
 2. Commit `customers/<id>/confirmations/<siem>/<log_source>.yaml`:
    ```yaml
    log_source: <id from log_sources.yaml>

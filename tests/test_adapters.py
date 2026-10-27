@@ -10,7 +10,7 @@ import pytest
 
 from conftest import FakeTransport, api_fixture, make_rule
 from dac.adapters import DeployError, MissingCredentials, get_adapter
-from dac.adapters.base import check_balanced
+from dac.adapters.base import KQL_STRINGS, SPL_STRINGS, YARAL_STRINGS, check_balanced
 from dac.adapters.secops import secops_rule_name
 from dac.adapters.sentinel import iso_minutes, parent_techniques, sentinel_tactic
 
@@ -35,6 +35,23 @@ SECOPS_ENV = {"SECOPS_PROJECT": "p", "SECOPS_REGION": "us", "SECOPS_INSTANCE": "
 ])
 def test_check_balanced(text, ok):
     assert (check_balanced(text) == []) is ok
+
+
+@pytest.mark.parametrize("text, strings, ok", [
+    # KQL verbatim strings: a backslash is literal, so @"\" closes the string.
+    ('T | where p endswith @"\\" and (x)', KQL_STRINGS, True),
+    ("T | where c matches regex @'\\breg\"?\\s+\\(' ", KQL_STRINGS, True),
+    ('T | where c matches regex @"(?i)\\(x"', KQL_STRINGS, True),
+    ('T | where c == @"open', KQL_STRINGS, False),
+    # SPL: an escaped backslash before the closing quote.
+    ('index=a | where match(f, "\\\\\\\\")', SPL_STRINGS, True),
+    ('index=a | where match(f, "\\"(")', SPL_STRINGS, True),
+    # YARA-L: backtick regex literals have no escapes.
+    ("rule r { events: re.regex($e.f, `\\(x\\`) condition: $e }", YARAL_STRINGS, True),
+    ("rule r { events: re.regex($e.f, `(x) }", YARAL_STRINGS, False),
+])
+def test_check_balanced_per_language(text, strings, ok):
+    assert (check_balanced(text, strings=strings) == []) is ok
 
 
 def test_sentinel_helpers():

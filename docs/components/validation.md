@@ -14,7 +14,7 @@ For each `detections/**/rule.yaml`:
 | JSON Schema | missing or misspelled fields, bad severity/status, malformed IDs and durations, a rule with no SIEM block |
 | Unique IDs | a copied folder that kept its UUID, which would overwrite another rule in the SIEM |
 | Log sources | a source not in `log_sources.yaml`, or not declared for a SIEM the rule targets |
-| `check_query` per SIEM | truncated queries (bracket/quote balance); a query that never references its declared table / source / log type; Sentinel frequency vs. period; Splunk search with no `index=`; YARA-L header, section order and rule name |
+| `check_query` per SIEM | truncated queries (bracket and string-literal balance, using each language's literals: KQL `@"..."` / `@'...'`, SPL `"..."`, YARA-L `` `...` ``); a query that never references its declared table / source / log type; Sentinel frequency vs. period; Splunk search with no `index=`; YARA-L header, section order and rule name |
 | Docs | `README.md` and `attack.md` present, every required section filled, no TODO, not the template's text left unchanged |
 | Tests | `tests/positive.json`, `tests/negative.json`, `tests/evidence.md` present |
 | `required_fields` | a field list naming a table / source / log type the rule's log sources do not declare; with a reference schema in `schemas/reference/<siem>/`, field names that do not exist (typos) |
@@ -37,10 +37,14 @@ current data rather than a list typed by hand.
   `Kusto.Language` parser is a candidate for KQL (not added).
 - It does not run queries against the sample logs. Whether a rule fires
   on `positive.json` and stays quiet on `negative.json` is checked by
-  running it in an engine and recording the result in `evidence.md`.
+  the engine harness (docs/components/engine-tests.md), which runs the
+  KQL in the Kusto emulator and the SPL in a local Splunk; its result
+  goes into `evidence.md`.
 - It cannot tell whether a doc section is correct, only that it was
   filled in. Accuracy and sourcing are review's job.
 - Field names are only checked where a reference schema exists
-  (Sentinel SecurityEvent, Syslog, CommonSecurityLog so far).
+  (Sentinel SecurityEvent, Event, Syslog, CommonSecurityLog so far).
+  Fields inside `Event.EventData` (Sysmon) are not columns and are not
+  checked.
 - OWASP and ATLAS IDs are format-checked only; OWASP against the 2025
   list. No 2026 list has been confirmed to exist.

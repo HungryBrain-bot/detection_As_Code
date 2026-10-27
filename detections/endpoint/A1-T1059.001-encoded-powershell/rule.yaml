@@ -1,0 +1,68 @@
+id: e07878fc-1056-45fc-91bf-0fffe5a4ce10
+name: PowerShell started with an encoded command or a download cradle
+version: 1
+status: test
+severity: Medium
+tier: baseline
+description: >
+  powershell.exe or pwsh.exe started with -EncodedCommand (or any prefix
+  of it PowerShell accepts) followed by a Base64 blob, or with a command
+  line that both downloads (Net.WebClient, Invoke-WebRequest and similar)
+  and executes (IEX / Invoke-Expression). Reads process creation, not
+  script block logging, so it sees the launch, not the decoded script.
+log_sources: [windows-process-creation]
+mapping:
+  attack:
+    techniques: [T1059.001]
+    tactics: [execution]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    SecurityEvent: [TimeGenerated, EventID, NewProcessName, CommandLine, Computer, Account, ParentProcessName]
+  query: |
+    SecurityEvent
+    | where EventID == 4688
+    | where NewProcessName endswith @"\powershell.exe" or NewProcessName endswith @"\pwsh.exe"
+    | where CommandLine matches regex @"(?i)(^|\s)[-/–—]e(c|n|nc|nco|ncod|ncode|ncoded|ncodedc|ncodedco|ncodedcom|ncodedcomm|ncodedcomma|ncodedcomman|ncodedcommand)?\s+[A-Za-z0-9+/]{20,}"
+        or (CommandLine matches regex @"(?i)\b(iex|invoke-expression)\b"
+            and CommandLine matches regex @"(?i)(downloadstring|downloadfile|downloaddata|net\.webclient|invoke-webrequest|\biwr\b|invoke-restmethod|\birm\b|start-bitstransfer)")
+    | project TimeGenerated, Computer, Account, NewProcessName, CommandLine, ParentProcessName
+
+splunk:
+  cron_schedule: "0 * * * *"
+  earliest_time: -60m
+  required_fields:
+    "XmlWinEventLog:Security": [EventCode, NewProcessName, CommandLine, ParentProcessName, SubjectUserName, host]
+  search: |
+    index=wineventlog source="XmlWinEventLog:Security" EventCode=4688
+    (NewProcessName="*\\powershell.exe" OR NewProcessName="*\\pwsh.exe")
+    | where match(CommandLine, "(?i)(^|\\s)[-/–—]e(c|n|nc|nco|ncod|ncode|ncoded|ncodedc|ncodedco|ncodedcom|ncodedcomm|ncodedcomma|ncodedcomman|ncodedcommand)?\\s+[A-Za-z0-9+/]{20,}")
+        OR (match(CommandLine, "(?i)\\b(iex|invoke-expression)\\b")
+            AND match(CommandLine, "(?i)(downloadstring|downloadfile|downloaddata|net\\.webclient|invoke-webrequest|\\biwr\\b|invoke-restmethod|\\birm\\b|start-bitstransfer)"))
+    | table _time host SubjectUserName NewProcessName CommandLine ParentProcessName
+
+secops:
+  required_fields:
+    WINDOWS_SYSMON: [metadata.event_type, metadata.log_type, target.process.file.full_path, target.process.command_line]
+  rule_text: |
+    rule dac_e07878fc_1056_45fc_91bf_0fffe5a4ce10 {
+      meta:
+        author = "detection-as-code"
+        description = "PowerShell started with an encoded command or a download cradle (T1059.001)"
+        severity = "Medium"
+      events:
+        $e.metadata.event_type = "PROCESS_LAUNCH"
+        $e.metadata.log_type = "WINDOWS_SYSMON"
+        re.regex($e.target.process.file.full_path, `(?i)\\(powershell|pwsh)\.exe$`)
+        (
+          re.regex($e.target.process.command_line, `(?i)(^|\s)[-/–—]e(c|n|nc|nco|ncod|ncode|ncoded|ncodedc|ncodedco|ncodedcom|ncodedcomm|ncodedcomma|ncodedcomman|ncodedcommand)?\s+[A-Za-z0-9+/]{20,}`)
+          or (
+            re.regex($e.target.process.command_line, `(?i)\b(iex|invoke-expression)\b`)
+            and re.regex($e.target.process.command_line, `(?i)(downloadstring|downloadfile|downloaddata|net\.webclient|invoke-webrequest|\biwr\b|invoke-restmethod|\birm\b|start-bitstransfer)`)
+          )
+        )
+      condition:
+        $e
+    }

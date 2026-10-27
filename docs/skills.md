@@ -9,7 +9,7 @@ re-explained.
 | Skill | Triggers when | What it enforces |
 |---|---|---|
 | [`build-and-document`](../.claude/skills/build-and-document/SKILL.md) | building or changing pipeline code or making a design decision | tests with code; component doc (what / how / why / advantages / limits) updated; ADR for real decisions; CLAUDE.md and BUILD_LOG.md kept current |
-| [`new-detection`](../.claude/skills/new-detection/SKILL.md) | adding or changing a rule | attack doc first, then rule, samples with provenance labels, evidence, rule doc; validate, gate and plan before the PR |
+| [`new-detection`](../.claude/skills/new-detection/SKILL.md) | adding or changing a rule | attack doc first, then rule, samples with provenance labels, engine run on recorded data (`python -m harness`), evidence, rule doc; validate, gate and plan before the PR |
 | [`log-source-gate`](../.claude/skills/log-source-gate/SKILL.md) | a deploy is blocked, a team confirms a source, a customer, team or source is added | how to read the gate output, record a real confirmation, add customers, sources and teams, switch to email |
 | [`schema-check`](../.claude/skills/schema-check/SKILL.md) | a schema gap blocks a rule, a customer's data lands in a different table / index / log type, `required_fields` are written | each SIEM in its own data model; read-only access; how to record a customer's schema and adapt a rule by review, never automatically |
 | [`coverage-map`](../.claude/skills/coverage-map/SKILL.md) | mapping a rule to ATT&CK / ATLAS, choosing baseline vs. targeted, producing coverage for management | map to what the rule detects; only gate-passed rules count; caveats travel with the numbers |

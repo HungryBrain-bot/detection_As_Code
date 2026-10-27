@@ -1,0 +1,57 @@
+# Recorded attack datasets the engine harness loads (docs/components/engine-tests.md).
+#
+# Each entry is pinned to a commit and a SHA-256 so a rerun loads the same
+# bytes. `python -m harness fetch` downloads and verifies them into
+# data/datasets/ (gitignored); nothing here is committed except the
+# extracts in each rule's tests/positive.json and tests/negative.json.
+#
+# OTRF Security-Datasets: MIT License, Copyright (c) 2021 Open Threat
+# Research Forge (https://github.com/OTRF/Security-Datasets/blob/master/LICENSE,
+# fetched 2026-10-27). Events were collected by NXLog (im_msvistalog) from a
+# lab domain and flattened to JSON; see harness/mapping.py for how they are
+# turned back into each SIEM's shape.
+
+otrf-commit: &otrf d9d40ef123d2c87d5d3df28c96bcab4f0faccc87
+
+datasets:
+  otrf-empire-launcher-vbs:
+    description: Empire VBS launcher run by a user; wscript.exe starts an encoded PowerShell stager.
+    commit: *otrf
+    path: datasets/atomic/windows/execution/host/empire_launcher_vbs.zip
+    sha256: 812da270cf8cda6f1948fb6275410f15dc1794d0bd6b623c9c25b2518285019c
+    license: MIT
+
+  otrf-empire-runkey-standard-user:
+    description: Empire agent as a standard user writes an HKCU Run key that relaunches an encoded stager; 40k events of host background.
+    commit: *otrf
+    path: datasets/atomic/windows/persistence/host/empire_persistence_registry_modification_run_keys_standard_user.zip
+    sha256: 2965f791bcaf5e6ccfc4059985e81fd7e67ec87f17855b6c383edd1b03a19c36
+    license: MIT
+
+  otrf-empire-runkey-elevated-user:
+    description: Empire agent as an elevated user writes an HKLM Run key.
+    commit: *otrf
+    path: datasets/atomic/windows/persistence/host/empire_persistence_registry_modification_run_keys_elevated_user.zip
+    sha256: 2809354d679025859d723be3ceb1e2c9f9e5dde2ebec5bbea7c398e165a9b67d
+    license: MIT
+
+  otrf-empire-reg-dump-sam:
+    description: Empire agent shell runs reg.exe save HKLM\sam.
+    commit: *otrf
+    path: datasets/atomic/windows/credential_access/host/empire_shell_reg_dump_sam.zip
+    sha256: 5a8ee19860f35da6d4bcadf15178a085b469086c461d3d873d0f4adedba41f0a
+    license: MIT
+
+  otrf-sam-copy-esentutl:
+    description: esentutl.exe copies the SAM hive through a volume shadow copy (/y /vss).
+    commit: *otrf
+    path: datasets/atomic/windows/credential_access/host/cmd_sam_copy_esentutl.zip
+    sha256: f7a71135778aeff605abcb88a14a076f0814ab5cb136d07103bdf13c45551b64
+    license: MIT
+
+  otrf-bitsadmin-download:
+    description: cmd.exe runs bitsadmin.exe /transfer to download a file from GitHub.
+    commit: *otrf
+    path: datasets/atomic/windows/defense_evasion/host/cmd_bitsadmin_download_psh_script.zip
+    sha256: 8fb7bc9f3d82f672dc39a55e50006137aa540c4a9860acdcc5d08a4fd609b594
+    license: MIT

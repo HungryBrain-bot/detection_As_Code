@@ -1,0 +1,7 @@
+datasets:
+  - otrf-empire-launcher-vbs
+  - otrf-empire-runkey-standard-user
+  - otrf-empire-runkey-elevated-user
+  - otrf-empire-reg-dump-sam
+  - otrf-bitsadmin-download
+  - otrf-sam-copy-esentutl

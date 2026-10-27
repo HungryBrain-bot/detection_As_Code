@@ -34,7 +34,7 @@ from Splunk's REST reference.
 import json
 import re
 
-from .base import DeployError, ObservedSchema, ProbeError, Request, Response, SiemAdapter, check_balanced
+from .base import SPL_STRINGS, DeployError, ObservedSchema, ProbeError, Request, Response, SiemAdapter, check_balanced
 
 # alert.severity: 1 debug, 2 info, 3 low, 4 medium, 5 high, 6 critical
 SEVERITY = {"Informational": 2, "Low": 3, "Medium": 4, "High": 5}
@@ -51,7 +51,7 @@ class SplunkAdapter(SiemAdapter):
 
     def check_query(self, rule_block: dict, allowed_sources: list[str], rule_id: str | None = None) -> list[str]:
         search = rule_block["search"]
-        errors = check_balanced(search)
+        errors = check_balanced(search, strings=SPL_STRINGS)
         if not re.search(r"\bindex\s*=", search):
             errors.append("search has no index= scope")
         if not any(name in search for name in allowed_sources):

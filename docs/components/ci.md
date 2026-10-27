@@ -14,6 +14,7 @@ otherwise) and regenerates each customer's coverage.
 flowchart LR
     PR["Pull request"] --> V["validate<br/>yamllint · pytest ·<br/>dac validate + ATT&CK bundle"]
     PUSH["Push to main"] --> V
+    V --> K["engine-kusto<br/>KQL in the Kusto emulator ·<br/>samples + OTRF datasets"]
     V --> C["customers<br/>customer x SIEM matrix"]
     C -- PR --> G["gate (per customer x SIEM)<br/>schema-check + gate, report-only"]
     C -- main --> D["deploy (per customer x SIEM)<br/>gate blocks · --mode auto"]
@@ -22,6 +23,13 @@ flowchart LR
 
 - **validate**: `yamllint .`, `pytest`, `python -m dac validate`
   against MITRE's enterprise ATT&CK bundle (cached per ISO week).
+- **engine-kusto**: starts the Azure Data Explorer emulator as a
+  service container (pinned by digest), fetches the recorded datasets
+  (SHA-256 checked) and runs `python -m harness run --engine kusto`:
+  every rule's Sentinel query against its samples and datasets, failing
+  on a missed positive, a matched negative, or a dataset count that
+  differs from the committed result (docs/components/engine-tests.md).
+  The Splunk engine test is not in CI.
 - **customers**: `python -m dac customers --json` turns
   `customers/*/customer.yaml` into the job matrix.
 - **gate** (PRs): per customer and SIEM, the schema check (report) and
@@ -54,7 +62,8 @@ secrets, dry-run) and later (secrets set, live) with no edit.
 Environments give per-customer secret isolation without custom code.
 
 ## What it does not prove
-- That any query is valid in its SIEM or fires on the samples.
+- That any query is valid in its real SIEM: KQL runs in the ADX
+  emulator, not Log Analytics; SPL and YARA-L are not run in CI.
 - That a live API accepts the requests: no live deploy or probe has run.
 - Fork PRs get no secrets, so their gate job never probes or emails.
 - The PR gate job uses the same Environment as deploy; if deploy

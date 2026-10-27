@@ -15,10 +15,12 @@
 # live tenant. Adjust them to the real environment.
 
 windows-process-creation:
-  description: Process creation with full command line (Sysmon event 1, or Security 4688 with command-line auditing on).
+  description: Process creation with full command line (Security 4688 with command-line auditing on, or Sysmon event 1).
   owner: endpoint-team
   siem:
-    sentinel: [SecurityEvent, SysmonEvent]
+    # Sysmon reaches Sentinel in the Event table (Source "Microsoft-Windows-Sysmon"),
+    # per Microsoft's Sysmon parser in the Azure-Sentinel repo.
+    sentinel: [SecurityEvent, Event]
     splunk: ["XmlWinEventLog:Microsoft-Windows-Sysmon/Operational", "XmlWinEventLog:Security"]
     secops: [WINDOWS_SYSMON]
 
@@ -26,7 +28,7 @@ windows-registry-set:
   description: Registry value set events (Sysmon event 13).
   owner: endpoint-team
   siem:
-    sentinel: [SysmonEvent]
+    sentinel: [Event]
     splunk: ["XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"]
     secops: [WINDOWS_SYSMON]
 
