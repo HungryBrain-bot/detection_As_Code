@@ -1,0 +1,12 @@
+# Rule files hold multi-line queries, so long lines are expected.
+extends: default
+ignore: |
+  .venv/
+  build/
+rules:
+  line-length: disable
+  document-start: disable
+  truthy:
+    check-keys: false
+  comments:
+    min-spaces-from-content: 1

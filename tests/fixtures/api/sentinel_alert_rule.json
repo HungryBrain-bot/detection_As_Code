@@ -1,0 +1,1 @@
+{"id": "/subscriptions/sub/resourceGroups/rg/providers/Microsoft.OperationalInsights/workspaces/ws/providers/Microsoft.SecurityInsights/alertRules/aa6e3de5-1813-4234-8137-df07958a0359", "name": "aa6e3de5-1813-4234-8137-df07958a0359", "kind": "Scheduled", "properties": {"displayName": "Fixture: encoded PowerShell command line", "enabled": false}}

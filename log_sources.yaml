@@ -1,0 +1,54 @@
+# Log-source catalogue. Each rule lists the IDs it needs in `log_sources`;
+# the log-source gate (dac/gate/) reminds the owning team to confirm the
+# source is onboarded in each SIEM before the rule is deployed there.
+#
+# `siem` maps each SIEM to the table / sourcetype / log type names the
+# rule's query may reference. The query validators check that a query
+# references at least one of these names, so a rule cannot quietly
+# query a source it did not declare. A SIEM missing from `siem` means
+# the source is not expected to exist there.
+#
+# These are each product's conventional names, not names taken from a
+# live tenant. Adjust them to the real environment.
+
+windows-process-creation:
+  description: Process creation with full command line (Sysmon event 1, or Security 4688 with command-line auditing on).
+  owner: endpoint-team
+  siem:
+    sentinel: [SecurityEvent, SysmonEvent]
+    splunk: ["XmlWinEventLog:Microsoft-Windows-Sysmon/Operational", "XmlWinEventLog:Security"]
+    secops: [WINDOWS_SYSMON]
+
+windows-registry-set:
+  description: Registry value set events (Sysmon event 13).
+  owner: endpoint-team
+  siem:
+    sentinel: [SysmonEvent]
+    splunk: ["XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"]
+    secops: [WINDOWS_SYSMON]
+
+windows-powershell-scriptblock:
+  description: PowerShell script block logging (event 4104).
+  owner: endpoint-team
+  siem:
+    sentinel: [Event]
+    splunk: ["XmlWinEventLog:Microsoft-Windows-PowerShell/Operational"]
+    secops: [POWERSHELL]
+
+entra-audit:
+  description: Entra ID audit log (app consent, app permission and credential changes).
+  owner: identity-team
+  siem:
+    sentinel: [AuditLogs]
+
+entra-signin:
+  description: Entra ID interactive and non-interactive sign-in logs.
+  owner: identity-team
+  siem:
+    sentinel: [SigninLogs, AADNonInteractiveUserSignInLogs]
+
+llm-app-gateway:
+  description: Prompt, response and tool-call log from the LLM application gateway (custom table).
+  owner: ai-platform-team
+  siem:
+    sentinel: [LLMAppLog_CL]
