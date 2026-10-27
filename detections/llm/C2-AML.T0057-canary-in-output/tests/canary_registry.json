@@ -1,0 +1,20 @@
+[
+  {
+    "_provenance": "hand-written",
+    "_note": "Registers AgentDojo's 'Secret key is 1a7b3d' (slack suite, #general) as a data canary for the slack app.",
+    "Type": "LLMCanary_CL",
+    "TimeGenerated": "2026-10-21T00:00:00Z",
+    "AppName": "agentdojo-slack",
+    "CanaryValue": "Secret key is 1a7b3d",
+    "PlantedIn": "document: slack #general message"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "A system-prompt canary for the banking app; AgentDojo's prompts contain no canary, so this must not match.",
+    "Type": "LLMCanary_CL",
+    "TimeGenerated": "2026-10-21T00:00:00Z",
+    "AppName": "agentdojo-banking",
+    "CanaryValue": "dac-canary-5f1e9a7c3b2d",
+    "PlantedIn": "system prompt"
+  }
+]

@@ -28,6 +28,9 @@ Optional keys in a rule's tests/datasets.yaml (used by the LLM rules):
   string) among matched rows, per label.
 - `max_matched_rows: N` keeps only the first N matched rows in the
   result file (the counts cover all of them).
+- `extra_events: [file, ...]` loads these sample files (relative to the
+  rule folder) together with the datasets, e.g. the canary registry rows
+  a join needs. They are hand-written and counted in `extra_events`.
 
 `--write` saves the result to tests/results/<engine>.json in the rule
 folder; tests/evidence.md is written from it by hand. Exit code 1 if a
@@ -241,7 +244,9 @@ def run_rule(engine, rule, catalogue: dict) -> dict:
     load_into(engine, shift(negatives))
     neg_rows = engine.query(query)
 
-    events = shift([e for d in dataset_ids for e in read_events(d, catalogue)])
+    extra = [e for name in options.get("extra_events", [])
+             for e in json.loads((rule.folder / name).read_text(encoding="utf-8"))]
+    events = shift([e for d in dataset_ids for e in read_events(d, catalogue)] + extra)
     dropped = load_into(engine, events)
     ds_rows = engine.query(query)
 
@@ -264,6 +269,8 @@ def run_rule(engine, rule, catalogue: dict) -> dict:
         "dataset_events": len(events),
         "dataset_rows": len(ds_rows),
     }
+    if extra:
+        result["extra_events"] = {"files": options["extra_events"], "events": len(extra)}
     if options.get("rebase_time"):
         result["time_rebased"] = True
     if options.get("score_by"):

@@ -189,6 +189,7 @@ sources:
       OutputTokens: CompletionTokens
     gaps:
       - "ConversationId: none; CorrelationId identifies one request, so per-conversation rules (C3) cannot be fed."
+      - "AppName: no column names the calling app; the API it came through would have to be joined from ApiManagementGatewayLogs (not verified)."
       - "Tool calls are only inside the message bodies; execute_tool rows would have to be derived from tool_calls and tool-role messages."
       - "Messages over 32 KB are split into 32 KB chunks with a SequenceNumber; a normaliser must reassemble them."
       - "Token counts can be missing when a stream breaks (Microsoft page)."
@@ -234,6 +235,7 @@ sources:
       - "Bodies over 100 KB go to S3, not inline; a normaliser must fetch them."
       - "ConversationId: none in the documented record; requestMetadata is app-supplied and was not checked as a carrier."
       - "identity.arn is the calling AWS principal; the end user needs app-side logging."
+      - "AppName: no documented field names the calling app; the normaliser would have to derive it (e.g. from the role in identity.arn)."
     integration:
       sentinel: "Logging to CloudWatch Logs or S3, then a forwarder that normalises records and sends them through the Logs Ingestion API. Not built, not verified."
       splunk: "Not verified (no Splunk add-on page for Bedrock logs was fetched)."

@@ -1,0 +1,60 @@
+id: 8a8c6047-8730-4fac-aa8d-277627582977
+name: Canary value from an LLM app's hidden context appears in model output or tool arguments
+version: 1
+status: test
+severity: High
+tier: targeted
+description: >-
+  A canary (a unique marker string planted in a system prompt, tool
+  configuration or confidential document, and registered in LLMCanary_CL)
+  appears in what the model wrote to the user or in the arguments of a tool
+  call it made, as plain text or Base64. A canary should never leave the
+  hidden context, so a match means the model disclosed that context: a
+  system-prompt extraction, a data leak, or exfiltration through a tool.
+log_sources:
+  - llm-app-log
+  - llm-canary-registry
+mapping:
+  owasp_llm_2025: [LLM02, LLM07]
+  owasp_llm_2026: [LLM02, LLM08]
+  atlas: [AML.T0056, AML.T0057, AML.T0086]
+llm_telemetry:
+  populated: [OperationName, InputText, OutputText, AppName]
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  query: |
+    // C2: canary in model output or tool arguments (detections/llm/C2-AML.T0057-canary-in-output/README.md)
+    // The registry must re-send every active canary at least once per query period.
+    let min_length = 12;
+    let canaries = LLMCanary_CL
+    | where strlen(CanaryValue) >= min_length
+    | summarize arg_max(TimeGenerated, PlantedIn) by CanaryApp = AppName, CanaryValue
+    // Base64 of a longer text contains the encoding of the canary only for the part
+    // of it that starts on a 3-byte boundary: one needle per possible offset,
+    // cut to whole 4-character groups.
+    | extend N0 = substring(base64_encode_tostring(CanaryValue), 0, 4 * (strlen(CanaryValue) / 3)),
+             N1 = substring(base64_encode_tostring(substring(CanaryValue, 1)), 0, 4 * ((strlen(CanaryValue) - 1) / 3)),
+             N2 = substring(base64_encode_tostring(substring(CanaryValue, 2)), 0, 4 * ((strlen(CanaryValue) - 2) / 3)),
+             Key = 1
+    | project Key, CanaryApp, CanaryValue, PlantedIn, N0, N1, N2;
+    LLMAppLog_CL
+    // What the model sent out: its answer, or the arguments of a tool it called.
+    // Tool results and retrieved documents are not checked: they are where the
+    // canary legitimately lives.
+    | where (OperationName == "chat" and isnotempty(OutputText))
+         or (OperationName == "execute_tool" and isnotempty(InputText))
+    | extend Channel = iff(OperationName == "chat", "model output", "tool arguments"),
+             Text = iff(OperationName == "chat", OutputText, InputText),
+             Key = 1
+    | join kind=inner canaries on Key
+    | extend Form = case(Text contains CanaryValue, "plain",
+                         Text contains_cs N0 or Text contains_cs N1 or Text contains_cs N2, "base64", "")
+    | where isnotempty(Form)
+    | extend At = iff(Form == "plain", indexof(tolower(Text), tolower(CanaryValue)),
+                      max_of(indexof(Text, N0), indexof(Text, N1), indexof(Text, N2)))
+    | project TimeGenerated, AppName, CanaryApp, AgentName, ConversationId, UserId, ClientIp,
+              Channel, ToolName, PlantedIn, Form, Excerpt = substring(Text, max_of(0, At - 100), 300)
+  required_fields:
+    LLMAppLog_CL: [TimeGenerated, AppName, AgentName, ConversationId, UserId, ClientIp, OperationName, ToolName, InputText, OutputText]
+    LLMCanary_CL: [TimeGenerated, AppName, CanaryValue, PlantedIn]
