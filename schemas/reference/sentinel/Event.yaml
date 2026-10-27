@@ -1,0 +1,32 @@
+# Reference schema for the Event table. Field names only; see docs/components/schema-check.md.
+# Sysmon events land here (Source "Microsoft-Windows-Sysmon") with their fields inside the
+# EventData XML, not as columns; rules read them with parse_xml (see A2).
+name: Event
+siem: sentinel
+source_url: https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/event
+fetched_on: '2026-10-27'
+provenance: Fetched with a summarising web tool (page ms.date 2026-07-27, last updated 2026-07-28);
+  22 columns as listed on the page, not yet checked character by character.
+fields:
+- AzureDeploymentID
+- _BilledSize
+- Computer
+- EventCategory
+- EventData
+- EventID
+- EventLevel
+- EventLevelName
+- EventLog
+- _IsBillable
+- ManagementGroupName
+- Message
+- ParameterXml
+- RenderedDescription
+- _ResourceId
+- Role
+- Source
+- SourceSystem
+- _SubscriptionId
+- TimeGenerated
+- Type
+- UserName

@@ -1,0 +1,71 @@
+{
+  "rule_id": "e07878fc-1056-45fc-91bf-0fffe5a4ce10",
+  "rule_version": 1,
+  "engine": "Splunk Enterprise 10.6.1.1 (build b2ae2962645c), XmlWinEventLog extraction from harness/engines.py",
+  "date": "2026-10-27",
+  "samples": {
+    "positive_events": 6,
+    "positive_rows": 6,
+    "negative_events": 6,
+    "negative_rows": 0
+  },
+  "datasets": [
+    {
+      "id": "otrf-empire-launcher-vbs",
+      "commit": "d9d40ef123d2c87d5d3df28c96bcab4f0faccc87",
+      "path": "datasets/atomic/windows/execution/host/empire_launcher_vbs.zip",
+      "sha256": "812da270cf8cda6f1948fb6275410f15dc1794d0bd6b623c9c25b2518285019c"
+    },
+    {
+      "id": "otrf-empire-runkey-standard-user",
+      "commit": "d9d40ef123d2c87d5d3df28c96bcab4f0faccc87",
+      "path": "datasets/atomic/windows/persistence/host/empire_persistence_registry_modification_run_keys_standard_user.zip",
+      "sha256": "2965f791bcaf5e6ccfc4059985e81fd7e67ec87f17855b6c383edd1b03a19c36"
+    },
+    {
+      "id": "otrf-empire-runkey-elevated-user",
+      "commit": "d9d40ef123d2c87d5d3df28c96bcab4f0faccc87",
+      "path": "datasets/atomic/windows/persistence/host/empire_persistence_registry_modification_run_keys_elevated_user.zip",
+      "sha256": "2809354d679025859d723be3ceb1e2c9f9e5dde2ebec5bbea7c398e165a9b67d"
+    },
+    {
+      "id": "otrf-empire-reg-dump-sam",
+      "commit": "d9d40ef123d2c87d5d3df28c96bcab4f0faccc87",
+      "path": "datasets/atomic/windows/credential_access/host/empire_shell_reg_dump_sam.zip",
+      "sha256": "5a8ee19860f35da6d4bcadf15178a085b469086c461d3d873d0f4adedba41f0a"
+    },
+    {
+      "id": "otrf-bitsadmin-download",
+      "commit": "d9d40ef123d2c87d5d3df28c96bcab4f0faccc87",
+      "path": "datasets/atomic/windows/defense_evasion/host/cmd_bitsadmin_download_psh_script.zip",
+      "sha256": "8fb7bc9f3d82f672dc39a55e50006137aa540c4a9860acdcc5d08a4fd609b594"
+    },
+    {
+      "id": "otrf-sam-copy-esentutl",
+      "commit": "d9d40ef123d2c87d5d3df28c96bcab4f0faccc87",
+      "path": "datasets/atomic/windows/credential_access/host/cmd_sam_copy_esentutl.zip",
+      "sha256": "f7a71135778aeff605abcb88a14a076f0814ab5cb136d07103bdf13c45551b64"
+    }
+  ],
+  "dataset_events": 45370,
+  "dataset_rows": 2,
+  "matched": [
+    {
+      "_time": "2020-09-04 07:09:34.024 GMT",
+      "host": "WORKSTATION5.theshire.local",
+      "SubjectUserName": "pgustavo",
+      "NewProcessName": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "CommandLine": "\"C:\\windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -Win Hidden -enc SQBGACgAJABQAFMAVgBFAFIAUwBpAG8AbgBUAEEAQgBsAEUALgBQAFMAVgBFAFIAUwBJAG8ATgAuAE0AQQBqAE8AcgAgAC0AZwBlACAAMwApAHsAJAA2ADgANgA2AD0AWwBSAGUAZgBdAC4AQQBzAHMAZQBNAEIATABZAC4ARwBFAFQAVAB5AFAAZQAoACcAUwB5AHMAdABlAG0ALgBNAGEAbgBhAGc...",
+      "ParentProcessName": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    },
+    {
+      "_time": "2020-09-04 20:09:57.091 GMT",
+      "host": "WORKSTATION5.theshire.local",
+      "SubjectUserName": "pgustavo",
+      "NewProcessName": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "CommandLine": "\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -noP -sta -w 1 -enc  SQBmACgAJABQAFMAVgBFAFIAUwBpAE8AbgBUAGEAQgBsAEUALgBQAFMAVgBFAHIAUwBJAE8AbgAuAE0AYQBqAE8AUgAgAC0AZwBFACAAMwApAHsAJAA2ADgANgA2AD0AWwByAEUARgBdAC4AQQBTAHMARQBNAGIATABZAC4ARwBlAHQAVABZAFAARQAoACcAUwB5AHMAdABlAG0ALgBNAGEAbgB...",
+      "ParentProcessName": "C:\\Windows\\System32\\wscript.exe"
+    }
+  ],
+  "columns_dropped_in_mapping": {}
+}

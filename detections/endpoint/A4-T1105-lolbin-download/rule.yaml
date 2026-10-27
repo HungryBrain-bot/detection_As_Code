@@ -1,0 +1,69 @@
+id: 00e5982f-6fb1-4920-a25e-1c5ddd845015
+name: certutil, bitsadmin or curl used to download a file from a URL
+version: 1
+status: test
+severity: Medium
+tier: baseline
+description: >
+  certutil.exe with urlcache or verifyctl and a URL, bitsadmin.exe with
+  /transfer or /addfile and a URL, or curl.exe with a URL and an output
+  option. These are signed Windows binaries attackers use to pull tools
+  onto a host without bringing a downloader of their own.
+log_sources: [windows-process-creation]
+mapping:
+  attack:
+    techniques: [T1105]
+    tactics: [command-and-control]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    SecurityEvent: [TimeGenerated, EventID, NewProcessName, CommandLine, Computer, Account, ParentProcessName]
+  query: |
+    SecurityEvent
+    | where EventID == 4688
+    | where CommandLine matches regex @"(?i)(https?|ftp)://"
+    | where (NewProcessName endswith @"\certutil.exe" and CommandLine matches regex @"(?i)urlcache|verifyctl")
+        or (NewProcessName endswith @"\bitsadmin.exe" and CommandLine matches regex @"(?i)[-/](transfer|addfile)\b")
+        or (NewProcessName endswith @"\curl.exe" and CommandLine matches regex @"\s(-[A-Za-z]*[oO]|--output|--remote-name)(\s|=|$)")
+    | project TimeGenerated, Computer, Account, NewProcessName, CommandLine, ParentProcessName
+
+splunk:
+  cron_schedule: "0 * * * *"
+  earliest_time: -60m
+  required_fields:
+    "XmlWinEventLog:Security": [EventCode, NewProcessName, CommandLine, ParentProcessName, SubjectUserName, host]
+  search: |
+    index=wineventlog source="XmlWinEventLog:Security" EventCode=4688
+    (NewProcessName="*\\certutil.exe" OR NewProcessName="*\\bitsadmin.exe" OR NewProcessName="*\\curl.exe")
+    | where match(CommandLine, "(?i)(https?|ftp)://")
+    | where (like(lower(NewProcessName), "%\\certutil.exe") AND match(CommandLine, "(?i)urlcache|verifyctl"))
+        OR (like(lower(NewProcessName), "%\\bitsadmin.exe") AND match(CommandLine, "(?i)[-/](transfer|addfile)\\b"))
+        OR (like(lower(NewProcessName), "%\\curl.exe") AND match(CommandLine, "\\s(-[A-Za-z]*[oO]|--output|--remote-name)(\\s|=|$)"))
+    | table _time host SubjectUserName NewProcessName CommandLine ParentProcessName
+
+secops:
+  required_fields:
+    WINDOWS_SYSMON: [metadata.event_type, metadata.log_type, target.process.file.full_path, target.process.command_line]
+  rule_text: |
+    rule dac_00e5982f_6fb1_4920_a25e_1c5ddd845015 {
+      meta:
+        author = "detection-as-code"
+        description = "certutil, bitsadmin or curl used to download a file from a URL (T1105)"
+        severity = "Medium"
+      events:
+        $e.metadata.event_type = "PROCESS_LAUNCH"
+        $e.metadata.log_type = "WINDOWS_SYSMON"
+        re.regex($e.target.process.command_line, `(?i)(https?|ftp)://`)
+        (
+          (re.regex($e.target.process.file.full_path, `(?i)\\certutil\.exe$`)
+            and re.regex($e.target.process.command_line, `(?i)urlcache|verifyctl`))
+          or (re.regex($e.target.process.file.full_path, `(?i)\\bitsadmin\.exe$`)
+            and re.regex($e.target.process.command_line, `(?i)[-/](transfer|addfile)\b`))
+          or (re.regex($e.target.process.file.full_path, `(?i)\\curl\.exe$`)
+            and re.regex($e.target.process.command_line, `\s(-[A-Za-z]*[oO]|--output|--remote-name)(\s|=|$)`))
+        )
+      condition:
+        $e
+    }

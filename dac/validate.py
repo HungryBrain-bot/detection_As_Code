@@ -25,7 +25,7 @@ need has an entry in its teams.yaml.
 
 Not checked here: that a query is valid in its language, or that it
 fires on the positive samples. Those need a query engine; see
-docs/components/validation.md.
+docs/components/engine-tests.md (`python -m harness`).
 """
 
 import json

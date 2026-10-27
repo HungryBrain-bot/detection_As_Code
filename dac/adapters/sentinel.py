@@ -29,7 +29,7 @@ not found" error text are from Microsoft's API reference.
 
 import re
 
-from .base import ObservedSchema, ProbeError, Request, SiemAdapter, check_balanced
+from .base import KQL_STRINGS, ObservedSchema, ProbeError, Request, SiemAdapter, check_balanced
 
 API_VERSION = "2023-11-01"  # Security Insights GA version; not verified by a live call.
 MIN_MINUTES = 5
@@ -83,7 +83,7 @@ class SentinelAdapter(SiemAdapter):
 
     def check_query(self, rule_block: dict, allowed_sources: list[str], rule_id: str | None = None) -> list[str]:
         query = rule_block["query"]
-        errors = check_balanced(query)
+        errors = check_balanced(query, strings=KQL_STRINGS)
         if not references_any(query, allowed_sources):
             errors.append(f"query does not reference any declared table: {allowed_sources}")
         try:

@@ -7,11 +7,27 @@ and fields the rule reads, holds back rules whose data is not
 confirmed (and tells the owning team exactly what is missing), and
 reports per-customer coverage as ATT&CK / ATLAS Navigator layers.
 
-**Status (2026-10-27):** the pipeline is built and tested offline. No
-detection rules yet; the 10 planned rules are listed in CLAUDE.md. No
-live SIEM exists for this project, so every deploy so far is a
-dry-run, and every API call (deploy and probe) is written from vendor
-documentation, not verified against a live API.
+**Status (2026-10-27):** the pipeline is built and tested offline, and
+the four endpoint rules (A1-A4) are built. Their KQL and SPL have been
+run in local engines (Kusto emulator, Splunk Enterprise container)
+against recorded open-source attack data; their YARA-L has not run
+anywhere. No live SIEM exists for this project, so every deploy so far
+is a dry-run, and every API call (deploy and probe) is written from
+vendor documentation, not verified against a live API.
+
+## Rules
+
+| # | Rule | ATT&CK | Tier | KQL / SPL tested on recorded data | YARA-L |
+|---|---|---|---|---|---|
+| A1 | [Encoded / download-cradle PowerShell](detections/endpoint/A1-T1059.001-encoded-powershell/) | T1059.001 | baseline | yes, 2 rows of 45,370 events, both attack | not run |
+| A2 | [Run-key persistence outside installer paths](detections/endpoint/A2-T1547.001-run-key-persistence/) | T1547.001 | targeted | yes, 2 rows, both attack | not run |
+| A3 | [SAM / SYSTEM / SECURITY hive dump](detections/endpoint/A3-T1003.002-sam-hive-dump/) | T1003.002 | baseline | yes, 2 rows, both attack | not run |
+| A4 | [certutil / bitsadmin / curl download](detections/endpoint/A4-T1105-lolbin-download/) | T1105 | baseline | yes, 1 row, attack | not run |
+
+Each folder has the attack doc (`attack.md`), the rule doc
+(`README.md`), labelled samples and `tests/evidence.md`. "Tested" means
+lab data in emulated engines, not a production false-positive rate; see
+[engine tests](docs/components/engine-tests.md).
 
 ## Architecture
 
@@ -28,6 +44,7 @@ flowchart LR
     GATE -- gap --> NOTIFY["reminder to owning team:<br/>what is missing, send schema if elsewhere"]
     GATE -- passed --> AD["SiemAdapter"]
     GATE --> COV["coverage<br/>Navigator layers + summary"]
+    RULE --> HAR["engine harness<br/>Kusto emulator · Splunk<br/>OTRF recorded data"]
     AD --> SEN["Sentinel<br/>PUT alertRules"]
     AD --> SPL["Splunk<br/>saved/searches"]
     AD --> SEC["SecOps<br/>rules (YARA-L)"]
@@ -42,7 +59,8 @@ flowchart LR
 | Log-source gate | each source passed a probe, or (without a probe) the owning team confirmed it within 90 days | on the human path, that events are arriving now |
 | Coverage | which techniques have at least one gate-passed rule per customer | that the rule actually catches the technique |
 | Adapter tests | requests match the vendor API references as we read them | that a live API accepts them |
-| `tests/evidence.md` per rule | the result of running the query in an engine, recorded by hand | anything about a production tenant |
+| Engine tests (`python -m harness`) | the deployed KQL / SPL text matches every positive sample, no negative, and only the attack events in recorded OTRF data, in the Kusto emulator and a local Splunk | Log Analytics or Splunk-add-on behaviour exactly; false-positive rate in production; anything about YARA-L |
+| `tests/evidence.md` per rule | the engine, dataset, counts and caveats of that run | anything about a production tenant |
 
 ## Quick start
 
@@ -58,6 +76,9 @@ python -m dac $F schema-check --customer acme --siem sentinel
 python -m dac $F gate --customer acme --siem sentinel --report-only
 python -m dac $F coverage --customer acme
 python -m dac $F plan --siem secops
+# Engine tests (needs Docker; see docs/components/engine-tests.md)
+docker run -d -e ACCEPT_EULA=Y -p 8080:8080 mcr.microsoft.com/azuredataexplorer/kustainer-linux:latest
+python -m harness fetch && python -m harness run --engine kusto
 ```
 
 ## Docs
@@ -66,6 +87,7 @@ python -m dac $F plan --siem secops
   [schema check](docs/components/schema-check.md),
   [log-source gate](docs/components/log-source-gate.md),
   [coverage](docs/components/coverage.md),
+  [engine tests](docs/components/engine-tests.md),
   [CI/CD](docs/components/ci.md)
 - Decisions: [docs/decisions/](docs/decisions/)
 - Templates for every rule: [attack doc](templates/attack-doc.md),

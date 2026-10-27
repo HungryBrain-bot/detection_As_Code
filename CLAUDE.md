@@ -30,7 +30,9 @@ check the request is explicit from the owner (Venu).
 | C2 | llm | Canary secret in model output | OWASP LLM02 (2025) + ATLAS | Sentinel |
 | C3 | llm | Abnormal tool-call volume | OWASP LLM06/LLM10 (2025) + ATLAS | Sentinel |
 
-None built yet. Tier is decided per rule when built; B1-B3 (Entra
+Built: A1-A4 (2026-10-27), `status: test`, A1/A3/A4 baseline, A2
+targeted. KQL and SPL run in local engines on recorded OTRF data
+(ADR 007); YARA-L not run anywhere. B1-C3 not built. B1-B3 (Entra
 tables every Entra tenant has) are the baseline candidates (ADR 004).
 Common high-value rules outside this list (brute force, AD changes)
 are parked in BUILD_LOG.md for the owner, not in scope. ATT&CK IDs above were checked against the enterprise
@@ -62,15 +64,19 @@ flowchart LR
     COV --> GATE
     CUST["customers/&lt;id&gt;/"] --> GATE
     CI[".github/workflows/ci.yml"] --> CLI
+    CI --> HAR["harness/ (Kusto emulator, Splunk;<br/>OTRF recorded data)"]
+    RULE --> HAR
 ```
 
-- `detections/<endpoint|identity|llm>/<ID>-<name>/` - one folder per
-  rule: `rule.yaml`, `README.md` (rule doc), `attack.md` (attack doc),
-  `tests/positive.json`, `tests/negative.json`, `tests/evidence.md`.
+- `detections/<endpoint|identity|llm>/<#>-<ATT&CK ID>-<name>/` (e.g.
+  `A1-T1059.001-encoded-powershell`) - one folder per rule: `rule.yaml`,
+  `README.md` (rule doc), `attack.md` (attack doc),
+  `tests/positive.json`, `tests/negative.json`, `tests/evidence.md`,
+  `tests/datasets.yaml`, `tests/results/<engine>.json`.
 - `schemas/rule.schema.json` - the rule format (ADR 001), incl. `tier`
   and per-SIEM `required_fields`.
 - `schemas/reference/<siem>/` - vendor-documented table schemas with
-  provenance (Sentinel SecurityEvent, Syslog, CommonSecurityLog so far).
+  provenance (Sentinel SecurityEvent, Event, Syslog, CommonSecurityLog so far).
 - `log_sources.yaml` - log-source catalogue: owning team key and
   per-SIEM table / source / log type names.
 - `customers/<id>/` - `customer.yaml` (SIEMs, include/exclude),
@@ -91,6 +97,10 @@ flowchart LR
   x SIEM: schema check + report-only gate on PRs, gated deploy on
   `main`; coverage per customer on `main`. One GitHub Environment per
   customer holds its secrets (docs/components/ci.md).
+- `harness/` - engine tests (ADR 007, docs/components/engine-tests.md):
+  `datasets.yaml` (pinned OTRF datasets), `mapping.py` (recorded event
+  -> SecurityEvent / Event / XmlWinEventLog), `engines.py` (Kusto
+  emulator, Splunk container), `python -m harness fetch | run`.
 - `templates/` - attack-doc and rule-doc templates; their `##`
   headings are the ones the validator requires.
 - `tests/` - pytest; `tests/fixtures/rules/` holds one pipeline
@@ -107,8 +117,11 @@ flowchart LR
 - Samples are labelled recorded (with dataset and file) or
   hand-written. Hand-written samples are never presented as attack
   data.
-- `evidence.md` records an actual engine run (engine, date, counts). If
-  the query was not run, it says so.
+- `evidence.md` records an actual engine run (engine, date, counts),
+  from `python -m harness run --write`. If a SIEM's query was not run
+  (YARA-L today), it says so. Emulated engines are named as emulated.
+- Recorded datasets only with a licence that allows reuse, pinned by
+  commit and SHA-256 in `harness/datasets.yaml`.
 - Citations come from fetched primary sources with the fetch date.
   Never cite from memory, never invent campaign details or IDs.
 - A check is described by exactly what it tests. List what it misses;
@@ -136,9 +149,14 @@ current MITRE ATT&CK bundle.
 - `test_schema_check.py` - required fields vs. probe / customer schema.
 - `test_coverage.py` - active vs. blocked, layers, summary.
 - `test_cli.py` - commands end to end on the fixture rule and customer.
+- `test_harness.py` - harness mapping, result checks, dataset fetch
+  (offline; the engine runs are `python -m harness run`).
 - Probe tests live in `test_adapters.py`.
+- Engine tests: `python -m harness run --engine kusto` (also CI job
+  `engine-kusto`) and `--engine splunk` (local only).
 
-Last run (2026-10-27): 96 passed, 0 failed.
+Last run (2026-10-27): 115 passed, 0 failed; engine tests: A1-A4 pass
+in Kusto emulator and Splunk 10.6.1.
 
 ## Model usage
 
@@ -153,17 +171,22 @@ conflicting sources).
 - Built: rule schema, validator, three adapters with read-only probes,
   schema check, per-customer log-source gate with file and SMTP
   notifiers, baseline/targeted tiers, coverage layers, CLI, CI
-  workflow, component docs, ADRs 001-006, templates, five skills.
+  workflow, engine harness, component docs, ADRs 001-007, templates,
+  five skills; rules A1-A4.
 - Verified: everything in the test suite; ATT&CK IDs for the planned
   rules against the STIX bundle; the first CI workflow ran green on
-  GitHub (PR #1).
+  GitHub (PR #1); per-customer gate job ran green (PR #2); A1-A4 KQL in
+  the Kusto emulator and SPL in Splunk 10.6.1 on 45,370 recorded OTRF
+  events (only attack events matched).
 - Not verified: any live API call (Sentinel, Splunk, SecOps deploy or
   probe, SMTP); Navigator loading of the layers (ATLAS `domain` value
-  is a guess); the per-customer CI workflow until its first run; ADX
-  free tier for running queries. SecurityEvent reference schema came
-  through a summarising fetch tool.
-- Next: day-1 checks (free query engine, dataset coverage for A1-A4),
-  then rule A1 end to end with the `new-detection` skill.
+  is a guess); the deploy and coverage CI jobs on `main`; A1-A4 in a
+  real Log Analytics workspace or with the Splunk Windows add-on; any
+  YARA-L rule; production false-positive rates. SecurityEvent and
+  Event reference schemas came through a summarising fetch tool.
+- Next: identity rules B1-B3 with the `new-detection` skill (needs
+  recorded Entra AuditLogs / SigninLogs data with a reuse licence;
+  OTRF has some compound Entra datasets, not yet checked).
 
 ## Do NOT
 

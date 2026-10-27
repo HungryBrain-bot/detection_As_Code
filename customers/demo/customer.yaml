@@ -5,7 +5,8 @@ name: Demo Customer
 siems: [sentinel]
 # Targeted rules (tier: targeted) this customer gets, by rule id.
 # Baseline rules (tier: baseline) are included automatically.
-include: []
+include:
+  - cbbad913-22f2-49cb-ad4c-85b2370acc24  # A2 Run-key persistence; demo is assumed to run Sysmon
 # Baseline rules this customer must not get, by rule id, with the reason
 # in a comment.
 exclude: []

@@ -97,31 +97,52 @@ def _parse(raw: str) -> dict:
     return parsed if isinstance(parsed, dict) else {"data": parsed}
 
 
-def check_balanced(text: str, pairs: str = "()[]{}") -> list[str]:
-    """Bracket and double-quote balance. Shared by all three query languages.
+# String literal openers per language -> whether a backslash escapes the next character.
+# The closing delimiter is the opener's last character.
+KQL_STRINGS = {'@"': False, "@'": False, '"': True, "'": True}
+SPL_STRINGS = {'"': True}
+YARAL_STRINGS = {'"': True, "`": False}
 
-    Ignores brackets inside double-quoted strings. Does not understand
-    escapes beyond a backslash before a quote, single-quoted strings or
-    verbatim strings, so it can be fooled; it catches truncated queries.
+
+def check_balanced(text: str, pairs: str = "()[]{}", strings: dict[str, bool] | None = None) -> list[str]:
+    """Bracket and string-literal balance. Shared by all three query languages.
+
+    Brackets inside string literals are ignored. `strings` names the
+    literal openers of the query's language (KQL_STRINGS, SPL_STRINGS,
+    YARAL_STRINGS); the default is double quotes with backslash escapes.
+    Does not understand comments, so a quote or bracket in a comment can
+    fool it. It catches truncated queries, not invalid ones.
     """
-    openers = {pairs[i]: pairs[i + 1] for i in range(0, len(pairs), 2)}
-    closers = set(openers.values())
+    strings = strings or {'"': True}
+    openers = sorted(strings, key=len, reverse=True)
+    brackets = {pairs[i]: pairs[i + 1] for i in range(0, len(pairs), 2)}
+    closers = set(brackets.values())
     stack = []
-    in_string = False
-    prev = ""
-    for ch in text:
-        if ch == '"' and prev != "\\":
-            in_string = not in_string
-        elif not in_string:
-            if ch in openers:
-                stack.append(openers[ch])
+    literal = None  # opener of the string literal we are inside
+    i = 0
+    while i < len(text):
+        if literal is None:
+            opener = next((o for o in openers if text.startswith(o, i)), None)
+            if opener:
+                literal, i = opener, i + len(opener)
+                continue
+            ch = text[i]
+            if ch in brackets:
+                stack.append(brackets[ch])
             elif ch in closers:
                 if not stack or stack.pop() != ch:
                     return [f"unbalanced '{ch}'"]
-        prev = ch
+        else:
+            ch = text[i]
+            if strings[literal] and ch == "\\":
+                i += 2
+                continue
+            if ch == literal[-1]:
+                literal = None
+        i += 1
     errors = []
-    if in_string:
-        errors.append("unterminated double-quoted string")
+    if literal is not None:
+        errors.append(f"unterminated {literal}-string")
     if stack:
         errors.append(f"unclosed bracket, expected '{stack[-1]}'")
     return errors

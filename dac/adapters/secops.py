@@ -43,7 +43,7 @@ import datetime as dt
 import re
 from urllib.parse import urlencode
 
-from .base import DeployError, ObservedSchema, ProbeError, Request, Response, SiemAdapter, check_balanced
+from .base import YARAL_STRINGS, DeployError, ObservedSchema, ProbeError, Request, Response, SiemAdapter, check_balanced
 
 PROBE_SAMPLE = 100
 _LOG_TYPE = re.compile(r"^[A-Z0-9_]+$")
@@ -60,7 +60,7 @@ class SecOpsAdapter(SiemAdapter):
 
     def check_query(self, rule_block: dict, allowed_sources: list[str], rule_id: str | None = None) -> list[str]:
         text = rule_block["rule_text"]
-        errors = check_balanced(text)
+        errors = check_balanced(text, strings=YARAL_STRINGS)
         header = re.search(r"^\s*rule\s+([A-Za-z0-9_]+)\s*\{", text, re.MULTILINE)
         if not header:
             errors.append("missing 'rule <name> {' header")

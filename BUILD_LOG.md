@@ -75,3 +75,55 @@
 - Tests: 96 passed; yamllint and pyflakes clean.
 - Next: unchanged. Day-1 checks, then rule A1. The pipeline is frozen
   until A1-A4 exist.
+
+## 2026-10-27 - Rules A1-A4, engine tests on recorded data
+
+- Owner's go-ahead to build the rules. The owner cannot create ADX or
+  Log Analytics, and asked for the rules to be checked against
+  open-source sample logs instead of shipping as "not run" (ADR 007).
+- Engines: the Azure Data Explorer emulator (Kustainer, Docker) for
+  KQL, and Splunk Enterprise 10.6.1 in Docker for SPL. Docker Hub
+  rate-limited the Splunk pull; the same image came from
+  `mirror.gcr.io`. No YARA-L engine exists outside SecOps; YARA-L is not
+  run and each evidence file says so. Both containers were started with
+  their vendors' licence-acceptance flags for local test use.
+- Data: OTRF Security-Datasets (MIT), six recorded runs at commit
+  d9d40ef, 45,370 events in total, pinned by SHA-256 in
+  `harness/datasets.yaml`. EVTX-ATTACK-SAMPLES was not used: it had no
+  licence file when checked.
+- Built `harness/` (fetch, mapping to SecurityEvent / Event /
+  XmlWinEventLog, engine clients, run), CI job `engine-kusto`, offline
+  tests, docs/components/engine-tests.md, ADR 007, Sentinel `Event`
+  reference schema.
+- Rules A1 (T1059.001), A2 (T1547.001), A3 (T1003.002), A4 (T1105),
+  each with attack doc, rule doc, labelled samples, dataset list,
+  results and evidence. Status `test`. A1/A3/A4 baseline on
+  SecurityEvent 4688; A2 targeted (Sysmon), included for `demo`.
+- Results, both engines: every positive matched, no negative matched,
+  and across all 45,370 events the four rules returned 7 rows, all of
+  them the recorded attack events. Each negative set was checked to
+  fail when the filter it guards is removed.
+- Tuning found by the recorded background: `ClipRenew.exe -e` (A1),
+  Defender writing a Run key (A2), `reg export HKLM\SYSTEM\...`
+  subkeys (A3), `certutil -store` (A4).
+- Correction: `log_sources.yaml` listed `SysmonEvent` as a Sentinel
+  table. It was not taken from a fetched Microsoft source; Microsoft's
+  own Sysmon parser (Azure-Sentinel repo) reads Sysmon from the `Event`
+  table, so the catalogue now says `Event`.
+- Fix found by running the queries: `check_balanced` reported real,
+  working KQL and YARA-L as unbalanced, because it did not know KQL
+  verbatim strings or YARA-L backtick regexes. It now takes each
+  language's string-literal rules; tests added.
+- Real vs. mocked / unverified: emulated engines, not Log Analytics or
+  Splunk with the Windows add-on; lab data, not production; Sentinel
+  table columns from reference schemas that came through a summarising
+  fetch (recorded fields with no column are dropped on load and listed
+  in each result file); SecOps UDM field names (`registry_key`,
+  `principal.process.file.full_path`) are from my reading of Google's
+  UDM, not verified.
+- Gate on `demo`: all four rules blocked (no confirmations, no probe
+  credentials), as expected; coverage shows 0 of 4 active.
+- Tests: 115 passed; yamllint and pyflakes clean; `dac validate`
+  against ATT&CK v20.0 passes.
+- Next: identity rules B1-B3. Needs recorded Entra data with a reuse
+  licence; not yet checked.

@@ -17,7 +17,7 @@ two ways (ADR 003 and its 2026-10-27 amendment, ADR 005):
        siem: sentinel
        confirmed_by: Endpoint Engineering (name)
        confirmed_on: 2026-10-27
-       evidence: Free text, e.g. "SysmonEvent has EventID 1 rows in the last 24h"
+       evidence: Free text, e.g. "Event has Sysmon EventID 1 rows in the last 24h"
 
    Confirmations expire after CONFIRMATION_MAX_AGE_DAYS. If the customer
    sent a schema file for a table and it lacks required fields, the

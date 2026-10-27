@@ -20,7 +20,8 @@ its docs or evidence is not done, and CI rejects it.
 
 ### 1. Attack doc first
 Copy `templates/attack-doc.md` to
-`detections/<track>/<ATTACK-ID>-<short-name>/attack.md` and fill every
+`detections/<track>/<scope #>-<ATTACK-ID>-<short-name>/attack.md`
+(e.g. `A1-T1059.001-encoded-powershell`) and fill every
 section. "How the attack happens" is from the attacker's side, step
 by step, naming real tools. "Real-world use" needs a dated report for
 the named group; for the identity and LLM tracks this is what backs
@@ -31,7 +32,8 @@ logs will show.
 Create `rule.yaml` next to it:
 - `id`: a new UUID (`python -c "import uuid; print(uuid.uuid4())"`),
   never reused or changed.
-- `status: experimental` until evidence exists (deploys disabled).
+- `status: experimental` until engine evidence exists (deploys
+  disabled); `test` once the harness passes (ADR 007).
 - `tier`: `baseline` or `targeted`; see the `coverage-map` skill.
 - `log_sources`: IDs from `log_sources.yaml`. If a new source is
   needed, add it there with its owning team, and say so in the PR.
@@ -46,13 +48,25 @@ Create `rule.yaml` next to it:
   `schema-check` skill.
 
 ### 3. Tests and evidence
+- Pick recorded datasets for the technique from `harness/datasets.yaml`,
+  or add one (licence that allows reuse, pinned commit and SHA-256).
+  List them in `tests/datasets.yaml`.
 - `tests/positive.json`: events that must match. `tests/negative.json`:
-  similar-looking benign events that must not.
-- Label each event `"_provenance": "recorded:<dataset/file>"` or
-  `"hand-written"`.
-- Run the query in an engine and record in `tests/evidence.md`: engine,
-  date, dataset and file, positive and negative match counts. If the
-  query has not been run, say so there; do not imply it was.
+  similar-looking benign events that must not. Take recorded ones from
+  the datasets first (including near-misses in the background), then
+  hand-write what the data lacks.
+- Label each event `"_provenance": "recorded:<dataset path @ commit>"`
+  or `"hand-written"` with a `"_note"`.
+- Run `python -m harness run --engine kusto --rule <#> --write` (and
+  `--engine splunk` for endpoint rules); see
+  docs/components/engine-tests.md. Read every dataset row it returns:
+  each must be attack activity, or the rule needs tuning.
+- Check the negatives bite: loosen the filter they guard and confirm
+  they then match.
+- Write `tests/evidence.md` from `tests/results/*.json`: engine and
+  version (say "emulator" where it is one), date, datasets, counts,
+  and what was not run (YARA-L today). Never imply a run that did not
+  happen.
 
 ### 4. Rule doc
 Copy `templates/rule-doc.md` to `README.md` and fill every section.
@@ -62,6 +76,7 @@ catch or miss. "Blind spots" must be specific to this rule.
 ### 5. Check and record
 ```bash
 python -m pytest
+python -m harness run --engine kusto
 python -m dac validate --attack-bundle data/enterprise-attack.json
 python -m dac schema-check --customer demo --siem sentinel
 python -m dac gate --customer demo --siem sentinel --report-only
@@ -74,4 +89,5 @@ entry to BUILD_LOG.md and update CLAUDE.md's rule table.
 - Don't write the docs after the rule is merged.
 - Don't present hand-written samples as recorded attack data.
 - Don't invent campaign names, dates, report titles or ATT&CK IDs.
-- Don't set `status: stable` without evidence from a real engine run.
+- Don't set `status: stable` without a live SIEM run and a production
+  false-positive baseline; emulator evidence earns `test`, not `stable`.

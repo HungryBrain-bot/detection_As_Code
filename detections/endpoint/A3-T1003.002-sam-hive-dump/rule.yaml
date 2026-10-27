@@ -1,0 +1,60 @@
+id: 20cda3e9-edbf-48e5-8994-fe1dbd1d3d18
+name: SAM, SYSTEM or SECURITY hive saved with reg.exe or copied from the config folder
+version: 1
+status: test
+severity: High
+tier: baseline
+description: >
+  A process command line that saves or exports the root of the SAM,
+  SYSTEM or SECURITY hive with reg (reg save HKLM\SAM ...), or that
+  names the hive files in System32\config (esentutl /y /vss, copy from a
+  volume shadow copy). Both give an attacker the local account hashes
+  and the boot key to decrypt them offline.
+log_sources: [windows-process-creation]
+mapping:
+  attack:
+    techniques: [T1003.002]
+    tactics: [credential-access]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    SecurityEvent: [TimeGenerated, EventID, NewProcessName, CommandLine, Computer, Account, ParentProcessName]
+  query: |
+    SecurityEvent
+    | where EventID == 4688
+    | where CommandLine matches regex @'(?i)\breg(\.exe)?"?\s+(save|export)\s+"?(hklm|hkey_local_machine)\\(sam|system|security)"?(\s|$)'
+        or CommandLine matches regex @'(?i)system32[\\/]+config[\\/]+(sam|system|security)\b'
+    | project TimeGenerated, Computer, Account, NewProcessName, CommandLine, ParentProcessName
+
+splunk:
+  cron_schedule: "0 * * * *"
+  earliest_time: -60m
+  required_fields:
+    "XmlWinEventLog:Security": [EventCode, NewProcessName, CommandLine, ParentProcessName, SubjectUserName, host]
+  search: |
+    index=wineventlog source="XmlWinEventLog:Security" EventCode=4688
+    | where match(CommandLine, "(?i)\\breg(\\.exe)?\"?\\s+(save|export)\\s+\"?(hklm|hkey_local_machine)\\\\(sam|system|security)\"?(\\s|$)")
+        OR match(CommandLine, "(?i)system32[\\\\/]+config[\\\\/]+(sam|system|security)\\b")
+    | table _time host SubjectUserName NewProcessName CommandLine ParentProcessName
+
+secops:
+  required_fields:
+    WINDOWS_SYSMON: [metadata.event_type, metadata.log_type, target.process.command_line]
+  rule_text: |
+    rule dac_20cda3e9_edbf_48e5_8994_fe1dbd1d3d18 {
+      meta:
+        author = "detection-as-code"
+        description = "SAM, SYSTEM or SECURITY hive saved with reg.exe or copied from the config folder (T1003.002)"
+        severity = "High"
+      events:
+        $e.metadata.event_type = "PROCESS_LAUNCH"
+        $e.metadata.log_type = "WINDOWS_SYSMON"
+        (
+          re.regex($e.target.process.command_line, `(?i)\breg(\.exe)?"?\s+(save|export)\s+"?(hklm|hkey_local_machine)\\(sam|system|security)"?(\s|$)`)
+          or re.regex($e.target.process.command_line, `(?i)system32[\\/]+config[\\/]+(sam|system|security)\b`)
+        )
+      condition:
+        $e
+    }
