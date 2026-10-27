@@ -116,3 +116,88 @@ def test_fetch_rejects_wrong_hash(tmp_path, monkeypatch):
     with pytest.raises(SystemExit):
         hmain.fetch({"d": {"commit": "c", "path": "p.zip", "sha256": "0" * 64}})
     assert not (tmp_path / "d").exists()
+
+
+# --- Entra ID (identity rules) ----------------------------------------------
+
+AUDIT_RECORD = {
+    "time": "2023-10-27T19:03:15.2602322Z", "category": "AuditLogs", "operationName": "Consent to application",
+    "tenantId": "t-1", "correlationId": "c-1", "Level": 4, "resultSignature": "None",
+    "properties": {"id": "Directory_c-1", "category": "ApplicationManagement", "result": "success",
+                   "activityDisplayName": "Consent to application", "operationType": "Assign",
+                   "initiatedBy": {"user": {"userPrincipalName": "u@example.com", "ipAddress": "192.0.2.1"}},
+                   "targetResources": [{"displayName": "App", "modifiedProperties": []}]},
+    "_provenance": "hand-written",
+}
+SIGNIN_RECORD = {
+    "time": "2023-01-12T19:22:14.5285742Z", "category": "NonInteractiveUserSignInLogs", "resultType": "0",
+    "location": "US", "resourceId": "/tenants/t-1/providers/Microsoft.aadiam", "callerIpAddress": "192.0.2.1",
+    "properties": {"ipAddress": "192.0.2.1", "location": {"countryOrRegion": "US"}, "sessionId": "s-1",
+                   "isInteractive": False, "resourceId": "r-1", "userPrincipalName": "u@example.com"},
+}
+
+
+def test_azure_monitor_audit_record_maps_to_auditlogs_columns():
+    table, row = mapping.to_sentinel(AUDIT_RECORD)
+    assert table == "AuditLogs" and row["Type"] == "AuditLogs"
+    assert row["TimeGenerated"] == AUDIT_RECORD["time"]
+    assert row["Category"] == "ApplicationManagement"       # properties win over the top-level category
+    assert row["AADOperationType"] == "Assign" and row["TenantId"] == row["AADTenantId"] == "t-1"
+    assert row["Result"] == "success" and row["InitiatedBy"]["user"]["ipAddress"] == "192.0.2.1"
+    assert "_provenance" not in row
+
+
+def test_azure_monitor_signin_record_maps_to_signin_columns():
+    table, row = mapping.to_sentinel(SIGNIN_RECORD)
+    assert table == "AADNonInteractiveUserSignInLogs"
+    assert row["IPAddress"] == "192.0.2.1" and row["SessionId"] == "s-1"   # matched ignoring case
+    assert row["LocationDetails"] == {"countryOrRegion": "US"} and row["Location"] == "US"
+    assert row["ResultType"] == "0" and row["IsInteractive"] is False
+    assert row["ResourceId"].startswith("/tenants/") and row["ResourceIdentity"] == "r-1"
+
+
+def test_unsupported_category_is_not_loaded():
+    assert mapping.to_sentinel({"category": "MicrosoftGraphActivityLogs", "properties": {}}) == (None, {})
+
+
+def test_sentinel_export_row_is_auditlogs_whatever_its_type():
+    row = {"ActivityDisplayName": "Update application", "AADOperationType": "Update", "Type": "Application",
+           "TargetResources": "[]"}
+    table, out = mapping.to_sentinel(row)
+    assert table == "AuditLogs" and out["Type"] == "AuditLogs"
+
+
+@pytest.mark.parametrize("value, kusto_type, expected", [
+    ({"countryOrRegion": "US"}, "string", '{"countryOrRegion":"US"}'),
+    ('[{"id": 1}]', "dynamic", [{"id": 1}]),
+    ("not json", "dynamic", "not json"),
+    (True, "string", "true"),
+    (True, "bool", True),
+])
+def test_coerce_to_column_type(value, kusto_type, expected):
+    from harness.engines import coerce
+    assert coerce(value, kusto_type) == expected
+
+
+def test_entra_reference_schemas_have_types_for_every_field():
+    from dac.rules import load_reference_schema
+    for table in ("AuditLogs", "SigninLogs", "AADNonInteractiveUserSignInLogs"):
+        schema = load_reference_schema("sentinel", table)
+        assert set(schema["types"]) == set(schema["fields"])
+
+
+def test_positive_cases_group_by_case_key():
+    assert hmain.cases([{"_case": "a"}, {"_case": "a"}, {}, {}]) == 3
+    result = {"samples": {"positive_events": 4, "positive_cases": 3, "positive_rows": 3,
+                          "negative_events": 1, "negative_rows": 0}, "dataset_rows": 0}
+    assert hmain.check(result, None) == []
+
+
+def test_fetch_saves_a_raw_file_by_base_name(tmp_path, monkeypatch):
+    blob = b'{"category": "AuditLogs"}\n'
+    _serve(monkeypatch, blob)
+    monkeypatch.setattr(hmain, "data_dir", lambda: tmp_path)
+    hmain.fetch({"d": {"source": "splunk-attack-data", "commit": "c", "path": "../a/b/azuread.log",
+                       "sha256": hashlib.sha256(blob).hexdigest()}})
+    assert [p.name for p in (tmp_path / "d").iterdir()] == ["azuread.log"]
+    assert hmain.read_events("d") == [{"category": "AuditLogs"}]

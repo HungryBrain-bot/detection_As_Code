@@ -50,3 +50,23 @@ than shipping them as "not run" and `experimental`.
   nothing if a UDM field name is wrong.
 - CI gains a job that pulls a container image; the image is pinned by
   digest.
+
+## Amendment (2026-10-27): Entra ID data from Splunk attack_data
+The identity rules B1-B3 read Entra ID tables, which OTRF covers only
+through one compound dataset. Splunk attack_data (Apache 2.0, listed
+above as "a good second source for later rules") is now used for them:
+nine Entra ID datasets at commit b52ee68, pinned by SHA-256, plus
+OTRF's Golden SAML `AuditLogs` export. Consequences beyond the above:
+- A second recorded format (Azure Monitor diagnostic records) and its
+  mapping to `AuditLogs`, `SigninLogs` and
+  `AADNonInteractiveUserSignInLogs`, with column types from Microsoft's
+  Azure-Sentinel repository instead of a summarising fetch.
+- Splunk replaced tenant ids, user names and IPs in these datasets; the
+  values are realistic in shape, not the lab's.
+- None of the recorded sign-ins has a `SessionId`, so B3 has no
+  recorded positive. It ships as `status: test` under the same rule as
+  the others (passing engine evidence), with its evidence file and rule
+  doc saying the positives are hand-written. `stable` still waits for a
+  live run.
+- Aggregating rules need several events per expected row; samples can
+  group events into one case with `_case`.

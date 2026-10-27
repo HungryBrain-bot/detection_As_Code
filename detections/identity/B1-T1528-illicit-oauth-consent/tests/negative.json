@@ -1,0 +1,480 @@
+[
+  {
+    "_provenance": "recorded:Splunk attack_data datasets/attack_techniques/T1528/azure_ad_user_consent_blocked/azure_ad_user_consent_blocked.log line 6 @ b52ee68",
+    "time": "2023-10-27T16:14:14.9747033Z",
+    "resourceId": "/tenants/75243ab2-44f8-435c-a7a6-b479385df6d4/providers/Microsoft.aadiam",
+    "operationName": "Consent to application",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "75243ab2-44f8-435c-a7a6-b479385df6d4",
+    "resultSignature": "None",
+    "resultDescription": "Microsoft.Online.Security.UserConsentBlockedForRiskyAppsException",
+    "durationMs": 0,
+    "callerIpAddress": "13.85.188.242",
+    "correlationId": "864210f1-2950-47cb-9e12-1a71dcbdb1d5",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_864210f1-2950-47cb-9e12-1a71dcbdb1d5_DO21D_338329364",
+      "category": "ApplicationManagement",
+      "correlationId": "864210f1-2950-47cb-9e12-1a71dcbdb1d5",
+      "result": "failure",
+      "resultReason": "Microsoft.Online.Security.UserConsentBlockedForRiskyAppsException",
+      "activityDisplayName": "Consent to application",
+      "activityDateTime": "2023-10-27T16:14:14.9747033+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Assign",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "57e4bd36-9722-4a4a-9729-7203d8e00b72",
+          "displayName": null,
+          "userPrincipalName": "user15@splunkresearch.onmicrosoft.com",
+          "ipAddress": "13.85.188.242",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "6228c72e-8895-4681-bbda-238132dc4f3c",
+          "displayName": "Bad App 1",
+          "type": "Application",
+          "modifiedProperties": [
+            {
+              "displayName": "ConsentContext.IsAdminConsent",
+              "oldValue": null,
+              "newValue": "\"False\""
+            },
+            {
+              "displayName": "ConsentContext.IsAppOnly",
+              "oldValue": null,
+              "newValue": "\"False\""
+            },
+            {
+              "displayName": "ConsentContext.OnBehalfOfAll",
+              "oldValue": null,
+              "newValue": "\"False\""
+            },
+            {
+              "displayName": "ConsentContext.Tags",
+              "oldValue": null,
+              "newValue": "\"WindowsAzureActiveDirectoryIntegratedApp\""
+            },
+            {
+              "displayName": "ConsentAction.Permissions",
+              "oldValue": null,
+              "newValue": "\"[] => [[Id: AAAAAAAAAAAAAAAAAAAAALSZcc5Sj_NGtUtP2B3pYeI2veRXIpdKSpcpcgPY4Aty, ClientId: 00000000-0000-0000-0000-000000000000, PrincipalId: 57e4bd36-9722-4a4a-9729-7203d8e00b72, ResourceId: ce7199b4-8f52-46f3-b54b-4fd81de961e2, ConsentType: Principal, Scope: Mail.Read Mail.Read.Shared Mail.ReadBasic Mail.ReadBasic.Shared Mail.ReadWrite Mail.ReadWrite.Shared Mail.Send Mail.Send.Shared User.Read, CreatedDateTime: , LastModifiedDateTime ]]; \""
+            },
+            {
+              "displayName": "ConsentAction.Reason",
+              "oldValue": null,
+              "newValue": "\"Risky application detected\""
+            },
+            {
+              "displayName": "MethodExecutionResult.",
+              "oldValue": null,
+              "newValue": "\"Microsoft.Online.Security.UserConsentBlockedForRiskyAppsException\""
+            }
+          ],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "EvoSTS"
+        },
+        {
+          "key": "AppId",
+          "value": "96f6a3d6-d5aa-4af5-a77a-9319b5283712"
+        }
+      ]
+    }
+  },
+  {
+    "_provenance": "recorded:Splunk attack_data datasets/attack_techniques/T1528/azure_ad_user_consent_granted/azure_ad_user_consent_granted.log line 7 @ b52ee68",
+    "time": "2023-10-27T19:03:15.2592316Z",
+    "resourceId": "/tenants/75243ab2-44f8-435c-a7a6-b479385df6d4/providers/Microsoft.aadiam",
+    "operationName": "Add app role assignment grant to user",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "75243ab2-44f8-435c-a7a6-b479385df6d4",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "20.55.51.211",
+    "correlationId": "e8f24ab7-b587-4a94-91f3-cb186133856d",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_e8f24ab7-b587-4a94-91f3-cb186133856d_IIML5_335468638",
+      "category": "UserManagement",
+      "correlationId": "e8f24ab7-b587-4a94-91f3-cb186133856d",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Add app role assignment grant to user",
+      "activityDateTime": "2023-10-27T19:03:15.2592316+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Assign",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "57e4bd36-9722-4a4a-9729-7203d8e00b72",
+          "displayName": null,
+          "userPrincipalName": "user15@splunkresearch.onmicrosoft.com",
+          "ipAddress": "20.55.51.211",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "295afd33-03e9-4d61-a023-ebf08ab0d5ce",
+          "displayName": "Bad App 1",
+          "type": "ServicePrincipal",
+          "modifiedProperties": [
+            {
+              "displayName": "AppRole.Id",
+              "oldValue": null,
+              "newValue": "\"00000000-0000-0000-0000-000000000000\""
+            },
+            {
+              "displayName": "AppRole.Value",
+              "oldValue": null,
+              "newValue": "\"\""
+            },
+            {
+              "displayName": "AppRole.DisplayName",
+              "oldValue": null,
+              "newValue": "\"\""
+            },
+            {
+              "displayName": "AppRoleAssignment.CreatedDateTime",
+              "oldValue": null,
+              "newValue": "\"2023-10-27T19:03:15.1032233Z\""
+            },
+            {
+              "displayName": "AppRoleAssignment.LastModifiedDateTime",
+              "oldValue": null,
+              "newValue": "\"2023-10-27T19:03:15.1032233Z\""
+            },
+            {
+              "displayName": "User.ObjectID",
+              "oldValue": null,
+              "newValue": "\"57e4bd36-9722-4a4a-9729-7203d8e00b72\""
+            },
+            {
+              "displayName": "User.UPN",
+              "oldValue": null,
+              "newValue": "\"user15@splunkresearch.onmicrosoft.com\""
+            },
+            {
+              "displayName": "User.PUID",
+              "oldValue": null,
+              "newValue": "\"10032002CC029AE9\""
+            },
+            {
+              "displayName": "TargetId.ServicePrincipalNames",
+              "oldValue": null,
+              "newValue": "\"96f6a3d6-d5aa-4af5-a77a-9319b5283712\""
+            }
+          ],
+          "administrativeUnits": []
+        },
+        {
+          "id": "57e4bd36-9722-4a4a-9729-7203d8e00b72",
+          "displayName": null,
+          "type": "User",
+          "userPrincipalName": "user15@splunkresearch.onmicrosoft.com",
+          "modifiedProperties": [],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "EvoSTS"
+        },
+        {
+          "key": "AppId",
+          "value": "96f6a3d6-d5aa-4af5-a77a-9319b5283712"
+        }
+      ]
+    }
+  },
+  {
+    "_provenance": "recorded:Splunk attack_data datasets/attack_techniques/T1528/azure_ad_user_consent_granted/azure_ad_user_consent_granted.log line 9 @ b52ee68",
+    "time": "2023-10-27T19:03:14.9172152Z",
+    "resourceId": "/tenants/75243ab2-44f8-435c-a7a6-b479385df6d4/providers/Microsoft.aadiam",
+    "operationName": "Add service principal",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "75243ab2-44f8-435c-a7a6-b479385df6d4",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "20.55.51.211",
+    "correlationId": "e8f24ab7-b587-4a94-91f3-cb186133856d",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_e8f24ab7-b587-4a94-91f3-cb186133856d_IIML5_335467140",
+      "category": "ApplicationManagement",
+      "correlationId": "e8f24ab7-b587-4a94-91f3-cb186133856d",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Add service principal",
+      "activityDateTime": "2023-10-27T19:03:14.9172152+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Add",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "57e4bd36-9722-4a4a-9729-7203d8e00b72",
+          "displayName": null,
+          "userPrincipalName": "user15@splunkresearch.onmicrosoft.com",
+          "ipAddress": "20.55.51.211",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "295afd33-03e9-4d61-a023-ebf08ab0d5ce",
+          "displayName": "Bad App 1",
+          "type": "ServicePrincipal",
+          "modifiedProperties": [
+            {
+              "displayName": "AccountEnabled",
+              "oldValue": "[]",
+              "newValue": "[true]"
+            },
+            {
+              "displayName": "AppAddress",
+              "oldValue": "[]",
+              "newValue": "[{\"AddressType\":0,\"Address\":\"https://52.88.103.113:443/login/authorized\",\"ReplyAddressClientType\":1,\"ReplyAddressIndex\":null,\"IsReplyAddressDefault\":false}]"
+            },
+            {
+              "displayName": "AppPrincipalId",
+              "oldValue": "[]",
+              "newValue": "[\"96f6a3d6-d5aa-4af5-a77a-9319b5283712\"]"
+            },
+            {
+              "displayName": "DisplayName",
+              "oldValue": "[]",
+              "newValue": "[\"Bad App 1\"]"
+            },
+            {
+              "displayName": "ServicePrincipalName",
+              "oldValue": "[]",
+              "newValue": "[\"96f6a3d6-d5aa-4af5-a77a-9319b5283712\"]"
+            },
+            {
+              "displayName": "Credential",
+              "oldValue": "[]",
+              "newValue": "[{\"CredentialType\":2,\"KeyStoreId\":\"291154f0-a9f5-45bb-87be-9c8ee5b6d62c\",\"KeyGroupId\":\"291154f0-a9f5-45bb-87be-9c8ee5b6d62c\"}]"
+            },
+            {
+              "displayName": "Included Updated Properties",
+              "oldValue": null,
+              "newValue": "\"AccountEnabled, AppAddress, AppPrincipalId, DisplayName, ServicePrincipalName, Credential\""
+            },
+            {
+              "displayName": "TargetId.ServicePrincipalNames",
+              "oldValue": null,
+              "newValue": "\"96f6a3d6-d5aa-4af5-a77a-9319b5283712\""
+            }
+          ],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "EvoSTS"
+        },
+        {
+          "key": "AppId",
+          "value": "96f6a3d6-d5aa-4af5-a77a-9319b5283712"
+        }
+      ]
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "consent to an app asking only for openid profile email offline_access User.Read (the scopes in Proofpoint's July 2025 campaign); not alerted by design; new correlation id",
+    "time": "2023-10-27T19:03:15.2602322Z",
+    "resourceId": "/tenants/75243ab2-44f8-435c-a7a6-b479385df6d4/providers/Microsoft.aadiam",
+    "operationName": "Consent to application",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "75243ab2-44f8-435c-a7a6-b479385df6d4",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "20.55.51.211",
+    "correlationId": "fa3f1024-df12-5ea3-aa02-dc25f223756f",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_fa3f1024-df12-5ea3-aa02-dc25f223756f_SAMPLE",
+      "category": "ApplicationManagement",
+      "correlationId": "fa3f1024-df12-5ea3-aa02-dc25f223756f",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Consent to application",
+      "activityDateTime": "2023-10-27T19:03:15.2602322+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Assign",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "57e4bd36-9722-4a4a-9729-7203d8e00b72",
+          "displayName": null,
+          "userPrincipalName": "user15@splunkresearch.onmicrosoft.com",
+          "ipAddress": "20.55.51.211",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "295afd33-03e9-4d61-a023-ebf08ab0d5ce",
+          "displayName": "Bad App 1",
+          "type": "ServicePrincipal",
+          "modifiedProperties": [
+            {
+              "displayName": "ConsentContext.IsAdminConsent",
+              "oldValue": null,
+              "newValue": "\"False\""
+            },
+            {
+              "displayName": "ConsentContext.IsAppOnly",
+              "oldValue": null,
+              "newValue": "\"False\""
+            },
+            {
+              "displayName": "ConsentContext.OnBehalfOfAll",
+              "oldValue": null,
+              "newValue": "\"False\""
+            },
+            {
+              "displayName": "ConsentContext.Tags",
+              "oldValue": null,
+              "newValue": "\"WindowsAzureActiveDirectoryIntegratedApp\""
+            },
+            {
+              "displayName": "ConsentAction.Permissions",
+              "oldValue": null,
+              "newValue": "\"[] => [[Id: AAAAAAAAAAAAAAAAAAAAALSZcc5Sj_NGtUtP2B3pYeI2veRXIpdKSpcpcgPY4Aty, ClientId: 00000000-0000-0000-0000-000000000000, PrincipalId: 57e4bd36-9722-4a4a-9729-7203d8e00b72, ResourceId: ce7199b4-8f52-46f3-b54b-4fd81de961e2, ConsentType: Principal, Scope: openid profile email offline_access User.Read, CreatedDateTime: , LastModifiedDateTime ]]; \""
+            },
+            {
+              "displayName": "TargetId.ServicePrincipalNames",
+              "oldValue": null,
+              "newValue": "\"96f6a3d6-d5aa-4af5-a77a-9319b5283712\""
+            }
+          ],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "EvoSTS"
+        },
+        {
+          "key": "AppId",
+          "value": "96f6a3d6-d5aa-4af5-a77a-9319b5283712"
+        }
+      ]
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "delegated grant of Mail.ReadBasic only (a substring of Mail.Read; exact scope matching must not alert); new correlation id",
+    "time": "2023-10-27T19:03:15.0822242Z",
+    "resourceId": "/tenants/75243ab2-44f8-435c-a7a6-b479385df6d4/providers/Microsoft.aadiam",
+    "operationName": "Add delegated permission grant",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "75243ab2-44f8-435c-a7a6-b479385df6d4",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "20.55.51.211",
+    "correlationId": "7c3f3ae0-6c8d-5e2b-bfe9-b5ee49d60f39",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_7c3f3ae0-6c8d-5e2b-bfe9-b5ee49d60f39_SAMPLE",
+      "category": "ApplicationManagement",
+      "correlationId": "7c3f3ae0-6c8d-5e2b-bfe9-b5ee49d60f39",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Add delegated permission grant",
+      "activityDateTime": "2023-10-27T19:03:15.0822242+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Assign",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "57e4bd36-9722-4a4a-9729-7203d8e00b72",
+          "displayName": null,
+          "userPrincipalName": "user15@splunkresearch.onmicrosoft.com",
+          "ipAddress": "20.55.51.211",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "ce7199b4-8f52-46f3-b54b-4fd81de961e2",
+          "displayName": "Microsoft Graph",
+          "type": "ServicePrincipal",
+          "modifiedProperties": [
+            {
+              "displayName": "DelegatedPermissionGrant.Scope",
+              "oldValue": null,
+              "newValue": "\"Mail.ReadBasic User.Read\""
+            },
+            {
+              "displayName": "DelegatedPermissionGrant.ConsentType",
+              "oldValue": null,
+              "newValue": "\"Principal\""
+            },
+            {
+              "displayName": "ServicePrincipal.ObjectID",
+              "oldValue": null,
+              "newValue": "\"295afd33-03e9-4d61-a023-ebf08ab0d5ce\""
+            },
+            {
+              "displayName": "ServicePrincipal.DisplayName",
+              "oldValue": null,
+              "newValue": null
+            },
+            {
+              "displayName": "ServicePrincipal.AppId",
+              "oldValue": null,
+              "newValue": null
+            },
+            {
+              "displayName": "ServicePrincipal.Name",
+              "oldValue": null,
+              "newValue": null
+            },
+            {
+              "displayName": "TargetId.ServicePrincipalNames",
+              "oldValue": null,
+              "newValue": "\"00000003-0000-0000-c000-000000000000;00000003-0000-0000-c000-000000000000/ags.windows.net;https://ags.windows.net;https://graph.microsoft.com;https://canary.graph.microsoft.com;https://graph.microsoft.us;https://graph.microsoft.com/;https://dod-graph.microsoft.us;https://dod-graph.microsoft.us/;https://graph.microsoft.us/;https://canary.graph.microsoft.com/\""
+            }
+          ],
+          "administrativeUnits": []
+        },
+        {
+          "id": "295afd33-03e9-4d61-a023-ebf08ab0d5ce",
+          "displayName": null,
+          "type": "ServicePrincipal",
+          "modifiedProperties": [],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "EvoSTS"
+        },
+        {
+          "key": "AppId",
+          "value": "00000003-0000-0000-c000-000000000000"
+        }
+      ]
+    }
+  }
+]

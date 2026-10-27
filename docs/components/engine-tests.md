@@ -6,18 +6,22 @@ Code: `harness/` (`python -m harness`). Decision record:
 ## What it does
 Runs each rule's real query in a real query engine, against:
 
-1. the rule's own samples (`tests/positive.json` must all match,
-   `tests/negative.json` must not), and
+1. the rule's own samples (every positive case in `tests/positive.json`
+   must produce a row, `tests/negative.json` must produce none), and
 2. every event of a set of recorded, open-source attack datasets
-   (attack activity plus the host's background noise), recording each
-   row the rule returns.
+   (attack activity plus the host's or tenant's background), recording
+   each row the rule returns.
+
+A positive case is one event, or several events sharing a `_case` key:
+rules that aggregate (B1 one row per consent, B3 one row per session)
+need more than one event for one row.
 
 The output is `tests/results/<engine>.json` in the rule folder, and
 `tests/evidence.md` is written from it. No cloud account is needed.
 
 | Rule language | Engine | How faithful |
 |---|---|---|
-| KQL (Sentinel) | Azure Data Explorer emulator ("Kustainer"), Docker image `mcr.microsoft.com/azuredataexplorer/kustainer-linux` | Real KQL engine. ADX, not Log Analytics: a function that exists only in Log Analytics fails here, visibly. Tables are created from `schemas/reference/sentinel/`. |
+| KQL (Sentinel) | Azure Data Explorer emulator ("Kustainer"), Docker image `mcr.microsoft.com/azuredataexplorer/kustainer-linux` | Real KQL engine. ADX, not Log Analytics: a function that exists only in Log Analytics fails here, visibly. Tables are created from `schemas/reference/sentinel/`; the Entra tables with Microsoft's published column types. |
 | SPL (Splunk) | Splunk Enterprise in Docker (`splunk/splunk`, local trial licence) | Real Splunk search. The Windows add-on is not installed (Splunkbase needs a login); `harness/engines.py` installs a minimal XmlWinEventLog extraction instead. |
 | YARA-L (SecOps) | none | No YARA-L engine exists outside a SecOps tenant. Not run; evidence says so. |
 
@@ -25,7 +29,9 @@ The output is `tests/results/<engine>.json` in the rule folder, and
 1. `python -m harness fetch` downloads each dataset in
    `harness/datasets.yaml` from GitHub at a pinned commit, checks its
    SHA-256, and extracts the JSON into `data/datasets/` (gitignored).
-   Zip members are written by base name only.
+   Zip members, and plain files, are written by base name only. Splunk
+   attack_data files are in Git LFS and come from
+   `media.githubusercontent.com`.
 2. `harness/mapping.py` rebuilds each recorded event in the shape the
    SIEM stores it:
    - Security channel -> a `SecurityEvent` row (EventData fields become
@@ -33,7 +39,15 @@ The output is `tests/results/<engine>.json` in the rule folder, and
    - Sysmon and other channels -> an `Event` row with `EventData` XML in
      the shape Microsoft's Sysmon parser reads;
    - for Splunk -> Windows event XML, sent through HEC with
-     `sourcetype=XmlWinEventLog` and `source=XmlWinEventLog:<channel>`.
+     `sourcetype=XmlWinEventLog` and `source=XmlWinEventLog:<channel>`;
+   - Entra ID records in the Azure Monitor diagnostic format (Splunk
+     attack_data) -> `AuditLogs`, `SigninLogs` or
+     `AADNonInteractiveUserSignInLogs` by `category`, with each
+     camelCase property mapped to the column of the same name (a few
+     renames, listed in the module); categories with no table here
+     (service principal sign-ins, Graph activity) are counted and not
+     loaded;
+   - OTRF's Sentinel `AuditLogs` export -> `AuditLogs` as exported.
    Field values are copied unchanged. What the mapping approximates is
    listed in its docstring.
 3. `python -m harness run --engine kusto|splunk [--rule A1] [--write]`
@@ -54,6 +68,11 @@ The output is `tests/results/<engine>.json` in the rule folder, and
   including the host's own background. That background is what found
   the tuning problems documented in each rule (`ClipRenew.exe -e`,
   Defender writing a Run key, `reg export HKLM\SYSTEM\...`).
+- The recorded Entra records did the same for the identity rules: the
+  credential operation name ends in an en dash and a trailing space
+  (an exact `==` would never match), one consent writes two events
+  with one correlation id (one alert, not two), and the
+  non-interactive sign-in table stores `LocationDetails` as a string.
 - Samples and datasets together: the samples cover branches the data
   does not (no recorded certutil or curl download exists in these
   datasets), and their provenance label says which is which.
@@ -81,6 +100,11 @@ The output is `tests/results/<engine>.json` in the rule folder, and
   summarising tool; recorded fields with no matching column are dropped
   on load and listed in the result file.
 - YARA-L is not run at all.
+- Entra data is a few lab tenants' worth of records (87 audit and
+  sign-in records for B1/B2, 127 for B3), not a production directory.
+  Splunk replaced tenant ids, user names and IPs in its datasets, so IP
+  and country values are Splunk's replacements. No recorded sign-in
+  here has a `SessionId`, so B3 is tested on hand-written samples only.
 - The Splunk run is local only, not in CI: it needs a several-GB image
   and a licence acceptance.
 
@@ -108,9 +132,9 @@ other than localhost. Settings: `DAC_KUSTO_URL` (default
 `https://localhost:8088`), `DAC_SPLUNK_USER` (default `admin`).
 
 ## Adding a dataset or a rule
-- Dataset: add it to `harness/datasets.yaml` with commit, path,
-  SHA-256 and licence. Only datasets whose licence allows reuse; OTRF
-  is MIT. A dataset with no licence file (for example
+- Dataset: add it to `harness/datasets.yaml` with `source`, commit,
+  path, SHA-256 and licence. Only datasets whose licence allows reuse;
+  OTRF is MIT, Splunk attack_data is Apache 2.0. A dataset with no licence file (for example
   EVTX-ATTACK-SAMPLES at the time of writing) is not used.
 - Rule: list dataset ids in `tests/datasets.yaml`, run with `--write`,
   then write `tests/evidence.md` from the result.

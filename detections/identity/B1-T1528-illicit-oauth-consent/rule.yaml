@@ -1,0 +1,55 @@
+id: 4d2ff9b2-ff26-4d71-aba1-4c66bdf24064
+name: Delegated OAuth consent or grant that includes mailbox, file or directory-write scopes
+version: 1
+status: test
+severity: Medium
+tier: baseline
+description: >
+  A user or admin consented to an application, or a delegated permission
+  grant was added directly, and the granted scopes include one of a
+  short list of high-risk delegated permissions (mail, files, sites,
+  notes, contacts, directory write). This is the step of an illicit
+  consent grant that gives the attacker's app a token for the user's data.
+log_sources: [entra-audit]
+mapping:
+  attack:
+    techniques: [T1528]
+    tactics: [credential-access]
+
+# Sentinel only (Scope, CLAUDE.md): the Entra tables exist in Sentinel.
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    AuditLogs: [TimeGenerated, OperationName, Result, TargetResources, InitiatedBy, CorrelationId]
+  query: |
+    let HighRiskScopes = dynamic(["mail.read", "mail.readwrite", "mail.send", "mail.read.shared", "mail.readwrite.shared", "mail.send.shared", "mailboxsettings.readwrite", "ews.accessasuser.all", "full_access_as_user", "files.read.all", "files.readwrite.all", "sites.read.all", "sites.readwrite.all", "notes.read.all", "notes.readwrite.all", "contacts.read", "contacts.readwrite", "user.readwrite.all", "directory.readwrite.all", "directory.accessasuser.all", "application.readwrite.all", "approleassignment.readwrite.all", "rolemanagement.readwrite.directory"]);
+    AuditLogs
+    | where OperationName in~ ("Consent to application", "Add delegated permission grant")
+    | where Result =~ "success"
+    | mv-apply Target = TargetResources on (
+        mv-apply Prop = Target.modifiedProperties on (
+            summarize Props = make_bag(bag_pack(tostring(Prop.displayName), trim(@'"', tostring(Prop.newValue))))
+        )
+        | extend TargetName = tostring(Target.displayName)
+    )
+    | extend Granted = coalesce(tostring(Props["ConsentAction.Permissions"]), tostring(Props["DelegatedPermissionGrant.Scope"]))
+    | where isnotempty(Granted)
+    // ConsentAction.Permissions reads "<old grants> => [[..., ConsentType: X, Scope: a b c, ...]]":
+    // keep the new grants. DelegatedPermissionGrant.Scope is the scope list itself.
+    | extend NewGrants = iff(Granted has "=>", substring(Granted, indexof(Granted, "=>") + 2), Granted)
+    | extend ScopeText = iff(NewGrants has "Scope:", strcat_array(extract_all(@"Scope: ([^,\]]*)", NewGrants), " "), NewGrants)
+    | extend RiskyScopes = set_intersect(split(tolower(trim(" ", ScopeText)), " "), HighRiskScopes)
+    | where array_length(RiskyScopes) > 0
+    | extend ConsentType = coalesce(extract(@"ConsentType: (\w+)", 1, NewGrants), tostring(Props["DelegatedPermissionGrant.ConsentType"]))
+    | summarize TimeGenerated = min(TimeGenerated),
+                Operations = make_set(OperationName),
+                Targets = make_set(TargetName),
+                RiskyScopes = make_set(RiskyScopes),
+                ConsentTypes = make_set_if(ConsentType, isnotempty(ConsentType)),
+                AdminConsent = take_anyif(tostring(Props["ConsentContext.IsAdminConsent"]), isnotempty(Props["ConsentContext.IsAdminConsent"])),
+                InitiatedByUser = take_any(tostring(InitiatedBy.user.userPrincipalName)),
+                InitiatedByApp = take_any(tostring(InitiatedBy.app.displayName)),
+                InitiatedFromIP = take_any(tostring(InitiatedBy.user.ipAddress))
+        by CorrelationId
+    | project TimeGenerated, InitiatedByUser, InitiatedByApp, InitiatedFromIP, Targets, RiskyScopes, ConsentTypes, AdminConsent, Operations, CorrelationId

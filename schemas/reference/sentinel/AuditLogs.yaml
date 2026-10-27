@@ -1,0 +1,73 @@
+# Reference schema for the AuditLogs table, with column types. See docs/components/schema-check.md.
+# Column names and types are copied from Microsoft's Azure-Sentinel repository
+# (Sample Data/Tables/AuditLogs/metadata.json, "schemaSource": "Microsoft public table schema"),
+# not from a live workspace. The harness creates the Kusto test table from `types`.
+name: AuditLogs
+siem: sentinel
+source_url: https://github.com/Azure/Azure-Sentinel/blob/c34840b2688830563130d6dd36e0130d0f672a62/Sample%20Data/Tables/AuditLogs/metadata.json
+vendor_page: https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/auditlogs
+fetched_on: '2026-10-27'
+provenance: Microsoft Azure-Sentinel repo (MIT) at commit c34840b, file read directly with git (not summarised);
+  30 columns.
+fields:
+- AADOperationType
+- AADTenantId
+- ActivityDateTime
+- ActivityDisplayName
+- AdditionalDetails
+- Category
+- CorrelationId
+- DurationMs
+- Id
+- Identity
+- InitiatedBy
+- Level
+- Location
+- LoggedByService
+- OperationName
+- OperationVersion
+- Resource
+- ResourceGroup
+- ResourceId
+- ResourceProvider
+- Result
+- ResultDescription
+- ResultReason
+- ResultSignature
+- ResultType
+- SourceSystem
+- TargetResources
+- TenantId
+- TimeGenerated
+- Type
+types:
+  AADOperationType: string
+  AADTenantId: string
+  ActivityDateTime: datetime
+  ActivityDisplayName: string
+  AdditionalDetails: dynamic
+  Category: string
+  CorrelationId: string
+  DurationMs: long
+  Id: string
+  Identity: string
+  InitiatedBy: dynamic
+  Level: string
+  Location: string
+  LoggedByService: string
+  OperationName: string
+  OperationVersion: string
+  Resource: string
+  ResourceGroup: string
+  ResourceId: string
+  ResourceProvider: string
+  Result: string
+  ResultDescription: string
+  ResultReason: string
+  ResultSignature: string
+  ResultType: string
+  SourceSystem: string
+  TargetResources: dynamic
+  TenantId: string
+  TimeGenerated: datetime
+  Type: string

@@ -1,0 +1,421 @@
+[
+  {
+    "_provenance": "recorded:Splunk attack_data datasets/attack_techniques/T1528/azure_ad_user_consent_granted/azure_ad_user_consent_granted.log line 6 @ b52ee68",
+    "_case": "user-consent-365-stealer",
+    "time": "2023-10-27T19:03:15.2602322Z",
+    "resourceId": "/tenants/75243ab2-44f8-435c-a7a6-b479385df6d4/providers/Microsoft.aadiam",
+    "operationName": "Consent to application",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "75243ab2-44f8-435c-a7a6-b479385df6d4",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "20.55.51.211",
+    "correlationId": "e8f24ab7-b587-4a94-91f3-cb186133856d",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_e8f24ab7-b587-4a94-91f3-cb186133856d_IIML5_335468643",
+      "category": "ApplicationManagement",
+      "correlationId": "e8f24ab7-b587-4a94-91f3-cb186133856d",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Consent to application",
+      "activityDateTime": "2023-10-27T19:03:15.2602322+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Assign",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "57e4bd36-9722-4a4a-9729-7203d8e00b72",
+          "displayName": null,
+          "userPrincipalName": "user15@splunkresearch.onmicrosoft.com",
+          "ipAddress": "20.55.51.211",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "295afd33-03e9-4d61-a023-ebf08ab0d5ce",
+          "displayName": "Bad App 1",
+          "type": "ServicePrincipal",
+          "modifiedProperties": [
+            {
+              "displayName": "ConsentContext.IsAdminConsent",
+              "oldValue": null,
+              "newValue": "\"False\""
+            },
+            {
+              "displayName": "ConsentContext.IsAppOnly",
+              "oldValue": null,
+              "newValue": "\"False\""
+            },
+            {
+              "displayName": "ConsentContext.OnBehalfOfAll",
+              "oldValue": null,
+              "newValue": "\"False\""
+            },
+            {
+              "displayName": "ConsentContext.Tags",
+              "oldValue": null,
+              "newValue": "\"WindowsAzureActiveDirectoryIntegratedApp\""
+            },
+            {
+              "displayName": "ConsentAction.Permissions",
+              "oldValue": null,
+              "newValue": "\"[] => [[Id: AAAAAAAAAAAAAAAAAAAAALSZcc5Sj_NGtUtP2B3pYeI2veRXIpdKSpcpcgPY4Aty, ClientId: 00000000-0000-0000-0000-000000000000, PrincipalId: 57e4bd36-9722-4a4a-9729-7203d8e00b72, ResourceId: ce7199b4-8f52-46f3-b54b-4fd81de961e2, ConsentType: Principal, Scope: Mail.Read Mail.Read.Shared Mail.ReadBasic Mail.ReadBasic.Shared Mail.ReadWrite Mail.ReadWrite.Shared Mail.Send Mail.Send.Shared User.Read, CreatedDateTime: , LastModifiedDateTime ]]; \""
+            },
+            {
+              "displayName": "TargetId.ServicePrincipalNames",
+              "oldValue": null,
+              "newValue": "\"96f6a3d6-d5aa-4af5-a77a-9319b5283712\""
+            }
+          ],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "EvoSTS"
+        },
+        {
+          "key": "AppId",
+          "value": "96f6a3d6-d5aa-4af5-a77a-9319b5283712"
+        }
+      ]
+    }
+  },
+  {
+    "_provenance": "recorded:Splunk attack_data datasets/attack_techniques/T1528/azure_ad_user_consent_granted/azure_ad_user_consent_granted.log line 8 @ b52ee68",
+    "_case": "user-consent-365-stealer",
+    "time": "2023-10-27T19:03:15.0822242Z",
+    "resourceId": "/tenants/75243ab2-44f8-435c-a7a6-b479385df6d4/providers/Microsoft.aadiam",
+    "operationName": "Add delegated permission grant",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "75243ab2-44f8-435c-a7a6-b479385df6d4",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "20.55.51.211",
+    "correlationId": "e8f24ab7-b587-4a94-91f3-cb186133856d",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_e8f24ab7-b587-4a94-91f3-cb186133856d_IIML5_335467814",
+      "category": "ApplicationManagement",
+      "correlationId": "e8f24ab7-b587-4a94-91f3-cb186133856d",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Add delegated permission grant",
+      "activityDateTime": "2023-10-27T19:03:15.0822242+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Assign",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "57e4bd36-9722-4a4a-9729-7203d8e00b72",
+          "displayName": null,
+          "userPrincipalName": "user15@splunkresearch.onmicrosoft.com",
+          "ipAddress": "20.55.51.211",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "ce7199b4-8f52-46f3-b54b-4fd81de961e2",
+          "displayName": "Microsoft Graph",
+          "type": "ServicePrincipal",
+          "modifiedProperties": [
+            {
+              "displayName": "DelegatedPermissionGrant.Scope",
+              "oldValue": null,
+              "newValue": "\"Mail.Read Mail.Read.Shared Mail.ReadBasic Mail.ReadBasic.Shared Mail.ReadWrite Mail.ReadWrite.Shared Mail.Send Mail.Send.Shared User.Read\""
+            },
+            {
+              "displayName": "DelegatedPermissionGrant.ConsentType",
+              "oldValue": null,
+              "newValue": "\"Principal\""
+            },
+            {
+              "displayName": "ServicePrincipal.ObjectID",
+              "oldValue": null,
+              "newValue": "\"295afd33-03e9-4d61-a023-ebf08ab0d5ce\""
+            },
+            {
+              "displayName": "ServicePrincipal.DisplayName",
+              "oldValue": null,
+              "newValue": null
+            },
+            {
+              "displayName": "ServicePrincipal.AppId",
+              "oldValue": null,
+              "newValue": null
+            },
+            {
+              "displayName": "ServicePrincipal.Name",
+              "oldValue": null,
+              "newValue": null
+            },
+            {
+              "displayName": "TargetId.ServicePrincipalNames",
+              "oldValue": null,
+              "newValue": "\"00000003-0000-0000-c000-000000000000;00000003-0000-0000-c000-000000000000/ags.windows.net;https://ags.windows.net;https://graph.microsoft.com;https://canary.graph.microsoft.com;https://graph.microsoft.us;https://graph.microsoft.com/;https://dod-graph.microsoft.us;https://dod-graph.microsoft.us/;https://graph.microsoft.us/;https://canary.graph.microsoft.com/\""
+            }
+          ],
+          "administrativeUnits": []
+        },
+        {
+          "id": "295afd33-03e9-4d61-a023-ebf08ab0d5ce",
+          "displayName": null,
+          "type": "ServicePrincipal",
+          "modifiedProperties": [],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "EvoSTS"
+        },
+        {
+          "key": "AppId",
+          "value": "00000003-0000-0000-c000-000000000000"
+        }
+      ]
+    }
+  },
+  {
+    "_provenance": "recorded:OTRF Security-Datasets datasets/compound/GoldenSAMLADFSMailAccess/AADAuditEvents.Zip line 4 @ d9d40ef",
+    "TenantId": "00000000-0000-0000-0000-000000000000",
+    "SourceSystem": "Azure AD",
+    "TimeGenerated": "2021-08-02T13:27:20.017Z",
+    "ResourceId": "/tenants/00000000-0000-0000-0000-000000000000/providers/Microsoft.aadiam",
+    "OperationName": "Add delegated permission grant",
+    "OperationVersion": "1.0",
+    "Category": "ApplicationManagement",
+    "ResultSignature": "None",
+    "CorrelationId": "630d7f0c-acc4-4596-85ab-7e5d839b4291",
+    "Resource": "Microsoft.aadiam",
+    "ResourceGroup": "Microsoft.aadiam",
+    "Level": "4",
+    "AdditionalDetails": "[{\"key\":\"User-Agent\",\"value\":\"Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.17763.1971\"}]",
+    "Id": "Directory_630d7f0c-acc4-4596-85ab-7e5d839b4291_9VRQI_37762000",
+    "InitiatedBy": "{\"user\":{\"id\":\"aead923d-498b-4f64-a66c-2af91447a8b6\",\"displayName\":null,\"userPrincipalName\":\"pgustavo@simulandlabs.com\",\"ipAddress\":null,\"roles\":[]}}",
+    "LoggedByService": "Core Directory",
+    "Result": "success",
+    "TargetResources": "[{\"id\":\"401dd906-ea4f-4d41-b762-7e936d222368\",\"displayName\":\"Microsoft Graph\",\"type\":\"ServicePrincipal\",\"modifiedProperties\":[{\"displayName\":\"DelegatedPermissionGrant.Scope\",\"oldValue\":\"\\\"User.Read\\\"\",\"newValue\":\"\\\"User.Read Mail.ReadWrite\\\"\"},{\"displayName\":\"DelegatedPermissionGrant.ConsentType\",\"oldValue\":\"\\\"AllPrincipals\\\"\",\"newValue\":\"\\\"AllPrincipals\\\"\"},{\"displayName\":\"ServicePrincipal.ObjectID\",\"oldValue\":null,\"newValue\":\"\\\"0d2f5969-011b-460d-ac74-3291d227d49f\\\"\"},{\"displayName\":\"ServicePrincipal.DisplayName\",\"oldValue\":null,\"newValue\":null},{\"displayName\":\"ServicePrincipal.AppId\",\"oldValue\":null,\"newValue\":null},{\"displayName\":\"ServicePrincipal.Name\",\"oldValue\":null,\"newValue\":null},{\"displayName\":\"TargetId.ServicePrincipalNames\",\"oldValue\":null,\"newValue\":\"\\\"00000003-0000-0000-c000-000000000000/ags.windows.net;00000003-0000-0000-c000-000000000000;https://canary.graph.microsoft.com;https://graph.microsoft.com;https://ags.windows.net;https://graph.microsoft.us;https://graph.microsoft.com/;https://dod-graph.microsoft.us;https://canary.graph.microsoft.com/;https://graph.microsoft.us/;https://dod-graph.microsoft.us/\\\"\"}],\"administrativeUnits\":[]},{\"id\":\"0d2f5969-011b-460d-ac74-3291d227d49f\",\"displayName\":null,\"type\":\"ServicePrincipal\",\"modifiedProperties\":[],\"administrativeUnits\":[]}]",
+    "AADTenantId": "00000000-0000-0000-0000-000000000000",
+    "ActivityDisplayName": "Add delegated permission grant",
+    "ActivityDateTime": "2021-08-02T13:27:20.017Z",
+    "AADOperationType": "Assign",
+    "Type": "ServicePrincipal",
+    "UserAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.17763.1971",
+    "InitiatingUser": "pgustavo@simulandlabs.com",
+    "DisplayName": "DelegatedPermissionGrant.Scope",
+    "Permissions": "User.Read Mail.ReadWrite",
+    "PermissionsAddedTo": "Microsoft Graph"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "admin consent for all users to Files.ReadWrite.All + offline_access: ConsentContext.IsAdminConsent and OnBehalfOfAll set to True, ConsentType AllPrincipals, scope changed, new correlation id",
+    "time": "2023-10-27T19:03:15.2602322Z",
+    "resourceId": "/tenants/75243ab2-44f8-435c-a7a6-b479385df6d4/providers/Microsoft.aadiam",
+    "operationName": "Consent to application",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "75243ab2-44f8-435c-a7a6-b479385df6d4",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "20.55.51.211",
+    "correlationId": "8db54381-cd03-54c8-9970-e61fbaaefe6b",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_8db54381-cd03-54c8-9970-e61fbaaefe6b_SAMPLE",
+      "category": "ApplicationManagement",
+      "correlationId": "8db54381-cd03-54c8-9970-e61fbaaefe6b",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Consent to application",
+      "activityDateTime": "2023-10-27T19:03:15.2602322+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Assign",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "57e4bd36-9722-4a4a-9729-7203d8e00b72",
+          "displayName": null,
+          "userPrincipalName": "user15@splunkresearch.onmicrosoft.com",
+          "ipAddress": "20.55.51.211",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "295afd33-03e9-4d61-a023-ebf08ab0d5ce",
+          "displayName": "Bad App 1",
+          "type": "ServicePrincipal",
+          "modifiedProperties": [
+            {
+              "displayName": "ConsentContext.IsAdminConsent",
+              "oldValue": null,
+              "newValue": "\"True\""
+            },
+            {
+              "displayName": "ConsentContext.IsAppOnly",
+              "oldValue": null,
+              "newValue": "\"False\""
+            },
+            {
+              "displayName": "ConsentContext.OnBehalfOfAll",
+              "oldValue": null,
+              "newValue": "\"True\""
+            },
+            {
+              "displayName": "ConsentContext.Tags",
+              "oldValue": null,
+              "newValue": "\"WindowsAzureActiveDirectoryIntegratedApp\""
+            },
+            {
+              "displayName": "ConsentAction.Permissions",
+              "oldValue": null,
+              "newValue": "\"[] => [[Id: AAAAAAAAAAAAAAAAAAAAALSZcc5Sj_NGtUtP2B3pYeI2veRXIpdKSpcpcgPY4Aty, ClientId: 00000000-0000-0000-0000-000000000000, PrincipalId: 57e4bd36-9722-4a4a-9729-7203d8e00b72, ResourceId: ce7199b4-8f52-46f3-b54b-4fd81de961e2, ConsentType: AllPrincipals, Scope: Files.ReadWrite.All offline_access User.Read, CreatedDateTime: , LastModifiedDateTime ]]; \""
+            },
+            {
+              "displayName": "TargetId.ServicePrincipalNames",
+              "oldValue": null,
+              "newValue": "\"96f6a3d6-d5aa-4af5-a77a-9319b5283712\""
+            }
+          ],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "EvoSTS"
+        },
+        {
+          "key": "AppId",
+          "value": "96f6a3d6-d5aa-4af5-a77a-9319b5283712"
+        }
+      ]
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-consent that adds Mail.Send to an existing User.Read grant: the old grant is before '=>' and the new grant after it; new correlation id",
+    "time": "2023-10-27T19:03:15.2602322Z",
+    "resourceId": "/tenants/75243ab2-44f8-435c-a7a6-b479385df6d4/providers/Microsoft.aadiam",
+    "operationName": "Consent to application",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "75243ab2-44f8-435c-a7a6-b479385df6d4",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "20.55.51.211",
+    "correlationId": "ac25ab5e-cc37-5988-813e-b78bf633c5c4",
+    "Level": 4,
+    "properties": {
+      "id": "Directory_ac25ab5e-cc37-5988-813e-b78bf633c5c4_SAMPLE",
+      "category": "ApplicationManagement",
+      "correlationId": "ac25ab5e-cc37-5988-813e-b78bf633c5c4",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Consent to application",
+      "activityDateTime": "2023-10-27T19:03:15.2602322+00:00",
+      "loggedByService": "Core Directory",
+      "operationType": "Assign",
+      "userAgent": null,
+      "initiatedBy": {
+        "user": {
+          "id": "57e4bd36-9722-4a4a-9729-7203d8e00b72",
+          "displayName": null,
+          "userPrincipalName": "user15@splunkresearch.onmicrosoft.com",
+          "ipAddress": "20.55.51.211",
+          "roles": []
+        }
+      },
+      "targetResources": [
+        {
+          "id": "295afd33-03e9-4d61-a023-ebf08ab0d5ce",
+          "displayName": "Bad App 1",
+          "type": "ServicePrincipal",
+          "modifiedProperties": [
+            {
+              "displayName": "ConsentContext.IsAdminConsent",
+              "oldValue": null,
+              "newValue": "\"False\""
+            },
+            {
+              "displayName": "ConsentContext.IsAppOnly",
+              "oldValue": null,
+              "newValue": "\"False\""
+            },
+            {
+              "displayName": "ConsentContext.OnBehalfOfAll",
+              "oldValue": null,
+              "newValue": "\"False\""
+            },
+            {
+              "displayName": "ConsentContext.Tags",
+              "oldValue": null,
+              "newValue": "\"WindowsAzureActiveDirectoryIntegratedApp\""
+            },
+            {
+              "displayName": "ConsentAction.Permissions",
+              "oldValue": null,
+              "newValue": "\"[[Id: AAAAAAAAAAAAAAAAAAAAALSZcc5Sj_NGtUtP2B3pYeI2veRXIpdKSpcpcgPY4Aty, ClientId: 00000000-0000-0000-0000-000000000000, PrincipalId: 57e4bd36-9722-4a4a-9729-7203d8e00b72, ResourceId: ce7199b4-8f52-46f3-b54b-4fd81de961e2, ConsentType: Principal, Scope: User.Read, CreatedDateTime: , LastModifiedDateTime ]] => [[Id: AAAAAAAAAAAAAAAAAAAAALSZcc5Sj_NGtUtP2B3pYeI2veRXIpdKSpcpcgPY4Aty, ClientId: 00000000-0000-0000-0000-000000000000, PrincipalId: 57e4bd36-9722-4a4a-9729-7203d8e00b72, ResourceId: ce7199b4-8f52-46f3-b54b-4fd81de961e2, ConsentType: Principal, Scope: User.Read Mail.Send, CreatedDateTime: , LastModifiedDateTime ]]; \""
+            },
+            {
+              "displayName": "TargetId.ServicePrincipalNames",
+              "oldValue": null,
+              "newValue": "\"96f6a3d6-d5aa-4af5-a77a-9319b5283712\""
+            }
+          ],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "EvoSTS"
+        },
+        {
+          "key": "AppId",
+          "value": "96f6a3d6-d5aa-4af5-a77a-9319b5283712"
+        }
+      ]
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "direct delegated grant (no consent prompt) whose scope is written in lower case (mail.read); scope matching is case-insensitive; new correlation id",
+    "TenantId": "00000000-0000-0000-0000-000000000000",
+    "SourceSystem": "Azure AD",
+    "TimeGenerated": "2021-08-02T13:27:20.017Z",
+    "ResourceId": "/tenants/00000000-0000-0000-0000-000000000000/providers/Microsoft.aadiam",
+    "OperationName": "Add delegated permission grant",
+    "OperationVersion": "1.0",
+    "Category": "ApplicationManagement",
+    "ResultSignature": "None",
+    "CorrelationId": "b7e993c5-46a2-5849-83f2-bf5491e393ec",
+    "Resource": "Microsoft.aadiam",
+    "ResourceGroup": "Microsoft.aadiam",
+    "Level": "4",
+    "AdditionalDetails": "[{\"key\":\"User-Agent\",\"value\":\"Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.17763.1971\"}]",
+    "Id": "Directory_630d7f0c-acc4-4596-85ab-7e5d839b4291_9VRQI_37762000",
+    "InitiatedBy": "{\"user\":{\"id\":\"aead923d-498b-4f64-a66c-2af91447a8b6\",\"displayName\":null,\"userPrincipalName\":\"pgustavo@simulandlabs.com\",\"ipAddress\":null,\"roles\":[]}}",
+    "LoggedByService": "Core Directory",
+    "Result": "success",
+    "TargetResources": "[{\"id\": \"401dd906-ea4f-4d41-b762-7e936d222368\", \"displayName\": \"Microsoft Graph\", \"type\": \"ServicePrincipal\", \"modifiedProperties\": [{\"displayName\": \"DelegatedPermissionGrant.Scope\", \"oldValue\": \"\\\"User.Read\\\"\", \"newValue\": \"\\\"User.Read mail.read\\\"\"}, {\"displayName\": \"DelegatedPermissionGrant.ConsentType\", \"oldValue\": \"\\\"AllPrincipals\\\"\", \"newValue\": \"\\\"AllPrincipals\\\"\"}, {\"displayName\": \"ServicePrincipal.ObjectID\", \"oldValue\": null, \"newValue\": \"\\\"0d2f5969-011b-460d-ac74-3291d227d49f\\\"\"}, {\"displayName\": \"ServicePrincipal.DisplayName\", \"oldValue\": null, \"newValue\": null}, {\"displayName\": \"ServicePrincipal.AppId\", \"oldValue\": null, \"newValue\": null}, {\"displayName\": \"ServicePrincipal.Name\", \"oldValue\": null, \"newValue\": null}, {\"displayName\": \"TargetId.ServicePrincipalNames\", \"oldValue\": null, \"newValue\": \"\\\"00000003-0000-0000-c000-000000000000/ags.windows.net;00000003-0000-0000-c000-000000000000;https://canary.graph.microsoft.com;https://graph.microsoft.com;https://ags.windows.net;https://graph.microsoft.us;https://graph.microsoft.com/;https://dod-graph.microsoft.us;https://canary.graph.microsoft.com/;https://graph.microsoft.us/;https://dod-graph.microsoft.us/\\\"\"}], \"administrativeUnits\": []}, {\"id\": \"0d2f5969-011b-460d-ac74-3291d227d49f\", \"displayName\": null, \"type\": \"ServicePrincipal\", \"modifiedProperties\": [], \"administrativeUnits\": []}]",
+    "AADTenantId": "00000000-0000-0000-0000-000000000000",
+    "ActivityDisplayName": "Add delegated permission grant",
+    "ActivityDateTime": "2021-08-02T13:27:20.017Z",
+    "AADOperationType": "Assign",
+    "Type": "ServicePrincipal",
+    "UserAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.17763.1971",
+    "InitiatingUser": "pgustavo@simulandlabs.com",
+    "DisplayName": "DelegatedPermissionGrant.Scope",
+    "Permissions": "User.Read Mail.ReadWrite",
+    "PermissionsAddedTo": "Microsoft Graph"
+  }
+]

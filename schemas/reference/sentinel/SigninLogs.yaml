@@ -1,0 +1,201 @@
+# Reference schema for the SigninLogs table, with column types. See docs/components/schema-check.md.
+# Column names and types are copied from Microsoft's Azure-Sentinel repository
+# (Sample Data/Tables/SigninLogs/metadata.json, "schemaSource": "Microsoft public table schema"),
+# not from a live workspace. The harness creates the Kusto test table from `types`.
+name: SigninLogs
+siem: sentinel
+source_url: https://github.com/Azure/Azure-Sentinel/blob/c34840b2688830563130d6dd36e0130d0f672a62/Sample%20Data/Tables/SigninLogs/metadata.json
+vendor_page: https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/signinlogs
+fetched_on: '2026-10-27'
+provenance: Microsoft Azure-Sentinel repo (MIT) at commit c34840b, file read directly with git (not summarised);
+  94 columns.
+fields:
+- AADTenantId
+- Agent
+- AlternateSignInName
+- AppDisplayName
+- AppId
+- AppOwnerTenantId
+- AppliedConditionalAccessPolicies
+- AppliedEventListeners
+- AuthenticationAppDeviceDetails
+- AuthenticationAppPolicyEvaluationDetails
+- AuthenticationContextClassReferences
+- AuthenticationDetails
+- AuthenticationMethodsUsed
+- AuthenticationProcessingDetails
+- AuthenticationProtocol
+- AuthenticationRequirement
+- AuthenticationRequirementPolicies
+- AuthenticatorAppLocation
+- AutonomousSystemNumber
+- Category
+- ClientAppUsed
+- ClientCredentialType
+- ConditionalAccessAudiences
+- ConditionalAccessPolicies
+- ConditionalAccessStatus
+- CorrelationId
+- CreatedDateTime
+- CrossTenantAccessType
+- DeviceDetail
+- DurationMs
+- FederatedCredentialId
+- FlaggedForReview
+- GlobalSecureAccessIpAddress
+- HomeTenantId
+- HomeTenantName
+- IPAddress
+- IPAddressFromResourceProvider
+- Id
+- Identity
+- IncomingTokenType
+- IsInteractive
+- IsRisky
+- IsTenantRestricted
+- IsThroughGlobalSecureAccess
+- Level
+- Location
+- LocationDetails
+- MfaDetail
+- NetworkLocationDetails
+- OperationName
+- OperationVersion
+- OriginalRequestId
+- OriginalTransferMethod
+- ProcessingTimeInMilliseconds
+- Resource
+- ResourceDisplayName
+- ResourceGroup
+- ResourceId
+- ResourceIdentity
+- ResourceOwnerTenantId
+- ResourceProvider
+- ResourceServicePrincipalId
+- ResourceTenantId
+- ResultDescription
+- ResultSignature
+- ResultType
+- RiskDetail
+- RiskEventTypes
+- RiskEventTypes_V2
+- RiskLevel
+- RiskLevelAggregated
+- RiskLevelDuringSignIn
+- RiskState
+- ServicePrincipalId
+- ServicePrincipalName
+- SessionId
+- SessionLifetimePolicies
+- SignInIdentifier
+- SignInIdentifierType
+- SourceAppClientId
+- SourceSystem
+- Status
+- TenantId
+- TimeGenerated
+- TokenIssuerName
+- TokenIssuerType
+- TokenProtectionStatusDetails
+- Type
+- UniqueTokenIdentifier
+- UserAgent
+- UserDisplayName
+- UserId
+- UserPrincipalName
+- UserType
+types:
+  AADTenantId: string
+  Agent: dynamic
+  AlternateSignInName: string
+  AppDisplayName: string
+  AppId: string
+  AppOwnerTenantId: string
+  AppliedConditionalAccessPolicies: string
+  AppliedEventListeners: dynamic
+  AuthenticationAppDeviceDetails: string
+  AuthenticationAppPolicyEvaluationDetails: string
+  AuthenticationContextClassReferences: string
+  AuthenticationDetails: string
+  AuthenticationMethodsUsed: string
+  AuthenticationProcessingDetails: string
+  AuthenticationProtocol: string
+  AuthenticationRequirement: string
+  AuthenticationRequirementPolicies: string
+  AuthenticatorAppLocation: string
+  AutonomousSystemNumber: string
+  Category: string
+  ClientAppUsed: string
+  ClientCredentialType: string
+  ConditionalAccessAudiences: string
+  ConditionalAccessPolicies: dynamic
+  ConditionalAccessStatus: string
+  CorrelationId: string
+  CreatedDateTime: datetime
+  CrossTenantAccessType: string
+  DeviceDetail: dynamic
+  DurationMs: long
+  FederatedCredentialId: string
+  FlaggedForReview: bool
+  GlobalSecureAccessIpAddress: string
+  HomeTenantId: string
+  HomeTenantName: string
+  IPAddress: string
+  IPAddressFromResourceProvider: string
+  Id: string
+  Identity: string
+  IncomingTokenType: string
+  IsInteractive: bool
+  IsRisky: bool
+  IsTenantRestricted: bool
+  IsThroughGlobalSecureAccess: bool
+  Level: string
+  Location: string
+  LocationDetails: dynamic
+  MfaDetail: dynamic
+  NetworkLocationDetails: string
+  OperationName: string
+  OperationVersion: string
+  OriginalRequestId: string
+  OriginalTransferMethod: string
+  ProcessingTimeInMilliseconds: string
+  Resource: string
+  ResourceDisplayName: string
+  ResourceGroup: string
+  ResourceId: string
+  ResourceIdentity: string
+  ResourceOwnerTenantId: string
+  ResourceProvider: string
+  ResourceServicePrincipalId: string
+  ResourceTenantId: string
+  ResultDescription: string
+  ResultSignature: string
+  ResultType: string
+  RiskDetail: string
+  RiskEventTypes: string
+  RiskEventTypes_V2: string
+  RiskLevel: string
+  RiskLevelAggregated: string
+  RiskLevelDuringSignIn: string
+  RiskState: string
+  ServicePrincipalId: string
+  ServicePrincipalName: string
+  SessionId: string
+  SessionLifetimePolicies: string
+  SignInIdentifier: string
+  SignInIdentifierType: string
+  SourceAppClientId: string
+  SourceSystem: string
+  Status: dynamic
+  TenantId: string
+  TimeGenerated: datetime
+  TokenIssuerName: string
+  TokenIssuerType: string
+  TokenProtectionStatusDetails: dynamic
+  Type: string
+  UniqueTokenIdentifier: string
+  UserAgent: string
+  UserDisplayName: string
+  UserId: string
+  UserPrincipalName: string
+  UserType: string

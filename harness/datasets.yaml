@@ -10,8 +10,21 @@
 # fetched 2026-10-27). Events were collected by NXLog (im_msvistalog) from a
 # lab domain and flattened to JSON; see harness/mapping.py for how they are
 # turned back into each SIEM's shape.
+#
+# Splunk attack_data: Apache License 2.0
+# (https://github.com/splunk/attack_data/blob/master/LICENSE, fetched 2026-10-27).
+# Entra ID logs recorded in Splunk's "attack_range" lab tenant and exported
+# in the Azure Monitor diagnostic format (sourcetype azure:monitor:aad). Each
+# dataset's .yml says "Tenant specific details have been replaced in the
+# dataset including tenant id, user names, ips"; the IP addresses and names
+# are therefore Splunk's replacements, not the lab's. The files are stored in
+# Git LFS, so they are fetched from media.githubusercontent.com.
+#
+# `source` picks the URL (harness/__main__.py SOURCES); default otrf.
+# A path ending in .zip is extracted; any other file is saved as is.
 
 otrf-commit: &otrf d9d40ef123d2c87d5d3df28c96bcab4f0faccc87
+splunk-commit: &splunk b52ee687423a305c677ef9db42c1656e73cce210
 
 datasets:
   otrf-empire-launcher-vbs:
@@ -55,3 +68,84 @@ datasets:
     path: datasets/atomic/windows/defense_evasion/host/cmd_bitsadmin_download_psh_script.zip
     sha256: 8fb7bc9f3d82f672dc39a55e50006137aa540c4a9860acdcc5d08a4fd609b594
     license: MIT
+
+  # --- Entra ID (identity rules B1-B3) ---------------------------------------
+
+  otrf-goldensaml-aad-audit:
+    description: Sentinel AuditLogs export from OTRF's simulated Golden SAML intrusion (SimuLand); a secret added to an app, a Graph permission added to its manifest, and a tenant-wide delegated grant (Mail.ReadWrite).
+    commit: *otrf
+    path: datasets/compound/GoldenSAMLADFSMailAccess/AADAuditEvents.Zip
+    sha256: c45f9b67de7ac1eede1e0f37d7448aadf76e0f238bd4403df047cc164fc8ea02
+    license: MIT
+
+  splunk-aad-consent-granted:
+    description: 365-stealer consent grant attack; a user consents to a multi-tenant app asking for Mail.* scopes ("Bad App 1"), plus the user's sign-ins.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1528/azure_ad_user_consent_granted/azure_ad_user_consent_granted.log
+    sha256: c246dccc71905891c49b06b0679c55fdcb25247eed513d6de5f45537e363aebb
+    license: Apache-2.0
+
+  splunk-aad-consent-declined:
+    description: The same app's consent prompt declined by the user; sign-ins only, no grant.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1528/azure_ad_user_consent_declined/azure_ad_user_consent_declined.log
+    sha256: f6f733aae61194210162e663c7c833b2e9dbc6efff48ab1680c1a9cb5e1c31ca
+    license: Apache-2.0
+
+  splunk-aad-consent-blocked:
+    description: The same consent blocked by Entra ("Risky application detected"); a failed Consent to application.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1528/azure_ad_user_consent_blocked/azure_ad_user_consent_blocked.log
+    sha256: 2ccc4ae07dd2f0f62da235dbc3edf6097ec2bdebd685049544c5cf4d7ea2ace6
+    license: Apache-2.0
+
+  splunk-aad-sp-credentials:
+    description: A client secret added to an application by hand (Update application - Certificates and secrets management).
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1098.001/azure_ad_service_principal_credentials/azure-audit.log
+    sha256: 0a6de8d20356feb056af2d90a17d82012348236f70b67b60a57f680016b7326e
+    license: Apache-2.0
+
+  splunk-aad-federated-credential:
+    description: A federated identity credential trusting an outside GitHub repository added to a service principal, plus one benign service principal rename.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1098.001/azure_ad_federated_identity_credential/azure-audit.log
+    sha256: 68a71da7b6ee2370fd29439c2590620061973f11f2938261b98e489017653425
+    license: Apache-2.0
+
+  splunk-aad-graph-perm-assigned:
+    description: A high-privilege Graph permission assigned to an app registration by hand (recorded as an Update application of its manifest), then the app's sign-ins and Graph calls (only the AuditLogs and user sign-in rows map to tables loaded here).
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1098.003/azure_ad_privileged_graph_perm_assigned/azure_ad_privileged_graph_perm_assigned.log
+    sha256: 5cf32a545e51a98ab5cf48be03ad3ad7b465c9ad65c6d48fb8349355134af696
+    license: Apache-2.0
+
+  splunk-aad-session-cookie-replay:
+    description: Evilginx2 phishes a user's session cookie, which is then imported into another browser and used from a different source IP; non-interactive sign-ins.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1185/azure_ad_concurrent_sessions_from_different_ips/azuread.log
+    sha256: e8dcbe04a2ee019a444a8242634c2eec2315a6cd29e2d464efe0300e238fc7d2
+    license: Apache-2.0
+
+  splunk-aad-success-different-ips:
+    description: One user signing in with a browser to the same account from two different IPs.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1110.001/azure_ad_successful_authentication_from_different_ips/azuread.log
+    sha256: 7de7bf2e60ee2746ab4cabfb714ffc42e7a1d839e7b5f33b2b0d07f228266a86
+    license: Apache-2.0
+
+  splunk-aad-multiple-appids-useragents:
+    description: Invoke-MfaSweep with a valid account; interactive sign-ins from several apps and user agents, interrupted by MFA.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1078/azure_ad_multiple_appids_and_useragents_auth/azure_ad_multiple_appids_and_useragents_auth.log
+    sha256: 58b05aa2bfa6af25b30c0ff84613450a3a42dfdab05455930ac48cec59e216f4
+    license: Apache-2.0

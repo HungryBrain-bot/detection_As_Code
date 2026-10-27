@@ -14,7 +14,7 @@ otherwise) and regenerates each customer's coverage.
 flowchart LR
     PR["Pull request"] --> V["validate<br/>yamllint · pytest ·<br/>dac validate + ATT&CK bundle"]
     PUSH["Push to main"] --> V
-    V --> K["engine-kusto<br/>KQL in the Kusto emulator ·<br/>samples + OTRF datasets"]
+    V --> K["engine-kusto<br/>KQL in the Kusto emulator ·<br/>samples + recorded datasets"]
     V --> C["customers<br/>customer x SIEM matrix"]
     C -- PR --> G["gate (per customer x SIEM)<br/>schema-check + gate, report-only"]
     C -- main --> D["deploy (per customer x SIEM)<br/>gate blocks · --mode auto"]

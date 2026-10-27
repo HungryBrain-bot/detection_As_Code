@@ -1,0 +1,92 @@
+{
+  "rule_id": "1e55b3f5-bb82-456e-ad3b-1624bfd66658",
+  "rule_version": 1,
+  "engine": "Kustainer (ADX engine) 1.0.9796.17726, product 2026.10.27.0942-2643-eb20c9c-master",
+  "date": "2026-10-27",
+  "samples": {
+    "positive_events": 4,
+    "positive_cases": 2,
+    "positive_rows": 2,
+    "negative_events": 6,
+    "negative_rows": 0
+  },
+  "datasets": [
+    {
+      "id": "splunk-aad-session-cookie-replay",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1185/azure_ad_concurrent_sessions_from_different_ips/azuread.log",
+      "sha256": "e8dcbe04a2ee019a444a8242634c2eec2315a6cd29e2d464efe0300e238fc7d2"
+    },
+    {
+      "id": "splunk-aad-success-different-ips",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1110.001/azure_ad_successful_authentication_from_different_ips/azuread.log",
+      "sha256": "7de7bf2e60ee2746ab4cabfb714ffc42e7a1d839e7b5f33b2b0d07f228266a86"
+    },
+    {
+      "id": "splunk-aad-multiple-appids-useragents",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1078/azure_ad_multiple_appids_and_useragents_auth/azure_ad_multiple_appids_and_useragents_auth.log",
+      "sha256": "58b05aa2bfa6af25b30c0ff84613450a3a42dfdab05455930ac48cec59e216f4"
+    },
+    {
+      "id": "splunk-aad-consent-granted",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1528/azure_ad_user_consent_granted/azure_ad_user_consent_granted.log",
+      "sha256": "c246dccc71905891c49b06b0679c55fdcb25247eed513d6de5f45537e363aebb"
+    },
+    {
+      "id": "splunk-aad-consent-declined",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1528/azure_ad_user_consent_declined/azure_ad_user_consent_declined.log",
+      "sha256": "f6f733aae61194210162e663c7c833b2e9dbc6efff48ab1680c1a9cb5e1c31ca"
+    },
+    {
+      "id": "splunk-aad-consent-blocked",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1528/azure_ad_user_consent_blocked/azure_ad_user_consent_blocked.log",
+      "sha256": "2ccc4ae07dd2f0f62da235dbc3edf6097ec2bdebd685049544c5cf4d7ea2ace6"
+    },
+    {
+      "id": "splunk-aad-graph-perm-assigned",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1098.003/azure_ad_privileged_graph_perm_assigned/azure_ad_privileged_graph_perm_assigned.log",
+      "sha256": "5cf32a545e51a98ab5cf48be03ad3ad7b465c9ad65c6d48fb8349355134af696"
+    }
+  ],
+  "dataset_events": 127,
+  "dataset_rows": 0,
+  "matched": [],
+  "columns_dropped_in_mapping": {
+    "AuditLogs": [
+      "callerIpAddress",
+      "userAgent"
+    ],
+    "SigninLogs": [
+      "appServicePrincipalId",
+      "authenticationStrengths",
+      "callerIpAddress",
+      "privateLinkDetails",
+      "rngcStatus",
+      "signInTokenProtectionStatus",
+      "ssoExtensionVersion"
+    ],
+    "AADNonInteractiveUserSignInLogs": [
+      "ResourceId",
+      "appServicePrincipalId",
+      "appliedConditionalAccessPolicies",
+      "authenticationStrengths",
+      "callerIpAddress",
+      "flaggedForReview",
+      "privateLinkDetails",
+      "processingTimeInMilliseconds",
+      "rngcStatus",
+      "signInTokenProtectionStatus",
+      "ssoExtensionVersion"
+    ],
+    "events_not_loaded": {
+      "MicrosoftGraphActivityLogs": 27,
+      "ServicePrincipalSignInLogs": 10
+    }
+  }
+}

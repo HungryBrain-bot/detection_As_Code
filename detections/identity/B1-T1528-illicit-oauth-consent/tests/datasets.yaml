@@ -1,0 +1,11 @@
+# Recorded datasets this rule is run against (ids from harness/datasets.yaml).
+# All Entra audit records available here; sign-in rows load into their own
+# tables and are background for this rule.
+datasets:
+  - splunk-aad-consent-granted
+  - splunk-aad-consent-declined
+  - splunk-aad-consent-blocked
+  - otrf-goldensaml-aad-audit
+  - splunk-aad-sp-credentials
+  - splunk-aad-federated-credential
+  - splunk-aad-graph-perm-assigned

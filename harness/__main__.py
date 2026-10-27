@@ -8,8 +8,10 @@ For each rule folder that has tests/datasets.yaml, `run` does two passes
 in the chosen engine:
 
 1. Samples: load tests/positive.json, run the rule's query, expect every
-   positive event to produce a row; then load tests/negative.json alone
-   and expect no rows.
+   positive case to produce a row; then load tests/negative.json alone
+   and expect no rows. A case is one event, or the events that share a
+   `_case` key: a rule that aggregates (one row per consent, per
+   session) needs several events for one row.
 2. Datasets: load every event of each dataset listed in
    tests/datasets.yaml (attack and background together), run the query,
    and record each row it returns.
@@ -28,6 +30,7 @@ import json
 import sys
 import urllib.request
 import zipfile
+from collections import Counter
 from datetime import date
 
 import yaml
@@ -38,7 +41,12 @@ from . import mapping
 from .engines import EngineError, KustoEngine, SplunkEngine, data_dir, epoch
 
 DATASETS_FILE = REPO_ROOT / "harness" / "datasets.yaml"
-RAW_URL = "https://raw.githubusercontent.com/OTRF/Security-Datasets/{commit}/{path}"
+SOURCES = {
+    "otrf": "https://raw.githubusercontent.com/OTRF/Security-Datasets/{commit}/{path}",
+    # attack_data keeps its logs in Git LFS; raw.githubusercontent.com serves the pointer.
+    "splunk-attack-data": "https://media.githubusercontent.com/media/splunk/attack_data/{commit}/{path}",
+}
+EVENT_FILES = ("*.json", "*.log")
 SIEM_FOR_ENGINE = {"kusto": ("sentinel", "query"), "splunk": ("splunk", "search")}
 MAX_CELL = 300
 
@@ -50,27 +58,39 @@ def load_catalogue() -> dict:
 def fetch(catalogue: dict) -> None:
     for dataset_id, entry in catalogue.items():
         target = data_dir() / dataset_id
-        if target.exists() and any(target.glob("*.json")):
+        if target.exists() and event_files(target):
             print(f"{dataset_id}: present")
             continue
-        url = RAW_URL.format(**entry)
+        url = SOURCES[entry.get("source", "otrf")].format(**entry)
         with urllib.request.urlopen(url, timeout=300) as response:
             blob = response.read()
         digest = hashlib.sha256(blob).hexdigest()
         if digest != entry["sha256"]:
             raise SystemExit(f"{dataset_id}: SHA-256 {digest} does not match {entry['sha256']}")
         target.mkdir(parents=True, exist_ok=True)
+        if not entry["path"].lower().endswith(".zip"):
+            (target / base_name(entry["path"])).write_bytes(blob)
+            print(f"{dataset_id}: fetched and verified")
+            continue
         with zipfile.ZipFile(io.BytesIO(blob)) as archive:
             for member in archive.infolist():
                 # Write by base name only, so no path inside the archive is trusted.
-                name = member.filename.replace("\\", "/").rsplit("/", 1)[-1]
+                name = base_name(member.filename)
                 if name.endswith(".json") and not name.startswith("."):
                     (target / name).write_bytes(archive.read(member))
         print(f"{dataset_id}: fetched and verified")
 
 
+def base_name(path: str) -> str:
+    return path.replace("\\", "/").rsplit("/", 1)[-1]
+
+
+def event_files(folder) -> list:
+    return sorted(p for pattern in EVENT_FILES for p in folder.glob(pattern))
+
+
 def read_events(dataset_id: str) -> list[dict]:
-    files = sorted((data_dir() / dataset_id).glob("*.json"))
+    files = event_files(data_dir() / dataset_id)
     if not files:
         raise SystemExit(f"{dataset_id}: not fetched; run `python -m harness fetch`")
     events = []
@@ -86,10 +106,18 @@ def load_into(engine, events: list[dict]) -> dict:
     engine.reset()
     if engine.name == "kusto":
         rows: dict[str, list[dict]] = {t: [] for t in engine.tables}
+        unmapped = Counter()
         for event in events:
             table, row = mapping.to_sentinel(event)
-            rows[table].append(row)
-        return engine.load(rows)
+            if table is None:
+                unmapped[event.get("category", "?")] += 1
+            else:
+                rows[table].append(row)
+        dropped = engine.load(rows)
+        if unmapped:
+            # Log categories with no table loaded here (e.g. ServicePrincipalSignInLogs).
+            dropped["events_not_loaded"] = dict(sorted(unmapped.items()))
+        return dropped
     engine.load([(mapping.splunk_source(e), e.get("Hostname", ""), mapping.to_windows_xml(e),
                   epoch(mapping.timestamp(e))) for e in events])
     return {}
@@ -124,6 +152,7 @@ def run_rule(engine, rule, catalogue: dict) -> dict:
         "date": date.today().isoformat(),
         "samples": {
             "positive_events": len(positives),
+            "positive_cases": cases(positives),
             "positive_rows": len(pos_rows),
             "negative_events": len(negatives),
             "negative_rows": len(neg_rows),
@@ -137,11 +166,17 @@ def run_rule(engine, rule, catalogue: dict) -> dict:
     }
 
 
+def cases(samples: list[dict]) -> int:
+    """Positive cases: events grouped by `_case`; an event without one is its own case."""
+    return len({e.get("_case", f"event {i}") for i, e in enumerate(samples)})
+
+
 def check(result: dict, committed: dict | None) -> list[str]:
     problems = []
     s = result["samples"]
-    if s["positive_rows"] < s["positive_events"]:
-        problems.append(f"{s['positive_events']} positive events, only {s['positive_rows']} rows")
+    expected = s.get("positive_cases", s["positive_events"])
+    if s["positive_rows"] < expected:
+        problems.append(f"{expected} positive cases, only {s['positive_rows']} rows")
     if s["negative_rows"]:
         problems.append(f"{s['negative_rows']} rows from negative samples")
     if committed is not None and committed["dataset_rows"] != result["dataset_rows"]:
@@ -182,7 +217,7 @@ def main(argv=None) -> int:
         committed = None if args.write or not out.exists() else json.loads(out.read_text(encoding="utf-8"))
         problems = check(result, committed)
         s = result["samples"]
-        print(f"{rule.folder.name} [{args.engine}]: positives {s['positive_rows']}/{s['positive_events']}, "
+        print(f"{rule.folder.name} [{args.engine}]: positive rows {s['positive_rows']} for {s['positive_cases']} cases, "
               f"negatives {s['negative_rows']}/{s['negative_events']}, "
               f"datasets {result['dataset_rows']} rows from {result['dataset_events']} events"
               + (f"  FAIL: {'; '.join(problems)}" if problems else "  ok"))

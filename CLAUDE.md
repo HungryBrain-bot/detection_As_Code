@@ -25,15 +25,18 @@ check the request is explicit from the owner (Venu).
 | A4 | endpoint | LOLBin download (certutil, bitsadmin, curl) | T1105 | Sentinel, Splunk, SecOps |
 | B1 | identity | Illicit OAuth consent grant | T1528 | Sentinel |
 | B2 | identity | Risky permission or credential added to an app | T1098.001 | Sentinel |
-| B3 | identity | Sign-in pattern consistent with token replay | T1550.001 | Sentinel |
+| B3 | identity | Sign-in pattern consistent with token replay | T1550.001 (+ T1550.004, 2026-10-27) | Sentinel |
 | C1 | llm | Prompt-injection patterns | OWASP LLM01 (2025) + ATLAS | Sentinel |
 | C2 | llm | Canary secret in model output | OWASP LLM02 (2025) + ATLAS | Sentinel |
 | C3 | llm | Abnormal tool-call volume | OWASP LLM06/LLM10 (2025) + ATLAS | Sentinel |
 
 Built: A1-A4 (2026-10-27), `status: test`, A1/A3/A4 baseline, A2
 targeted. KQL and SPL run in local engines on recorded OTRF data
-(ADR 007); YARA-L not run anywhere. B1-C3 not built. B1-B3 (Entra
-tables every Entra tenant has) are the baseline candidates (ADR 004).
+(ADR 007); YARA-L not run anywhere. B1-B3 built (2026-10-27),
+`status: test`, Sentinel only, KQL run in the Kusto emulator on recorded
+Entra logs (Splunk attack_data, OTRF); B1/B2 baseline, B3 targeted
+(false-positive profile unmeasured; no recorded sign-in has a
+SessionId, so B3's positives are hand-written). C1-C3 not built.
 Common high-value rules outside this list (brute force, AD changes)
 are parked in BUILD_LOG.md for the owner, not in scope. ATT&CK IDs above were checked against the enterprise
 STIX bundle on 2026-10-27 (all exist, none deprecated). ATLAS IDs are
@@ -64,7 +67,7 @@ flowchart LR
     COV --> GATE
     CUST["customers/&lt;id&gt;/"] --> GATE
     CI[".github/workflows/ci.yml"] --> CLI
-    CI --> HAR["harness/ (Kusto emulator, Splunk;<br/>OTRF recorded data)"]
+    CI --> HAR["harness/ (Kusto emulator, Splunk;<br/>OTRF, Splunk attack_data)"]
     RULE --> HAR
 ```
 
@@ -76,7 +79,9 @@ flowchart LR
 - `schemas/rule.schema.json` - the rule format (ADR 001), incl. `tier`
   and per-SIEM `required_fields`.
 - `schemas/reference/<siem>/` - vendor-documented table schemas with
-  provenance (Sentinel SecurityEvent, Event, Syslog, CommonSecurityLog so far).
+  provenance (Sentinel SecurityEvent, Event, Syslog, CommonSecurityLog;
+  AuditLogs, SigninLogs, AADNonInteractiveUserSignInLogs with column
+  types from Microsoft's Azure-Sentinel repo).
 - `log_sources.yaml` - log-source catalogue: owning team key and
   per-SIEM table / source / log type names.
 - `customers/<id>/` - `customer.yaml` (SIEMs, include/exclude),
@@ -98,8 +103,10 @@ flowchart LR
   `main`; coverage per customer on `main`. One GitHub Environment per
   customer holds its secrets (docs/components/ci.md).
 - `harness/` - engine tests (ADR 007, docs/components/engine-tests.md):
-  `datasets.yaml` (pinned OTRF datasets), `mapping.py` (recorded event
-  -> SecurityEvent / Event / XmlWinEventLog), `engines.py` (Kusto
+  `datasets.yaml` (pinned OTRF and Splunk attack_data datasets),
+  `mapping.py` (recorded event -> SecurityEvent / Event / XmlWinEventLog;
+  Entra diagnostic records -> AuditLogs / SigninLogs /
+  AADNonInteractiveUserSignInLogs), `engines.py` (Kusto
   emulator, Splunk container), `python -m harness fetch | run`.
 - `docs/future/` - design-only notes, unbuilt and not scheduled (RAG
   over the attack docs).
@@ -157,8 +164,8 @@ current MITRE ATT&CK bundle.
 - Engine tests: `python -m harness run --engine kusto` (also CI job
   `engine-kusto`) and `--engine splunk` (local only).
 
-Last run (2026-10-27): 115 passed, 0 failed; engine tests: A1-A4 pass
-in Kusto emulator and Splunk 10.6.1.
+Last run (2026-10-27): 127 passed, 0 failed; engine tests: A1-A4 pass
+in Kusto emulator and Splunk 10.6.1, B1-B3 in the Kusto emulator.
 
 ## Model usage
 
@@ -174,21 +181,23 @@ conflicting sources).
   schema check, per-customer log-source gate with file and SMTP
   notifiers, baseline/targeted tiers, coverage layers, CLI, CI
   workflow, engine harness, component docs, ADRs 001-007, templates,
-  five skills; rules A1-A4.
+  five skills; rules A1-A4, B1-B3.
 - Verified: everything in the test suite; ATT&CK IDs for the planned
   rules against the STIX bundle; the first CI workflow ran green on
   GitHub (PR #1); per-customer gate job ran green (PR #2); A1-A4 KQL in
   the Kusto emulator and SPL in Splunk 10.6.1 on 45,370 recorded OTRF
-  events (only attack events matched).
+  events (only attack events matched); B1-B2 KQL on recorded Entra
+  audit logs (only attack or lab-test events matched).
 - Not verified: any live API call (Sentinel, Splunk, SecOps deploy or
   probe, SMTP); Navigator loading of the layers (ATLAS `domain` value
   is a guess); the deploy and coverage CI jobs on `main`; A1-A4 in a
   real Log Analytics workspace or with the Splunk Windows add-on; any
   YARA-L rule; production false-positive rates. SecurityEvent and
-  Event reference schemas came through a summarising fetch tool.
-- Next: identity rules B1-B3 with the `new-detection` skill (needs
-  recorded Entra AuditLogs / SigninLogs data with a reuse licence;
-  OTRF has some compound Entra datasets, not yet checked).
+  Event reference schemas came through a summarising fetch tool. B3
+  against any recorded sign-in with a SessionId (none available); B2's
+  app-permission branch against a recorded event.
+- Next: LLM rules C1-C3 (needs the gateway log format decided and ATLAS
+  IDs fetched).
 
 ## Do NOT
 
