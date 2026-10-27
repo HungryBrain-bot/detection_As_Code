@@ -101,6 +101,8 @@ flowchart LR
   `datasets.yaml` (pinned OTRF datasets), `mapping.py` (recorded event
   -> SecurityEvent / Event / XmlWinEventLog), `engines.py` (Kusto
   emulator, Splunk container), `python -m harness fetch | run`.
+- `docs/future/` - design-only notes, unbuilt and not scheduled (RAG
+  over the attack docs).
 - `templates/` - attack-doc and rule-doc templates; their `##`
   headings are the ones the validator requires.
 - `tests/` - pytest; `tests/fixtures/rules/` holds one pipeline

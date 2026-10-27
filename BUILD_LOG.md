@@ -127,3 +127,13 @@
   against ATT&CK v20.0 passes.
 - Next: identity rules B1-B3. Needs recorded Entra data with a reuse
   licence; not yet checked.
+
+## 2026-10-27 - Parked: RAG over the attack docs
+
+- Owner asked to record, for the future, a RAG system with evaluation
+  that answers attack and tactic questions from the attack docs (CLI /
+  FastAPI), later also the rules per customer. Not built, not
+  scheduled. Scope, evaluation-first approach and dependency in
+  docs/future/rag-over-attack-docs.md: answers cite their source doc,
+  an eval set (retrieval hit rate, groundedness) comes before code, and
+  it waits until enough rules and attack docs exist.
