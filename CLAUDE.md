@@ -5,8 +5,11 @@
 Detection-as-code portfolio project: up to 10 detection rules, each
 documented as an attack and as a detection, deployed through one
 pipeline to Microsoft Sentinel (KQL), Splunk (SPL) and Google SecOps
-(YARA-L). No live SIEM exists; everything except API credentials is
-built and tested here.
+(YARA-L), per customer (MSSP-style). Before deploying, a schema check
+probes each customer's SIEM for the tables and fields a rule reads,
+and a gate holds back rules whose data is not confirmed. Coverage is
+reported per customer as ATT&CK / ATLAS Navigator layers. No live SIEM
+exists; everything except API credentials is built and tested here.
 
 Time-boxed (about 3 weeks from 2026-10-27), not a platform. Before
 adding a rule, SIEM, data source or feature beyond the Scope below,
@@ -27,7 +30,10 @@ check the request is explicit from the owner (Venu).
 | C2 | llm | Canary secret in model output | OWASP LLM02 (2025) + ATLAS | Sentinel |
 | C3 | llm | Abnormal tool-call volume | OWASP LLM06/LLM10 (2025) + ATLAS | Sentinel |
 
-None built yet. ATT&CK IDs above were checked against the enterprise
+None built yet. Tier is decided per rule when built; B1-B3 (Entra
+tables every Entra tenant has) are the baseline candidates (ADR 004).
+Common high-value rules outside this list (brute force, AD changes)
+are parked in BUILD_LOG.md for the owner, not in scope. ATT&CK IDs above were checked against the enterprise
 STIX bundle on 2026-10-27 (all exist, none deprecated). ATLAS IDs are
 not yet fetched. No OWASP LLM Top 10 2026 list has been confirmed to
 exist; rules use 2025 IDs.
@@ -44,38 +50,54 @@ flowchart LR
     RULE["detections/**/rule.yaml"] --> VAL["dac/validate.py"]
     VAL --> GATE["dac/gate/ (log-source gate)"]
     GATE --> NOTIFY["dac/gate/notifier.py"]
-    GATE --> AD["dac/adapters/base.py"]
+    GATE --> SC["dac/schema_check.py"]
+    SC --> AD
+    GATE --> AD["dac/adapters/base.py<br/>deploy + read-only probe"]
     AD --> SEN["sentinel.py"]
     AD --> SPL["splunk.py"]
     AD --> SEC["secops.py"]
     CLI["dac/cli.py"] --> VAL
     CLI --> GATE
+    CLI --> COV["dac/coverage.py"]
+    COV --> GATE
+    CUST["customers/&lt;id&gt;/"] --> GATE
     CI[".github/workflows/ci.yml"] --> CLI
 ```
 
 - `detections/<endpoint|identity|llm>/<ID>-<name>/` - one folder per
   rule: `rule.yaml`, `README.md` (rule doc), `attack.md` (attack doc),
   `tests/positive.json`, `tests/negative.json`, `tests/evidence.md`.
-- `schemas/rule.schema.json` - the rule format (ADR 001).
-- `log_sources.yaml` / `teams.yaml` - log-source catalogue with owning
-  team and per-SIEM names; team contacts (emails empty for now).
-- `confirmations/<siem>/<log_source>.yaml` - team confirmations the
-  gate checks (ADR 003). None yet.
+- `schemas/rule.schema.json` - the rule format (ADR 001), incl. `tier`
+  and per-SIEM `required_fields`.
+- `schemas/reference/<siem>/` - vendor-documented table schemas with
+  provenance (Sentinel SecurityEvent, Syslog, CommonSecurityLog so far).
+- `log_sources.yaml` - log-source catalogue: owning team key and
+  per-SIEM table / source / log type names.
+- `customers/<id>/` - `customer.yaml` (SIEMs, include/exclude),
+  `teams.yaml`, `confirmations/<siem>/`, `schemas/<siem>/` (ADR 004).
+  One fictional customer, `demo`. No confirmations yet.
 - `dac/validate.py` - offline checks (docs/components/validation.md).
 - `dac/adapters/` - one `SiemAdapter` interface, three adapters
   (ADR 002, docs/components/adapters.md).
-- `dac/gate/` - log-source gate and notifiers
+- `dac/schema_check.py` - required fields vs. probe / customer schema
+  (ADR 005, docs/components/schema-check.md).
+- `dac/gate/` - per-customer log-source gate and notifiers
   (docs/components/log-source-gate.md).
-- `dac/cli.py` - `python -m dac validate | gate | plan | deploy`.
-- `.github/workflows/ci.yml` - validate on every push/PR, report-only
-  gate on PRs, gated deploy on `main` (docs/components/ci.md).
+- `dac/coverage.py` - Navigator layers + summary per customer
+  (ADR 006, docs/components/coverage.md).
+- `dac/cli.py` - `python -m dac validate | customers | schema-check |
+  gate | plan | deploy | coverage`.
+- `.github/workflows/ci.yml` - validate on every push/PR; per customer
+  x SIEM: schema check + report-only gate on PRs, gated deploy on
+  `main`; coverage per customer on `main`. One GitHub Environment per
+  customer holds its secrets (docs/components/ci.md).
 - `templates/` - attack-doc and rule-doc templates; their `##`
   headings are the ones the validator requires.
 - `tests/` - pytest; `tests/fixtures/rules/` holds one pipeline
   fixture rule (not a reviewed detection), `tests/fixtures/api/` holds
   API responses written from vendor docs (not recorded).
 - `.claude/skills/` - `build-and-document`, `new-detection`,
-  `log-source-gate` (docs/skills.md).
+  `log-source-gate`, `schema-check`, `coverage-map` (docs/skills.md).
 
 ## Conventions
 
@@ -91,8 +113,12 @@ flowchart LR
   Never cite from memory, never invent campaign details or IDs.
 - A check is described by exactly what it tests. List what it misses;
   never say it "closes" a problem.
-- Live-API behavior is "not verified" until a live call is made and
-  logged in BUILD_LOG.md.
+- Live-API behavior (deploy and probe) is "not verified" until a live
+  call is made and logged in BUILD_LOG.md.
+- Reference schemas only from fetched vendor sources, with provenance.
+  Customer schema files only from what the customer sent.
+- Coverage counts only rules that passed the gate. Never present a
+  coverage map without its caveats.
 - Secrets only via environment variables / GitHub Actions secrets.
 - ADRs and BUILD_LOG.md are append-only; correct with dated amendments.
 
@@ -105,10 +131,14 @@ current MITRE ATT&CK bundle.
 - `test_validate.py` - schema, sources, query checks, docs, ATT&CK.
 - `test_adapters.py` - query checks and requests per SIEM; deploy
   against a fake transport.
-- `test_gate.py` - confirmations, blocking, reminders, notifier choice.
-- `test_cli.py` - commands end to end on the fixture rule.
+- `test_gate.py` - per-customer gate: confirmations, probe
+  auto-confirm and veto, tiers, reminders, notifier choice.
+- `test_schema_check.py` - required fields vs. probe / customer schema.
+- `test_coverage.py` - active vs. blocked, layers, summary.
+- `test_cli.py` - commands end to end on the fixture rule and customer.
+- Probe tests live in `test_adapters.py`.
 
-Last run (2026-10-27): 59 passed, 0 failed.
+Last run (2026-10-27): 96 passed, 0 failed.
 
 ## Model usage
 
@@ -120,14 +150,18 @@ conflicting sources).
 
 ## Current status
 
-- Built: rule schema, validator, three adapters, log-source gate with
-  file and SMTP notifiers, CLI, CI workflow, component docs, ADRs
-  001-003, templates, skills.
+- Built: rule schema, validator, three adapters with read-only probes,
+  schema check, per-customer log-source gate with file and SMTP
+  notifiers, baseline/targeted tiers, coverage layers, CLI, CI
+  workflow, component docs, ADRs 001-006, templates, five skills.
 - Verified: everything in the test suite; ATT&CK IDs for the planned
-  rules against the STIX bundle.
-- Not verified: any live API call (Sentinel, Splunk, SecOps, SMTP);
-  the CI workflow on GitHub until its first run; ADX free tier for
-  running queries.
+  rules against the STIX bundle; the first CI workflow ran green on
+  GitHub (PR #1).
+- Not verified: any live API call (Sentinel, Splunk, SecOps deploy or
+  probe, SMTP); Navigator loading of the layers (ATLAS `domain` value
+  is a guess); the per-customer CI workflow until its first run; ADX
+  free tier for running queries. SecurityEvent reference schema came
+  through a summarising fetch tool.
 - Next: day-1 checks (free query engine, dataset coverage for A1-A4),
   then rule A1 end to end with the `new-detection` skill.
 

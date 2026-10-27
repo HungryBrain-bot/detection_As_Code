@@ -14,6 +14,14 @@ Per rule:
 6. tests/positive.json, tests/negative.json and tests/evidence.md exist.
 7. With an ATT&CK STIX bundle: each technique exists, is not revoked or
    deprecated, and each tactic is one of its techniques' tactics.
+8. Each SIEM block's required_fields only names tables / sources / log
+   types declared for the rule's log sources, and, where a reference
+   schema for that name is in schemas/reference/, every field exists in
+   it. Where no reference schema exists, field names are not checked.
+
+Per customer (validate_customers): SIEMs are known, included and
+excluded rule ids exist, and every owning team the customer's rules
+need has an entry in its teams.yaml.
 
 Not checked here: that a query is valid in its language, or that it
 fires on the positive samples. Those need a query engine; see
@@ -28,7 +36,7 @@ from pathlib import Path
 import jsonschema
 
 from .adapters import get_adapter
-from .rules import REPO_ROOT, Rule
+from .rules import REPO_ROOT, SIEMS, Customer, Rule, load_reference_schema
 
 SCHEMA_FILE = REPO_ROOT / "schemas" / "rule.schema.json"
 TEMPLATES_DIR = REPO_ROOT / "templates"
@@ -99,6 +107,15 @@ def load_attack_index(bundle_path: Path) -> dict[str, dict]:
     return index
 
 
+def attack_bundle_version(bundle_path: Path) -> str | None:
+    """ATT&CK release number from the bundle's x-mitre-collection object, e.g. "18.0"."""
+    bundle = json.loads(bundle_path.read_text(encoding="utf-8"))
+    for obj in bundle.get("objects", []):
+        if obj.get("type") == "x-mitre-collection":
+            return obj.get("x_mitre_version")
+    return None
+
+
 def _mitre_id(stix_object: dict) -> str | None:
     for ref in stix_object.get("external_references", []):
         if ref.get("source_name") == "mitre-attack":
@@ -122,6 +139,23 @@ def check_attack(rule: Rule, attack_index: dict[str, dict]) -> list[str]:
     for tactic in attack["tactics"]:
         if allowed_tactics and tactic not in allowed_tactics:
             errors.append(f"ATT&CK: tactic {tactic} is not a tactic of {attack['techniques']}")
+    return errors
+
+
+def check_required_fields(siem: str, required: dict[str, list[str]], allowed: list[str]) -> list[str]:
+    errors = []
+    for name, fields in required.items():
+        if name not in allowed:
+            errors.append(f"required_fields names {name!r}, which is not declared for this rule's log sources")
+            continue
+        reference = load_reference_schema(siem, name)
+        if reference is None:
+            continue
+        known = set(reference.get("fields", []))
+        unknown = [f for f in fields if f not in known]
+        if unknown:
+            errors.append(f"required_fields for {name}: {unknown} not in the reference schema "
+                          f"(schemas/reference/{siem}/)")
     return errors
 
 
@@ -151,6 +185,7 @@ def validate_rule(rule: Rule, schema: dict, catalogue: dict,
         if allowed:
             adapter = get_adapter(siem, env={})
             errors += [f"{siem}: {e}" for e in adapter.check_query(rule.data[siem], allowed, rule_id=rule.id)]
+            errors += [f"{siem}: {e}" for e in check_required_fields(siem, rule.required_fields(siem), allowed)]
 
     errors += check_doc(rule.folder / "README.md", RULE_DOC_HEADINGS, TEMPLATES_DIR / "rule-doc.md")
     errors += check_doc(rule.folder / "attack.md", ATTACK_DOC_HEADINGS, TEMPLATES_DIR / "attack-doc.md")
@@ -173,4 +208,23 @@ def validate_all(rules: list[Rule], catalogue: dict, attack_index: dict | None =
             errors.append(f"duplicate rule id {rule.data.get('id')}")
         if errors:
             results[str(rule.folder)] = errors
+    return results
+
+
+def validate_customers(customers: list[Customer], rules: list[Rule], catalogue: dict) -> dict[str, list[str]]:
+    """Customer id -> errors, only for customers with errors."""
+    rule_ids = {rule.id for rule in rules}
+    results = {}
+    for customer in customers:
+        errors = []
+        if not customer.siems:
+            errors.append("customer.yaml lists no siems")
+        errors += [f"unknown siem {s!r}" for s in customer.siems if s not in SIEMS]
+        for key in ("include", "exclude"):
+            errors += [f"{key} names unknown rule id {rid}" for rid in customer.data.get(key, []) if rid not in rule_ids]
+        owners = {catalogue[src]["owner"] for rule in customer.applicable_rules(rules)
+                  for src in rule.log_sources if src in catalogue}
+        errors += [f"teams.yaml has no entry for owning team {team}" for team in sorted(owners - set(customer.teams))]
+        if errors:
+            results[customer.id] = errors
     return results

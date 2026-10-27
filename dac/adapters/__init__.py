@@ -1,6 +1,7 @@
 """SIEM adapters, keyed by the name used in rule.yaml and log_sources.yaml."""
 
-from .base import DeployError, MissingCredentials, Request, Response, SiemAdapter, Transport
+from .base import (DeployError, MissingCredentials, ObservedSchema, ProbeError, Request, Response,
+                   SiemAdapter, Transport)
 from .secops import SecOpsAdapter
 from .sentinel import SentinelAdapter
 from .splunk import SplunkAdapter
@@ -20,4 +21,4 @@ def get_adapter(name: str, **kwargs) -> SiemAdapter:
 
 
 __all__ = ["ADAPTERS", "get_adapter", "SiemAdapter", "Transport", "Request", "Response",
-           "MissingCredentials", "DeployError"]
+           "MissingCredentials", "DeployError", "ObservedSchema", "ProbeError"]

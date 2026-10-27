@@ -33,6 +33,8 @@ what it does not do.
 ## Related skills
 - Adding or changing a rule: `new-detection`.
 - Anything blocked by or changing the log-source gate: `log-source-gate`.
+- Required fields, probes, customer schemas: `schema-check`.
+- ATT&CK / ATLAS mapping, rule tier, coverage reports: `coverage-map`.
 
 ## Commit conventions
 One commit per logical unit. The message says why, not just what:

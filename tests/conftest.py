@@ -7,16 +7,20 @@ import pytest
 import yaml
 
 from dac.adapters.base import Response
-from dac.rules import Rule, load_log_sources, load_rule, load_teams
+from dac.rules import Rule, load_customer, load_log_sources, load_rule
 
 FIXTURES = Path(__file__).parent / "fixtures"
 FIXTURE_RULES = FIXTURES / "rules"
 FIXTURE_RULE = FIXTURE_RULES / "endpoint" / "fixture-encoded-powershell"
+FIXTURE_CUSTOMERS = FIXTURES / "customers"
 
 
 def api_fixture(name: str) -> dict:
     """Response bodies written from each vendor's API reference, not recorded from a live API."""
-    return json.loads((FIXTURES / "api" / name).read_text())
+    path = FIXTURES / "api" / name
+    if name.endswith(".ndjson"):
+        return {"raw": path.read_text()}  # what Transport returns for a non-JSON body
+    return json.loads(path.read_text())
 
 
 class FakeTransport:
@@ -38,8 +42,11 @@ def catalogue():
 
 
 @pytest.fixture
-def teams():
-    return load_teams()
+def customer(tmp_path):
+    """A writable copy of the fixture customer (all three SIEMs, no confirmations)."""
+    folder = tmp_path / "customers" / "acme"
+    shutil.copytree(FIXTURE_CUSTOMERS / "acme", folder)
+    return load_customer(folder)
 
 
 @pytest.fixture

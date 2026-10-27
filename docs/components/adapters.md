@@ -18,6 +18,8 @@ classDiagram
         +auth_headers() dict
         +deploy(rule) Response
         +has_credentials() bool
+        +probe(name) ObservedSchema
+        +has_probe_credentials() bool
     }
     SiemAdapter <|-- SentinelAdapter
     SiemAdapter <|-- SplunkAdapter
@@ -32,6 +34,8 @@ classDiagram
 | Request | `PUT .../alertRules/<uuid>` | `POST .../saved/searches` (update on 409) | list rules, then `POST .../rules` or `PATCH <rule>` |
 | Keyed on | rule UUID in the URL | name `dac_<uuid>` | rule name `dac_<uuid_underscored>` |
 | Auth | Entra ID app, client-credentials token | Splunk auth token (Bearer) | short-lived OAuth token from workload identity |
+| Read-only probe | Log Analytics query API (`getschema`, 24h count) | export search with `fieldsummary` | UDM search, 100-event sample (least certain) |
+| Probe env vars | `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `SENTINEL_WORKSPACE_ID` (GUID) | `SPLUNK_URL`, `SPLUNK_TOKEN` | same as deploy |
 | Env vars | `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `SENTINEL_SUBSCRIPTION_ID`, `SENTINEL_RESOURCE_GROUP`, `SENTINEL_WORKSPACE` | `SPLUNK_URL`, `SPLUNK_TOKEN`, optional `SPLUNK_APP` | `SECOPS_PROJECT`, `SECOPS_REGION`, `SECOPS_INSTANCE`, `SECOPS_ACCESS_TOKEN` |
 
 Mapping details worth knowing:
@@ -44,6 +48,11 @@ Mapping details worth knowing:
   any status; enabling them is a manual step.
 - YARA-L is not YARA. YARA matches byte patterns in files; YARA-L is
   SecOps' language for matching UDM log events over time.
+
+Credentials are per customer: CI runs each customer's jobs in a GitHub
+Environment named after the customer, so the names above hold that
+customer's values (ADR 004). The probe is described in
+docs/components/schema-check.md.
 
 ## Why this method
 One interface means the gate, dry-run, redaction and credential checks
@@ -69,6 +78,6 @@ visible and the dependencies at two packages.
 ## How to use
 ```bash
 python -m dac plan --siem sentinel                # write requests, no gate
-python -m dac deploy --siem splunk                # gate, then dry-run
-SPLUNK_URL=... SPLUNK_TOKEN=... python -m dac deploy --siem splunk --mode live
+python -m dac deploy --customer demo --siem sentinel   # gate, then dry-run
+SPLUNK_URL=... SPLUNK_TOKEN=... python -m dac deploy --customer demo --siem splunk --mode live
 ```

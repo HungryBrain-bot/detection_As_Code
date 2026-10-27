@@ -17,11 +17,24 @@ What check_query checks (offline, not an SPL parser):
 Not checked: SPL syntax, field names, that the index exists. Not
 verified against a live Splunk: the endpoint and field names are from
 Splunk's REST API reference, not from a call.
+
+Schema probe (read-only): one export search over the last 24h,
+``search index=* (source="<name>" OR sourcetype="<name>") | fieldsummary``,
+which returns each field seen and its event count. Splunk has no table
+catalogue to ask, so "no results" cannot be told apart from "this
+sourcetype does not exist": both report exists=None, 0 events. The
+token's role needs search access to the indexes holding the data and
+nothing else. ``index=*`` scans every index the role can read: an
+accepted cost for a probe run per deploy over at most 10 rules; scope
+it to known indexes if probes ever run often. Not verified against a
+live Splunk: the export response format (one JSON object per line) is
+from Splunk's REST reference.
 """
 
+import json
 import re
 
-from .base import DeployError, Request, Response, SiemAdapter, check_balanced
+from .base import DeployError, ObservedSchema, ProbeError, Request, Response, SiemAdapter, check_balanced
 
 # alert.severity: 1 debug, 2 info, 3 low, 4 medium, 5 high, 6 critical
 SEVERITY = {"Informational": 2, "Low": 3, "Medium": 4, "High": 5}
@@ -34,6 +47,7 @@ def saved_search_name(rule_id: str) -> str:
 class SplunkAdapter(SiemAdapter):
     name = "splunk"
     credential_env_vars = ("SPLUNK_URL", "SPLUNK_TOKEN")
+    probe_env_vars = ("SPLUNK_URL", "SPLUNK_TOKEN")
 
     def check_query(self, rule_block: dict, allowed_sources: list[str], rule_id: str | None = None) -> list[str]:
         search = rule_block["search"]
@@ -89,3 +103,42 @@ class SplunkAdapter(SiemAdapter):
         if response.status >= 300:
             raise DeployError(f"splunk: update {update.url} -> HTTP {response.status}: {response.body}")
         return response
+
+    def probe(self, name: str) -> ObservedSchema:
+        if '"' in name or "\\" in name:
+            raise ProbeError(f"splunk: refusing to probe unusual source name {name!r}")
+        search = (f'search index=* (source="{name}" OR sourcetype="{name}") '
+                  "| fieldsummary | fields field count")
+        request = Request("POST", f"{self._env('SPLUNK_URL').rstrip('/')}/services/search/jobs/export",
+                          headers=self.auth_headers(),
+                          body={"search": search, "output_mode": "json",
+                                "earliest_time": "-24h", "latest_time": "now"},
+                          form_encoded=True)
+        response = self.transport.send(request)
+        if response.status != 200:
+            raise ProbeError(f"splunk: probe search for {name} -> HTTP {response.status}")
+        counts = {}
+        for line in _export_lines(response.body):
+            result = line.get("result") or {}
+            if "field" in result:
+                counts[result["field"]] = int(result.get("count") or 0)
+        if not counts:
+            return ObservedSchema(name, "probe", exists=None, fields=None, recent_events=0,
+                                  note="no events in 24h (Splunk cannot tell a missing source from an empty one)")
+        recent = counts.get("_time", max(counts.values()))
+        return ObservedSchema(name, "probe", exists=True, fields=set(counts), recent_events=recent)
+
+
+def _export_lines(body: dict) -> list[dict]:
+    """The export endpoint returns one JSON object per line, which Transport keeps as body['raw']."""
+    if "raw" not in body:
+        return [body]
+    lines = []
+    for line in body["raw"].splitlines():
+        line = line.strip()
+        if line:
+            try:
+                lines.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+    return lines

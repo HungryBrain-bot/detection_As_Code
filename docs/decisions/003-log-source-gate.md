@@ -50,3 +50,18 @@ deployed, working without email now and with email later.
   deduplication with many rules and real email.
 - A confirmation file is reviewed in a PR like code, so who confirmed
   what, and when, is in git history.
+
+## Amendment (2026-10-27)
+Two changes, decided after the owner's review:
+
+- **Per customer.** Confirmations moved from `confirmations/<siem>/` to
+  `customers/<id>/confirmations/<siem>/`, and teams to
+  `customers/<id>/teams.yaml` (ADR 004).
+- **A live probe can confirm, and can veto.** The "query the SIEM"
+  alternative rejected above is now built (ADR 005). When read-only
+  credentials exist, a probe showing the table, events in the last 24h
+  and every required field auto-confirms the source; a probe showing a
+  gap blocks the rule even if a human confirmation exists. Human
+  confirmation remains the fallback when no probe can run. The
+  "Consequences" line "does not prove events are arriving now" still
+  holds for the human path only.

@@ -1,6 +1,6 @@
 # Rule validation
 
-Code: `dac/validate.py`, `schemas/rule.schema.json`. Run: `python -m dac validate`.
+Code: `dac/validate.py`, `schemas/rule.schema.json`, `schemas/reference/`. Run: `python -m dac validate`.
 
 ## What it does
 Offline checks that every rule folder is complete and internally
@@ -17,6 +17,8 @@ For each `detections/**/rule.yaml`:
 | `check_query` per SIEM | truncated queries (bracket/quote balance); a query that never references its declared table / source / log type; Sentinel frequency vs. period; Splunk search with no `index=`; YARA-L header, section order and rule name |
 | Docs | `README.md` and `attack.md` present, every required section filled, no TODO, not the template's text left unchanged |
 | Tests | `tests/positive.json`, `tests/negative.json`, `tests/evidence.md` present |
+| `required_fields` | a field list naming a table / source / log type the rule's log sources do not declare; with a reference schema in `schemas/reference/<siem>/`, field names that do not exist (typos) |
+| Customers | unknown SIEMs, `include`/`exclude` naming rules that do not exist, an owning team the customer's rules need missing from its `teams.yaml` |
 | ATT&CK (with `--attack-bundle`) | technique IDs that do not exist, are revoked or deprecated; tactics that are not tactics of the listed techniques |
 
 Schema errors stop the other checks for that rule, since they assume a
@@ -38,5 +40,7 @@ current data rather than a list typed by hand.
   running it in an engine and recording the result in `evidence.md`.
 - It cannot tell whether a doc section is correct, only that it was
   filled in. Accuracy and sourcing are review's job.
+- Field names are only checked where a reference schema exists
+  (Sentinel SecurityEvent, Syslog, CommonSecurityLog so far).
 - OWASP and ATLAS IDs are format-checked only; OWASP against the 2025
   list. No 2026 list has been confirmed to exist.

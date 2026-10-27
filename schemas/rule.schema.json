@@ -3,7 +3,16 @@
   "title": "Detection rule",
   "description": "One detection, with one query block per SIEM it targets. See docs/decisions/001-rule-format.md.",
   "type": "object",
-  "required": ["id", "name", "version", "status", "severity", "description", "log_sources", "mapping"],
+  "required": [
+    "id",
+    "name",
+    "version",
+    "status",
+    "severity",
+    "description",
+    "log_sources",
+    "mapping"
+  ],
   "additionalProperties": false,
   "properties": {
     "id": {
@@ -11,16 +20,50 @@
       "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
       "description": "Stable UUID. Never changes once the rule is merged; the SIEM-side rule is keyed on it."
     },
-    "name": {"type": "string", "minLength": 5, "maxLength": 120},
-    "version": {"type": "integer", "minimum": 1},
-    "status": {"enum": ["experimental", "test", "stable", "deprecated"]},
-    "severity": {"enum": ["Informational", "Low", "Medium", "High"]},
-    "description": {"type": "string", "minLength": 20},
+    "name": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 120
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "enum": [
+        "experimental",
+        "test",
+        "stable",
+        "deprecated"
+      ]
+    },
+    "severity": {
+      "enum": [
+        "Informational",
+        "Low",
+        "Medium",
+        "High"
+      ]
+    },
+    "tier": {
+      "enum": [
+        "baseline",
+        "targeted"
+      ],
+      "description": "baseline: deployed to every customer (unless excluded) once its sources pass the gate. targeted: only to customers that include it. Default targeted. See docs/decisions/004-customers-and-baseline.md."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20
+    },
     "log_sources": {
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
-      "items": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$"
+      },
       "description": "IDs from log_sources.yaml. The log-source gate checks these."
     },
     "mapping": {
@@ -30,63 +73,185 @@
       "properties": {
         "attack": {
           "type": "object",
-          "required": ["techniques", "tactics"],
+          "required": [
+            "techniques",
+            "tactics"
+          ],
           "additionalProperties": false,
           "properties": {
             "techniques": {
-              "type": "array", "minItems": 1,
-              "items": {"type": "string", "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$"}
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$"
+              }
             },
             "tactics": {
-              "type": "array", "minItems": 1,
-              "items": {"type": "string", "pattern": "^[a-z-]+$"}
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z-]+$"
+              }
             }
           }
         },
         "owasp_llm_2025": {
-          "type": "array", "minItems": 1,
-          "items": {"enum": ["LLM01", "LLM02", "LLM03", "LLM04", "LLM05", "LLM06", "LLM07", "LLM08", "LLM09", "LLM10"]}
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "LLM01",
+              "LLM02",
+              "LLM03",
+              "LLM04",
+              "LLM05",
+              "LLM06",
+              "LLM07",
+              "LLM08",
+              "LLM09",
+              "LLM10"
+            ]
+          }
         },
         "atlas": {
-          "type": "array", "minItems": 1,
-          "items": {"type": "string", "pattern": "^AML\\.T[0-9]{4}(\\.[0-9]{3})?$"}
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^AML\\.T[0-9]{4}(\\.[0-9]{3})?$"
+          }
         }
       }
     },
     "sentinel": {
       "type": "object",
-      "required": ["query", "query_frequency", "query_period"],
+      "required": [
+        "query",
+        "query_frequency",
+        "query_period",
+        "required_fields"
+      ],
       "additionalProperties": false,
       "properties": {
-        "query": {"type": "string", "minLength": 10},
-        "query_frequency": {"type": "string", "pattern": "^P(T[0-9]+[HM]|[0-9]+D)$"},
-        "query_period": {"type": "string", "pattern": "^P(T[0-9]+[HM]|[0-9]+D)$"},
-        "trigger_threshold": {"type": "integer", "minimum": 0}
+        "query": {
+          "type": "string",
+          "minLength": 10
+        },
+        "query_frequency": {
+          "type": "string",
+          "pattern": "^P(T[0-9]+[HM]|[0-9]+D)$"
+        },
+        "query_period": {
+          "type": "string",
+          "pattern": "^P(T[0-9]+[HM]|[0-9]+D)$"
+        },
+        "trigger_threshold": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "required_fields": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Table / source / log type -> fields the query reads. The schema check compares these with the reference and observed schemas.",
+          "additionalProperties": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
       }
     },
     "splunk": {
       "type": "object",
-      "required": ["search", "cron_schedule", "earliest_time"],
+      "required": [
+        "search",
+        "cron_schedule",
+        "earliest_time",
+        "required_fields"
+      ],
       "additionalProperties": false,
       "properties": {
-        "search": {"type": "string", "minLength": 10},
-        "cron_schedule": {"type": "string", "minLength": 9},
-        "earliest_time": {"type": "string", "pattern": "^-[0-9]+[smhd]$"},
-        "latest_time": {"type": "string"}
+        "search": {
+          "type": "string",
+          "minLength": 10
+        },
+        "cron_schedule": {
+          "type": "string",
+          "minLength": 9
+        },
+        "earliest_time": {
+          "type": "string",
+          "pattern": "^-[0-9]+[smhd]$"
+        },
+        "latest_time": {
+          "type": "string"
+        },
+        "required_fields": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Table / source / log type -> fields the query reads. The schema check compares these with the reference and observed schemas.",
+          "additionalProperties": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
       }
     },
     "secops": {
       "type": "object",
-      "required": ["rule_text"],
+      "required": [
+        "rule_text",
+        "required_fields"
+      ],
       "additionalProperties": false,
       "properties": {
-        "rule_text": {"type": "string", "minLength": 20}
+        "rule_text": {
+          "type": "string",
+          "minLength": 20
+        },
+        "required_fields": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Table / source / log type -> fields the query reads. The schema check compares these with the reference and observed schemas.",
+          "additionalProperties": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
       }
     }
   },
   "anyOf": [
-    {"required": ["sentinel"]},
-    {"required": ["splunk"]},
-    {"required": ["secops"]}
+    {
+      "required": [
+        "sentinel"
+      ]
+    },
+    {
+      "required": [
+        "splunk"
+      ]
+    },
+    {
+      "required": [
+        "secops"
+      ]
+    }
   ]
 }

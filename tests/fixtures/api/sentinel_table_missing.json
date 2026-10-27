@@ -1,0 +1,1 @@
+{"error": {"code": "BadArgumentError", "message": "The request had some invalid properties", "innererror": {"code": "SemanticError", "message": "A semantic error occurred.", "innererror": {"code": "SEM0100", "message": "'getschema' operator: Failed to resolve table or column expression named 'SysmonEvent'"}}}}
