@@ -16,6 +16,19 @@ in the chosen engine:
    tests/datasets.yaml (attack and background together), run the query,
    and record each row it returns.
 
+Optional keys in a rule's tests/datasets.yaml (used by the LLM rules):
+- `rebase_time: true` shifts each load's timestamps so its newest row is
+  two minutes before now, keeping the spacing; for queries that use
+  ago() against recorded data.
+- `score_by: {column, pattern}` groups dataset rows and matched rows by
+  the first regex group of that column (the label the dataset converter
+  wrote, e.g. "jailbreakhub:jailbreak") and records, per label, how many
+  distinct values of the column were loaded and how many matched.
+- `tally: <column>` counts the values of a result column (a list or a
+  string) among matched rows, per label.
+- `max_matched_rows: N` keeps only the first N matched rows in the
+  result file (the counts cover all of them).
+
 `--write` saves the result to tests/results/<engine>.json in the rule
 folder; tests/evidence.md is written from it by hand. Exit code 1 if a
 positive did not match, a negative matched, or (without --write) the
@@ -29,15 +42,16 @@ import io
 import json
 import sys
 import urllib.request
+import re
 import zipfile
-from collections import Counter
-from datetime import date
+from collections import Counter, defaultdict
+from datetime import date, datetime, timedelta, timezone
 
 import yaml
 
 from dac.rules import REPO_ROOT, load_rules
 
-from . import mapping
+from . import llm_datasets, mapping
 from .engines import EngineError, KustoEngine, SplunkEngine, data_dir, epoch
 
 DATASETS_FILE = REPO_ROOT / "harness" / "datasets.yaml"
@@ -45,8 +59,10 @@ SOURCES = {
     "otrf": "https://raw.githubusercontent.com/OTRF/Security-Datasets/{commit}/{path}",
     # attack_data keeps its logs in Git LFS; raw.githubusercontent.com serves the pointer.
     "splunk-attack-data": "https://media.githubusercontent.com/media/splunk/attack_data/{commit}/{path}",
+    "github": "https://raw.githubusercontent.com/{repo}/{commit}/{path}",
 }
 EVENT_FILES = ("*.json", "*.log")
+CONVERTED_FILES = ("*.json", "*.jsonl", "*.csv")
 SIEM_FOR_ENGINE = {"kusto": ("sentinel", "query"), "splunk": ("splunk", "search")}
 MAX_CELL = 300
 
@@ -55,18 +71,43 @@ def load_catalogue() -> dict:
     return yaml.safe_load(DATASETS_FILE.read_text(encoding="utf-8"))["datasets"]
 
 
+def files_of(entry: dict) -> list[tuple[str, str]]:
+    """(path, sha256) for each file of a catalogue entry."""
+    if "manifest" in entry:
+        lines = (REPO_ROOT / entry["manifest"]).read_text(encoding="utf-8").splitlines()
+        return [(path.strip(), digest) for digest, path in (line.split(None, 1) for line in lines if line.strip())]
+    if "files" in entry:
+        return [(f["path"], f["sha256"]) for f in entry["files"]]
+    return [(entry["path"], entry["sha256"])]
+
+
+def download(entry: dict, path: str, sha256: str) -> bytes:
+    url = SOURCES[entry.get("source", "otrf")].format(**dict(entry, path=path))
+    with urllib.request.urlopen(url, timeout=300) as response:
+        blob = response.read()
+    digest = hashlib.sha256(blob).hexdigest()
+    if digest != sha256:
+        raise SystemExit(f"{path}: SHA-256 {digest} does not match {sha256}")
+    return blob
+
+
 def fetch(catalogue: dict) -> None:
     for dataset_id, entry in catalogue.items():
         target = data_dir() / dataset_id
-        if target.exists() and event_files(target):
+        files = files_of(entry)
+        multi = len(files) > 1 or "manifest" in entry or "files" in entry
+        if target.exists() and (all((target / safe_name(p)).exists() for p, _ in files) if multi
+                                else event_files(target)):
             print(f"{dataset_id}: present")
             continue
-        url = SOURCES[entry.get("source", "otrf")].format(**entry)
-        with urllib.request.urlopen(url, timeout=300) as response:
-            blob = response.read()
-        digest = hashlib.sha256(blob).hexdigest()
-        if digest != entry["sha256"]:
-            raise SystemExit(f"{dataset_id}: SHA-256 {digest} does not match {entry['sha256']}")
+        if multi:
+            blobs = [(path, download(entry, path, sha256)) for path, sha256 in files]
+            target.mkdir(parents=True, exist_ok=True)
+            for path, blob in blobs:
+                (target / safe_name(path)).write_bytes(blob)
+            print(f"{dataset_id}: fetched and verified ({len(files)} files)")
+            continue
+        blob = download(entry, *files[0])
         target.mkdir(parents=True, exist_ok=True)
         if not entry["path"].lower().endswith(".zip"):
             (target / base_name(entry["path"])).write_bytes(blob)
@@ -81,6 +122,14 @@ def fetch(catalogue: dict) -> None:
         print(f"{dataset_id}: fetched and verified")
 
 
+def safe_name(path: str) -> str:
+    """One flat file name per path ("a/b/c.json" -> "a__b__c.json"); no directory is created from data."""
+    name = path.replace("\\", "/").strip("/").replace("/", "__")
+    if not re.fullmatch(r"[A-Za-z0-9_.-]+", name) or name.startswith("."):
+        raise SystemExit(f"unsafe dataset path {path!r}")
+    return name
+
+
 def base_name(path: str) -> str:
     return path.replace("\\", "/").rsplit("/", 1)[-1]
 
@@ -89,8 +138,14 @@ def event_files(folder) -> list:
     return sorted(p for pattern in EVENT_FILES for p in folder.glob(pattern))
 
 
-def read_events(dataset_id: str) -> list[dict]:
-    files = event_files(data_dir() / dataset_id)
+def read_events(dataset_id: str, catalogue: dict | None = None) -> list[dict]:
+    entry = (catalogue if catalogue is not None else load_catalogue()).get(dataset_id, {})
+    folder = data_dir() / dataset_id
+    if entry.get("format"):
+        if not any(p for pattern in CONVERTED_FILES for p in folder.glob(pattern)):
+            raise SystemExit(f"{dataset_id}: not fetched; run `python -m harness fetch`")
+        return llm_datasets.convert(entry["format"], folder)
+    files = event_files(folder)
     if not files:
         raise SystemExit(f"{dataset_id}: not fetched; run `python -m harness fetch`")
     events = []
@@ -111,6 +166,8 @@ def load_into(engine, events: list[dict]) -> dict:
             table, row = mapping.to_sentinel(event)
             if table is None:
                 unmapped[event.get("category", "?")] += 1
+            elif table not in rows:
+                unmapped[table] += 1
             else:
                 rows[table].append(row)
         dropped = engine.load(rows)
@@ -128,24 +185,67 @@ def trim(row: dict) -> dict:
             for k, v in row.items() if not k.startswith("_") or k == "_time"}
 
 
+def rebase(events: list[dict]) -> list[dict]:
+    """Copies of events shifted so the newest TimeGenerated is two minutes before now."""
+    times = [_parse(e["TimeGenerated"]) for e in events if e.get("TimeGenerated")]
+    if not times:
+        return events
+    delta = datetime.now(timezone.utc) - timedelta(minutes=2) - max(times)
+    return [dict(e, TimeGenerated=(_parse(e["TimeGenerated"]) + delta).isoformat().replace("+00:00", "Z"))
+            if e.get("TimeGenerated") else e for e in events]
+
+
+def _parse(value: str) -> datetime:
+    return datetime.fromisoformat(value.replace("Z", "+00:00"))
+
+
+def score(events: list[dict], rows: list[dict], spec: dict, tally: str | None) -> dict:
+    """Per label: distinct values of spec['column'] loaded and matched, plus an optional tally."""
+    pattern = re.compile(spec["pattern"])
+
+    def label(value):
+        match = pattern.search(str(value or ""))
+        return match.group(1) if match else "(no label)"
+
+    loaded, matched, tallies = defaultdict(set), defaultdict(set), defaultdict(Counter)
+    for event in events:
+        if spec["column"] in event:
+            loaded[label(event[spec["column"]])].add(event[spec["column"]])
+    for row in rows:
+        name = label(row.get(spec["column"]))
+        matched[name].add(row.get(spec["column"]))
+        if tally:
+            values = row.get(tally)
+            tallies[name].update(values if isinstance(values, list) else [values])
+    result = {}
+    for name in sorted(set(loaded) | set(matched)):
+        entry = {"loaded": len(loaded[name]), "matched": len(matched[name])}
+        if tally:
+            entry[f"{tally}_counts"] = dict(sorted(tallies[name].items()))
+        result[name] = entry
+    return result
+
+
 def run_rule(engine, rule, catalogue: dict) -> dict:
     siem, key = SIEM_FOR_ENGINE[engine.name]
     query = rule.data[siem][key]
     tests = rule.folder / "tests"
     positives = json.loads((tests / "positive.json").read_text(encoding="utf-8"))
     negatives = json.loads((tests / "negative.json").read_text(encoding="utf-8"))
-    dataset_ids = yaml.safe_load((tests / "datasets.yaml").read_text(encoding="utf-8"))["datasets"]
+    options = yaml.safe_load((tests / "datasets.yaml").read_text(encoding="utf-8"))
+    dataset_ids = options["datasets"]
+    shift = rebase if options.get("rebase_time") else (lambda events: events)
 
-    load_into(engine, positives)
+    load_into(engine, shift(positives))
     pos_rows = engine.query(query)
-    load_into(engine, negatives)
+    load_into(engine, shift(negatives))
     neg_rows = engine.query(query)
 
-    events = [e for d in dataset_ids for e in read_events(d)]
+    events = shift([e for d in dataset_ids for e in read_events(d, catalogue)])
     dropped = load_into(engine, events)
     ds_rows = engine.query(query)
 
-    return {
+    result = {
         "rule_id": rule.id,
         "rule_version": rule.version,
         "engine": engine.version(),
@@ -157,13 +257,21 @@ def run_rule(engine, rule, catalogue: dict) -> dict:
             "negative_events": len(negatives),
             "negative_rows": len(neg_rows),
         },
-        "datasets": [{"id": d, "commit": catalogue[d]["commit"], "path": catalogue[d]["path"],
-                      "sha256": catalogue[d]["sha256"]} for d in dataset_ids],
+        "datasets": [dict({"id": d, "commit": catalogue[d]["commit"]},
+                          **({"path": catalogue[d]["path"], "sha256": catalogue[d]["sha256"]} if "path" in catalogue[d]
+                             else {"files": len(files_of(catalogue[d]))}))
+                     for d in dataset_ids],
         "dataset_events": len(events),
         "dataset_rows": len(ds_rows),
-        "matched": [trim(r) for r in ds_rows],
-        "columns_dropped_in_mapping": dropped,
     }
+    if options.get("rebase_time"):
+        result["time_rebased"] = True
+    if options.get("score_by"):
+        result["scores"] = score(events, ds_rows, options["score_by"], options.get("tally"))
+    limit = options.get("max_matched_rows")
+    result["matched"] = [trim(r) for r in (ds_rows if limit is None else ds_rows[:limit])]
+    result["columns_dropped_in_mapping"] = dropped
+    return result
 
 
 def cases(samples: list[dict]) -> int:

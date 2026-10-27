@@ -113,6 +113,26 @@
               "LLM09",
               "LLM10"
             ]
+          },
+          "description": "OWASP Top 10 for LLM Applications 2025 IDs (LLM01-LLM10)."
+        },
+        "owasp_llm_2026": {
+          "type": "array",
+          "minItems": 1,
+          "description": "OWASP Top 10 for LLM Applications 2026 IDs. The 2026 list renumbers entries (e.g. Excessive Agency is LLM06 in 2025, LLM03 in 2026); see docs/components/llm-telemetry.md.",
+          "items": {
+            "enum": [
+              "LLM01",
+              "LLM02",
+              "LLM03",
+              "LLM04",
+              "LLM05",
+              "LLM06",
+              "LLM07",
+              "LLM08",
+              "LLM09",
+              "LLM10"
+            ]
           }
         },
         "atlas": {
@@ -121,6 +141,25 @@
           "items": {
             "type": "string",
             "pattern": "^AML\\.T[0-9]{4}(\\.[0-9]{3})?$"
+          }
+        }
+      }
+    },
+    "llm_telemetry": {
+      "type": "object",
+      "required": [
+        "populated"
+      ],
+      "additionalProperties": false,
+      "description": "LLM rules only: normalised columns (LLMAppLog_CL) that must hold values for the rule to work. `python -m dac llm-inventory` checks them against llm_log_inventory.yaml and each customer's llm_apps.yaml (ADR 008).",
+      "properties": {
+        "populated": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
           }
         }
       }

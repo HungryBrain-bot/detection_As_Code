@@ -1,0 +1,354 @@
+# LLM log-source inventory: the standard every LLM detection rule in this
+# repo builds on (docs/decisions/008-llm-telemetry.md,
+# docs/components/llm-telemetry.md, skill .claude/skills/llm-log-inventory).
+#
+# Why this file exists: no public, recorded LLM-application log standard
+# exists that SIEMs share. Each gateway, cloud and SDK logs prompts, outputs
+# and tool calls differently, and most log no content unless switched on.
+# So this repo defines one normalised table (LLMAppLog_CL, based on the
+# OpenTelemetry GenAI semantic conventions, status Development), and this
+# file records, per source:
+#   - what the source records, and what is off by default
+#   - which normalised column each vendor field fills (maps_to)
+#   - what it cannot fill (gaps)
+#   - how it reaches each SIEM (integration)
+#   - what was checked against the vendor page and what was not
+#
+# `python -m dac validate` checks this file's structure; `python -m dac
+# llm-inventory --customer <id>` reads it with customers/<id>/llm_apps.yaml
+# and reports which LLM rules each of the customer's apps can feed.
+#
+# Nothing here is a live integration. The normalisers described under
+# `integration` are designs; the only normalisers built in this repo are
+# the harness converters for the test datasets (harness/llm_datasets.py).
+
+normalised_table: LLMAppLog_CL
+
+# Column -> where it comes from in OpenTelemetry GenAI terms (commit e19717d
+# of open-telemetry/semantic-conventions-genai) and what rules use it for.
+# `content: true` columns hold prompt, output or tool text: OpenTelemetry
+# makes these Opt-In ("SHOULD NOT capture them by default"), so they are
+# empty unless the app owner turns content capture on.
+normalised_schema:
+  TimeGenerated: {from: span start time, content: false}
+  AppName: {from: "service.name (OTel resource attribute)", content: false}
+  Environment: {from: app-supplied (prod, test), content: false}
+  OperationName: {from: gen_ai.operation.name (chat, execute_tool, retrieval, invoke_agent), content: false}
+  AgentName: {from: gen_ai.agent.name, content: false}
+  ProviderName: {from: gen_ai.provider.name, content: false}
+  RequestModel: {from: gen_ai.request.model, content: false}
+  ResponseModel: {from: gen_ai.response.model, content: false}
+  ConversationId: {from: gen_ai.conversation.id, content: false}
+  ResponseId: {from: gen_ai.response.id, content: false}
+  TraceId: {from: span trace id, content: false}
+  SpanId: {from: span id, content: false}
+  ParentSpanId: {from: parent span id, content: false}
+  UserId: {from: "app-supplied; the GenAI conventions define no end-user attribute", content: false}
+  ClientIp: {from: client.address, content: false}
+  InputText: {from: "chat: text of the latest user message in gen_ai.input.messages; execute_tool: gen_ai.tool.call.arguments; retrieval: gen_ai.retrieval.query.text", content: true}
+  OutputText: {from: "chat: text of gen_ai.output.messages; execute_tool: gen_ai.tool.call.result; retrieval: gen_ai.retrieval.documents", content: true}
+  ToolName: {from: gen_ai.tool.name, content: false}
+  ToolCallId: {from: gen_ai.tool.call.id, content: false}
+  ToolType: {from: gen_ai.tool.type, content: false}
+  InputTokens: {from: gen_ai.usage.input_tokens, content: false}
+  OutputTokens: {from: gen_ai.usage.output_tokens, content: false}
+  FinishReason: {from: "gen_ai.response.finish_reasons (first value)", content: false}
+  ErrorType: {from: error.type, content: false}
+  GuardrailAction: {from: "app or gateway guardrail verdict (blocked, flagged, allowed); no GenAI attribute", content: false}
+  GuardrailCategories: {from: guardrail categories that fired, content: false}
+  LogSource: {from: "the id of the source below that produced the row", content: false}
+  Type: {from: filled by Log Analytics, content: false}
+
+# One row per span. What goes in InputText / OutputText depends on the
+# operation, so a rule always filters on OperationName first.
+operations:
+  chat: one model call; InputText is the latest user message, OutputText the model's answer.
+  execute_tool: one tool call made by an agent; InputText is the arguments the model chose, OutputText the tool's result (where indirect prompt injection arrives).
+  retrieval: one retrieval (RAG) call; InputText is the query, OutputText the documents returned.
+  invoke_agent: one agent invocation; parent of the chat and execute_tool spans.
+
+sources:
+  otel-genai:
+    name: OpenTelemetry GenAI spans from the application or agent framework
+    kind: logs
+    status: recommended
+    log_source: llm-app-log
+    source_url: https://github.com/open-telemetry/semantic-conventions-genai/tree/e19717d65f890955777b044bca2a3cd71ae8b498/docs/gen-ai
+    fetched_on: '2026-10-27'
+    records:
+      prompts: opt-in
+      outputs: opt-in
+      tool_calls: "yes"
+      tool_arguments_and_results: opt-in
+      end_user_identity: app-supplied
+      tokens: "yes"
+      guardrail_verdicts: "no"
+    maps_to:
+      TimeGenerated: span start time
+      AppName: service.name
+      OperationName: gen_ai.operation.name
+      AgentName: gen_ai.agent.name
+      ProviderName: gen_ai.provider.name
+      RequestModel: gen_ai.request.model
+      ResponseModel: gen_ai.response.model
+      ConversationId: gen_ai.conversation.id
+      ResponseId: gen_ai.response.id
+      TraceId: trace id
+      SpanId: span id
+      ParentSpanId: parent span id
+      ClientIp: client.address
+      InputText: gen_ai.input.messages / gen_ai.tool.call.arguments / gen_ai.retrieval.query.text
+      OutputText: gen_ai.output.messages / gen_ai.tool.call.result / gen_ai.retrieval.documents
+      ToolName: gen_ai.tool.name
+      ToolCallId: gen_ai.tool.call.id
+      ToolType: gen_ai.tool.type
+      InputTokens: gen_ai.usage.input_tokens
+      OutputTokens: gen_ai.usage.output_tokens
+      FinishReason: gen_ai.response.finish_reasons
+      ErrorType: error.type
+    gaps:
+      - "UserId: no GenAI attribute; the app must add the signed-in user as a span attribute."
+      - "GuardrailAction / GuardrailCategories: no GenAI attribute; the app or gateway must add them."
+      - "Status Development: attribute names can change between releases; pin the semconv version per app."
+      - "Content columns are empty unless content capture is switched on; the conventions also allow storing content externally and keeping only a reference on the span, which a SIEM rule cannot read."
+    integration:
+      sentinel: "OpenTelemetry Collector (or a small forwarder) -> Azure Monitor Logs Ingestion API -> data collection rule (DCR) whose transformation maps span attributes to LLMAppLog_CL columns. The API takes a JSON array, authenticates with an Entra app (client credentials, Monitoring Metrics Publisher role on the DCR), and writes only to tables that already exist."
+      splunk: "OpenTelemetry Collector -> HTTP Event Collector, POST /services/collector/event with 'Authorization: Splunk <token>', one event per span with the normalised column names, sourcetype llm:app (name chosen by this project)."
+      secops: not verified (no Google SecOps ingestion documentation was fetched for this project)
+    verified:
+      - attribute names and requirement levels, read from the conventions repo with git at commit e19717d
+      - Logs Ingestion API behaviour, Microsoft page updated 2026-10-15, fetched 2026-10-27
+      - HEC endpoint and header, Splunk page updated 2026-02-18, fetched 2026-10-27
+    not_verified:
+      - any collector exporter or DCR transformation actually running
+      - which instrumentation libraries emit gen_ai.conversation.id
+
+  mcp-server:
+    name: Model Context Protocol server spans (OpenTelemetry MCP conventions)
+    kind: logs
+    status: supported
+    log_source: llm-app-log
+    source_url: https://github.com/open-telemetry/semantic-conventions-genai/blob/e19717d65f890955777b044bca2a3cd71ae8b498/docs/gen-ai/mcp.md
+    fetched_on: '2026-10-27'
+    records:
+      prompts: "no"
+      outputs: "no"
+      tool_calls: "yes"
+      tool_arguments_and_results: opt-in
+      end_user_identity: app-supplied
+      tokens: "no"
+      guardrail_verdicts: "no"
+    maps_to:
+      TimeGenerated: span start time
+      AppName: service.name
+      OperationName: gen_ai.operation.name (execute_tool for tools/call)
+      ToolName: gen_ai.tool.name
+      ConversationId: mcp.session.id (a session, not a conversation; documented per app)
+      ClientIp: client.address
+      InputText: gen_ai.tool.call.arguments
+      OutputText: gen_ai.tool.call.result
+      ErrorType: error.type
+      TraceId: trace id
+      SpanId: span id
+    gaps:
+      - "Sees the tool side only: no prompts, no model output, no tokens."
+      - "mcp.session.id is an MCP transport session; several conversations can share one."
+    integration:
+      sentinel: same path as otel-genai (Collector -> Logs Ingestion API -> DCR -> LLMAppLog_CL)
+      splunk: same path as otel-genai (Collector -> HEC)
+      secops: not verified
+    verified:
+      - attribute names and requirement levels in mcp.md at commit e19717d
+    not_verified:
+      - any MCP server emitting these spans in practice
+
+  azure-apim-ai-gateway:
+    name: Azure API Management AI gateway LLM log (ApiManagementGatewayLlmLog)
+    kind: logs
+    status: partial
+    log_source: llm-app-log
+    source_url: https://learn.microsoft.com/en-us/azure/api-management/api-management-howto-llm-logs
+    fetched_on: '2026-10-27'
+    records:
+      prompts: opt-in
+      outputs: opt-in
+      tool_calls: in the request and response bodies only
+      tool_arguments_and_results: in the bodies only
+      end_user_identity: "no column; join ApiManagementGatewayLogs on CorrelationId"
+      tokens: "yes"
+      guardrail_verdicts: "no"
+    maps_to:
+      TimeGenerated: TimeGenerated
+      OperationName: chat (set by the normaliser)
+      RequestModel: DeploymentName
+      ResponseModel: ModelName
+      ResponseId: RequestId
+      InputText: RequestMessages (latest user message)
+      OutputText: ResponseMessages
+      InputTokens: PromptTokens
+      OutputTokens: CompletionTokens
+    gaps:
+      - "ConversationId: none; CorrelationId identifies one request, so per-conversation rules (C3) cannot be fed."
+      - "Tool calls are only inside the message bodies; execute_tool rows would have to be derived from tool_calls and tool-role messages."
+      - "Messages over 32 KB are split into 32 KB chunks with a SequenceNumber; a normaliser must reassemble them."
+      - "Token counts can be missing when a stream breaks (Microsoft page)."
+      - "Lands natively in the workspace table ApiManagementGatewayLlmLog, not in LLMAppLog_CL; a copy job is needed (see integration)."
+    integration:
+      sentinel: "Diagnostic setting 'Logs related to generative AI gateway' to the workspace, with 'Log LLM messages' enabled per API. The rows land in ApiManagementGatewayLlmLog; getting them into LLMAppLog_CL needs a job that reads them and re-sends through the Logs Ingestion API. Not built, not verified."
+      splunk: not verified (no Splunk route for this table was fetched)
+      secops: not verified
+    verified:
+      - logging switches, chunking and the token caveat, Microsoft page updated 2026-06-16, fetched 2026-10-27
+      - table columns, Microsoft table reference https://docs.azure.cn/en-us/azure-monitor/reference/tables/apimanagementgatewayllmlog updated 2026-08-14, fetched 2026-10-27
+    not_verified:
+      - ApiManagementGatewayLogs column names for the caller join
+      - the copy job
+
+  aws-bedrock-invocation:
+    name: Amazon Bedrock model invocation logging
+    kind: logs
+    status: partial
+    log_source: llm-app-log
+    source_url: https://docs.aws.amazon.com/bedrock/latest/userguide/model-invocation-logging.html
+    fetched_on: '2026-10-27'
+    records:
+      prompts: opt-in
+      outputs: opt-in
+      tool_calls: in the request and response bodies only
+      tool_arguments_and_results: in the bodies only
+      end_user_identity: "identity.arn (the AWS principal, usually the app's role, not the end user)"
+      tokens: "yes"
+      guardrail_verdicts: not documented on the page read
+    maps_to:
+      TimeGenerated: timestamp
+      OperationName: chat (set by the normaliser)
+      RequestModel: modelId
+      ResponseId: requestId
+      UserId: identity.arn
+      InputText: input.inputBodyJson (latest user message)
+      OutputText: output.outputBodyJson
+      InputTokens: input.inputTokenCount
+      OutputTokens: output.outputTokenCount
+    gaps:
+      - "Disabled by default; covers Converse, ConverseStream, InvokeModel and InvokeModelWithResponseStream on bedrock-runtime only."
+      - "Bodies over 100 KB go to S3, not inline; a normaliser must fetch them."
+      - "ConversationId: none in the documented record; requestMetadata is app-supplied and was not checked as a carrier."
+      - "identity.arn is the calling AWS principal; the end user needs app-side logging."
+    integration:
+      sentinel: "Logging to CloudWatch Logs or S3, then a forwarder that normalises records and sends them through the Logs Ingestion API. Not built, not verified."
+      splunk: "Not verified (no Splunk add-on page for Bedrock logs was fetched)."
+      secops: not verified
+    verified:
+      - record fields, destinations, size limit and covered APIs, AWS user guide page fetched 2026-10-27 (no date shown on the page)
+    not_verified:
+      - guardrail fields in the record
+      - any forwarder
+
+  azure-openai-diagnostics:
+    name: Azure OpenAI / Foundry resource diagnostic logs (AzureDiagnostics)
+    kind: logs
+    status: not-verified
+    log_source: llm-app-log
+    source_url: https://docs.azure.cn/en-us/azure-monitor/reference/supported-logs/microsoft-cognitiveservices-accounts-logs
+    fetched_on: '2026-10-27'
+    records:
+      prompts: not documented on the page read
+      outputs: not documented on the page read
+      tool_calls: not documented on the page read
+      tool_arguments_and_results: not documented on the page read
+      end_user_identity: not documented on the page read
+      tokens: not documented on the page read
+      guardrail_verdicts: not documented on the page read
+    maps_to:
+      TimeGenerated: TimeGenerated
+    gaps:
+      - "The page lists categories (Audit, AzureOpenAIRequestUsage, ManagedNetworkEvent, RequestResponse, Trace) going to AzureDiagnostics, but not their fields; do not plan content rules on it until a recorded sample is seen."
+    integration:
+      sentinel: Diagnostic setting to the workspace (AzureDiagnostics). Not a source for LLMAppLog_CL until its fields are known.
+      splunk: not verified
+      secops: not verified
+    verified:
+      - category names, docs.azure.cn page updated 2026-09-11, fetched 2026-10-27
+    not_verified:
+      - every field
+
+  gcp-vertex-ai:
+    name: Google Vertex AI request-response logging
+    kind: logs
+    status: not-verified
+    log_source: llm-app-log
+    source_url: https://docs.cloud.google.com/vertex-ai/generative-ai/docs/multimodal/request-response-logging
+    fetched_on: '2026-10-27'
+    records:
+      prompts: not verified
+      outputs: not verified
+      tool_calls: not verified
+      tool_arguments_and_results: not verified
+      end_user_identity: not verified
+      tokens: not verified
+      guardrail_verdicts: not verified
+    maps_to:
+      TimeGenerated: not verified
+    gaps:
+      - "The page could not be read from this environment (fetch truncated, host blocked); nothing about it is claimed."
+    integration:
+      sentinel: not verified
+      splunk: not verified
+      secops: not verified
+    verified: []
+    not_verified:
+      - the whole source
+
+  defender-for-ai-alerts:
+    name: Microsoft Defender for Cloud threat protection for AI services (alerts)
+    kind: alerts
+    status: alerts-only
+    log_source: llm-app-log
+    source_url: https://learn.microsoft.com/en-us/azure/defender-for-cloud/alerts-ai-workloads
+    fetched_on: '2026-10-27'
+    records:
+      prompts: "no"
+      outputs: "no"
+      tool_calls: "no"
+      tool_arguments_and_results: "no"
+      end_user_identity: per alert
+      tokens: "no"
+      guardrail_verdicts: "yes, as alerts (e.g. AI.Azure_Jailbreak.ContentFiltering.BlockedAttempt)"
+    maps_to: {}
+    gaps:
+      - "Alerts, not logs: they complement C1-C3 (jailbreak, ASCII smuggling, credential theft attempt, wallet attacks, anomalous tool invocation) but cannot feed LLMAppLog_CL."
+      - "Azure AI services only."
+    integration:
+      sentinel: "Defender for Cloud alerts can reach Sentinel through its connector; the table they land in (SecurityAlert) was not confirmed on the page read."
+      splunk: not verified
+      secops: not verified
+    verified:
+      - alert names and descriptions, Microsoft page updated 2026-07-06, fetched 2026-10-27
+    not_verified:
+      - routing to SecurityAlert
+
+  llm-canary-registry:
+    name: Canary registry (secret marker values planted in system prompts, tool configuration or documents)
+    kind: config
+    status: recommended
+    log_source: llm-canary-registry
+    source_url: https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/blob/9253e38ade58e959b531c0c5c9a4842272c9cd0e/2026/final/LLM08_HiddenContextExposure.md
+    fetched_on: '2026-10-27'
+    records:
+      prompts: "no"
+      outputs: "no"
+      tool_calls: "no"
+      tool_arguments_and_results: "no"
+      end_user_identity: "no"
+      tokens: "no"
+      guardrail_verdicts: "no"
+    maps_to: {}
+    gaps:
+      - "Writes LLMCanary_CL, not LLMAppLog_CL. Must re-send every active canary at least once an hour, or C2's one-hour lookback will not see it."
+    integration:
+      sentinel: "A scheduled job posts the active canaries to LLMCanary_CL through the Logs Ingestion API. A Sentinel watchlist is the usual alternative (C2 README)."
+      splunk: "A lookup file would be the Splunk equivalent; not built."
+      secops: not verified
+    verified: []
+    not_verified:
+      - the job (design only)

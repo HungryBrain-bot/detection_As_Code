@@ -1,0 +1,25 @@
+# LLM applications of the fictional demo customer, for the LLM log-source
+# inventory report (`python -m dac llm-inventory --customer demo`,
+# docs/components/llm-telemetry.md). No real app or tenant.
+#
+# Per app:
+#   owner            team key from teams.yaml that runs the app
+#   sources          ids from llm_log_inventory.yaml the app's telemetry comes from
+#   content_capture  true if prompt, output and tool text are captured (OpenTelemetry
+#                    makes this opt-in; without it InputText / OutputText are empty)
+#   adds_columns     normalised columns the app fills itself because no source
+#                    attribute exists (e.g. UserId)
+apps:
+  support-agent:
+    description: Customer-support agent that reads tickets and calls tools (fictional).
+    owner: ai-platform-team
+    sources: [otel-genai, mcp-server, llm-canary-registry]
+    content_capture: true
+    adds_columns: [UserId, Environment]
+
+  marketing-copy:
+    description: Chat app behind the API Management AI gateway, no tools (fictional).
+    owner: ai-platform-team
+    sources: [azure-apim-ai-gateway]
+    content_capture: false
+    adds_columns: []

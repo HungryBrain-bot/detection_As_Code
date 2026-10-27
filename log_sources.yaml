@@ -52,8 +52,14 @@ entra-signin:
   siem:
     sentinel: [SigninLogs, AADNonInteractiveUserSignInLogs]
 
-llm-app-gateway:
-  description: Prompt, response and tool-call log from the LLM application gateway (custom table).
+llm-app-log:
+  description: Normalised LLM application log (prompts, outputs, tool calls), one row per OpenTelemetry GenAI span. Sources and mapping in llm_log_inventory.yaml.
   owner: ai-platform-team
   siem:
     sentinel: [LLMAppLog_CL]
+
+llm-canary-registry:
+  description: Active canary values planted in LLM system prompts, tool configuration or documents, re-sent at least hourly (llm_log_inventory.yaml).
+  owner: ai-platform-team
+  siem:
+    sentinel: [LLMCanary_CL]

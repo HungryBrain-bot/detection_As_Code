@@ -1,0 +1,61 @@
+id: ae372bcb-05fa-4970-a3a6-3f9b1227dad9
+name: Prompt-injection phrasing in a user prompt or in tool and retrieval results
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >-
+  Text reaching an LLM app matches known prompt-injection phrasing: an order
+  to ignore earlier instructions, a persona or "developer mode" switch, a
+  request for the system prompt, a spoofed role or chat-template delimiter,
+  invisible Unicode tag characters, an instruction to hide something from
+  the user, or (in tool and retrieval results only) text addressed to the
+  AI itself. Checked in the user's prompt (direct injection) and in tool
+  and retrieval results (indirect injection). Pattern matching: it catches
+  copied and lightly edited attacks, not paraphrased ones (README, Blind
+  spots).
+log_sources:
+  - llm-app-log
+mapping:
+  owasp_llm_2025: [LLM01]
+  owasp_llm_2026: [LLM01]
+  atlas: [AML.T0051.000, AML.T0051.001, AML.T0054, AML.T0056, AML.T0068]
+llm_telemetry:
+  populated: [OperationName, InputText, OutputText]
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  query: |
+    // C1: prompt-injection phrasing (detections/llm/C1-AML.T0051-prompt-injection/README.md)
+    let override_rx = @"(?i)\b(ignore|disregard|forget|override|bypass)\b[^.\n]{0,40}\b(previous|prior|above|earlier|preceding|all|any|your|the|my)\b[^.\n]{0,30}\b(instructions?|rules|prompts?|guidelines|directives|policy|policies|restrictions|programming)\b";
+    let persona_rx = @"(?i)(\byou are now\b[^.\n]{0,40}\b(free|unrestricted|unfiltered|uncensored|jailbroken|no longer)\b|\bdeveloper mode\b|\bdo anything now\b|\bjailbr(eak|oken)\b|\bnew instructions?\s*:)";
+    let dan_rx = @"\bDAN\b";
+    let extract_rx = @"(?i)\b(reveal|show|print|repeat|output|display|tell me|give me|what is|what are|what was|what were)\b[^.\n]{0,30}\b(your|the)\b[^.\n]{0,20}\b(system prompt|system message|initial prompt|initial instructions|hidden prompt|hidden instructions|original instructions|pre-?prompt)";
+    let role_rx = @"(?im)(<\|im_start\|>\s*system|\[/?INST\]|<\|system\|>|</?system>|<<SYS>>|^\s*#{0,3}\s*system\s*:)";
+    let smuggle_rx = @"[\x{E0000}-\x{E007F}]";
+    // Indirect only: data (a tool result, an email, a web page) addressing the AI itself.
+    let addressed_rx = @"(?i)(\b(to you|dear|attention|hey|hello|hi|note to|note for)\b,?\s+(the\s+)?(ai|ai assistant|assistant|model|agent|llm|chatbot|claude|chatgpt|gpt|gemini|copilot)\b|\b(ai|assistant|model|agent|llm)s?\b[^.\n]{0,20}\b(must|should|needs? to|are instructed to|has to|have to)\b)";
+    let conceal_rx = @"(?i)\b(do not|don't|never)\b[^.\n]{0,20}\b(tell|inform|mention|reveal|notify|alert)\b[^.\n]{0,15}\b(the user|user|anyone)\b";
+    LLMAppLog_CL
+    | where OperationName in ("chat", "execute_tool", "retrieval")
+    // Direct: the user's prompt. Indirect: what a tool or retrieval returned.
+    | extend Surface = iff(OperationName == "chat", "direct", "indirect"),
+             Text = iff(OperationName == "chat", InputText, OutputText)
+    | where isnotempty(Text)
+    | extend Categories = set_difference(pack_array(
+        iff(Text matches regex override_rx, "override", ""),
+        iff(Text matches regex persona_rx or Text matches regex dan_rx, "persona", ""),
+        iff(Text matches regex extract_rx, "prompt-extraction", ""),
+        iff(Text matches regex role_rx, "role-spoofing", ""),
+        iff(Text matches regex smuggle_rx, "unicode-tags", ""),
+        iff(Text matches regex conceal_rx, "concealment", ""),
+        iff(Surface == "indirect" and Text matches regex addressed_rx, "addressed-to-model", "")), dynamic([""]))
+    // A user's own "ignore all previous instructions" with nothing else is mostly
+    // prompt-template boilerplate (README, Why this logic); it alerts only in tool
+    // and retrieval results.
+    | where array_length(Categories) > 0
+    | where not(Surface == "direct" and array_length(Categories) == 1 and tostring(Categories[0]) == "override")
+    | project TimeGenerated, AppName, AgentName, ConversationId, UserId, ClientIp,
+              OperationName, Surface, ToolName, Categories, Excerpt = substring(Text, 0, 300)
+  required_fields:
+    LLMAppLog_CL: [TimeGenerated, AppName, AgentName, ConversationId, UserId, ClientIp, OperationName, ToolName, InputText, OutputText]

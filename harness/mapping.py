@@ -201,8 +201,15 @@ def from_azure_monitor(record: dict) -> tuple[str | None, dict]:
     return table, row
 
 
+# Tables whose rows are written in table shape already (ADR 008): the LLM
+# dataset converters (harness/llm_datasets.py) and hand-written samples.
+NATIVE_TABLES = ("LLMAppLog_CL", "LLMCanary_CL")
+
+
 def to_sentinel(event: dict) -> tuple[str | None, dict]:
     """(table, row) for one event; table None if no table here holds it."""
+    if event.get("Type") in NATIVE_TABLES:
+        return event["Type"], {k: v for k, v in event.items() if not k.startswith("_")}
     if "properties" in event and "category" in event:
         return from_azure_monitor(event)
     if "ActivityDisplayName" in event and "AADOperationType" in event:
