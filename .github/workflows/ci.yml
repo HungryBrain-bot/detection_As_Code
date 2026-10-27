@@ -60,8 +60,14 @@ jobs:
             curl -sSfL -o data/enterprise-attack.json \
               https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack/enterprise-attack.json
           fi
+      - name: Download MITRE ATLAS data (pinned by commit and SHA-256)
+        run: |
+          mkdir -p data
+          curl -sSfL -o data/ATLAS-2026.06.yaml \
+            https://raw.githubusercontent.com/mitre-atlas/atlas-data/3259f388d19cbcca11bacf12a0ef97f4198f711b/dist/v6/ATLAS-2026.06.yaml
+          echo "b771de8b1489564b2838a709c7429849a9575dbd94073928817fe1a21661e70a  data/ATLAS-2026.06.yaml" | sha256sum -c -
       - name: Validate rules and customers
-        run: python -m dac validate --attack-bundle data/enterprise-attack.json
+        run: python -m dac validate --attack-bundle data/enterprise-attack.json --atlas-data data/ATLAS-2026.06.yaml
 
   engine-kusto:
     needs: validate

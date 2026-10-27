@@ -1,0 +1,9 @@
+datasets:
+  - jailbreakhub-prompts
+  - agentdojo-claude37-banking-slack
+  - bipia-email
+score_by:
+  column: ConversationId
+  pattern: '^([a-z]+:[a-z-]+):'
+tally: Categories
+max_matched_rows: 40

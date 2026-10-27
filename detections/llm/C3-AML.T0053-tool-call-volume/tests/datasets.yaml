@@ -1,0 +1,8 @@
+datasets:
+  - agentdojo-claude37-banking-slack
+# The query uses ago(); recorded and sample timestamps are shifted so the
+# newest row is two minutes before the run (harness rebase_time).
+rebase_time: true
+score_by:
+  column: ConversationId
+  pattern: '^([a-z]+:[a-z-]+):'

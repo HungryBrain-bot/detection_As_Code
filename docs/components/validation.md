@@ -20,6 +20,9 @@ For each `detections/**/rule.yaml`:
 | `required_fields` | a field list naming a table / source / log type the rule's log sources do not declare; with a reference schema in `schemas/reference/<siem>/`, field names that do not exist (typos) |
 | Customers | unknown SIEMs, `include`/`exclude` naming rules that do not exist, an owning team the customer's rules need missing from its `teams.yaml` |
 | ATT&CK (with `--attack-bundle`) | technique IDs that do not exist, are revoked or deprecated; tactics that are not tactics of the listed techniques |
+| ATLAS (with `--atlas-data`, atlas-data `dist/v6` YAML) | ATLAS technique IDs that do not exist or are deprecated |
+| LLM telemetry | a rule reading `LLMAppLog_CL` without `llm_telemetry.populated`, or naming columns there it does not read (ADR 008) |
+| LLM inventory | `llm_log_inventory.yaml` entries missing keys, with unknown kinds or statuses, unknown log sources, columns outside the normalised schema, or no integration entry per SIEM; `llm_apps.yaml` naming unknown sources, columns or teams (docs/components/llm-telemetry.md) |
 
 Schema errors stop the other checks for that rule, since they assume a
 well-formed rule.

@@ -1,6 +1,6 @@
 """Command line: python -m dac <command>.
 
-    validate [--attack-bundle FILE]            offline checks on every rule and customer
+    validate [--attack-bundle F] [--atlas-data F]  offline checks on every rule and customer
     customers [--json]                         list customer/SIEM pairs (CI matrix)
     schema-check --customer C --siem S         compare rules' required fields with the SIEM
     gate --customer C --siem S [--report-only] log-source gate; sends reminders
@@ -10,12 +10,15 @@
                                                auto = live if every credential env
                                                var is set, else dry-run
     coverage --customer C [--attack-bundle F]  Navigator layers + summary for the customer
+    llm-inventory --customer C                 which LLM rules each of the customer's LLM apps
+                                               can feed (docs/components/llm-telemetry.md)
 
 Probes run whenever the adapter's read-only credentials are set; without
 them, schema-check and the gate use customer schema files and human
 confirmations only.
 
-Exit codes: 0 ok, 1 validation or deploy error, 2 blocked by the gate,
+Exit codes: 0 ok, 1 validation or deploy error, 2 blocked by the gate
+(llm-inventory: an app cannot feed a rule),
 3 --mode live without credentials, 4 unknown customer.
 """
 
@@ -27,10 +30,12 @@ from pathlib import Path
 from .adapters import get_adapter
 from .coverage import write_coverage
 from .gate import run_gate
+from .llm_inventory import load_inventory, report as llm_report, validate_inventory
 from .rules import (CUSTOMERS_DIR, DETECTIONS_DIR, REPO_ROOT, SIEMS, load_customer, load_customers,
                     load_log_sources, load_rules)
 from .schema_check import OK, check_rule
-from .validate import attack_bundle_version, load_attack_index, validate_all, validate_customers
+from .validate import (attack_bundle_version, load_atlas_index, load_attack_index, validate_all,
+                       validate_customers)
 
 BUILD_DIR = REPO_ROOT / "build"
 REPORTS_DIR = REPO_ROOT / "reports"
@@ -57,7 +62,13 @@ def cmd_validate(args) -> int:
     attack_index = load_attack_index(args.attack_bundle) if args.attack_bundle else None
     if attack_index is None:
         print("note: no --attack-bundle given, ATT&CK IDs not checked against MITRE data")
-    results = validate_all(rules, catalogue, attack_index)
+    atlas_index = load_atlas_index(args.atlas_data) if args.atlas_data else None
+    if atlas_index is None:
+        print("note: no --atlas-data given, ATLAS IDs not checked against MITRE ATLAS data")
+    results = validate_all(rules, catalogue, attack_index, atlas_index)
+    inventory_errors = validate_inventory(load_inventory(), catalogue)
+    if inventory_errors:
+        results["llm_log_inventory.yaml"] = inventory_errors
     results.update({f"customer {k}": v for k, v in
                     validate_customers(load_customers(args.customers_dir), rules, catalogue).items()})
     for where, errors in results.items():
@@ -199,6 +210,19 @@ def cmd_coverage(args) -> int:
     return 0
 
 
+def cmd_llm_inventory(args) -> int:
+    customer = _customer(args)
+    if customer is None:
+        return 4
+    text, gaps = llm_report(customer, load_rules(args.rules_dir), load_inventory(), load_log_sources())
+    print(text)
+    out = REPORTS_DIR / "llm" / f"{customer.id}.md"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(text, encoding="utf-8")
+    print(f"written {_rel(out)}")
+    return 0 if gaps == 0 else 2
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="python -m dac")
     parser.add_argument("--rules-dir", type=Path, default=DETECTIONS_DIR)
@@ -207,6 +231,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = sub.add_parser("validate")
     p.add_argument("--attack-bundle", type=Path)
+    p.add_argument("--atlas-data", type=Path, help="atlas-data dist/v6 YAML, e.g. ATLAS-2026.06.yaml")
     p.set_defaults(func=cmd_validate)
 
     p = sub.add_parser("customers")
@@ -228,6 +253,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--customer", required=True)
     p.add_argument("--attack-bundle", type=Path)
     p.set_defaults(func=cmd_coverage)
+
+    p = sub.add_parser("llm-inventory")
+    p.add_argument("--customer", required=True)
+    p.set_defaults(func=cmd_llm_inventory)
     return parser
 
 

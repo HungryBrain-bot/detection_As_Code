@@ -187,3 +187,72 @@
 - Tests: 127 passed; yamllint clean; `dac validate` against ATT&CK
   v20.0 passes; `python -m harness run --engine kusto` passes for all
   seven rules.
+
+## 2026-10-27 - LLM detection practice and rules C1-C3
+
+- Owner asked to build the remaining three scoped rules (C1-C3), mapped
+  to both OWASP LLM lists and MITRE ATLAS, tested on the closest real
+  data, and, because LLM apps have no common log format, to set up an
+  LLM logging practice for every future LLM rule: which log sources to
+  use, what telemetry each gives, how each is integrated, kept as a log
+  inventory with its own skill, and documented.
+- No public recorded LLM-application log exists in any format. The
+  practice (ADR 008, docs/components/llm-telemetry.md, skill
+  `llm-log-inventory`): one normalised table `LLMAppLog_CL` (one row per
+  OpenTelemetry GenAI span, semconv commit e19717d, status Development,
+  content opt-in), `LLMCanary_CL` for canaries, `llm_log_inventory.yaml`
+  with eight sources (OTel GenAI, MCP server, API Management AI gateway,
+  Bedrock invocation logs, Azure OpenAI diagnostics, Vertex AI, Defender
+  for AI alerts, canary registry), per-customer `llm_apps.yaml`, rule
+  field `llm_telemetry.populated`, and `python -m dac llm-inventory`.
+  `dac validate` also checks ATLAS IDs against pinned atlas-data
+  v2026.06 (commit 3259f38); CI downloads it by commit and SHA-256.
+- OWASP Top 10 for LLM Applications 2026 confirmed final (commit
+  9253e38) and renumbers risks; rules carry `owasp_llm_2025` and
+  `owasp_llm_2026`.
+- Data (licences checked at the pinned commits, all MIT): JailbreakHub
+  prompts (1,405 jailbreak, 13,735 regular), AgentDojo runs of one model
+  on the banking and slack suites (300 runs: 231 injected and reached,
+  18 injection not reached, 51 benign), BIPIA email attacks (75 attack
+  texts, 50 emails). Converters in `harness/llm_datasets.py`; the logs
+  around the text (timestamps, ids, span layout) are built by this repo.
+- Results (Kusto emulator):
+  - C1: jailbreak prompts 329/1,405 (23.4%) caught; regular prompts
+    256/13,735 (1.9%) alerted, of which 17 of 30 read by hand are
+    jailbreaks the dataset labels regular; AgentDojo injected 231/231
+    (in-sample: the addressed-to-model category was written after
+    reading AgentDojo's attack text), not-reached 0/18, benign 0/51;
+    BIPIA 0/75 attacks, 0/50 clean emails.
+  - C2: 5 rows, all the registered secret leaving the app: both recorded
+    AgentDojo exfiltrations plus three where the user asked for it. No
+    dataset has a planted canary; the registry row is hand-written.
+  - C3: 0 alerts on 300 recorded agent runs (max 16 calls, 10 identical
+    repeats per run); all positives hand-written.
+  - Every positive case matched, no negative matched; each hand-written
+    negative matches when the clause it tests is removed.
+- Decisions to review (owner):
+  - C2 maps LLM07:2025 System Prompt Leakage (LLM08:2026) as well as the
+    scoped LLM02, because a canary in the system prompt is that risk.
+  - C1 drops direct prompts whose only category is `override`: it removed
+    954 regular and 105 jailbreak alerts. Keeping them trades recall for
+    a 10.6% alert rate on regular prompts.
+  - C1's addressed-to-model category is tuned on AgentDojo, so its
+    AgentDojo result is not a recall estimate.
+  - Tensor Trust (prompt-injection game data) has no licence file in its
+    data repository, so it was not used.
+  - Gateway sources (API Management, Bedrock) need either a copy job into
+    `LLMAppLog_CL` or an ASIM-style parser function; ADR 008 picks the
+    table for now. Neither is built.
+  - C3 thresholds (50 calls per hour floor, 3x the agent's 7-day p95, 20
+    identical calls) are judgment calls, not measured.
+  - Log source `llm-app-gateway` renamed `llm-app-log` (no confirmation
+    referenced it); `llm-canary-registry` added.
+- Real vs. unverified: research text, not production app logs; ADX
+  engine, not Log Analytics; `LLMAppLog_CL` / `LLMCanary_CL` never
+  created in a workspace; every normaliser and the registry job are
+  designs; inventory entries for Vertex AI and Azure OpenAI fields are
+  not verified; scheduled-rule lookback limiting `LLMCanary_CL` is
+  assumed.
+- Tests: 153 passed; yamllint clean; `dac validate` with ATT&CK and
+  ATLAS data passes; `python -m harness run --engine kusto` passes for
+  all ten rules.

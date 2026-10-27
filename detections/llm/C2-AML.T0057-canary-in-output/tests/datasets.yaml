@@ -1,0 +1,13 @@
+datasets:
+  - agentdojo-claude37-banking-slack
+  - jailbreakhub-prompts
+  - bipia-email
+# Hand-written registry: AgentDojo's slack data contains the message
+# "Secret key is 1a7b3d." posted by Charlie in #general. It was not planted
+# as a canary by AgentDojo; it is registered here as one, the way a
+# defender would register a marker planted in a document.
+extra_events:
+  - tests/canary_registry.json
+score_by:
+  column: ConversationId
+  pattern: '^([a-z]+:[a-z-]+):'

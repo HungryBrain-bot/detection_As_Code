@@ -19,9 +19,17 @@ Per rule:
    schema for that name is in schemas/reference/, every field exists in
    it. Where no reference schema exists, field names are not checked.
 
+9. With MITRE ATLAS data (atlas-data `dist/v6/` YAML): each ATLAS ID
+   exists and is not deprecated.
+10. A rule that reads the normalised LLM table (LLMAppLog_CL) lists the
+   columns it needs populated in `llm_telemetry` (ADR 008).
+
 Per customer (validate_customers): SIEMs are known, included and
-excluded rule ids exist, and every owning team the customer's rules
-need has an entry in its teams.yaml.
+excluded rule ids exist, every owning team the customer's rules
+need has an entry in its teams.yaml, and llm_apps.yaml (if present)
+names known sources, columns and teams.
+
+Repo-wide: llm_log_inventory.yaml is well formed (dac/llm_inventory.py).
 
 Not checked here: that a query is valid in its language, or that it
 fires on the positive samples. Those need a query engine; see
@@ -34,8 +42,10 @@ from collections import Counter
 from pathlib import Path
 
 import jsonschema
+import yaml
 
 from .adapters import get_adapter
+from .llm_inventory import load_inventory, validate_apps, validate_rule_telemetry
 from .rules import REPO_ROOT, SIEMS, Customer, Rule, load_reference_schema
 
 SCHEMA_FILE = REPO_ROOT / "schemas" / "rule.schema.json"
@@ -142,6 +152,22 @@ def check_attack(rule: Rule, attack_index: dict[str, dict]) -> list[str]:
     return errors
 
 
+def load_atlas_index(path: Path) -> dict[str, bool]:
+    """ATLAS technique id -> deprecated?, from an atlas-data v6 YAML file (`techniques` keyed by id)."""
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    return {tid: bool(t.get("deprecated")) for tid, t in (data.get("techniques") or {}).items()}
+
+
+def check_atlas(rule: Rule, atlas_index: dict[str, bool]) -> list[str]:
+    errors = []
+    for tid in rule.data["mapping"].get("atlas", []):
+        if tid not in atlas_index:
+            errors.append(f"ATLAS: {tid} not found in the ATLAS data")
+        elif atlas_index[tid]:
+            errors.append(f"ATLAS: {tid} is deprecated")
+    return errors
+
+
 def check_required_fields(siem: str, required: dict[str, list[str]], allowed: list[str]) -> list[str]:
     errors = []
     for name, fields in required.items():
@@ -160,7 +186,8 @@ def check_required_fields(siem: str, required: dict[str, list[str]], allowed: li
 
 
 def validate_rule(rule: Rule, schema: dict, catalogue: dict,
-                  attack_index: dict | None = None) -> list[str]:
+                  attack_index: dict | None = None, inventory: dict | None = None,
+                  atlas_index: dict | None = None) -> list[str]:
     schema_errors = sorted(jsonschema.Draft202012Validator(schema).iter_errors(rule.data),
                            key=lambda e: list(e.path))
     if schema_errors:
@@ -194,16 +221,21 @@ def validate_rule(rule: Rule, schema: dict, catalogue: dict,
             errors.append(f"missing tests/{name}")
     if attack_index is not None:
         errors += check_attack(rule, attack_index)
+    if atlas_index is not None:
+        errors += check_atlas(rule, atlas_index)
+    errors += validate_rule_telemetry(rule, inventory if inventory is not None else load_inventory())
     return errors
 
 
-def validate_all(rules: list[Rule], catalogue: dict, attack_index: dict | None = None) -> dict[str, list[str]]:
+def validate_all(rules: list[Rule], catalogue: dict, attack_index: dict | None = None,
+                 atlas_index: dict | None = None) -> dict[str, list[str]]:
     """Folder name -> errors, only for folders with errors."""
     schema = load_schema()
+    inventory = load_inventory()
     results = {}
     id_counts = Counter(rule.data.get("id") for rule in rules)
     for rule in rules:
-        errors = validate_rule(rule, schema, catalogue, attack_index)
+        errors = validate_rule(rule, schema, catalogue, attack_index, inventory, atlas_index)
         if id_counts[rule.data.get("id")] > 1:
             errors.append(f"duplicate rule id {rule.data.get('id')}")
         if errors:
@@ -214,6 +246,7 @@ def validate_all(rules: list[Rule], catalogue: dict, attack_index: dict | None =
 def validate_customers(customers: list[Customer], rules: list[Rule], catalogue: dict) -> dict[str, list[str]]:
     """Customer id -> errors, only for customers with errors."""
     rule_ids = {rule.id for rule in rules}
+    inventory = load_inventory()
     results = {}
     for customer in customers:
         errors = []
@@ -225,6 +258,7 @@ def validate_customers(customers: list[Customer], rules: list[Rule], catalogue: 
         owners = {catalogue[src]["owner"] for rule in customer.applicable_rules(rules)
                   for src in rule.log_sources if src in catalogue}
         errors += [f"teams.yaml has no entry for owning team {team}" for team in sorted(owners - set(customer.teams))]
+        errors += validate_apps(customer, inventory)
         if errors:
             results[customer.id] = errors
     return results

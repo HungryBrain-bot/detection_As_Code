@@ -1,0 +1,27 @@
+# Reference schema for LLMCanary_CL, the canary registry for LLM apps
+# (docs/decisions/008-llm-telemetry.md). Not a vendor table: defined by
+# this project. One row per active canary value, re-sent by the registry
+# at least once per hour so that a scheduled rule's lookback period
+# always contains every active canary (see rule C2's README).
+#
+# A Sentinel watchlist would be the usual place for this list; it is a
+# table here because the harness's Kusto emulator has no _GetWatchlist.
+name: LLMCanary_CL
+siem: sentinel
+source_url: https://github.com/open-telemetry/semantic-conventions-genai/tree/e19717d65f890955777b044bca2a3cd71ae8b498/docs/gen-ai
+vendor_page: https://learn.microsoft.com/en-us/azure/azure-monitor/logs/logs-ingestion-api-overview
+fetched_on: '2026-10-27'
+provenance: Defined by this project (ADR 008); not based on any vendor schema. AppName matches
+  LLMAppLog_CL AppName.
+fields:
+- TimeGenerated
+- AppName
+- CanaryValue
+- PlantedIn
+- Type
+types:
+  TimeGenerated: datetime
+  AppName: string
+  CanaryValue: string
+  PlantedIn: string
+  Type: string

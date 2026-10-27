@@ -47,9 +47,18 @@ The output is `tests/results/<engine>.json` in the rule folder, and
      renames, listed in the module); categories with no table here
      (service principal sign-ins, Graph activity) are counted and not
      loaded;
-   - OTRF's Sentinel `AuditLogs` export -> `AuditLogs` as exported.
+   - OTRF's Sentinel `AuditLogs` export -> `AuditLogs` as exported;
+   - rows already shaped as `LLMAppLog_CL` or `LLMCanary_CL` (LLM
+     samples and converted LLM datasets) -> loaded as they are.
    Field values are copied unchanged. What the mapping approximates is
    listed in its docstring.
+   LLM datasets (ADR 008) are not logs: entries with a `format`
+   (`jailbreakhub-csv`, `agentdojo-run`, `bipia-email`) are converted to
+   `LLMAppLog_CL` rows by `harness/llm_datasets.py`, whose docstring says
+   what is real and what the converter writes (AgentDojo timestamps,
+   BIPIA's email-plus-attack cases). Multi-file entries use `files` or a
+   `manifest` (sha256sum-style file in `harness/manifests/`) and are
+   saved under flattened names (`a/b.json` -> `a__b.json`).
 3. `python -m harness run --engine kusto|splunk [--rule A1] [--write]`
    resets the engine, loads the positives and runs the query, loads the
    negatives alone and runs it, then loads all datasets the rule lists
@@ -57,6 +66,14 @@ The output is `tests/results/<engine>.json` in the rule folder, and
 4. Without `--write` it also compares the dataset match count with the
    committed `tests/results/<engine>.json`, so CI notices when a rule or
    the data changes what it catches.
+5. Optional keys in a rule's `tests/datasets.yaml`, added for the LLM
+   rules: `score_by` (alert counts per dataset label, so recall and
+   alert rates are recorded, not only a row count), `tally` (counts of a
+   result column's values per label), `max_matched_rows` (keep the
+   result file small when thousands of rows match), `extra_events`
+   (hand-written lookup rows loaded with the datasets, e.g. a canary
+   registry), and `rebase_time` (shift timestamps so the newest row is
+   two minutes old, for queries using `ago()`).
 
 ## Why this method
 - The owner has no Azure Data Explorer cluster, Log Analytics workspace
@@ -136,5 +153,10 @@ other than localhost. Settings: `DAC_KUSTO_URL` (default
   path, SHA-256 and licence. Only datasets whose licence allows reuse;
   OTRF is MIT, Splunk attack_data is Apache 2.0. A dataset with no licence file (for example
   EVTX-ATTACK-SAMPLES at the time of writing) is not used.
+- LLM dataset: no recorded LLM-application log exists; add a research
+  dataset with a reuse licence (Tensor Trust's data repository has no
+  licence file, so it is not used), a `format`, and a converter in
+  `harness/llm_datasets.py` that writes the dataset's own label into
+  `ConversationId` (see the `llm-log-inventory` skill).
 - Rule: list dataset ids in `tests/datasets.yaml`, run with `--write`,
   then write `tests/evidence.md` from the result.

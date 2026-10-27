@@ -1,0 +1,80 @@
+# Reference schema for LLMAppLog_CL, the normalised LLM application log
+# (docs/decisions/008-llm-telemetry.md, docs/components/llm-telemetry.md).
+#
+# This is NOT a vendor table. No vendor or standards body publishes a
+# recorded LLM-application log format that SIEMs share. This project
+# defines one custom table, based on the OpenTelemetry GenAI semantic
+# conventions (status: Development, so names can still change), and every
+# LLM rule reads only this table. Each source in llm_log_inventory.yaml
+# says how its fields map onto these columns.
+#
+# Not verified: that this table has been created in a real Log Analytics
+# workspace. The Logs Ingestion API page (updated 2026-10-15) says custom
+# table names need the _CL suffix and that TenantId and Type are reserved;
+# Type is listed here because Log Analytics fills it, not the sender.
+name: LLMAppLog_CL
+siem: sentinel
+source_url: https://github.com/open-telemetry/semantic-conventions-genai/tree/e19717d65f890955777b044bca2a3cd71ae8b498/docs/gen-ai
+vendor_page: https://learn.microsoft.com/en-us/azure/azure-monitor/logs/logs-ingestion-api-overview
+fetched_on: '2026-10-27'
+provenance: Defined by this project (ADR 008). Column meanings follow OpenTelemetry GenAI semantic
+  conventions at commit e19717d (Apache 2.0, read with git, not summarised); the per-column source
+  attribute is in llm_log_inventory.yaml under normalised_schema.
+fields:
+- TimeGenerated
+- AppName
+- Environment
+- OperationName
+- AgentName
+- ProviderName
+- RequestModel
+- ResponseModel
+- ConversationId
+- ResponseId
+- TraceId
+- SpanId
+- ParentSpanId
+- UserId
+- ClientIp
+- InputText
+- OutputText
+- ToolName
+- ToolCallId
+- ToolType
+- InputTokens
+- OutputTokens
+- FinishReason
+- ErrorType
+- GuardrailAction
+- GuardrailCategories
+- LogSource
+- Type
+types:
+  TimeGenerated: datetime
+  AppName: string
+  Environment: string
+  OperationName: string
+  AgentName: string
+  ProviderName: string
+  RequestModel: string
+  ResponseModel: string
+  ConversationId: string
+  ResponseId: string
+  TraceId: string
+  SpanId: string
+  ParentSpanId: string
+  UserId: string
+  ClientIp: string
+  InputText: string
+  OutputText: string
+  ToolName: string
+  ToolCallId: string
+  ToolType: string
+  InputTokens: long
+  OutputTokens: long
+  FinishReason: string
+  ErrorType: string
+  GuardrailAction: string
+  GuardrailCategories: dynamic
+  LogSource: string
+  Type: string

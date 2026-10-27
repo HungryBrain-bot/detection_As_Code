@@ -14,8 +14,11 @@ honestly.
   the most specific technique or sub-technique the query actually
   detects, and only tactics that technique belongs to. CI checks both
   against the current STIX bundle.
-- **LLM application rules** map to `mapping.owasp_llm_2025` and
-  `mapping.atlas`. ATT&CK has no LLM techniques; do not force one.
+- **LLM application rules** map to `mapping.owasp_llm_2025`,
+  `mapping.owasp_llm_2026` and `mapping.atlas`. The 2026 list renumbers
+  risks (see the `llm-log-inventory` skill); the summary prints them as
+  `LLM06:2025` / `LLM03:2026` so the two are not confused. ATT&CK has no
+  LLM techniques; do not force one.
   Fetch ATLAS IDs from the ATLAS data (github.com/mitre-atlas), never
   from memory.
 - Map to what the rule detects, not what the attack eventually does.

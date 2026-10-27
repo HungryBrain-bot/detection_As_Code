@@ -70,3 +70,16 @@ OTRF's Golden SAML `AuditLogs` export. Consequences beyond the above:
   live run.
 - Aggregating rules need several events per expected row; samples can
   group events into one case with `_case`.
+
+## Amendment (2026-10-27): LLM rules
+No recorded LLM-application log exists, so for the LLM rules (C1-C3)
+"recorded data" means open research datasets of real prompts and real
+agent runs (JailbreakHub, AgentDojo, MIT) and constructed injection
+cases (BIPIA, MIT), converted into this project's normalised
+`LLMAppLog_CL` table (ADR 008). Each LLM evidence file says so first.
+The harness gained per-label scoring, multi-file datasets with a hash
+manifest, hand-written lookup rows loaded with the datasets, and
+timestamp rebasing for queries that use `ago()`; the rest of this
+decision is unchanged. CI also validates ATLAS IDs against pinned
+atlas-data (v2026.06, by commit and SHA-256).
+
