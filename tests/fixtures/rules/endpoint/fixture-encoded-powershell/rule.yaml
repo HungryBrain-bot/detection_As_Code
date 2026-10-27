@@ -1,0 +1,52 @@
+# PIPELINE TEST FIXTURE, not a reviewed detection. It exists so the
+# validator, gate and the three adapters have one rule to run on. The
+# real T1059.001 rule will live under detections/endpoint/ with tested
+# logic and real evidence.
+id: aa6e3de5-1813-4234-8137-df07958a0359
+name: "Fixture: encoded PowerShell command line"
+version: 1
+status: experimental
+severity: Medium
+description: >
+  Test fixture. Flags powershell.exe or pwsh.exe started with an
+  encoded-command switch.
+log_sources: [windows-process-creation]
+mapping:
+  attack:
+    techniques: [T1059.001]
+    tactics: [execution]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  query: |
+    SecurityEvent
+    | where EventID == 4688
+    | where NewProcessName endswith @"\powershell.exe" or NewProcessName endswith @"\pwsh.exe"
+    | where CommandLine has_any ("-enc", "-encodedcommand", "-ec ")
+    | project TimeGenerated, Computer, Account, CommandLine, ParentProcessName
+
+splunk:
+  cron_schedule: "*/60 * * * *"
+  earliest_time: -60m
+  search: |
+    index=wineventlog source="XmlWinEventLog:Security" EventCode=4688
+    (New_Process_Name="*\\powershell.exe" OR New_Process_Name="*\\pwsh.exe")
+    (Process_Command_Line="* -enc*" OR Process_Command_Line="* -encodedcommand*")
+    | table _time host user Process_Command_Line
+
+secops:
+  rule_text: |
+    rule dac_aa6e3de5_1813_4234_8137_df07958a0359 {
+      meta:
+        author = "detection-as-code fixture"
+        description = "Pipeline test fixture: encoded PowerShell command line"
+        severity = "Medium"
+      events:
+        $e.metadata.event_type = "PROCESS_LAUNCH"
+        $e.metadata.log_type = "WINDOWS_SYSMON"
+        re.regex($e.target.process.file.full_path, `(?i)\\(powershell|pwsh)\.exe$`)
+        re.regex($e.target.process.command_line, `(?i)\s-(e|ec|enc|encodedcommand)\s`)
+      condition:
+        $e
+    }

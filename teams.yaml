@@ -1,0 +1,21 @@
+# Owning teams for log sources. The log-source gate sends each team a
+# reminder before a rule that depends on their sources is deployed.
+#
+# `email` is empty because this is a portfolio repo with no real teams.
+# With an empty email, or with SMTP not configured (see
+# docs/components/log-source-gate.md), the reminder is written to
+# reports/notifications/ and the CI job summary instead of being mailed.
+# Filling in an address and the SMTP_* secrets is the only change
+# needed for mail delivery.
+
+endpoint-team:
+  name: Endpoint Engineering
+  email: ""
+
+identity-team:
+  name: Identity and Access
+  email: ""
+
+ai-platform-team:
+  name: AI Platform
+  email: ""
