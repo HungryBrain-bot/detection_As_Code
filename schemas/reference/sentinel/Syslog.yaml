@@ -1,0 +1,31 @@
+# Reference schema for the Syslog table. Field names only; see docs/components/schema-check.md.
+name: Syslog
+siem: sentinel
+source_url: https://github.com/Azure/Azure-Sentinel/blob/master/.script/tests/KqlvalidationsTests/CustomTables/Syslog.json
+fetched_on: '2026-10-27'
+provenance: Copied verbatim from the table definition the Azure-Sentinel repo uses for its own KQL validation
+  tests, not from the Microsoft table reference (learn.microsoft.com was not reachable from the build
+  environment).
+fields:
+- TimeGenerated
+- Computer
+- EventTime
+- Facility
+- HostName
+- SeverityLevel
+- SyslogMessage
+- ProcessID
+- HostIP
+- ProcessName
+- CollectorHostName
+- SourceSystem
+- TenantId
+- MG
+- TimeCollected
+- ManagementGroupName
+- Type
+- _ResourceId
+- _SubscriptionId
+- _BilledSize
+- _IsBillable
+- _ItemId

@@ -1,0 +1,5 @@
+{"preview":false,"offset":0,"result":{"field":"_time","count":"812"}}
+{"preview":false,"offset":1,"result":{"field":"EventCode","count":"812"}}
+{"preview":false,"offset":2,"result":{"field":"New_Process_Name","count":"812"}}
+{"preview":false,"offset":3,"result":{"field":"host","count":"812"}}
+{"preview":false,"offset":4,"result":{"field":"user","count":"790"}}

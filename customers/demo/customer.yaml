@@ -1,0 +1,11 @@
+# Fictional customer used to exercise the per-customer pipeline. No real
+# tenant, no real contacts. See docs/decisions/004-customers-and-baseline.md.
+name: Demo Customer
+# SIEMs this customer runs. Rules are only gated and deployed for these.
+siems: [sentinel]
+# Targeted rules (tier: targeted) this customer gets, by rule id.
+# Baseline rules (tier: baseline) are included automatically.
+include: []
+# Baseline rules this customer must not get, by rule id, with the reason
+# in a comment.
+exclude: []

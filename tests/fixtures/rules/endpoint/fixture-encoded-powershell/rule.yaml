@@ -7,6 +7,7 @@ name: "Fixture: encoded PowerShell command line"
 version: 1
 status: experimental
 severity: Medium
+tier: baseline
 description: >
   Test fixture. Flags powershell.exe or pwsh.exe started with an
   encoded-command switch.
@@ -19,6 +20,8 @@ mapping:
 sentinel:
   query_frequency: PT1H
   query_period: PT1H
+  required_fields:
+    SecurityEvent: [TimeGenerated, EventID, NewProcessName, CommandLine, Computer, Account, ParentProcessName]
   query: |
     SecurityEvent
     | where EventID == 4688
@@ -29,6 +32,8 @@ sentinel:
 splunk:
   cron_schedule: "*/60 * * * *"
   earliest_time: -60m
+  required_fields:
+    "XmlWinEventLog:Security": [EventCode, New_Process_Name, Process_Command_Line, host, user]
   search: |
     index=wineventlog source="XmlWinEventLog:Security" EventCode=4688
     (New_Process_Name="*\\powershell.exe" OR New_Process_Name="*\\pwsh.exe")
@@ -36,6 +41,8 @@ splunk:
     | table _time host user Process_Command_Line
 
 secops:
+  required_fields:
+    WINDOWS_SYSMON: [metadata.event_type, metadata.log_type, target.process.file.full_path, target.process.command_line]
   rule_text: |
     rule dac_aa6e3de5_1813_4234_8137_df07958a0359 {
       meta:

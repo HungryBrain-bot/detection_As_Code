@@ -26,6 +26,10 @@ class MissingCredentials(RuntimeError):
     pass
 
 
+class ProbeError(RuntimeError):
+    pass
+
+
 class DeployError(RuntimeError):
     pass
 
@@ -51,6 +55,17 @@ class Request:
 class Response:
     status: int
     body: dict
+
+
+@dataclass
+class ObservedSchema:
+    """What a SIEM (or a customer-sent schema file) says about one table / source / log type."""
+    name: str
+    basis: str                   # "probe" (queried live) or "customer-schema" (a file the customer sent)
+    exists: bool | None          # None: this SIEM cannot tell "missing" from "no events"
+    fields: set[str] | None      # None: not known
+    recent_events: int | None    # events in the last 24h; None: not known
+    note: str = ""
 
 
 class Transport:
@@ -117,6 +132,8 @@ class SiemAdapter(ABC):
     name: str
     #: env vars that must all be set before deploy() will run
     credential_env_vars: tuple[str, ...]
+    #: env vars that must all be set before probe() will run (read-only access)
+    probe_env_vars: tuple[str, ...] = ()
 
     def __init__(self, transport: Transport | None = None, env: dict | None = None):
         self.transport = transport or Transport()
@@ -127,6 +144,16 @@ class SiemAdapter(ABC):
 
     def missing_credentials(self) -> list[str]:
         return [var for var in self.credential_env_vars if not self.env.get(var)]
+
+    def has_probe_credentials(self) -> bool:
+        return bool(self.probe_env_vars) and all(self.env.get(var) for var in self.probe_env_vars)
+
+    def probe(self, name: str) -> ObservedSchema:
+        """Ask the live SIEM which fields `name` has and how many events arrived in 24h.
+
+        Read-only. Only called when has_probe_credentials() is true.
+        """
+        raise NotImplementedError(f"{self.name} has no schema probe")
 
     def _env(self, var: str) -> str:
         """Credential/config value, or a visible placeholder for dry-run URLs."""

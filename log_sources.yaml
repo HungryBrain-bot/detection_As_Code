@@ -8,6 +8,9 @@
 # query a source it did not declare. A SIEM missing from `siem` means
 # the source is not expected to exist there.
 #
+# `owner` is a team key that each customer defines in its own
+# customers/<id>/teams.yaml.
+#
 # These are each product's conventional names, not names taken from a
 # live tenant. Adjust them to the real environment.
 

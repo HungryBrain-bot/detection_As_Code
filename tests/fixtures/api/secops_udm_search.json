@@ -1,0 +1,1 @@
+{"events": [{"name": "projects/p/locations/us/instances/i/events/e1", "udm": {"metadata": {"eventType": "PROCESS_LAUNCH", "logType": "WINDOWS_SYSMON"}, "target": {"process": {"file": {"fullPath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"}, "commandLine": "powershell -enc AAAA"}}}}], "moreDataAvailable": false}

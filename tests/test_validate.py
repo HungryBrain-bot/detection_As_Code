@@ -118,3 +118,54 @@ def test_attack_unknown_retired_and_wrong_tactic(rule_copy, tmp_path):
     assert "revoked or deprecated" in check_attack(retired, index)[0]
     unknown = edit(lambda d: d["mapping"]["attack"].update(techniques=["T9999"]))
     assert "not found" in check_attack(unknown, index)[0]
+
+
+# --- required_fields and reference schemas ---------------------------------
+
+def test_required_fields_must_name_a_declared_table(rule_copy, catalogue):
+    _, edit = rule_copy
+    errors = errors_for(edit(lambda d: d["sentinel"].update(required_fields={"Syslog": ["SyslogMessage"]})),
+                        catalogue)
+    assert any("required_fields names 'Syslog'" in e for e in errors)
+
+
+def test_required_fields_checked_against_reference_schema(rule_copy, catalogue):
+    _, edit = rule_copy
+    typo = edit(lambda d: d["sentinel"].update(required_fields={"SecurityEvent": ["EventID", "CommandLines"]}))
+    errors = errors_for(typo, catalogue)
+    assert any("['CommandLines'] not in the reference schema" in e for e in errors)
+
+
+def test_required_fields_are_mandatory(rule_copy, catalogue):
+    _, edit = rule_copy
+    errors = errors_for(edit(lambda d: d["splunk"].pop("required_fields")), catalogue)
+    assert any("required_fields" in e for e in errors)
+
+
+def test_reference_schemas_are_well_formed():
+    from dac.rules import REFERENCE_SCHEMAS_DIR, load_yaml
+    files = list(REFERENCE_SCHEMAS_DIR.rglob("*.yaml"))
+    assert files
+    for path in files:
+        data = load_yaml(path)
+        assert data["siem"] == path.parent.name and data["fields"] and data["source_url"].startswith("https://")
+        assert data["fetched_on"] and data["provenance"]
+
+
+# --- customers ---------------------------------------------------------------
+
+def test_customer_validation(rule, customer, catalogue):
+    from dac.validate import validate_customers
+    assert validate_customers([customer], [rule], catalogue) == {}
+    customer.data.update(siems=["qradar"], include=["00000000-0000-0000-0000-000000000000"])
+    del customer.teams["endpoint-team"]
+    errors = validate_customers([customer], [rule], catalogue)[customer.id]
+    assert "unknown siem 'qradar'" in errors
+    assert any("include names unknown rule id" in e for e in errors)
+    assert "teams.yaml has no entry for owning team endpoint-team" in errors
+
+
+def test_repo_customers_pass(catalogue):
+    from dac.rules import load_customers
+    from dac.validate import validate_customers
+    assert validate_customers(load_customers(), load_rules(DETECTIONS_DIR), catalogue) == {}

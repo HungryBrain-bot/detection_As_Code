@@ -1,12 +1,20 @@
 # Detection-as-code pipeline. What each job proves, and what it does not,
 # is in docs/components/ci.md.
 #
-#   validate  every push and PR: lint, tests, rule validation against
-#             the current MITRE ATT&CK bundle
-#   gate      PRs: log-source gate in report-only mode, so owning teams
-#             get the reminder while the rule is still in review
-#   deploy    push to main: gate (blocking), then deploy per SIEM;
-#             live only when that SIEM's secrets exist, otherwise dry-run
+#   validate   every push and PR: lint, tests, rule and customer
+#              validation against the current MITRE ATT&CK bundle
+#   customers  lists customer/SIEM pairs from customers/*/customer.yaml
+#   gate       PRs, per customer and SIEM: schema check + log-source gate
+#              in report-only mode, so owning teams get the reminder while
+#              the rule is still in review
+#   deploy     push to main, per customer and SIEM: gate (blocking), then
+#              deploy; live only when that SIEM's secrets exist
+#   coverage   push to main, per customer: Navigator layers + summary
+#
+# Credentials are per customer: each customer is a GitHub Environment
+# named after its folder (customers/<id>/), holding that customer's
+# secrets under the plain names below. No customer's job can read
+# another customer's secrets.
 name: detection-pipeline
 
 on:
@@ -49,50 +57,35 @@ jobs:
             curl -sSfL -o data/enterprise-attack.json \
               https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack/enterprise-attack.json
           fi
-      - name: Validate rules
+      - name: Validate rules and customers
         run: python -m dac validate --attack-bundle data/enterprise-attack.json
 
-  gate:
-    if: github.event_name == 'pull_request'
+  customers:
     needs: validate
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        siem: [sentinel, splunk, secops]
-    env:
-      SMTP_HOST: ${{ secrets.SMTP_HOST }}
-      SMTP_PORT: ${{ secrets.SMTP_PORT }}
-      SMTP_FROM: ${{ secrets.SMTP_FROM }}
-      SMTP_USER: ${{ secrets.SMTP_USER }}
-      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+    outputs:
+      pairs: ${{ steps.list.outputs.pairs }}
+      ids: ${{ steps.list.outputs.ids }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - name: Log-source gate (report only)
-        run: python -m dac gate --siem ${{ matrix.siem }} --report-only
-      - name: Upload reminders
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: log-source-reminders-${{ matrix.siem }}
-          path: reports/notifications/
-          if-no-files-found: ignore
+      - id: list
+        run: |
+          echo "pairs=$(python -m dac customers --json)" >> "$GITHUB_OUTPUT"
+          echo "ids=$(python -m dac customers --json | python -c 'import json,sys; print(json.dumps(sorted({p["customer"] for p in json.load(sys.stdin)})))')" >> "$GITHUB_OUTPUT"
 
-  deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: validate
+  gate:
+    if: github.event_name == 'pull_request' && needs.customers.outputs.pairs != '[]'
+    needs: customers
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write  # only used by the SecOps workload-identity step
+    environment: ${{ matrix.customer }}
     strategy:
       fail-fast: false
       matrix:
-        siem: [sentinel, splunk, secops]
+        include: ${{ fromJSON(needs.customers.outputs.pairs) }}
     env:
       SMTP_HOST: ${{ secrets.SMTP_HOST }}
       SMTP_PORT: ${{ secrets.SMTP_PORT }}
@@ -105,6 +98,7 @@ jobs:
       SENTINEL_SUBSCRIPTION_ID: ${{ secrets.SENTINEL_SUBSCRIPTION_ID }}
       SENTINEL_RESOURCE_GROUP: ${{ secrets.SENTINEL_RESOURCE_GROUP }}
       SENTINEL_WORKSPACE: ${{ secrets.SENTINEL_WORKSPACE }}
+      SENTINEL_WORKSPACE_ID: ${{ secrets.SENTINEL_WORKSPACE_ID }}
       SPLUNK_URL: ${{ secrets.SPLUNK_URL }}
       SPLUNK_TOKEN: ${{ secrets.SPLUNK_TOKEN }}
       SPLUNK_APP: ${{ secrets.SPLUNK_APP }}
@@ -113,6 +107,75 @@ jobs:
       SECOPS_INSTANCE: ${{ secrets.SECOPS_INSTANCE }}
       GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
       GCP_SERVICE_ACCOUNT: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+    permissions:
+      contents: read
+      id-token: write  # only used by the SecOps workload-identity step
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Mint SecOps access token
+        id: gcp
+        if: matrix.siem == 'secops' && env.GCP_WORKLOAD_IDENTITY_PROVIDER != ''
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
+          token_format: access_token
+      - name: Schema check
+        env:
+          SECOPS_ACCESS_TOKEN: ${{ steps.gcp.outputs.access_token }}
+        # Exit 2 means gaps were found; the gate below reports them, so do not fail here.
+        run: python -m dac schema-check --customer ${{ matrix.customer }} --siem ${{ matrix.siem }} || [ $? -eq 2 ]
+      - name: Log-source gate (report only)
+        env:
+          SECOPS_ACCESS_TOKEN: ${{ steps.gcp.outputs.access_token }}
+        run: python -m dac gate --customer ${{ matrix.customer }} --siem ${{ matrix.siem }} --report-only
+      - name: Upload reminders and schema report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gate-${{ matrix.customer }}-${{ matrix.siem }}
+          path: |
+            reports/notifications/
+            reports/schema/
+          if-no-files-found: ignore
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.customers.outputs.pairs != '[]'
+    needs: customers
+    runs-on: ubuntu-latest
+    environment: ${{ matrix.customer }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.customers.outputs.pairs) }}
+    env:
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      SMTP_FROM: ${{ secrets.SMTP_FROM }}
+      SMTP_USER: ${{ secrets.SMTP_USER }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      SENTINEL_SUBSCRIPTION_ID: ${{ secrets.SENTINEL_SUBSCRIPTION_ID }}
+      SENTINEL_RESOURCE_GROUP: ${{ secrets.SENTINEL_RESOURCE_GROUP }}
+      SENTINEL_WORKSPACE: ${{ secrets.SENTINEL_WORKSPACE }}
+      SENTINEL_WORKSPACE_ID: ${{ secrets.SENTINEL_WORKSPACE_ID }}
+      SPLUNK_URL: ${{ secrets.SPLUNK_URL }}
+      SPLUNK_TOKEN: ${{ secrets.SPLUNK_TOKEN }}
+      SPLUNK_APP: ${{ secrets.SPLUNK_APP }}
+      SECOPS_PROJECT: ${{ secrets.SECOPS_PROJECT }}
+      SECOPS_REGION: ${{ secrets.SECOPS_REGION }}
+      SECOPS_INSTANCE: ${{ secrets.SECOPS_INSTANCE }}
+      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      GCP_SERVICE_ACCOUNT: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -130,13 +193,63 @@ jobs:
       - name: Gate and deploy
         env:
           SECOPS_ACCESS_TOKEN: ${{ steps.gcp.outputs.access_token }}
-        run: python -m dac deploy --siem ${{ matrix.siem }} --mode auto
+        run: python -m dac deploy --customer ${{ matrix.customer }} --siem ${{ matrix.siem }} --mode auto
       - name: Upload plan and reminders
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: deploy-${{ matrix.siem }}
+          name: deploy-${{ matrix.customer }}-${{ matrix.siem }}
           path: |
             build/
             reports/notifications/
           if-no-files-found: ignore
+
+  coverage:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.customers.outputs.ids != '[]'
+    needs: [customers, deploy]
+    runs-on: ubuntu-latest
+    environment: ${{ matrix.customer }}
+    strategy:
+      fail-fast: false
+      matrix:
+        customer: ${{ fromJSON(needs.customers.outputs.ids) }}
+    env:
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      SMTP_FROM: ${{ secrets.SMTP_FROM }}
+      SMTP_USER: ${{ secrets.SMTP_USER }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      SENTINEL_SUBSCRIPTION_ID: ${{ secrets.SENTINEL_SUBSCRIPTION_ID }}
+      SENTINEL_RESOURCE_GROUP: ${{ secrets.SENTINEL_RESOURCE_GROUP }}
+      SENTINEL_WORKSPACE: ${{ secrets.SENTINEL_WORKSPACE }}
+      SENTINEL_WORKSPACE_ID: ${{ secrets.SENTINEL_WORKSPACE_ID }}
+      SPLUNK_URL: ${{ secrets.SPLUNK_URL }}
+      SPLUNK_TOKEN: ${{ secrets.SPLUNK_TOKEN }}
+      SPLUNK_APP: ${{ secrets.SPLUNK_APP }}
+      SECOPS_PROJECT: ${{ secrets.SECOPS_PROJECT }}
+      SECOPS_REGION: ${{ secrets.SECOPS_REGION }}
+      SECOPS_INSTANCE: ${{ secrets.SECOPS_INSTANCE }}
+      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      GCP_SERVICE_ACCOUNT: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Download ATT&CK bundle
+        run: |
+          mkdir -p data
+          curl -sSfL -o data/enterprise-attack.json \
+            https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack/enterprise-attack.json
+      - name: Coverage layers and summary
+        run: |
+          python -m dac coverage --customer ${{ matrix.customer }} --attack-bundle data/enterprise-attack.json
+          cat reports/coverage/${{ matrix.customer }}/summary.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.customer }}
+          path: reports/coverage/

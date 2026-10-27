@@ -32,13 +32,18 @@ Create `rule.yaml` next to it:
 - `id`: a new UUID (`python -c "import uuid; print(uuid.uuid4())"`),
   never reused or changed.
 - `status: experimental` until evidence exists (deploys disabled).
+- `tier`: `baseline` or `targeted`; see the `coverage-map` skill.
 - `log_sources`: IDs from `log_sources.yaml`. If a new source is
   needed, add it there with its owning team, and say so in the PR.
 - Mapping: ATT&CK technique and tactic, checked against the STIX
-  bundle in CI. LLM rules: `owasp_llm_2025` and `atlas`.
+  bundle in CI. LLM rules: `owasp_llm_2025` and `atlas`. Follow the
+  `coverage-map` skill.
 - One block per target SIEM. Sentinel for every rule; `splunk` and
   `secops` only for the four endpoint rules (CLAUDE.md, Scope).
 - SecOps rule name must be `dac_<uuid with underscores>`.
+- Each SIEM block's `required_fields`: every field the query reads,
+  per table / source / log type, in that SIEM's own names. See the
+  `schema-check` skill.
 
 ### 3. Tests and evidence
 - `tests/positive.json`: events that must match. `tests/negative.json`:
@@ -58,10 +63,11 @@ catch or miss. "Blind spots" must be specific to this rule.
 ```bash
 python -m pytest
 python -m dac validate --attack-bundle data/enterprise-attack.json
-python -m dac gate --siem sentinel --report-only
+python -m dac schema-check --customer demo --siem sentinel
+python -m dac gate --customer demo --siem sentinel --report-only
 python -m dac plan --siem sentinel
 ```
-Read `build/sentinel/<id>.json` as the reviewer will. Then add a dated
+Read `build/all/sentinel/<id>.json` as the reviewer will. Then add a dated
 entry to BUILD_LOG.md and update CLAUDE.md's rule table.
 
 ## Do NOT

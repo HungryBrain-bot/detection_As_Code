@@ -1,0 +1,9 @@
+endpoint-team:
+  name: Acme Endpoint
+  email: ""
+identity-team:
+  name: Acme Identity
+  email: ""
+ai-platform-team:
+  name: Acme AI Platform
+  email: ""

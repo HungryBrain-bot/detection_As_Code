@@ -189,3 +189,75 @@ def test_secops_deploy_needs_credentials(rule):
 def test_unknown_adapter():
     with pytest.raises(ValueError):
         get_adapter("qradar")
+
+
+# --- schema probes (read-only) ---------------------------------------------
+# Response bodies are written from vendor docs (tests/fixtures/api/README.md);
+# these tests prove how we build the probe and read the documented shapes.
+
+SENTINEL_PROBE_ENV = {"AZURE_TENANT_ID": "tenant", "AZURE_CLIENT_ID": "client", "AZURE_CLIENT_SECRET": "secret",
+                      "SENTINEL_WORKSPACE_ID": "11111111-2222-3333-4444-555555555555"}
+
+
+def test_probe_credentials_are_separate_from_deploy():
+    assert get_adapter("sentinel", env=SENTINEL_PROBE_ENV).has_probe_credentials()
+    assert not get_adapter("sentinel", env=SENTINEL_PROBE_ENV).has_credentials()
+    assert not get_adapter("sentinel", env=SENTINEL_ENV).has_probe_credentials()  # needs the workspace GUID
+
+
+def test_sentinel_probe(rule):
+    transport = FakeTransport([(200, api_fixture("sentinel_token.json")),
+                               (200, api_fixture("sentinel_getschema.json")),
+                               (200, api_fixture("sentinel_count.json"))])
+    observed = get_adapter("sentinel", transport=transport, env=SENTINEL_PROBE_ENV).probe("SecurityEvent")
+    token, schema, count = transport.requests
+    assert token.body["scope"] == "https://api.loganalytics.io/.default"
+    assert schema.url == "https://api.loganalytics.io/v1/workspaces/11111111-2222-3333-4444-555555555555/query"
+    assert schema.body["query"] == "SecurityEvent | getschema | project ColumnName"
+    assert "ago(24h)" in count.body["query"]
+    assert observed.exists and "CommandLine" in observed.fields and observed.recent_events == 1520
+
+
+def test_sentinel_probe_missing_table():
+    transport = FakeTransport([(200, api_fixture("sentinel_token.json")),
+                               (400, api_fixture("sentinel_table_missing.json"))])
+    observed = get_adapter("sentinel", transport=transport, env=SENTINEL_PROBE_ENV).probe("SysmonEvent")
+    assert observed.exists is False
+
+
+def test_sentinel_probe_rejects_odd_table_names():
+    from dac.adapters import ProbeError
+    with pytest.raises(ProbeError):
+        get_adapter("sentinel", env=SENTINEL_PROBE_ENV).probe("SecurityEvent | take 1")
+
+
+def test_splunk_probe():
+    transport = FakeTransport([(200, api_fixture("splunk_fieldsummary.ndjson"))])
+    observed = get_adapter("splunk", transport=transport, env=SPLUNK_ENV).probe("XmlWinEventLog:Security")
+    request = transport.requests[0]
+    assert request.url.endswith("/services/search/jobs/export") and request.form_encoded
+    assert 'source="XmlWinEventLog:Security" OR sourcetype="XmlWinEventLog:Security"' in request.body["search"]
+    assert request.body["earliest_time"] == "-24h"
+    assert observed.fields >= {"EventCode", "New_Process_Name", "host"} and observed.recent_events == 812
+
+
+def test_splunk_probe_no_results_is_unknown_not_missing():
+    observed = get_adapter("splunk", transport=FakeTransport([(200, {"raw": ""})]), env=SPLUNK_ENV).probe("x")
+    assert observed.exists is None and observed.recent_events == 0
+
+
+def test_secops_probe():
+    import datetime as dt
+    transport = FakeTransport([(200, api_fixture("secops_udm_search.json"))])
+    now = dt.datetime(2026, 10, 27, 12, 0, tzinfo=dt.timezone.utc)
+    observed = get_adapter("secops", transport=transport, env=SECOPS_ENV).probe("WINDOWS_SYSMON", now=now)
+    url = transport.requests[0].url
+    assert ":udmSearch?" in url and "WINDOWS_SYSMON" in url and "2026-10-26T12%3A00%3A00Z" in url
+    # camelCase API keys become the snake_case paths YARA-L uses
+    assert {"target.process.command_line", "target.process.file.full_path", "metadata.event_type"} <= observed.fields
+
+
+def test_secops_probe_empty():
+    transport = FakeTransport([(200, {"events": []})])
+    observed = get_adapter("secops", transport=transport, env=SECOPS_ENV).probe("WINDOWS_SYSMON")
+    assert observed.exists is None and observed.recent_events == 0
