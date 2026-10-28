@@ -78,6 +78,12 @@ def test_deploy_dry_run_blocked_writes_nothing(isolated):
     assert not list((isolated / "build").glob("**/*.json"))
 
 
+def test_deploy_report_only_exits_0_but_still_holds_back_blocked_rules(isolated, capsys):
+    assert run(isolated, "deploy", "--customer", "acme", "--siem", "sentinel", "--report-only") == 0
+    assert "BLOCK" in capsys.readouterr().out
+    assert not list((isolated / "build").glob("**/*.json"))
+
+
 def test_deploy_dry_run_after_confirmation(isolated):
     confirm(isolated)
     assert run(isolated, "deploy", "--customer", "acme", "--siem", "sentinel") == 0

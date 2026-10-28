@@ -256,3 +256,62 @@
 - Tests: 153 passed; yamllint clean; `dac validate` with ATT&CK and
   ATLAS data passes; `python -m harness run --engine kusto` passes for
   all ten rules.
+
+## 2026-10-28 - CI on main: deploy red by design, coverage never ran
+
+- Owner asked whether PRs #3-#5 had merge conflicts. None did: each PR
+  branch started from the previous merge and main had no other commits;
+  `git show --remerge-diff` is empty for every merge commit, and main's
+  tree equals PR #5's head tree.
+- Found while checking: the push-to-main workflow has been red since
+  PR #3. Cause: `demo` has no log-source confirmations, so the gate
+  blocks every included rule and `dac deploy` exits 2 (documented
+  behaviour in docs/components/ci.md). Validate, engine-kusto and
+  customers are green on main. The coverage job `needs` deploy, so it
+  was skipped on every one of those runs: the coverage CI job had not
+  run on main since PR #3.
+- Fixed: coverage now runs unless the run is cancelled or the customers
+  job failed. Run locally for `demo`: exits 0, 0 of 6 applicable rules
+  active, each blocked rule with its reason. Not yet verified on GitHub.
+- Decision for the owner: whether a blocked rule should keep the deploy
+  job red (current, a visible signal) or be reported without failing
+  the job. Deploy will stay red until the owning teams confirm sources.
+
+## 2026-10-28 - Open decisions settled on defaults; deploy report-only
+
+- Owner asked to "complete whatever is left". Each open decision below
+  was settled on the default recommended when it was raised; the owner
+  can reverse any of them, and each is one edit to undo.
+- Deploy on `main` (raised in the previous entry): `dac deploy` gains
+  `--report-only` and CI uses it. A rule held back by the gate is still
+  not deployed, is listed as a `BLOCK` line and in the coverage summary,
+  and its owning team still gets the reminder; the job no longer fails
+  for it. Reason: with no confirmations possible in this project, a
+  red deploy job was permanent, so a red `main` said nothing; now red
+  means a check, the engine run or a live deploy failed. Run locally on
+  `demo`: exit 2 before, 0 with the flag, same six BLOCK lines. The
+  CLI's default is unchanged (exit 2 when anything is blocked). What it
+  loses: nobody is forced to look at blocked rules; the coverage summary
+  and the reminders are the only signal.
+- C2 keeps OWASP LLM07:2025 / LLM08:2026 next to LLM02. Reason: a canary
+  planted in a system prompt and seen in output is system-prompt
+  leakage by that entry's own definition; dropping it would hide the
+  one risk C2 most directly shows. Cost: C2 counts toward two OWASP
+  entries in coverage while catching only the canary case of each.
+- C1 keeps the exclusion of direct prompts whose only category is
+  `override`. Reason: it cut the alert rate on JailbreakHub's regular
+  prompts from 10.6% to 1.9% for 105 of 1,405 jailbreaks (7.5 points of
+  recall); a rule alerting on one prompt in ten would be tuned out.
+  Indirect content (tool and retrieval results) keeps `override` alone.
+- Tensor Trust stays unused. Reason: its data repository has no licence
+  file, and the convention is recorded data only with a licence that
+  allows reuse. Revisit if the authors add one.
+- Gateway sources keep ADR 008's choice: normalise into `LLMAppLog_CL`
+  with a copy job (not built), not an ASIM-style parser function.
+  Reason: the gate's probe and the schema check read real tables, and
+  the harness cannot test workspace functions. Revisit when one
+  customer onboards two gateway sources.
+- Not changed: C3 thresholds and the `llm-app-gateway` rename stay as
+  built (they were noted, not raised as choices).
+- Tests: 154 passed (new: deploy `--report-only` exits 0 and still
+  writes no plan for blocked rules); yamllint clean.

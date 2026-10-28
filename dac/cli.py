@@ -192,7 +192,7 @@ def cmd_deploy(args) -> int:
                     print(f"FAILED {rule.id}: {exc}")
         if failed:
             return 1
-    return 0 if result.passed else 2
+    return 0 if result.passed or args.report_only else 2
 
 
 def cmd_coverage(args) -> int:
@@ -243,8 +243,9 @@ def build_parser() -> argparse.ArgumentParser:
         p = sub.add_parser(name)
         p.add_argument("--siem", required=True, choices=list(SIEMS))
         p.add_argument("--customer", required=name != "plan")
-        if name == "gate":
-            p.add_argument("--report-only", action="store_true", help="send reminders but exit 0")
+        if name in ("gate", "deploy"):
+            p.add_argument("--report-only", action="store_true",
+                           help="blocked rules are reported and reminded, but do not fail the exit code")
         if name == "deploy":
             p.add_argument("--mode", choices=["dry-run", "live", "auto"], default="dry-run")
         p.set_defaults(func=func)
