@@ -40,7 +40,10 @@ flowchart LR
   rules still deploy. SecOps tokens are minted by workload identity only
   when configured.
 - **coverage** (push to `main`): per customer, Navigator layers and the
-  summary, shown in the job summary and uploaded.
+  summary, shown in the job summary and uploaded. Runs after deploy even
+  when deploy is red, since blocked rules are what it reports
+  (amended 2026-10-28: until then it was skipped whenever a rule was
+  blocked, so it had not run on `main` since PR #3).
 
 ## Secrets, per customer
 Each customer is a GitHub **Environment** named after its folder

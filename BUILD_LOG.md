@@ -256,3 +256,23 @@
 - Tests: 153 passed; yamllint clean; `dac validate` with ATT&CK and
   ATLAS data passes; `python -m harness run --engine kusto` passes for
   all ten rules.
+
+## 2026-10-28 - CI on main: deploy red by design, coverage never ran
+
+- Owner asked whether PRs #3-#5 had merge conflicts. None did: each PR
+  branch started from the previous merge and main had no other commits;
+  `git show --remerge-diff` is empty for every merge commit, and main's
+  tree equals PR #5's head tree.
+- Found while checking: the push-to-main workflow has been red since
+  PR #3. Cause: `demo` has no log-source confirmations, so the gate
+  blocks every included rule and `dac deploy` exits 2 (documented
+  behaviour in docs/components/ci.md). Validate, engine-kusto and
+  customers are green on main. The coverage job `needs` deploy, so it
+  was skipped on every one of those runs: the coverage CI job had not
+  run on main since PR #3.
+- Fixed: coverage now runs unless the run is cancelled or the customers
+  job failed. Run locally for `demo`: exits 0, 0 of 6 applicable rules
+  active, each blocked rule with its reason. Not yet verified on GitHub.
+- Decision for the owner: whether a blocked rule should keep the deploy
+  job red (current, a visible signal) or be reported without failing
+  the job. Deploy will stay red until the owning teams confirm sources.

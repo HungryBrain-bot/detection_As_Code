@@ -247,7 +247,12 @@ jobs:
           if-no-files-found: ignore
 
   coverage:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.customers.outputs.ids != '[]'
+    # Runs after deploy even when deploy is red: a blocked rule makes deploy
+    # exit 2, and coverage is where that gap is reported (it re-runs the gate).
+    if: >-
+      !cancelled() && needs.customers.result == 'success'
+      && github.event_name == 'push' && github.ref == 'refs/heads/main'
+      && needs.customers.outputs.ids != '[]'
     needs: [customers, deploy]
     runs-on: ubuntu-latest
     environment: ${{ matrix.customer }}
