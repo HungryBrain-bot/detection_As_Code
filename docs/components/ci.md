@@ -36,8 +36,12 @@ flowchart LR
   the gate in report-only mode. Reminders and the schema report are
   uploaded as artifacts.
 - **deploy** (push to `main`): per customer and SIEM, gate then deploy
-  with `--mode auto`. Blocked rules make the job exit 2 (red); allowed
-  rules still deploy. SecOps tokens are minted by workload identity only
+  with `--mode auto --report-only`. Blocked rules are held back, listed
+  as `BLOCK` lines and in the coverage summary, and their owning teams
+  get the reminder, but the job stays green; allowed rules still deploy,
+  and a failed live deploy (exit 1) turns it red (amended 2026-10-28:
+  until then blocked rules made the job exit 2, which kept `main` red
+  while no team had confirmed a source). SecOps tokens are minted by workload identity only
   when configured.
 - **coverage** (push to `main`): per customer, Navigator layers and the
   summary, shown in the job summary and uploaded. Runs after deploy even

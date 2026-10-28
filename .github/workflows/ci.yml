@@ -10,8 +10,9 @@
 #   gate       PRs, per customer and SIEM: schema check + log-source gate
 #              in report-only mode, so owning teams get the reminder while
 #              the rule is still in review
-#   deploy     push to main, per customer and SIEM: gate (blocking), then
-#              deploy; live only when that SIEM's secrets exist
+#   deploy     push to main, per customer and SIEM: gate (blocked rules are
+#              held back and reported, not a job failure), then deploy;
+#              live only when that SIEM's secrets exist
 #   coverage   push to main, per customer: Navigator layers + summary
 #
 # Credentials are per customer: each customer is a GitHub Environment
@@ -235,7 +236,10 @@ jobs:
       - name: Gate and deploy
         env:
           SECOPS_ACCESS_TOKEN: ${{ steps.gcp.outputs.access_token }}
-        run: python -m dac deploy --customer ${{ matrix.customer }} --siem ${{ matrix.siem }} --mode auto
+        # --report-only: a rule held back by the gate is listed (BLOCK lines,
+        # reminders, coverage summary) but does not turn main red; a failed
+        # live deploy of an allowed rule (exit 1) still does.
+        run: python -m dac deploy --customer ${{ matrix.customer }} --siem ${{ matrix.siem }} --mode auto --report-only
       - name: Upload plan and reminders
         if: always()
         uses: actions/upload-artifact@v4

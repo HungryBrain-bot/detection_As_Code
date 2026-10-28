@@ -191,7 +191,7 @@ current MITRE ATT&CK bundle and pinned ATLAS data (v2026.06).
 - Engine tests: `python -m harness run --engine kusto` (also CI job
   `engine-kusto`) and `--engine splunk` (local only).
 
-Last run (2026-10-27): 153 passed, 0 failed; engine tests: A1-A4 pass
+Last run (2026-10-28): 154 passed, 0 failed; engine tests: A1-A4 pass
 in Kusto emulator and Splunk 10.6.1, B1-B3 and C1-C3 in the Kusto
 emulator.
 
@@ -231,10 +231,11 @@ conflicting sources).
   app logs (none public); `LLMAppLog_CL` / `LLMCanary_CL` in a workspace;
   every LLM normaliser and the canary registry job (designs only); the
   inventory's Vertex AI and Azure OpenAI field entries.
-- Next: all ten scoped rules are built. Open decisions for the owner are
-  in BUILD_LOG.md (2026-10-27, LLM rules): C2's added LLM07 mapping, C1's
-  direct override-only exclusion, Tensor Trust (no licence), the
-  copy-job vs. parser-function choice for gateway sources.
+- Next: all ten scoped rules are built. The four LLM decisions were
+  settled on defaults on 2026-10-28 (BUILD_LOG.md); the owner can still
+  reverse any. Deploy on `main` runs `--report-only` (blocked rules
+  reported, job green); coverage runs after it. Unblocking needs the
+  owning teams' confirmations, which only they can give.
 
 ## Do NOT
 
