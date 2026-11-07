@@ -230,3 +230,61 @@ datasets:
     path: datasets/attack_techniques/T1580/aws_iam_excessive_list_command_usage/aws_iam_excessive_list_command_usage.json
     sha256: d0e597bf34919e87ff53d757766a71431847d8788ca80ffe78d8ac23bb498f35
     license: Apache-2.0
+
+  # ---- Foothold track (ADR 012). Sysmon recorded in Splunk's attack_range lab, one Windows event XML
+  # document per line (sourcetype XmlWinEventLog); harness/winxml.py reads them (`format: winevent-xml`).
+  # Host names are the lab's. Apache-2.0.
+
+  splunk-wsus-webshell-sysmon:
+    description: WSUS exploitation on a lab server (CVE-2025-59287 per the attack_data commit that added it, 68bf516); 6 Sysmon process events, incl. w3wp.exe starting cmd.exe, wsusservice.exe starting cmd.exe, and curl.exe posting command output to webhook.site.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1505.003/wsus-windows-sysmon.log
+    sha256: f9a4be69d25d2c39be02a4288f75780b4e34a80d3555a8900e4f7a3c977ec220
+    format: winevent-xml
+    license: Apache-2.0
+
+  splunk-wsus-sa-webshell-sysmon:
+    description: Second WSUS exploitation recording; 2 Sysmon process events, WsusService.exe and mmc.exe starting cmd.exe with an encoded PowerShell command.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1505.003/wsus-sa-windows-sysmon.log
+    sha256: 3fb605825f6598cbcde1f339cc2f9eebafee494525d133377733f16791d04aa0
+    format: winevent-xml
+    license: Apache-2.0
+
+  splunk-crushftp-sysmon:
+    description: CrushFTP exploitation (CVE-2024-4040 / CVE-2025-31161 per the dataset's .yml); 1 Sysmon event, crushftpservice.exe starting cmd.exe /c whoami.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1190/crushftp/windows-sysmon.log
+    sha256: 2e9efea0d5421db1f9f2889ba418fc5f868fd38cb9654dc7312a9d31c0e28d0c
+    format: winevent-xml
+    license: Apache-2.0
+
+  splunk-sharepoint-webshell-sysmon:
+    description: ToolShell (CVE-2025-53770 per the dataset's .yml); 1 Sysmon file creation, w3wp.exe writing spinstall0.aspx under SharePoint's TEMPLATE\LAYOUTS.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1505.003/sharepoint_webshell/sysmon_spinstall0.log
+    sha256: ae25e647c1fc51c2290a5782b620fe923f62f6d9d74dd9df935a7cbed79f930f
+    format: winevent-xml
+    license: Apache-2.0
+
+  splunk-moveit-webshell-sysmon:
+    description: MOVEit Transfer web shell file (no CVE stated in the dataset .yml, which describes ProxyLogon); 6 Sysmon file creations of C:\MOVEitTransfer\wwwroot\human2.aspx by the System process.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1505.003/moveit_windows-sysmon.log
+    sha256: 90742ea18f8421e91e0321cadcd02f2e7fae84b22b2b4549b08a24f21b2de931
+    format: winevent-xml
+    license: Apache-2.0
+
+  splunk-java-shell-linux-sysmon:
+    description: Sysmon for Linux on a lab host during Log4Shell testing (directory T1190/java); 42 process creations, among them java (a Maven build, not an application server) starting /bin/sh. Background for E4.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1190/java/java_spawn_shell_nix.log
+    sha256: eab1d19a5fe4cd073270105c69002e0f6e4270ffc7fdbc368a10272db32a1e02
+    format: winevent-xml
+    license: Apache-2.0

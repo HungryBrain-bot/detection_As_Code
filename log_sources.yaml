@@ -101,3 +101,35 @@ aws-cloudtrail:
   owner: cloud-platform-team
   siem:
     sentinel: [AWSCloudTrail]
+
+# Added 2026-11-07 for rules E1-E9 (ARTEX Phase 4, initial exploitation and foothold; ADR 012).
+# E1 reads app-service-http (above).
+mde-advanced-hunting:
+  description: Microsoft Defender for Endpoint advanced hunting tables streamed to Sentinel by the Microsoft Defender XDR connector (process, file and network events, device inventory), Windows and Linux.
+  owner: endpoint-team
+  siem:
+    sentinel: [DeviceProcessEvents, DeviceFileEvents, DeviceNetworkEvents, DeviceInfo]
+
+windows-file-creation:
+  description: File creation events (Sysmon event 11) on Windows, in the Event table.
+  owner: endpoint-team
+  siem:
+    sentinel: [Event]
+
+linux-sysmon-syslog:
+  description: Sysmon for Linux events (process creation, event 1) sent to Sentinel through the Syslog connector; the event XML is in SyslogMessage, as Microsoft's ASIM Sysmon for Linux parsers read it.
+  owner: endpoint-team
+  siem:
+    sentinel: [Syslog]
+
+mysql-audit-syslog:
+  description: MariaDB Audit Plugin (server_audit) with server_audit_output_type=SYSLOG and server_audit_events including QUERY, sent to Sentinel through the Syslog connector. Self-hosted MySQL/MariaDB only.
+  owner: database-team
+  siem:
+    sentinel: [Syslog]
+
+app-service-audit:
+  description: Azure App Service publishing logins (FTP, Kudu, Web Deploy). Needs the AppServiceAuditLogs diagnostic setting on each app.
+  owner: app-platform-team
+  siem:
+    sentinel: [AppServiceAuditLogs]

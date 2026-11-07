@@ -1,0 +1,39 @@
+id: 82dbb6fa-063e-4233-9625-0a5b9288ecc2
+name: New server-side script file in a web root (Windows Sysmon)
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >
+  Sysmon file creation (event 11) on Windows of a .jsp, .aspx, .ashx,
+  .asmx, .asp or .php file under a web root (IIS wwwroot, Tomcat webapps,
+  htdocs, SharePoint LAYOUTS), by a process that is not a known deployment
+  tool. Same hypothesis as E5, for hosts with Sysmon; High in the alert
+  when the writer is a database process (ADR 012).
+log_sources: [windows-file-creation]
+mapping:
+  attack:
+    techniques: [T1505.003]
+    tactics: [persistence]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    Event: [TimeGenerated, Source, EventID, EventData, Computer]
+  query: |
+    // E6: server-side script file in a web root, Sysmon (detections/foothold/E6-T1505.003-webroot-script-file-sysmon/README.md)
+    let script_ext = @"(?i)\.(jspx?|aspx|ashx|asmx|asp|php[0-9]?|phtml)$";
+    let web_roots = @"(?i)(\\inetpub\\wwwroot\\|\\wwwroot\\|[\\/]webapps[\\/]|[\\/]htdocs[\\/]|\\Web Server Extensions\\[0-9]+\\TEMPLATE\\LAYOUTS\\)";
+    let database_writers = @"(?i)\\(mysqld|mariadbd|sqlservr|postgres)\.exe$";
+    let deployment_writers = @"(?i)\\msdeploy\.exe$";
+    Event
+    | where Source == "Microsoft-Windows-Sysmon" and EventID == 11
+    | extend Data = parse_xml(EventData).DataItem.EventData.Data
+    | mv-apply d = Data on (summarize Fields = make_bag(bag_pack(tostring(d["@Name"]), tostring(d["#text"]))))
+    | extend Image = tostring(Fields.Image), TargetFilename = tostring(Fields.TargetFilename), User = tostring(Fields.User)
+    | where TargetFilename matches regex script_ext and TargetFilename matches regex web_roots
+    | where not(Image matches regex deployment_writers)
+    | extend WriterIsDatabase = Image matches regex database_writers
+    | extend AlertSeverity = iff(WriterIsDatabase, "High", "Medium")
+    | project TimeGenerated, Computer, TargetFilename, Image, User, WriterIsDatabase, AlertSeverity

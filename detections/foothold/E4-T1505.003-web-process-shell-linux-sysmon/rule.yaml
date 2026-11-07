@@ -1,0 +1,42 @@
+id: be40d34d-9e94-42f8-884a-892ce9215ee5
+name: Web server or database process starts a shell or download tool (Sysmon for Linux)
+version: 1
+status: test
+severity: High
+tier: targeted
+description: >
+  Sysmon for Linux process creation (event 1), collected through the
+  Syslog connector, where the parent is nginx, httpd/apache2, mysqld,
+  mariadbd or a Java application server and the child is sh, bash, dash,
+  zsh, curl, wget or netcat. Same hypothesis as E2, for Linux hosts
+  without Defender for Endpoint (ADR 012).
+log_sources: [linux-sysmon-syslog]
+mapping:
+  attack:
+    techniques: [T1505.003, T1059.004]
+    tactics: [persistence, execution]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    Syslog: [TimeGenerated, Computer, SyslogMessage]
+  query: |
+    // E4: web or database process starts a shell or download tool, Sysmon for Linux (detections/foothold/E4-T1505.003-web-process-shell-linux-sysmon/README.md)
+    let server_parents = @"(?i)/(nginx|httpd|apache2|mysqld|mariadbd)$";
+    let java_parents = @"(?i)/java$";
+    let java_server_markers = @"(?i)catalina|tomcat|jboss|wildfly|jetty|weblogic|websphere|glassfish";
+    let children = @"(?i)/(sh|bash|dash|zsh|curl|wget|nc|ncat|netcat)$";
+    let allowed_child_commands = dynamic([]);
+    Syslog
+    | where SyslogMessage has_all ('<Provider Name="Linux-Sysmon"', '<EventID>1</EventID>')
+    | extend Image = extract(@'<Data Name="Image">([^<]*)<', 1, SyslogMessage),
+             CommandLine = extract(@'<Data Name="CommandLine">([^<]*)<', 1, SyslogMessage),
+             User = extract(@'<Data Name="User">([^<]*)<', 1, SyslogMessage),
+             ParentImage = extract(@'<Data Name="ParentImage">([^<]*)<', 1, SyslogMessage),
+             ParentCommandLine = extract(@'<Data Name="ParentCommandLine">([^<]*)<', 1, SyslogMessage)
+    | where Image matches regex children
+    | where ParentImage matches regex server_parents
+        or (ParentImage matches regex java_parents and ParentCommandLine matches regex java_server_markers)
+    | where not(CommandLine in (allowed_child_commands))
+    | project TimeGenerated, Computer, ParentImage, ParentCommandLine, Image, CommandLine, User

@@ -1,0 +1,117 @@
+# Reference schema for the DeviceNetworkEvents table, with column types. See docs/components/schema-check.md.
+# Defender for Endpoint network connections, with RemoteUrl when the sensor resolved it. Read by E9.
+# Column names and types are copied from Microsoft's Azure-Sentinel repository
+# (.script/tests/KqlvalidationsTests/CustomTables/DeviceNetworkEvents.json at commit c0c2dc2, the table definition the repo
+# uses to validate its own KQL), file read directly with curl (not summarised); not from a live workspace.
+# Added 2026-11-07 for the foothold rules (ARTEX Phase 4; ADR 012).
+name: DeviceNetworkEvents
+siem: sentinel
+source_url: https://github.com/Azure/Azure-Sentinel/blob/c0c2dc267d7b5840299e76e195b0407f3f9c92c8/.script/tests/KqlvalidationsTests/CustomTables/DeviceNetworkEvents.json
+fetched_on: '2026-11-07'
+provenance: Microsoft Azure-Sentinel repo (MIT) at commit c0c2dc2, file read directly (not summarised); 52 columns.
+fields:
+- ActionType
+- AdditionalFields
+- AppGuardContainerId
+- _BilledSize
+- DeviceId
+- DeviceName
+- InitiatingProcessAccountDomain
+- InitiatingProcessAccountName
+- InitiatingProcessAccountObjectId
+- InitiatingProcessAccountSid
+- InitiatingProcessAccountUpn
+- InitiatingProcessCommandLine
+- InitiatingProcessCreationTime
+- InitiatingProcessFileName
+- InitiatingProcessFileSize
+- InitiatingProcessFolderPath
+- InitiatingProcessId
+- InitiatingProcessIntegrityLevel
+- InitiatingProcessMD5
+- InitiatingProcessParentCreationTime
+- InitiatingProcessParentFileName
+- InitiatingProcessParentId
+- InitiatingProcessRemoteSessionDeviceName
+- InitiatingProcessRemoteSessionIP
+- InitiatingProcessSessionId
+- InitiatingProcessSHA1
+- InitiatingProcessSHA256
+- InitiatingProcessTokenElevation
+- InitiatingProcessUniqueId
+- InitiatingProcessVersionInfoCompanyName
+- InitiatingProcessVersionInfoFileDescription
+- InitiatingProcessVersionInfoInternalFileName
+- InitiatingProcessVersionInfoOriginalFileName
+- InitiatingProcessVersionInfoProductName
+- InitiatingProcessVersionInfoProductVersion
+- _IsBillable
+- IsInitiatingProcessRemoteSession
+- LocalIP
+- LocalIPType
+- LocalPort
+- MachineGroup
+- Protocol
+- RemoteIP
+- RemoteIPType
+- RemotePort
+- RemoteUrl
+- ReportId
+- SourceSystem
+- TenantId
+- TimeGenerated
+- Type
+- Timestamp
+types:
+  ActionType: string
+  AdditionalFields: dynamic
+  AppGuardContainerId: string
+  _BilledSize: real
+  DeviceId: string
+  DeviceName: string
+  InitiatingProcessAccountDomain: string
+  InitiatingProcessAccountName: string
+  InitiatingProcessAccountObjectId: string
+  InitiatingProcessAccountSid: string
+  InitiatingProcessAccountUpn: string
+  InitiatingProcessCommandLine: string
+  InitiatingProcessCreationTime: datetime
+  InitiatingProcessFileName: string
+  InitiatingProcessFileSize: long
+  InitiatingProcessFolderPath: string
+  InitiatingProcessId: long
+  InitiatingProcessIntegrityLevel: string
+  InitiatingProcessMD5: string
+  InitiatingProcessParentCreationTime: datetime
+  InitiatingProcessParentFileName: string
+  InitiatingProcessParentId: long
+  InitiatingProcessRemoteSessionDeviceName: string
+  InitiatingProcessRemoteSessionIP: string
+  InitiatingProcessSessionId: long
+  InitiatingProcessSHA1: string
+  InitiatingProcessSHA256: string
+  InitiatingProcessTokenElevation: string
+  InitiatingProcessUniqueId: string
+  InitiatingProcessVersionInfoCompanyName: string
+  InitiatingProcessVersionInfoFileDescription: string
+  InitiatingProcessVersionInfoInternalFileName: string
+  InitiatingProcessVersionInfoOriginalFileName: string
+  InitiatingProcessVersionInfoProductName: string
+  InitiatingProcessVersionInfoProductVersion: string
+  _IsBillable: string
+  IsInitiatingProcessRemoteSession: bool
+  LocalIP: string
+  LocalIPType: string
+  LocalPort: int
+  MachineGroup: string
+  Protocol: string
+  RemoteIP: string
+  RemoteIPType: string
+  RemotePort: int
+  RemoteUrl: string
+  ReportId: long
+  SourceSystem: string
+  TenantId: string
+  TimeGenerated: datetime
+  Type: string
+  Timestamp: datetime
