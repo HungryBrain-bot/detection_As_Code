@@ -203,3 +203,30 @@ datasets:
       - path: benchmark/email/test.jsonl
         sha256: 217b403faaa1d0cb12c24892bea39f4a0b9e2819919ac7e2b902006e28278cdb
     license: MIT
+
+  # ---- Recon track (ADR 010). Raw CloudTrail records recorded in Splunk's attack_range lab
+  # (sourcetype aws:cloudtrail); account ids and IPs are Splunk's replacements. Apache-2.0.
+
+  splunk-aws-accessdenied-discovery:
+    description: cloudsploit and cloudmapper (AWS posture / mapping tools) run against a lab account with limited rights; 1,150 AccessDenied calls over about two hours, most in four bursts of a few minutes.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1580/aws_iam_accessdenied_discovery_events/aws_iam_accessdenied_discovery_events.json
+    sha256: 4f52389f17745abf5fa1cf30c055d4f9d34022fcfb8e5c2544c70177da228433
+    license: Apache-2.0
+
+  splunk-aws-security-scanner:
+    description: cloudsploit against a lab account; 1,071 calls in three minutes, 499 AccessDenied and 480 Client.UnauthorizedOperation.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1526/aws_security_scanner/aws_security_scanner.json
+    sha256: 4c7ba5d7ac8186f61acf60b6a94e5bc6c3b5a3313bc627a35998110e7103021e
+    license: Apache-2.0
+
+  splunk-aws-excessive-list:
+    description: Several IAM users (aws-cli, .NET SDK, cloudsploit, cloudmapper) over a week; 4,196 calls, 497 AccessDenied, mostly from the scanner. The ordinary users are background.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1580/aws_iam_excessive_list_command_usage/aws_iam_excessive_list_command_usage.json
+    sha256: d0e597bf34919e87ff53d757766a71431847d8788ca80ffe78d8ac23bb498f35
+    license: Apache-2.0

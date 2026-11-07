@@ -1,0 +1,80 @@
+[
+  {
+    "_provenance": "hand-written",
+    "_note": "honeytoken registry row, TokenType DecoyRoute",
+    "TimeGenerated": "2026-11-06T12:00:00.0000000Z",
+    "Type": "Honeytoken_CL",
+    "TokenType": "DecoyRoute",
+    "TokenValue": "/api/internal/v1/export-customers",
+    "PlantedIn": "OpenAPI spec (internal-v1) and a commented-out route in main.js",
+    "_case": "decoy-404"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "agent calls the planted route (not implemented, 404)",
+    "TimeGenerated": "2026-11-06T12:00:00.0000000Z",
+    "Type": "AppServiceHTTPLogs",
+    "CIp": "203.0.113.60",
+    "CsHost": "app.example.test",
+    "CsMethod": "GET",
+    "CsUriStem": "/api/internal/v1/export-customers",
+    "CsUriQuery": "",
+    "ScStatus": 404,
+    "Result": "Failure",
+    "UserAgent": "python-requests/2.34.2",
+    "Referer": "",
+    "_case": "decoy-404"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "honeytoken registry row, TokenType DecoyRoute",
+    "TimeGenerated": "2026-11-06T12:00:00.0000000Z",
+    "Type": "Honeytoken_CL",
+    "TokenType": "DecoyRoute",
+    "TokenValue": "/api/internal/v1/export-customers",
+    "PlantedIn": "OpenAPI spec (internal-v1) and a commented-out route in main.js",
+    "_case": "decoy-case-slash"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "different case and trailing slash, POST, 401",
+    "TimeGenerated": "2026-11-06T12:00:00.0000000Z",
+    "Type": "AppServiceHTTPLogs",
+    "CIp": "198.51.100.7",
+    "CsHost": "app.example.test",
+    "CsMethod": "POST",
+    "CsUriStem": "/API/Internal/V1/Export-Customers/",
+    "CsUriQuery": "",
+    "ScStatus": 401,
+    "Result": "Failure",
+    "UserAgent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/130",
+    "Referer": "",
+    "_case": "decoy-case-slash"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "honeytoken registry row, TokenType DecoyRoute",
+    "TimeGenerated": "2026-11-06T12:00:00.0000000Z",
+    "Type": "Honeytoken_CL",
+    "TokenType": "DecoyRoute",
+    "TokenValue": "/api/v2/debug/dump-config",
+    "PlantedIn": "JS bundle",
+    "_case": "second-route"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "second registered route, 200",
+    "TimeGenerated": "2026-11-06T12:00:00.0000000Z",
+    "Type": "AppServiceHTTPLogs",
+    "CIp": "203.0.113.61",
+    "CsHost": "app.example.test",
+    "CsMethod": "GET",
+    "CsUriStem": "/api/v2/debug/dump-config",
+    "CsUriQuery": "",
+    "ScStatus": 200,
+    "Result": "Success",
+    "UserAgent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/130",
+    "Referer": "",
+    "_case": "second-route"
+  }
+]

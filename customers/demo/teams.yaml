@@ -28,3 +28,7 @@ cloud-platform-team:
 detection-team:
   name: Detection Engineering
   email: ""
+
+app-platform-team:
+  name: Application Platform
+  email: ""

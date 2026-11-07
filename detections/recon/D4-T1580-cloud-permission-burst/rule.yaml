@@ -1,0 +1,44 @@
+id: 6b7d007b-5a28-47df-96a5-a83983cd94bc
+name: Burst of AccessDenied across several AWS services from one principal
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >
+  One AWS principal gets at least 20 authorization failures
+  (AccessDenied / UnauthorizedOperation) across at least 4 services
+  within one minute. An identity that checks what it can do by trying
+  every API call it knows produces that pattern; a person or a normal
+  application fails a few calls on one or two services. Known posture
+  scanners that behave the same way are excluded by principal (ADR 010).
+log_sources: [aws-cloudtrail]
+mapping:
+  attack:
+    techniques: [T1580]
+    tactics: [discovery]
+
+# AWS only. The Azure Activity log does not record reads, and how it records an authorization failure was
+# not found in Microsoft's docs, so there is no Azure branch (ADR 010).
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    AWSCloudTrail: [TimeGenerated, EventName, EventSource, ErrorCode, UserIdentityArn, SourceIpAddress, UserAgent]
+  query: |
+    // D4: authorization-failure burst across services (detections/recon/D4-T1580-cloud-permission-burst/README.md)
+    let bin_size = 1m;
+    let min_denied = 20;
+    let min_services = 4;
+    // Principals that legitimately sweep every service (cloud security posture scanners). Fill per customer.
+    let scanner_principals = dynamic([]);
+    AWSCloudTrail
+    | where ErrorCode contains "AccessDenied" or ErrorCode contains "UnauthorizedOperation"
+    | where not(UserIdentityArn in (scanner_principals))
+    | summarize Denied = count(), Services = dcount(EventSource), ServiceList = make_set(EventSource, 30),
+                Actions = dcount(EventName), ActionList = make_set(EventName, 30), ErrorCodes = make_set(ErrorCode, 5),
+                IPAddresses = make_set(SourceIpAddress, 10), UserAgents = make_set(UserAgent, 5),
+                FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+        by UserIdentityArn, Window = bin(TimeGenerated, bin_size)
+    | where Denied >= min_denied and Services >= min_services
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, UserIdentityArn, Window, Denied, Services, ServiceList, Actions, ActionList, ErrorCodes, IPAddresses, UserAgents, FirstSeen, LastSeen

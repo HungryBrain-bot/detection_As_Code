@@ -8,6 +8,8 @@
 #   ServicePrincipalAppId  - the AppId (client id) of a decoy app registration
 #                            whose secret was planted somewhere an attacker looks
 #   KeyVaultObject         - the name of a decoy Key Vault secret or key
+#   DecoyRoute             - the URL path (no query string) of a decoy API route listed in an
+#                            OpenAPI spec or a JavaScript bundle; read by rule D1 (ADR 010)
 #
 # A Sentinel watchlist is the usual place for this list (the Sentinel
 # Deception / HoneyTokens solution uses one, read with _GetWatchlist); it is

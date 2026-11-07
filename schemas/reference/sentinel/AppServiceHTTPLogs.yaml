@@ -1,0 +1,67 @@
+# Reference schema for the AppServiceHTTPLogs table (Azure App Service HTTP access log), with column types.
+# See docs/components/schema-check.md. The Azure-Sentinel repository has no Sample Data metadata for this
+# table, so columns and types come from Microsoft's Azure Monitor table reference page, fetched 2026-11-07
+# (page read in full, not truncated; through a fetch tool, so not checked character by character).
+# Resource type microsoft.web/sites. CsUriStem is the path; the query string is in CsUriQuery.
+# Not stated by the page: whether CIp is the original client or a proxy (Front Door, Application Gateway)
+# when the app sits behind one. Added 2026-11-07 for rules D1-D3 (ARTEX Phase 2, recon; ADR 010).
+name: AppServiceHTTPLogs
+siem: sentinel
+source_url: https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/appservicehttplogs
+vendor_page: https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/appservicehttplogs
+fetched_on: '2026-11-07'
+provenance: Microsoft Learn table reference, fetched 2026-11-07 through a fetch tool (full page); 26 columns.
+fields:
+- _BilledSize
+- CIp
+- ComputerName
+- Cookie
+- CsBytes
+- CsHost
+- CsMethod
+- CsUriQuery
+- CsUriStem
+- CsUsername
+- _IsBillable
+- Referer
+- _ResourceId
+- Result
+- ScBytes
+- ScStatus
+- ScSubStatus
+- ScWin32Status
+- SourceSystem
+- SPort
+- _SubscriptionId
+- TenantId
+- TimeGenerated
+- TimeTaken
+- Type
+- UserAgent
+types:
+  _BilledSize: real
+  CIp: string
+  ComputerName: string
+  Cookie: string
+  CsBytes: int
+  CsHost: string
+  CsMethod: string
+  CsUriQuery: string
+  CsUriStem: string
+  CsUsername: string
+  _IsBillable: string
+  Referer: string
+  _ResourceId: string
+  Result: string
+  ScBytes: int
+  ScStatus: int
+  ScSubStatus: string
+  ScWin32Status: string
+  SourceSystem: string
+  SPort: string
+  _SubscriptionId: string
+  TenantId: string
+  TimeGenerated: datetime
+  TimeTaken: int
+  Type: string
+  UserAgent: string

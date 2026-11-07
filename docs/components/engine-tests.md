@@ -50,6 +50,10 @@ The output is `tests/results/<engine>.json` in the rule folder, and
      are counted and not loaded;
    - hand-written `AzureDiagnostics` (Key Vault) and `Honeytoken_CL`
      rows -> loaded as they are (no recorded Key Vault log is available);
+   - raw CloudTrail records (Splunk attack_data) -> `AWSCloudTrail`
+     columns (`from_cloudtrail`, 2026-11-07, rule D4); hand-written
+     `AppServiceHTTPLogs` and `AWSCloudTrail` rows load as they are (no
+     recorded web access log is loaded; ADR 010);
    - OTRF's Sentinel `AuditLogs` export -> `AuditLogs` as exported;
    - rows already shaped as `LLMAppLog_CL` or `LLMCanary_CL` (LLM
      samples and converted LLM datasets) -> loaded as they are.

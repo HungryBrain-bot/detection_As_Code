@@ -212,13 +212,41 @@ def from_azure_monitor(record: dict) -> tuple[str | None, dict]:
 # no recorded Key Vault audit log is available here (ADR 009). Hand-written
 # service principal sign-in and Graph rows are also written in table shape.
 NATIVE_TABLES = ("LLMAppLog_CL", "LLMCanary_CL", "AzureDiagnostics", "Honeytoken_CL",
-                 "AADServicePrincipalSignInLogs", "MicrosoftGraphActivityLogs")
+                 "AADServicePrincipalSignInLogs", "MicrosoftGraphActivityLogs",
+                 "AppServiceHTTPLogs", "AWSCloudTrail")
+
+
+def is_cloudtrail_record(event: dict) -> bool:
+    """A raw CloudTrail record, as AWS writes it (camelCase, userIdentity object)."""
+    return "eventSource" in event and "eventName" in event and isinstance(event.get("userIdentity"), dict)
+
+
+def from_cloudtrail(record: dict) -> dict:
+    """AWSCloudTrail row for a raw CloudTrail record (ADR 010).
+
+    Only the columns rule D4 reads, plus a few identifying ones, are mapped; every other
+    column of Sentinel's table stays empty. Sentinel's AWS S3 connector fills these from the
+    same record fields (names follow Microsoft's column list); the connector itself was not run.
+    """
+    identity = record.get("userIdentity") or {}
+    return {
+        "TimeGenerated": record.get("eventTime"), "Type": "AWSCloudTrail",
+        "EventName": record.get("eventName"), "EventSource": record.get("eventSource"),
+        "ErrorCode": record.get("errorCode"), "ErrorMessage": record.get("errorMessage"),
+        "AWSRegion": record.get("awsRegion"), "SourceIpAddress": record.get("sourceIPAddress"),
+        "UserAgent": record.get("userAgent"), "ReadOnly": record.get("readOnly"),
+        "RecipientAccountId": record.get("recipientAccountId"),
+        "UserIdentityArn": identity.get("arn"), "UserIdentityType": identity.get("type"),
+        "UserIdentityUserName": identity.get("userName"), "UserIdentityAccessKeyId": identity.get("accessKeyId"),
+    }
 
 
 def to_sentinel(event: dict) -> tuple[str | None, dict]:
     """(table, row) for one event; table None if no table here holds it."""
     if event.get("Type") in NATIVE_TABLES:
         return event["Type"], {k: v for k, v in event.items() if not k.startswith("_")}
+    if is_cloudtrail_record(event):
+        return "AWSCloudTrail", from_cloudtrail(event)
     if "properties" in event and "category" in event:
         return from_azure_monitor(event)
     if "ActivityDisplayName" in event and "AADOperationType" in event:

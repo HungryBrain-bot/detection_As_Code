@@ -359,3 +359,51 @@
 - Tests: 158 passed (new: SP sign-in and Graph mapping, native Key Vault
   and registry rows, rebase of `time`); yamllint clean; `dac validate`
   against ATT&CK 20.1 and ATLAS 2026.06 clean.
+
+## 2026-11-07 - ARTEX Phase 2 (recon): rules D1-D4
+
+- Owner asked, in the project thread, for the Phase 2 post of their
+  agentic-attack blog series to be recorded in the repo with rules for
+  four detections and the hardening list as guidance. Beyond the original
+  ten-rule Scope; the request was explicit, so it is built, and noted here
+  as scope growth: four rules, two tables, two log sources, a new
+  `detections/recon/` track folder.
+- Built: D1 decoy route (path is a `DecoyRoute` row in `Honeytoken_CL`;
+  how to plant one is in D1's README), D2 documents or source maps then
+  routes the UI does not call (learned per-app baseline), D3 path sweep
+  with mostly 401/403/404, D4 AccessDenied / UnauthorizedOperation burst
+  across AWS services. ADR 010 records the choices;
+  docs/threats/artex-phase2-recon.md maps the post to the rules, lists
+  which claims the sources support, and holds the hardening guidance.
+- Claims the sources do not support (details in the threats file): the
+  Korean intrusions "via IDOR and broken authorization" (Zscaler reports
+  SQL injection and authentication bypass in peripheral portals); cloud
+  permission testing as ARTEX behaviour (the Wiz post has no CloudTrail,
+  AccessDenied or IAM enumeration; Microsoft's verbatim part has only Key
+  Vault); the file names `swagger.json`, `openapi.json`, `v2/api-docs`,
+  `runtime-config` (Wiz names `.js.map`, `/assets/config.json`, `/env.js`,
+  `/swagger/?format=openapi`). Supported: the download of bundles, source
+  maps, runtime config and Swagger/OpenAPI documents, and the route calls
+  minutes later (Wiz 2026-10-22). Phase 1's unverified "closed source in
+  October, 12,000+ forks" is now supported by Wiz.
+- Harness: `AppServiceHTTPLogs` and `AWSCloudTrail` tables; raw
+  CloudTrail records map to `AWSCloudTrail`; three Splunk attack_data
+  CloudTrail sets pinned in datasets.yaml. Kusto emulator (Kustainer
+  1.0.9796.17726): D1 3/3 positive cases, 0/8 negatives; D2 3/3, 0/611;
+  D3 2/2, 0/385; D4 2/2, 0/193. Each negative scenario was shown to match
+  when its clause was loosened (D1 2 clauses, D2 8, D3 5, D4 5). D4 on the
+  recorded sets (6,417 events): 11 rows, all the `cloudsploit` user; none
+  for `cloudmapper` (never more than one service in a minute) or the
+  ordinary users. D1-D3 have no recorded data, all positives are
+  hand-written.
+- Dropped: an Azure Activity branch for D4 (Activity log does not record
+  reads; 403 representation not found). The `AzureActivity` reference
+  schema written for it was removed.
+- Parked for the owner: Key Vault AccessDenied burst rule over
+  `AzureDiagnostics`; Application Gateway / Front Door / IIS / nginx
+  logs for D1-D3 (App Gateway `requestUri` vs query string unverified);
+  mapping Splunk attack_data web access logs as D3 background; a
+  build-time route registry for D2's baseline; an allowlist let for D3.
+- Tests: 162 passed (new: CloudTrail record mapping, native recon rows,
+  the engine's table list); yamllint clean; `dac validate` against the
+  current ATT&CK enterprise bundle clean.
