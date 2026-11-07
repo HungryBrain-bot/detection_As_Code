@@ -1,0 +1,244 @@
+{
+  "rule_id": "847becfe-0214-4314-a8cf-7b751191b46d",
+  "rule_version": 1,
+  "engine": "Kustainer (ADX engine) 1.0.9796.17726, product 2026.10.27.0942-2643-eb20c9c-master",
+  "date": "2026-11-07",
+  "samples": {
+    "positive_events": 58,
+    "positive_cases": 3,
+    "positive_rows": 3,
+    "negative_events": 132,
+    "negative_rows": 0
+  },
+  "datasets": [
+    {
+      "id": "splunk-aad-distributed-spray",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1110.003/azure_ad_distributed_spray/azure_ad_distributed_spray.log",
+      "sha256": "e449c7a937e83f9795065e6ac215ad71ec80ae2fa66fdba0621326aa23bd7f85"
+    },
+    {
+      "id": "splunk-aad-spray-one-ip",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1110.003/password_spraying_azuread/azuread_signin.log",
+      "sha256": "14b4ded54e61209e62cd8d883032a8bb3f33753cec0423510a725142ae36c0f6"
+    },
+    {
+      "id": "splunk-aad-bruteforce-one-user",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1110.001/azure_ad_high_number_of_failed_authentications_for_user/azuread.log",
+      "sha256": "1d5c729dc5e864ca2894cceae832ff4119f17a709e1ec33838b3f60baab3af87"
+    },
+    {
+      "id": "splunk-aad-session-cookie-replay",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1185/azure_ad_concurrent_sessions_from_different_ips/azuread.log",
+      "sha256": "e8dcbe04a2ee019a444a8242634c2eec2315a6cd29e2d464efe0300e238fc7d2"
+    },
+    {
+      "id": "splunk-aad-success-different-ips",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1110.001/azure_ad_successful_authentication_from_different_ips/azuread.log",
+      "sha256": "7de7bf2e60ee2746ab4cabfb714ffc42e7a1d839e7b5f33b2b0d07f228266a86"
+    },
+    {
+      "id": "splunk-aad-multiple-appids-useragents",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1078/azure_ad_multiple_appids_and_useragents_auth/azure_ad_multiple_appids_and_useragents_auth.log",
+      "sha256": "58b05aa2bfa6af25b30c0ff84613450a3a42dfdab05455930ac48cec59e216f4"
+    },
+    {
+      "id": "splunk-aad-consent-granted",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1528/azure_ad_user_consent_granted/azure_ad_user_consent_granted.log",
+      "sha256": "c246dccc71905891c49b06b0679c55fdcb25247eed513d6de5f45537e363aebb"
+    },
+    {
+      "id": "splunk-aad-consent-declined",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1528/azure_ad_user_consent_declined/azure_ad_user_consent_declined.log",
+      "sha256": "f6f733aae61194210162e663c7c833b2e9dbc6efff48ab1680c1a9cb5e1c31ca"
+    },
+    {
+      "id": "splunk-aad-consent-blocked",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1528/azure_ad_user_consent_blocked/azure_ad_user_consent_blocked.log",
+      "sha256": "2ccc4ae07dd2f0f62da235dbc3edf6097ec2bdebd685049544c5cf4d7ea2ace6"
+    },
+    {
+      "id": "splunk-aad-graph-perm-assigned",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1098.003/azure_ad_privileged_graph_perm_assigned/azure_ad_privileged_graph_perm_assigned.log",
+      "sha256": "5cf32a545e51a98ab5cf48be03ad3ad7b465c9ad65c6d48fb8349355134af696"
+    }
+  ],
+  "dataset_events": 219,
+  "dataset_rows": 2,
+  "matched": [
+    {
+      "TimeGenerated": "2023-11-06T20:53:22.5530125Z",
+      "Reason": "breadth",
+      "Round": "2023-11-06T20:00:00Z",
+      "FailingAccounts": 31,
+      "SprayRounds": 1,
+      "Failures": 31,
+      "DistinctIPs": 30,
+      "MaxFailuresPerIP": 2,
+      "Distributed": true,
+      "ErrorCodes": [
+        "50126"
+      ],
+      "ClientApps": [
+        "Mobile Apps and Desktop clients"
+      ],
+      "Accounts": [
+        "joseph.phillips@splunkresearch.onmicrosoft.com",
+        "isabella.moore@splunkresearch.onmicrosoft.com",
+        "emily.lewis@splunkresearch.onmicrosoft.com",
+        "mason.garcia@splunkresearch.onmicrosoft.com",
+        "alexander.rodriguez@splunkresearch.onmicrosoft.com",
+        "william.davis@splunkresearch.onmicrosoft.com",
+        "olivia.williams@splunkresearch.onmicrosoft.com",
+        "abigail.clark@splunkresearch.onmicrosoft.com",
+        "oliver.taylor@splunkresearch.onmicrosoft.com",
+        "charlotte.jackson@splunkresearch.onmicrosoft.com",
+        "benjamin.thomas@splunkresearch.onmicrosoft.com",
+        "mia.anderson@splunkresearch.onmicrosoft.com",
+        "donald.reed@splunkresearch.onmicrosoft.com",
+        "noah.jones@splunkresearch.onmicrosoft.com",
+        "sebastian.lee@splunkresearch.onmicrosoft.com",
+        "lucas.martin@splunkresearch.onmicrosoft.com",
+        "paul.morgan@splunkresearch.onmicrosoft.com",
+        "james.wilson@splunkresearch.onmicrosoft.com",
+        "sophia.miller@splunkresearch.onmicrosoft.com",
+        "logan.robinson@splunkresearch.onmicrosoft.com",
+        "amelia.harris@splunkresearch.onmicrosoft.com",
+        "elijah.white@splunkresearch.onmicrosoft.com",
+        "robert.turner@splunkresearch.onmicrosoft.com",
+        "mary.evans@splunkresearch.onmicrosoft.com",
+        "christopher.collins@splunkresearch.onmicrosoft.com",
+        "elizabeth.walker@splunkresearch.onmicrosoft.com",
+        "ava.brown@splunkresearch.onmicrosoft.com",
+        "emma.smith@splunkresearch.onmicrosoft.com",
+        "harper.thompson@splunkresearch.onmicrosoft.com",
+        "liam.johnson@splunkresearch.onmicrosoft.com",
+        "evelyn.martinez@splunkresearch.onmicrosoft.com"
+      ],
+      "FirstSeen": "2023-11-06T20:22:51.5389424Z",
+      "LastSeen": "2023-11-06T20:53:22.5530125Z"
+    },
+    {
+      "TimeGenerated": "2023-06-16T18:13:08.9527529Z",
+      "Reason": "breadth",
+      "Round": "2023-06-16T18:00:00Z",
+      "FailingAccounts": 31,
+      "SprayRounds": 1,
+      "Failures": 31,
+      "DistinctIPs": 1,
+      "MaxFailuresPerIP": 31,
+      "Distributed": false,
+      "ErrorCodes": [
+        "50126"
+      ],
+      "ClientApps": [
+        "Mobile Apps and Desktop clients"
+      ],
+      "Accounts": [
+        "sebastian.lee@splunkresearch.com",
+        "amelia.harris@splunkresearch.com",
+        "emily.lewis@splunkresearch.com",
+        "elizabeth.walker@splunkresearch.com",
+        "evelyn.martinez@splunkresearch.com",
+        "christopher.collins@splunkresearch.com",
+        "ava.brown@splunkresearch.com",
+        "sophia.miller@splunkresearch.com",
+        "noah.jones@splunkresearch.com",
+        "isabella.moore@splunkresearch.com",
+        "charlotte.jackson@splunkresearch.com",
+        "oliver.taylor@splunkresearch.com",
+        "abigail.clark@splunkresearch.com",
+        "robert.turner@splunkresearch.com",
+        "mason.garcia@splunkresearch.com",
+        "alexander.rodriguez@splunkresearch.com",
+        "william.davis@splunkresearch.com",
+        "mia.anderson@splunkresearch.com",
+        "james.wilson@splunkresearch.com",
+        "liam.johnson@splunkresearch.com",
+        "emma.smith@splunkresearch.com",
+        "donald.reed@splunkresearch.com",
+        "lucas.martin@splunkresearch.com",
+        "harper.thompson@splunkresearch.com",
+        "logan.robinson@splunkresearch.com",
+        "elijah.white@splunkresearch.com",
+        "benjamin.thomas@splunkresearch.com",
+        "paul.morgan@splunkresearch.com",
+        "olivia.williams@splunkresearch.com",
+        "olivia.toro@splunkresearch.com",
+        "olivia.jenkins@splunkresearch.com"
+      ],
+      "FirstSeen": "2023-06-16T18:11:35.3484819Z",
+      "LastSeen": "2023-06-16T18:13:08.9527529Z"
+    }
+  ],
+  "columns_dropped_in_mapping": {
+    "AuditLogs": [
+      "callerIpAddress",
+      "userAgent"
+    ],
+    "SigninLogs": [
+      "appServicePrincipalId",
+      "authenticationStrengths",
+      "callerIpAddress",
+      "managedIdentityType",
+      "privateLinkDetails",
+      "rngcStatus",
+      "signInTokenProtectionStatus",
+      "ssoExtensionVersion"
+    ],
+    "AADNonInteractiveUserSignInLogs": [
+      "ResourceId",
+      "appServicePrincipalId",
+      "appliedConditionalAccessPolicies",
+      "authenticationStrengths",
+      "callerIpAddress",
+      "flaggedForReview",
+      "privateLinkDetails",
+      "processingTimeInMilliseconds",
+      "rngcStatus",
+      "signInTokenProtectionStatus",
+      "ssoExtensionVersion"
+    ],
+    "AADServicePrincipalSignInLogs": [
+      "ResourceId",
+      "appServicePrincipalId",
+      "appliedConditionalAccessPolicies",
+      "authenticationProtocol",
+      "callerIpAddress",
+      "crossTenantAccessType",
+      "flaggedForReview",
+      "incomingTokenType",
+      "isInteractive",
+      "isTenantRestricted",
+      "originalTransferMethod",
+      "processingTimeInMilliseconds",
+      "riskDetail",
+      "riskLevelAggregated",
+      "riskLevelDuringSignIn",
+      "riskState",
+      "signInTokenProtectionStatus",
+      "status",
+      "tokenIssuerType",
+      "userId"
+    ],
+    "MicrosoftGraphActivityLogs": [
+      "Level",
+      "ResourceId",
+      "callerIpAddress",
+      "category",
+      "correlationId",
+      "operationName",
+      "operationVersion",
+      "resultSignature"
+    ]
+  }
+}

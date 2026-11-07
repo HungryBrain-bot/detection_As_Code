@@ -1,0 +1,14 @@
+# Recorded datasets this rule is run against (ids from harness/datasets.yaml).
+# splunk-aad-multiple-appids-useragents holds four ROPC sign-ins by MFASweep
+# (password right, MFA required); the recorded sprays log as a modern client.
+datasets:
+  - splunk-aad-multiple-appids-useragents
+  - splunk-aad-distributed-spray
+  - splunk-aad-spray-one-ip
+  - splunk-aad-bruteforce-one-user
+  - splunk-aad-session-cookie-replay
+  - splunk-aad-success-different-ips
+  - splunk-aad-consent-granted
+  - splunk-aad-consent-declined
+  - splunk-aad-consent-blocked
+  - splunk-aad-graph-perm-assigned

@@ -150,6 +150,58 @@ datasets:
     sha256: 58b05aa2bfa6af25b30c0ff84613450a3a42dfdab05455930ac48cec59e216f4
     license: Apache-2.0
 
+  # ---- Identity, ARTEX Phase 3 (ADR 011). Entra sign-ins in the Azure Monitor diagnostic format and
+  # raw Okta System Log events (sourcetype OktaIM2:log), recorded in Splunk's attack_range lab;
+  # user names and IPs are Splunk's replacements. Apache-2.0.
+
+  splunk-aad-distributed-spray:
+    description: Distributed password spray against an Entra tenant; 31 accounts, one failed sign-in (50126) each, from 30 IPs over 31 minutes.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1110.003/azure_ad_distributed_spray/azure_ad_distributed_spray.log
+    sha256: e449c7a937e83f9795065e6ac215ad71ec80ae2fa66fdba0621326aa23bd7f85
+    license: Apache-2.0
+
+  splunk-aad-spray-one-ip:
+    description: Invoke-MSOLSpray against 31 accounts from one IP in under two minutes; every sign-in fails with 50126.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1110.003/password_spraying_azuread/azuread_signin.log
+    sha256: 14b4ded54e61209e62cd8d883032a8bb3f33753cec0423510a725142ae36c0f6
+    license: Apache-2.0
+
+  splunk-aad-bruteforce-one-user:
+    description: Invoke-MSOLSpray brute force of one account with 25 passwords from one IP; 30 failed sign-ins (50126) in 11 seconds.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1110.001/azure_ad_high_number_of_failed_authentications_for_user/azuread.log
+    sha256: 1d5c729dc5e864ca2894cceae832ff4119f17a709e1ec33838b3f60baab3af87
+    license: Apache-2.0
+
+  splunk-aad-enable-and-reset:
+    description: An administrator enables a disabled account and resets its password in the Azure portal (audit log; "Reset password (by admin)").
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1098/azure_ad_enable_and_reset/azure-audit.log
+    sha256: a2f1a3496783dc4e3e52a28d9f8560e4190d7bce3986e5bf252409403f18b36d
+    license: Apache-2.0
+
+  splunk-okta-spray-one-ip:
+    description: A tool sprays 10 Okta users from one IP; user.session.start failures (INVALID_CREDENTIALS) and MFA failures.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1110.003/okta_multiple_users_from_ip/okta_multiple_users_from_ip.log
+    sha256: 7c37e04ca34ea47c8bc3120573bb33a767feec758aead237c58f2e1a20087ac7
+    license: Apache-2.0
+
+  splunk-okta-accounts-lockout:
+    description: Seven Okta accounts locked out (user.account.lock, LOCKED_OUT) from one IP in the same second.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1110/okta_multiple_accounts_lockout/okta_multiple_accounts_lockout.log
+    sha256: 7d2c4716df07ec5044ebae5f17fa81d48d3e915343ab337a5aea236e8e8bf330
+    license: Apache-2.0
+
   # ---- LLM track (ADR 008). No recorded LLM-application log dataset exists;
   # these are research datasets of prompts, attack texts and agent runs,
   # converted to LLMAppLog_CL rows by harness/llm_datasets.py (`format`).

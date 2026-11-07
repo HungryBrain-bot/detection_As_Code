@@ -1,0 +1,462 @@
+[
+  {
+    "_provenance": "hand-written",
+    "_note": "reset flow started for one of four users from one /24",
+    "_case": "four-users-one-network",
+    "time": "2026-11-06T10:00:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Self-service password reset flow activity progress",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "203.0.113.30",
+    "correlationId": "83e1fdc8-7d9b-ae52-284a-2b2d6756fa61",
+    "Level": 4,
+    "properties": {
+      "id": "SSPR_83e1fdc8-7d9b-ae52-284a-2b2d6756fa61",
+      "category": "UserManagement",
+      "correlationId": "83e1fdc8-7d9b-ae52-284a-2b2d6756fa61",
+      "result": "failure",
+      "resultReason": "User submitted their user ID",
+      "activityDisplayName": "Self-service password reset flow activity progress",
+      "activityDateTime": "2026-11-06T10:00:00.0000000+00:00",
+      "loggedByService": "Self-service Password Management",
+      "operationType": "Update",
+      "initiatedBy": {
+        "user": {
+          "id": "374b2983-fb70-a261-68db-d4d3977529d5",
+          "displayName": null,
+          "userPrincipalName": "r.a01@contoso.example",
+          "ipAddress": "203.0.113.30"
+        }
+      },
+      "targetResources": [
+        {
+          "id": "374b2983-fb70-a261-68db-d4d3977529d5",
+          "displayName": null,
+          "type": "User",
+          "userPrincipalName": "r.a01@contoso.example",
+          "modifiedProperties": [],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": []
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "reset flow started for one of four users from one /24",
+    "_case": "four-users-one-network",
+    "time": "2026-11-06T10:03:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Self-service password reset flow activity progress",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "203.0.113.31",
+    "correlationId": "7ff9c1a3-0dc7-a3ff-3dd4-8322d139c38c",
+    "Level": 4,
+    "properties": {
+      "id": "SSPR_7ff9c1a3-0dc7-a3ff-3dd4-8322d139c38c",
+      "category": "UserManagement",
+      "correlationId": "7ff9c1a3-0dc7-a3ff-3dd4-8322d139c38c",
+      "result": "failure",
+      "resultReason": "User submitted their user ID",
+      "activityDisplayName": "Self-service password reset flow activity progress",
+      "activityDateTime": "2026-11-06T10:03:00.0000000+00:00",
+      "loggedByService": "Self-service Password Management",
+      "operationType": "Update",
+      "initiatedBy": {
+        "user": {
+          "id": "4690137f-91b2-943f-e977-affb0b6d49a9",
+          "displayName": null,
+          "userPrincipalName": "r.a02@contoso.example",
+          "ipAddress": "203.0.113.31"
+        }
+      },
+      "targetResources": [
+        {
+          "id": "4690137f-91b2-943f-e977-affb0b6d49a9",
+          "displayName": null,
+          "type": "User",
+          "userPrincipalName": "r.a02@contoso.example",
+          "modifiedProperties": [],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": []
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "reset flow started for one of four users from one /24",
+    "_case": "four-users-one-network",
+    "time": "2026-11-06T10:06:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Self-service password reset flow activity progress",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "203.0.113.30",
+    "correlationId": "9e14d2db-aa1f-879b-e80b-088b448c3a08",
+    "Level": 4,
+    "properties": {
+      "id": "SSPR_9e14d2db-aa1f-879b-e80b-088b448c3a08",
+      "category": "UserManagement",
+      "correlationId": "9e14d2db-aa1f-879b-e80b-088b448c3a08",
+      "result": "failure",
+      "resultReason": "User submitted their user ID",
+      "activityDisplayName": "Self-service password reset flow activity progress",
+      "activityDateTime": "2026-11-06T10:06:00.0000000+00:00",
+      "loggedByService": "Self-service Password Management",
+      "operationType": "Update",
+      "initiatedBy": {
+        "user": {
+          "id": "5e39224a-da37-96e5-db09-2e39376518cc",
+          "displayName": null,
+          "userPrincipalName": "r.a03@contoso.example",
+          "ipAddress": "203.0.113.30"
+        }
+      },
+      "targetResources": [
+        {
+          "id": "5e39224a-da37-96e5-db09-2e39376518cc",
+          "displayName": null,
+          "type": "User",
+          "userPrincipalName": "r.a03@contoso.example",
+          "modifiedProperties": [],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": []
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "reset flow started for one of four users from one /24",
+    "_case": "four-users-one-network",
+    "time": "2026-11-06T10:09:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Self-service password reset flow activity progress",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "203.0.113.31",
+    "correlationId": "0d36dc8b-d839-1f9e-d165-a35b91473f46",
+    "Level": 4,
+    "properties": {
+      "id": "SSPR_0d36dc8b-d839-1f9e-d165-a35b91473f46",
+      "category": "UserManagement",
+      "correlationId": "0d36dc8b-d839-1f9e-d165-a35b91473f46",
+      "result": "failure",
+      "resultReason": "User submitted their user ID",
+      "activityDisplayName": "Self-service password reset flow activity progress",
+      "activityDateTime": "2026-11-06T10:09:00.0000000+00:00",
+      "loggedByService": "Self-service Password Management",
+      "operationType": "Update",
+      "initiatedBy": {
+        "user": {
+          "id": "3fb19223-a366-cc76-983e-cb8d3d72f91e",
+          "displayName": null,
+          "userPrincipalName": "r.a04@contoso.example",
+          "ipAddress": "203.0.113.31"
+        }
+      },
+      "targetResources": [
+        {
+          "id": "3fb19223-a366-cc76-983e-cb8d3d72f91e",
+          "displayName": null,
+          "type": "User",
+          "userPrincipalName": "r.a04@contoso.example",
+          "modifiedProperties": [],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": []
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "reset flow for one of three users ...",
+    "_case": "three-users-one-completes",
+    "time": "2026-11-06T11:00:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Self-service password reset flow activity progress",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "198.51.100.33",
+    "correlationId": "e3850967-d211-2aee-c4ff-adb2a435379b",
+    "Level": 4,
+    "properties": {
+      "id": "SSPR_e3850967-d211-2aee-c4ff-adb2a435379b",
+      "category": "UserManagement",
+      "correlationId": "e3850967-d211-2aee-c4ff-adb2a435379b",
+      "result": "failure",
+      "resultReason": "User submitted their user ID",
+      "activityDisplayName": "Self-service password reset flow activity progress",
+      "activityDateTime": "2026-11-06T11:00:00.0000000+00:00",
+      "loggedByService": "Self-service Password Management",
+      "operationType": "Update",
+      "initiatedBy": {
+        "user": {
+          "id": "59464969-1a7b-6809-3702-72545fef18c0",
+          "displayName": null,
+          "userPrincipalName": "r.b01@contoso.example",
+          "ipAddress": "198.51.100.33"
+        }
+      },
+      "targetResources": [
+        {
+          "id": "59464969-1a7b-6809-3702-72545fef18c0",
+          "displayName": null,
+          "type": "User",
+          "userPrincipalName": "r.b01@contoso.example",
+          "modifiedProperties": [],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": []
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "reset flow for one of three users ...",
+    "_case": "three-users-one-completes",
+    "time": "2026-11-06T11:02:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Self-service password reset flow activity progress",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "198.51.100.33",
+    "correlationId": "959d1cdf-3346-fdac-1100-19ca17979b86",
+    "Level": 4,
+    "properties": {
+      "id": "SSPR_959d1cdf-3346-fdac-1100-19ca17979b86",
+      "category": "UserManagement",
+      "correlationId": "959d1cdf-3346-fdac-1100-19ca17979b86",
+      "result": "failure",
+      "resultReason": "User submitted their user ID",
+      "activityDisplayName": "Self-service password reset flow activity progress",
+      "activityDateTime": "2026-11-06T11:02:00.0000000+00:00",
+      "loggedByService": "Self-service Password Management",
+      "operationType": "Update",
+      "initiatedBy": {
+        "user": {
+          "id": "9f45b7d5-e495-ab4f-ba26-27120bf63bfa",
+          "displayName": null,
+          "userPrincipalName": "r.b02@contoso.example",
+          "ipAddress": "198.51.100.33"
+        }
+      },
+      "targetResources": [
+        {
+          "id": "9f45b7d5-e495-ab4f-ba26-27120bf63bfa",
+          "displayName": null,
+          "type": "User",
+          "userPrincipalName": "r.b02@contoso.example",
+          "modifiedProperties": [],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": []
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "reset flow for one of three users ...",
+    "_case": "three-users-one-completes",
+    "time": "2026-11-06T11:04:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Self-service password reset flow activity progress",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "198.51.100.33",
+    "correlationId": "b454646b-fa3e-74f4-4e46-56fb6447f697",
+    "Level": 4,
+    "properties": {
+      "id": "SSPR_b454646b-fa3e-74f4-4e46-56fb6447f697",
+      "category": "UserManagement",
+      "correlationId": "b454646b-fa3e-74f4-4e46-56fb6447f697",
+      "result": "failure",
+      "resultReason": "User submitted their user ID",
+      "activityDisplayName": "Self-service password reset flow activity progress",
+      "activityDateTime": "2026-11-06T11:04:00.0000000+00:00",
+      "loggedByService": "Self-service Password Management",
+      "operationType": "Update",
+      "initiatedBy": {
+        "user": {
+          "id": "8361ab9b-f982-cf40-c824-858d00aba66d",
+          "displayName": null,
+          "userPrincipalName": "r.b03@contoso.example",
+          "ipAddress": "198.51.100.33"
+        }
+      },
+      "targetResources": [
+        {
+          "id": "8361ab9b-f982-cf40-c824-858d00aba66d",
+          "displayName": null,
+          "type": "User",
+          "userPrincipalName": "r.b03@contoso.example",
+          "modifiedProperties": [],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": []
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "... and one reset completes (weak recovery: the account is taken over)",
+    "_case": "three-users-one-completes",
+    "time": "2026-11-06T11:10:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Reset password (self-service)",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "198.51.100.33",
+    "correlationId": "9237ad77-b9e6-899a-1766-0460cec836a1",
+    "Level": 4,
+    "properties": {
+      "id": "SSPR_9237ad77-b9e6-899a-1766-0460cec836a1",
+      "category": "UserManagement",
+      "correlationId": "9237ad77-b9e6-899a-1766-0460cec836a1",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Reset password (self-service)",
+      "activityDateTime": "2026-11-06T11:10:00.0000000+00:00",
+      "loggedByService": "Self-service Password Management",
+      "operationType": "Update",
+      "initiatedBy": {
+        "user": {
+          "id": "9f45b7d5-e495-ab4f-ba26-27120bf63bfa",
+          "displayName": null,
+          "userPrincipalName": "r.b02@contoso.example",
+          "ipAddress": "198.51.100.33"
+        }
+      },
+      "targetResources": [
+        {
+          "id": "9f45b7d5-e495-ab4f-ba26-27120bf63bfa",
+          "displayName": null,
+          "type": "User",
+          "userPrincipalName": "r.b02@contoso.example",
+          "modifiedProperties": [],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": []
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "user throttled after more than five attempts; two users, two networks",
+    "_case": "two-blocked",
+    "time": "2026-11-06T12:00:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Blocked from self-service password reset",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "192.0.2.60",
+    "correlationId": "64e84e31-c112-bdb0-a5b1-3be8703e5334",
+    "Level": 4,
+    "properties": {
+      "id": "SSPR_64e84e31-c112-bdb0-a5b1-3be8703e5334",
+      "category": "UserManagement",
+      "correlationId": "64e84e31-c112-bdb0-a5b1-3be8703e5334",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Blocked from self-service password reset",
+      "activityDateTime": "2026-11-06T12:00:00.0000000+00:00",
+      "loggedByService": "Self-service Password Management",
+      "operationType": "Update",
+      "initiatedBy": {
+        "user": {
+          "id": "85ffb345-7617-9a27-c182-9243b5b48ba8",
+          "displayName": null,
+          "userPrincipalName": "r.c01@contoso.example",
+          "ipAddress": "192.0.2.60"
+        }
+      },
+      "targetResources": [
+        {
+          "id": "85ffb345-7617-9a27-c182-9243b5b48ba8",
+          "displayName": null,
+          "type": "User",
+          "userPrincipalName": "r.c01@contoso.example",
+          "modifiedProperties": [],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": []
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "user throttled after more than five attempts; two users, two networks",
+    "_case": "two-blocked",
+    "time": "2026-11-06T12:10:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Blocked from self-service password reset",
+    "operationVersion": "1.0",
+    "category": "AuditLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "203.0.113.61",
+    "correlationId": "2bff67a2-ac70-d810-d4d6-e05c16426b8c",
+    "Level": 4,
+    "properties": {
+      "id": "SSPR_2bff67a2-ac70-d810-d4d6-e05c16426b8c",
+      "category": "UserManagement",
+      "correlationId": "2bff67a2-ac70-d810-d4d6-e05c16426b8c",
+      "result": "success",
+      "resultReason": "",
+      "activityDisplayName": "Blocked from self-service password reset",
+      "activityDateTime": "2026-11-06T12:10:00.0000000+00:00",
+      "loggedByService": "Self-service Password Management",
+      "operationType": "Update",
+      "initiatedBy": {
+        "user": {
+          "id": "a32455fe-900a-6ffc-5063-2ab1457c3964",
+          "displayName": null,
+          "userPrincipalName": "r.c02@contoso.example",
+          "ipAddress": "203.0.113.61"
+        }
+      },
+      "targetResources": [
+        {
+          "id": "a32455fe-900a-6ffc-5063-2ab1457c3964",
+          "displayName": null,
+          "type": "User",
+          "userPrincipalName": "r.c02@contoso.example",
+          "modifiedProperties": [],
+          "administrativeUnits": []
+        }
+      ],
+      "additionalDetails": []
+    }
+  }
+]

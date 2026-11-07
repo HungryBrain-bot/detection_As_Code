@@ -1,0 +1,70 @@
+id: 847becfe-0214-4314-a8cf-7b751191b46d
+name: Many Entra accounts fail with a wrong password, or the same accounts are sprayed again
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >
+  Counted from the account side, not per source IP. Alerts when, in one
+  hour, at least 15 Entra accounts fail sign-in with a wrong password or
+  lockout (50126, 50053) and do not sign in successfully that hour; or
+  when at least 5 accounts fail that way in two or more hours that were
+  each spray hours (10 or more such accounts). Rotating source IPs
+  defeats per-IP limits but not this count. The number of IPs and the
+  failures per IP are reported, not required (ADR 011).
+log_sources: [entra-signin]
+mapping:
+  attack:
+    techniques: [T1110.003]
+    tactics: [credential-access]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT6H
+  required_fields:
+    SigninLogs: [TimeGenerated, ResultType, UserPrincipalName, IPAddress, ClientAppUsed, AppDisplayName]
+  query: |
+    // B8: account-side password spray, Entra (detections/identity/B8-T1110.003-entra-account-side-spray/README.md)
+    let round_size = 1h;
+    let min_accounts = 15;        // breadth: failing accounts in one round
+    let min_spray_round = 10;     // a round with this many failing accounts is a spray round
+    let min_retargeted = 5;       // accounts failing in two or more spray rounds
+    let fail_codes = dynamic(["50126", "50053"]);
+    let attempts = SigninLogs
+    | where ResultType in (fail_codes) or ResultType == "0"
+    | where isnotempty(UserPrincipalName)
+    | extend Account = tolower(UserPrincipalName), Failed = ResultType != "0", Round = bin(TimeGenerated, round_size);
+    // An account counts in a round if it failed and did not also sign in successfully in that round.
+    let failing = attempts
+    | summarize Failures = countif(Failed), Successes = countif(not(Failed)) by Account, Round
+    | where Failures > 0 and Successes == 0
+    | project Account, Round;
+    let failed = attempts | where Failed | join kind=inner failing on Account, Round;
+    let per_ip = failed | summarize IPFailures = count() by Round, IPAddress;
+    let breadth = failed
+    | summarize FailingAccounts = dcount(Account), Accounts = make_set(Account, 50), Failures = count(),
+                DistinctIPs = dcount(IPAddress), ErrorCodes = make_set(ResultType), ClientApps = make_set(ClientAppUsed, 10),
+                FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+        by Round
+    | where FailingAccounts >= min_accounts
+    | join kind=inner (per_ip | summarize MaxFailuresPerIP = max(IPFailures) by Round) on Round
+    | extend Reason = "breadth", SprayRounds = 1;
+    let spray_rounds = failing | summarize RoundAccounts = dcount(Account) by Round | where RoundAccounts >= min_spray_round;
+    let retargeted_accounts = failing
+    | join kind=inner spray_rounds on Round
+    | summarize SprayRounds = dcount(Round) by Account
+    | where SprayRounds >= 2;
+    let retargeted = failed | join kind=inner retargeted_accounts on Account;
+    let retarget = retargeted
+    | summarize FailingAccounts = dcount(Account), Accounts = make_set(Account, 50), Failures = count(),
+                DistinctIPs = dcount(IPAddress), ErrorCodes = make_set(ResultType), ClientApps = make_set(ClientAppUsed, 10),
+                SprayRounds = dcount(Round), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+    | where FailingAccounts >= min_retargeted
+    | extend MaxFailuresPerIP = toscalar(retargeted | summarize n = count() by IPAddress | summarize max(n)),
+             Reason = "re-targeted", Round = datetime(null);
+    union breadth, retarget
+    // Distributed: many sources, each with few attempts. Reported, not required.
+    | extend Distributed = DistinctIPs >= 10 and MaxFailuresPerIP <= 3
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, Reason, Round, FailingAccounts, SprayRounds, Failures, DistinctIPs, MaxFailuresPerIP,
+              Distributed, ErrorCodes, ClientApps, Accounts, FirstSeen, LastSeen

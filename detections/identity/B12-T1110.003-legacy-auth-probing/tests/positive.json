@@ -1,0 +1,371 @@
+[
+  {
+    "_provenance": "hand-written",
+    "_note": "IMAP4 sign-in with a wrong password",
+    "_case": "legacy-four-accounts",
+    "time": "2026-11-06T10:00:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Sign-in activity",
+    "operationVersion": "1.0",
+    "category": "SignInLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultType": "50126",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "203.0.113.40",
+    "correlationId": "d09ad175-3ad1-983a-5fd8-2a60d227d4b7",
+    "identity": "l.a01",
+    "Level": 4,
+    "location": "US",
+    "properties": {
+      "id": "5db069e3-87f7-262f-b8d0-8c2376d42853",
+      "createdDateTime": "2026-11-06T10:00:00.0000000+00:00",
+      "userDisplayName": "l.a01",
+      "userPrincipalName": "l.a01@contoso.example",
+      "userId": "b443738a-8ff1-f63e-5070-90fea0b391ba",
+      "appId": "51b3a90e-830d-27fd-3f49-e6d171ddfbd6",
+      "appDisplayName": "Office 365 Exchange Online",
+      "ipAddress": "203.0.113.40",
+      "status": {
+        "errorCode": 50126
+      },
+      "clientAppUsed": "IMAP4",
+      "userAgent": "",
+      "authenticationProtocol": "none",
+      "isInteractive": true,
+      "resultType": "50126",
+      "location": {
+        "countryOrRegion": "US"
+      },
+      "correlationId": "d09ad175-3ad1-983a-5fd8-2a60d227d4b7"
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "Exchange Web Services sign-in with a wrong password",
+    "_case": "legacy-four-accounts",
+    "time": "2026-11-06T10:04:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Sign-in activity",
+    "operationVersion": "1.0",
+    "category": "SignInLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultType": "50126",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "203.0.113.41",
+    "correlationId": "7ea36745-b5d6-bf20-77ab-b913715cd145",
+    "identity": "l.a02",
+    "Level": 4,
+    "location": "US",
+    "properties": {
+      "id": "bad9a916-9f48-3c8f-b36a-467bcb69b4e1",
+      "createdDateTime": "2026-11-06T10:04:00.0000000+00:00",
+      "userDisplayName": "l.a02",
+      "userPrincipalName": "l.a02@contoso.example",
+      "userId": "ade328c7-90d3-6ab0-5a28-e824faccb61d",
+      "appId": "51b3a90e-830d-27fd-3f49-e6d171ddfbd6",
+      "appDisplayName": "Office 365 Exchange Online",
+      "ipAddress": "203.0.113.41",
+      "status": {
+        "errorCode": 50126
+      },
+      "clientAppUsed": "Exchange Web Services",
+      "userAgent": "",
+      "authenticationProtocol": "none",
+      "isInteractive": true,
+      "resultType": "50126",
+      "location": {
+        "countryOrRegion": "US"
+      },
+      "correlationId": "7ea36745-b5d6-bf20-77ab-b913715cd145"
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "AutoDiscover sign-in with a wrong password",
+    "_case": "legacy-four-accounts",
+    "time": "2026-11-06T10:08:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Sign-in activity",
+    "operationVersion": "1.0",
+    "category": "SignInLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultType": "50126",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "203.0.113.40",
+    "correlationId": "4709cf51-6f8b-f3e1-1a99-ff334a389155",
+    "identity": "l.a03",
+    "Level": 4,
+    "location": "US",
+    "properties": {
+      "id": "3a06f4ff-8b4d-fddd-4d5e-7de7ae9f3942",
+      "createdDateTime": "2026-11-06T10:08:00.0000000+00:00",
+      "userDisplayName": "l.a03",
+      "userPrincipalName": "l.a03@contoso.example",
+      "userId": "b60cf237-1686-6670-2bd9-e1af779180d0",
+      "appId": "51b3a90e-830d-27fd-3f49-e6d171ddfbd6",
+      "appDisplayName": "Office 365 Exchange Online",
+      "ipAddress": "203.0.113.40",
+      "status": {
+        "errorCode": 50126
+      },
+      "clientAppUsed": "AutoDiscover",
+      "userAgent": "",
+      "authenticationProtocol": "none",
+      "isInteractive": true,
+      "resultType": "50126",
+      "location": {
+        "countryOrRegion": "US"
+      },
+      "correlationId": "4709cf51-6f8b-f3e1-1a99-ff334a389155"
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "POP3 sign-in with a wrong password",
+    "_case": "legacy-four-accounts",
+    "time": "2026-11-06T10:12:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Sign-in activity",
+    "operationVersion": "1.0",
+    "category": "SignInLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultType": "50126",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "203.0.113.41",
+    "correlationId": "46c562d0-bc0a-da60-01d0-8a2c87125e5c",
+    "identity": "l.a04",
+    "Level": 4,
+    "location": "US",
+    "properties": {
+      "id": "e00308d5-be21-966f-ad8f-4512e55dfaa9",
+      "createdDateTime": "2026-11-06T10:12:00.0000000+00:00",
+      "userDisplayName": "l.a04",
+      "userPrincipalName": "l.a04@contoso.example",
+      "userId": "0795bc88-7fba-c39b-c63a-9980195384a7",
+      "appId": "51b3a90e-830d-27fd-3f49-e6d171ddfbd6",
+      "appDisplayName": "Office 365 Exchange Online",
+      "ipAddress": "203.0.113.41",
+      "status": {
+        "errorCode": 50126
+      },
+      "clientAppUsed": "POP3",
+      "userAgent": "",
+      "authenticationProtocol": "none",
+      "isInteractive": true,
+      "resultType": "50126",
+      "location": {
+        "countryOrRegion": "US"
+      },
+      "correlationId": "46c562d0-bc0a-da60-01d0-8a2c87125e5c"
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "ROPC password grant, wrong password",
+    "_case": "ropc-three-accounts",
+    "time": "2026-11-06T11:00:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Sign-in activity",
+    "operationVersion": "1.0",
+    "category": "SignInLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultType": "50126",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "198.51.100.44",
+    "correlationId": "fc18b5ee-1d50-663d-ca0a-91db9f2593e3",
+    "identity": "l.b01",
+    "Level": 4,
+    "location": "US",
+    "properties": {
+      "id": "0e36d936-4abf-2b9c-60c7-a29a7b238ef8",
+      "createdDateTime": "2026-11-06T11:00:00.0000000+00:00",
+      "userDisplayName": "l.b01",
+      "userPrincipalName": "l.b01@contoso.example",
+      "userId": "6aea5d06-cbbf-8dad-4fd2-63d9fa7bd229",
+      "appId": "51b3a90e-830d-27fd-3f49-e6d171ddfbd6",
+      "appDisplayName": "Office 365 Exchange Online",
+      "ipAddress": "198.51.100.44",
+      "status": {
+        "errorCode": 50126
+      },
+      "clientAppUsed": "Mobile Apps and Desktop clients",
+      "userAgent": "python-requests/2.34.2",
+      "authenticationProtocol": "ropc",
+      "isInteractive": true,
+      "resultType": "50126",
+      "location": {
+        "countryOrRegion": "US"
+      },
+      "correlationId": "fc18b5ee-1d50-663d-ca0a-91db9f2593e3"
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "ROPC password grant, wrong password",
+    "_case": "ropc-three-accounts",
+    "time": "2026-11-06T11:02:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Sign-in activity",
+    "operationVersion": "1.0",
+    "category": "SignInLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultType": "50126",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "198.51.100.44",
+    "correlationId": "5d3f8d65-b7a8-cc13-2dc7-082cfbac8c8f",
+    "identity": "l.b02",
+    "Level": 4,
+    "location": "US",
+    "properties": {
+      "id": "83b48ecc-ca40-7bbe-01d5-6f6ad3c48eee",
+      "createdDateTime": "2026-11-06T11:02:00.0000000+00:00",
+      "userDisplayName": "l.b02",
+      "userPrincipalName": "l.b02@contoso.example",
+      "userId": "86f96517-199e-7b6b-f196-a875a1f702c2",
+      "appId": "51b3a90e-830d-27fd-3f49-e6d171ddfbd6",
+      "appDisplayName": "Office 365 Exchange Online",
+      "ipAddress": "198.51.100.44",
+      "status": {
+        "errorCode": 50126
+      },
+      "clientAppUsed": "Mobile Apps and Desktop clients",
+      "userAgent": "python-requests/2.34.2",
+      "authenticationProtocol": "ropc",
+      "isInteractive": true,
+      "resultType": "50126",
+      "location": {
+        "countryOrRegion": "US"
+      },
+      "correlationId": "5d3f8d65-b7a8-cc13-2dc7-082cfbac8c8f"
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "ROPC password grant, wrong password",
+    "_case": "ropc-three-accounts",
+    "time": "2026-11-06T11:04:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Sign-in activity",
+    "operationVersion": "1.0",
+    "category": "SignInLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultType": "50126",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "198.51.100.44",
+    "correlationId": "93c1483b-a146-f47f-2c0b-f1a5586e5bd4",
+    "identity": "l.b03",
+    "Level": 4,
+    "location": "US",
+    "properties": {
+      "id": "f88f6bef-8226-fcd4-3ea6-32f860947cb0",
+      "createdDateTime": "2026-11-06T11:04:00.0000000+00:00",
+      "userDisplayName": "l.b03",
+      "userPrincipalName": "l.b03@contoso.example",
+      "userId": "7ae5c38d-de48-7f04-8e5d-401b5b7500ad",
+      "appId": "51b3a90e-830d-27fd-3f49-e6d171ddfbd6",
+      "appDisplayName": "Office 365 Exchange Online",
+      "ipAddress": "198.51.100.44",
+      "status": {
+        "errorCode": 50126
+      },
+      "clientAppUsed": "Mobile Apps and Desktop clients",
+      "userAgent": "python-requests/2.34.2",
+      "authenticationProtocol": "ropc",
+      "isInteractive": true,
+      "resultType": "50126",
+      "location": {
+        "countryOrRegion": "US"
+      },
+      "correlationId": "93c1483b-a146-f47f-2c0b-f1a5586e5bd4"
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "ROPC: password right, MFA required (50076)",
+    "_case": "ropc-password-accepted",
+    "time": "2026-11-06T12:00:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Sign-in activity",
+    "operationVersion": "1.0",
+    "category": "SignInLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultType": "50076",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "192.0.2.45",
+    "correlationId": "b23b035c-a76b-3792-1fdc-1fc88cb7897f",
+    "identity": "l.c01",
+    "Level": 4,
+    "location": "US",
+    "properties": {
+      "id": "cd4ff39c-c819-d603-b617-0906b3254509",
+      "createdDateTime": "2026-11-06T12:00:00.0000000+00:00",
+      "userDisplayName": "l.c01",
+      "userPrincipalName": "l.c01@contoso.example",
+      "userId": "c6e918d1-adfb-76c7-0d36-b09d13f1d390",
+      "appId": "51b3a90e-830d-27fd-3f49-e6d171ddfbd6",
+      "appDisplayName": "Office 365 Exchange Online",
+      "ipAddress": "192.0.2.45",
+      "status": {
+        "errorCode": 50076
+      },
+      "clientAppUsed": "Mobile Apps and Desktop clients",
+      "userAgent": "python-requests/2.34.2",
+      "authenticationProtocol": "ropc",
+      "isInteractive": true,
+      "resultType": "50076",
+      "location": {
+        "countryOrRegion": "US"
+      },
+      "correlationId": "b23b035c-a76b-3792-1fdc-1fc88cb7897f"
+    }
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "authenticated SMTP succeeds (legacy auth not blocked)",
+    "_case": "smtp-success",
+    "time": "2026-11-06T13:00:00.0000000Z",
+    "resourceId": "/tenants/6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f/providers/Microsoft.aadiam",
+    "operationName": "Sign-in activity",
+    "operationVersion": "1.0",
+    "category": "SignInLogs",
+    "tenantId": "6f1c2d3e-4b5a-4c7d-8e9f-0a1b2c3d4e5f",
+    "resultType": "0",
+    "resultSignature": "None",
+    "durationMs": 0,
+    "callerIpAddress": "192.0.2.46",
+    "correlationId": "7aa7966e-21d8-6429-0a2b-292204bd390e",
+    "identity": "l.d01",
+    "Level": 4,
+    "location": "US",
+    "properties": {
+      "id": "ef7a31a6-98b3-745d-b36d-c3c109dcf8fd",
+      "createdDateTime": "2026-11-06T13:00:00.0000000+00:00",
+      "userDisplayName": "l.d01",
+      "userPrincipalName": "l.d01@contoso.example",
+      "userId": "1f20f8f5-685f-a7e6-6caa-b2ec7656aa01",
+      "appId": "51b3a90e-830d-27fd-3f49-e6d171ddfbd6",
+      "appDisplayName": "Office 365 Exchange Online",
+      "ipAddress": "192.0.2.46",
+      "status": {
+        "errorCode": 0
+      },
+      "clientAppUsed": "Authenticated SMTP",
+      "userAgent": "",
+      "authenticationProtocol": "none",
+      "isInteractive": true,
+      "resultType": "0",
+      "location": {
+        "countryOrRegion": "US"
+      },
+      "correlationId": "7aa7966e-21d8-6429-0a2b-292204bd390e"
+    }
+  }
+]
