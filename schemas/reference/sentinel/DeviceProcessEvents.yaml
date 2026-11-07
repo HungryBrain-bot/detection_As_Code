@@ -1,0 +1,163 @@
+# Reference schema for the DeviceProcessEvents table, with column types. See docs/components/schema-check.md.
+# Microsoft Defender for Endpoint process creation (Windows and Linux), streamed to Sentinel by the Microsoft Defender XDR connector. Read by E2.
+# Column names and types are copied from Microsoft's Azure-Sentinel repository
+# (.script/tests/KqlvalidationsTests/CustomTables/DeviceProcessEvents.json at commit c0c2dc2, the table definition the repo
+# uses to validate its own KQL), file read directly with curl (not summarised); not from a live workspace.
+# Added 2026-11-07 for the foothold rules (ARTEX Phase 4; ADR 012).
+name: DeviceProcessEvents
+siem: sentinel
+source_url: https://github.com/Azure/Azure-Sentinel/blob/c0c2dc267d7b5840299e76e195b0407f3f9c92c8/.script/tests/KqlvalidationsTests/CustomTables/DeviceProcessEvents.json
+fetched_on: '2026-11-07'
+provenance: Microsoft Azure-Sentinel repo (MIT) at commit c0c2dc2, file read directly (not summarised); 75 columns.
+fields:
+- AccountDomain
+- AccountName
+- AccountObjectId
+- AccountSid
+- AccountUpn
+- ActionType
+- AdditionalFields
+- AppGuardContainerId
+- _BilledSize
+- CreatedProcessSessionId
+- DeviceId
+- DeviceName
+- FileName
+- FileSize
+- FolderPath
+- InitiatingProcessAccountDomain
+- InitiatingProcessAccountName
+- InitiatingProcessAccountObjectId
+- InitiatingProcessAccountSid
+- InitiatingProcessAccountUpn
+- InitiatingProcessCommandLine
+- InitiatingProcessCreationTime
+- InitiatingProcessFileName
+- InitiatingProcessFileSize
+- InitiatingProcessFolderPath
+- InitiatingProcessId
+- InitiatingProcessIntegrityLevel
+- InitiatingProcessLogonId
+- InitiatingProcessMD5
+- InitiatingProcessParentCreationTime
+- InitiatingProcessParentFileName
+- InitiatingProcessParentId
+- InitiatingProcessRemoteSessionDeviceName
+- InitiatingProcessRemoteSessionIP
+- InitiatingProcessSessionId
+- InitiatingProcessSHA1
+- InitiatingProcessSHA256
+- InitiatingProcessSignatureStatus
+- InitiatingProcessSignerType
+- InitiatingProcessTokenElevation
+- InitiatingProcessUniqueId
+- InitiatingProcessVersionInfoCompanyName
+- InitiatingProcessVersionInfoFileDescription
+- InitiatingProcessVersionInfoInternalFileName
+- InitiatingProcessVersionInfoOriginalFileName
+- InitiatingProcessVersionInfoProductName
+- InitiatingProcessVersionInfoProductVersion
+- _IsBillable
+- IsInitiatingProcessRemoteSession
+- IsProcessRemoteSession
+- LogonId
+- MachineGroup
+- MD5
+- ProcessCommandLine
+- ProcessCreationTime
+- ProcessId
+- ProcessIntegrityLevel
+- ProcessRemoteSessionDeviceName
+- ProcessRemoteSessionIP
+- ProcessTokenElevation
+- ProcessUniqueId
+- ProcessVersionInfoCompanyName
+- ProcessVersionInfoFileDescription
+- ProcessVersionInfoInternalFileName
+- ProcessVersionInfoOriginalFileName
+- ProcessVersionInfoProductName
+- ProcessVersionInfoProductVersion
+- ReportId
+- SHA1
+- SHA256
+- SourceSystem
+- TenantId
+- TimeGenerated
+- Type
+- Timestamp
+types:
+  AccountDomain: string
+  AccountName: string
+  AccountObjectId: string
+  AccountSid: string
+  AccountUpn: string
+  ActionType: string
+  AdditionalFields: dynamic
+  AppGuardContainerId: string
+  _BilledSize: real
+  CreatedProcessSessionId: long
+  DeviceId: string
+  DeviceName: string
+  FileName: string
+  FileSize: long
+  FolderPath: string
+  InitiatingProcessAccountDomain: string
+  InitiatingProcessAccountName: string
+  InitiatingProcessAccountObjectId: string
+  InitiatingProcessAccountSid: string
+  InitiatingProcessAccountUpn: string
+  InitiatingProcessCommandLine: string
+  InitiatingProcessCreationTime: datetime
+  InitiatingProcessFileName: string
+  InitiatingProcessFileSize: long
+  InitiatingProcessFolderPath: string
+  InitiatingProcessId: long
+  InitiatingProcessIntegrityLevel: string
+  InitiatingProcessLogonId: long
+  InitiatingProcessMD5: string
+  InitiatingProcessParentCreationTime: datetime
+  InitiatingProcessParentFileName: string
+  InitiatingProcessParentId: long
+  InitiatingProcessRemoteSessionDeviceName: string
+  InitiatingProcessRemoteSessionIP: string
+  InitiatingProcessSessionId: long
+  InitiatingProcessSHA1: string
+  InitiatingProcessSHA256: string
+  InitiatingProcessSignatureStatus: string
+  InitiatingProcessSignerType: string
+  InitiatingProcessTokenElevation: string
+  InitiatingProcessUniqueId: string
+  InitiatingProcessVersionInfoCompanyName: string
+  InitiatingProcessVersionInfoFileDescription: string
+  InitiatingProcessVersionInfoInternalFileName: string
+  InitiatingProcessVersionInfoOriginalFileName: string
+  InitiatingProcessVersionInfoProductName: string
+  InitiatingProcessVersionInfoProductVersion: string
+  _IsBillable: string
+  IsInitiatingProcessRemoteSession: bool
+  IsProcessRemoteSession: bool
+  LogonId: long
+  MachineGroup: string
+  MD5: string
+  ProcessCommandLine: string
+  ProcessCreationTime: datetime
+  ProcessId: long
+  ProcessIntegrityLevel: string
+  ProcessRemoteSessionDeviceName: string
+  ProcessRemoteSessionIP: string
+  ProcessTokenElevation: string
+  ProcessUniqueId: string
+  ProcessVersionInfoCompanyName: string
+  ProcessVersionInfoFileDescription: string
+  ProcessVersionInfoInternalFileName: string
+  ProcessVersionInfoOriginalFileName: string
+  ProcessVersionInfoProductName: string
+  ProcessVersionInfoProductVersion: string
+  ReportId: long
+  SHA1: string
+  SHA256: string
+  SourceSystem: string
+  TenantId: string
+  TimeGenerated: datetime
+  Type: string
+  Timestamp: datetime

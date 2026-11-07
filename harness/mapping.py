@@ -221,7 +221,11 @@ def from_azure_monitor(record: dict) -> tuple[str | None, dict]:
 # service principal sign-in and Graph rows are also written in table shape.
 NATIVE_TABLES = ("LLMAppLog_CL", "LLMCanary_CL", "AzureDiagnostics", "Honeytoken_CL",
                  "AADServicePrincipalSignInLogs", "MicrosoftGraphActivityLogs",
-                 "AppServiceHTTPLogs", "AWSCloudTrail", "AppAuthEvent_CL")
+                 "AppServiceHTTPLogs", "AWSCloudTrail", "AppAuthEvent_CL",
+                 # Foothold track (ADR 012): hand-written Defender for Endpoint, App Service
+                 # audit and Syslog rows, and Sysmon for Linux lines from harness/winxml.py.
+                 "Syslog", "DeviceProcessEvents", "DeviceFileEvents", "DeviceNetworkEvents",
+                 "DeviceInfo", "AppServiceAuditLogs")
 # Suffixes the Okta connector's table adds to a flattened System Log key (ADR 011).
 OKTA_SUFFIXES = ("_s", "_d", "_b", "_g", "_t")
 

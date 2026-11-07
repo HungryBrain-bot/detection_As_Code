@@ -1,0 +1,123 @@
+# Reference schema for the DeviceInfo table, with column types. See docs/components/schema-check.md.
+# Defender for Endpoint device inventory (OS platform, device type). Read by E9 to tell servers from workstations.
+# Column names and types are copied from Microsoft's Azure-Sentinel repository
+# (.script/tests/KqlvalidationsTests/CustomTables/DeviceInfo.json at commit c0c2dc2, the table definition the repo
+# uses to validate its own KQL), file read directly with curl (not summarised); not from a live workspace.
+# Added 2026-11-07 for the foothold rules (ARTEX Phase 4; ADR 012).
+name: DeviceInfo
+siem: sentinel
+source_url: https://github.com/Azure/Azure-Sentinel/blob/c0c2dc267d7b5840299e76e195b0407f3f9c92c8/.script/tests/KqlvalidationsTests/CustomTables/DeviceInfo.json
+fetched_on: '2026-11-07'
+provenance: Microsoft Azure-Sentinel repo (MIT) at commit c0c2dc2, file read directly (not summarised); 55 columns.
+fields:
+- AadDeviceId
+- AdditionalFields
+- AssetValue
+- AwsResourceName
+- AzureResourceId
+- AzureVmId
+- AzureVmSubscriptionId
+- _BilledSize
+- ClientVersion
+- CloudPlatforms
+- ConnectivityType
+- DeviceCategory
+- DeviceDynamicTags
+- DeviceId
+- DeviceManualTags
+- DeviceName
+- DeviceObjectId
+- DeviceSubtype
+- DeviceType
+- ExclusionReason
+- ExposureLevel
+- GcpFullResourceName
+- HardwareUuid
+- HostDeviceId
+- IsAzureADJoined
+- _IsBillable
+- IsExcluded
+- IsInternetFacing
+- IsTransient
+- JoinType
+- LoggedOnUsers
+- MachineGroup
+- MergedDeviceIds
+- MergedToDeviceId
+- MitigationStatus
+- Model
+- OnboardingStatus
+- OSArchitecture
+- OSBuild
+- OsBuildRevision
+- OSDistribution
+- OSPlatform
+- OSVersion
+- OSVersionInfo
+- PublicIP
+- RegistryDeviceTag
+- ReportId
+- RestrictedDeviceSecurityOperations
+- SensorHealthState
+- SourceSystem
+- TenantId
+- TimeGenerated
+- Type
+- Vendor
+- Timestamp
+types:
+  AadDeviceId: string
+  AdditionalFields: dynamic
+  AssetValue: string
+  AwsResourceName: string
+  AzureResourceId: string
+  AzureVmId: string
+  AzureVmSubscriptionId: string
+  _BilledSize: real
+  ClientVersion: string
+  CloudPlatforms: string
+  ConnectivityType: string
+  DeviceCategory: string
+  DeviceDynamicTags: string
+  DeviceId: string
+  DeviceManualTags: string
+  DeviceName: string
+  DeviceObjectId: string
+  DeviceSubtype: string
+  DeviceType: string
+  ExclusionReason: string
+  ExposureLevel: string
+  GcpFullResourceName: string
+  HardwareUuid: string
+  HostDeviceId: string
+  IsAzureADJoined: bool
+  _IsBillable: string
+  IsExcluded: bool
+  IsInternetFacing: bool
+  IsTransient: bool
+  JoinType: string
+  LoggedOnUsers: dynamic
+  MachineGroup: string
+  MergedDeviceIds: string
+  MergedToDeviceId: string
+  MitigationStatus: string
+  Model: string
+  OnboardingStatus: string
+  OSArchitecture: string
+  OSBuild: long
+  OsBuildRevision: string
+  OSDistribution: string
+  OSPlatform: string
+  OSVersion: string
+  OSVersionInfo: string
+  PublicIP: string
+  RegistryDeviceTag: string
+  ReportId: long
+  RestrictedDeviceSecurityOperations: string
+  SensorHealthState: string
+  SourceSystem: string
+  TenantId: string
+  TimeGenerated: datetime
+  Type: string
+  Vendor: string
+  Timestamp: datetime

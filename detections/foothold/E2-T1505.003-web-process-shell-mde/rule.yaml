@@ -1,0 +1,42 @@
+id: 6bc4862d-be4d-469e-9a48-0fa6f5640431
+name: Web server or database process starts a shell or download tool (Defender for Endpoint)
+version: 1
+status: experimental
+severity: High
+tier: targeted
+description: >
+  A web server or database process (w3wp, nginx, httpd/apache2, Tomcat,
+  a Java application server, mysqld/mariadbd) starts a command shell,
+  PowerShell, curl, wget or netcat, on Windows or Linux, from Defender
+  for Endpoint process events. These processes serve requests; they do
+  not normally start shells. However the attacker got in (web shell,
+  upload, deserialisation, SQL injection), commands they run through the
+  server show up as this parent-child pair (ADR 012).
+log_sources: [mde-advanced-hunting]
+mapping:
+  attack:
+    techniques: [T1505.003, T1059]
+    tactics: [persistence, execution]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    DeviceProcessEvents: [TimeGenerated, DeviceName, FileName, FolderPath, ProcessCommandLine, AccountName, InitiatingProcessFileName, InitiatingProcessCommandLine, InitiatingProcessFolderPath, InitiatingProcessAccountName]
+  query: |
+    // E2: web or database process starts a shell or download tool (detections/foothold/E2-T1505.003-web-process-shell-mde/README.md)
+    let server_parents = @"(?i)^(w3wp\.exe|nginx(\.exe)?|httpd(\.exe)?|apache2|tomcat[0-9]*w?(\.exe)?|mysqld(\.exe)?|mariadbd(\.exe)?)$";
+    let java_parents = @"(?i)^javaw?(\.exe)?$";
+    // Java counts only when its command line names an application server (not a build tool or IDE).
+    let java_server_markers = @"(?i)catalina|tomcat|jboss|wildfly|jetty|weblogic|websphere|glassfish";
+    let children = @"(?i)^(cmd\.exe|powershell\.exe|pwsh(\.exe)?|sh|bash|dash|zsh|curl(\.exe)?|wget(\.exe)?|nc(\.exe)?|ncat(\.exe)?|netcat)$";
+    // Per customer: known parent/child command lines that are part of an app (exact matches).
+    let allowed_child_commands = dynamic([]);
+    DeviceProcessEvents
+    | where FileName matches regex children
+    | where InitiatingProcessFileName matches regex server_parents
+        or (InitiatingProcessFileName matches regex java_parents and InitiatingProcessCommandLine matches regex java_server_markers)
+    | where not(ProcessCommandLine in (allowed_child_commands))
+    | project TimeGenerated, DeviceName, Parent = InitiatingProcessFileName, ParentPath = InitiatingProcessFolderPath,
+              ParentCommandLine = InitiatingProcessCommandLine, ParentAccount = InitiatingProcessAccountName,
+              Child = FileName, ChildPath = FolderPath, ChildCommandLine = ProcessCommandLine, AccountName

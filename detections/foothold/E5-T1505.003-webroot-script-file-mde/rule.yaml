@@ -1,0 +1,41 @@
+id: 3ce35248-5fd3-4298-a99b-542ce6d0fe38
+name: New server-side script file in a web root (Defender for Endpoint)
+version: 1
+status: experimental
+severity: Medium
+tier: targeted
+description: >
+  A .jsp, .jspx, .aspx, .ashx, .asmx, .asp, .php or .phtml file is
+  created, renamed into place or modified under a web root (IIS wwwroot,
+  /var/www, nginx html, Tomcat webapps, htdocs, SharePoint LAYOUTS), by a
+  process that is not a known deployment tool. Severity is raised to High
+  in the alert when the writer is a database process (mysqld, mariadbd,
+  sqlservr, postgres), the trace of a web shell written through SQL
+  (ADR 012).
+log_sources: [mde-advanced-hunting]
+mapping:
+  attack:
+    techniques: [T1505.003]
+    tactics: [persistence]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    DeviceFileEvents: [TimeGenerated, DeviceName, ActionType, FileName, FolderPath, InitiatingProcessFileName, InitiatingProcessCommandLine, InitiatingProcessAccountName]
+  query: |
+    // E5: server-side script file in a web root (detections/foothold/E5-T1505.003-webroot-script-file-mde/README.md)
+    let script_ext = @"(?i)\.(jspx?|aspx|ashx|asmx|asp|php[0-9]?|phtml)$";
+    let web_roots = @"(?i)(\\inetpub\\wwwroot\\|\\wwwroot\\|/var/www/|/usr/share/nginx/html/|/srv/www/|[\\/]webapps[\\/]|[\\/]htdocs[\\/]|\\Web Server Extensions\\[0-9]+\\TEMPLATE\\LAYOUTS\\)";
+    let database_writers = @"(?i)^(mysqld|mariadbd|sqlservr|postgres)(\.exe)?$";
+    // Per customer: processes that deploy web content (build agents, Web Deploy, rsync from CI).
+    let deployment_writers = dynamic(["msdeploy.exe"]);
+    DeviceFileEvents
+    | where ActionType in ("FileCreated", "FileRenamed", "FileModified")
+    | where FileName matches regex script_ext and FolderPath matches regex web_roots
+    | where not(InitiatingProcessFileName in~ (deployment_writers))
+    | extend WriterIsDatabase = InitiatingProcessFileName matches regex database_writers
+    | extend AlertSeverity = iff(WriterIsDatabase, "High", "Medium")
+    | project TimeGenerated, DeviceName, ActionType, FolderPath, FileName, Writer = InitiatingProcessFileName,
+              WriterCommandLine = InitiatingProcessCommandLine, WriterAccount = InitiatingProcessAccountName,
+              WriterIsDatabase, AlertSeverity

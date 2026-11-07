@@ -1,0 +1,47 @@
+{
+  "rule_id": "f94519ab-04fd-44c3-b117-56d319767163",
+  "rule_version": 1,
+  "engine": "Kustainer (ADX engine) 1.0.9805.13559, product 2026.11.05.0724-2644-79043d5-master",
+  "date": "2026-11-07",
+  "samples": {
+    "positive_events": 0,
+    "positive_cases": 0,
+    "positive_rows": 0,
+    "negative_events": 0,
+    "negative_rows": 0
+  },
+  "datasets": [
+    {
+      "id": "splunk-wsus-webshell-sysmon",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1505.003/wsus-windows-sysmon.log",
+      "sha256": "f9a4be69d25d2c39be02a4288f75780b4e34a80d3555a8900e4f7a3c977ec220"
+    },
+    {
+      "id": "splunk-wsus-sa-webshell-sysmon",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1505.003/wsus-sa-windows-sysmon.log",
+      "sha256": "3fb605825f6598cbcde1f339cc2f9eebafee494525d133377733f16791d04aa0"
+    },
+    {
+      "id": "splunk-crushftp-sysmon",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1190/crushftp/windows-sysmon.log",
+      "sha256": "2e9efea0d5421db1f9f2889ba418fc5f868fd38cb9654dc7312a9d31c0e28d0c"
+    }
+  ],
+  "dataset_events": 9,
+  "dataset_rows": 1,
+  "matched": [
+    {
+      "TimeGenerated": "2025-10-23T23:35:45.1278913Z",
+      "Computer": "wsus-srv-01.contoso.local",
+      "ParentImage": "C:\\Windows\\System32\\inetsrv\\w3wp.exe",
+      "ParentCommandLine": "c:\\windows\\system32\\inetsrv\\w3wp.exe -ap \"WsusPool\" -v \"v4.0\" -l \"webengine4.dll\" -a \\\\.\\pipe\\iisipm8530-wsus -h \"C:\\inetpub\\temp\\apppools\\WsusPool\\WsusPool.config\" -w \"\" -m 0",
+      "Image": "C:\\Windows\\System32\\cmd.exe",
+      "CommandLine": "C:\\Windows\\system32\\cmd.exe",
+      "User": "NT AUTHORITY\\NETWORK SERVICE"
+    }
+  ],
+  "columns_dropped_in_mapping": {}
+}

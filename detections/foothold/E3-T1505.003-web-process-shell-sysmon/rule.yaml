@@ -1,0 +1,41 @@
+id: f94519ab-04fd-44c3-b117-56d319767163
+name: Web server or database process starts a shell or download tool (Windows Sysmon)
+version: 1
+status: experimental
+severity: High
+tier: targeted
+description: >
+  Sysmon process creation (event 1) on Windows where the parent is a web
+  server or database process (w3wp, nginx, httpd, Tomcat, a Java
+  application server, mysqld/mariadbd) and the child is cmd, PowerShell,
+  curl, wget or netcat. Same hypothesis as E2, for hosts with Sysmon
+  instead of Defender for Endpoint (ADR 012).
+log_sources: [windows-process-creation]
+mapping:
+  attack:
+    techniques: [T1505.003, T1059]
+    tactics: [persistence, execution]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    Event: [TimeGenerated, Source, EventID, EventData, Computer]
+  query: |
+    // E3: web or database process starts a shell or download tool, Sysmon (detections/foothold/E3-T1505.003-web-process-shell-sysmon/README.md)
+    let server_parents = @"(?i)\\(w3wp|nginx|httpd|tomcat[0-9]*w?|mysqld|mariadbd)\.exe$";
+    let java_parents = @"(?i)\\javaw?\.exe$";
+    let java_server_markers = @"(?i)catalina|tomcat|jboss|wildfly|jetty|weblogic|websphere|glassfish";
+    let children = @"(?i)\\(cmd|powershell|pwsh|curl|wget|nc|ncat)\.exe$";
+    let allowed_child_commands = dynamic([]);
+    Event
+    | where Source == "Microsoft-Windows-Sysmon" and EventID == 1
+    | extend Data = parse_xml(EventData).DataItem.EventData.Data
+    | mv-apply d = Data on (summarize Fields = make_bag(bag_pack(tostring(d["@Name"]), tostring(d["#text"]))))
+    | extend Image = tostring(Fields.Image), CommandLine = tostring(Fields.CommandLine), User = tostring(Fields.User),
+             ParentImage = tostring(Fields.ParentImage), ParentCommandLine = tostring(Fields.ParentCommandLine)
+    | where Image matches regex children
+    | where ParentImage matches regex server_parents
+        or (ParentImage matches regex java_parents and ParentCommandLine matches regex java_server_markers)
+    | where not(CommandLine in (allowed_child_commands))
+    | project TimeGenerated, Computer, ParentImage, ParentCommandLine, Image, CommandLine, User

@@ -1,0 +1,4 @@
+datasets:
+  - splunk-wsus-webshell-sysmon
+  - splunk-wsus-sa-webshell-sysmon
+  - splunk-crushftp-sysmon

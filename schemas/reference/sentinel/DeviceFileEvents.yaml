@@ -1,0 +1,143 @@
+# Reference schema for the DeviceFileEvents table, with column types. See docs/components/schema-check.md.
+# Defender for Endpoint file creation, modification and rename events (Windows and Linux). Read by E5.
+# Column names and types are copied from Microsoft's Azure-Sentinel repository
+# (.script/tests/KqlvalidationsTests/CustomTables/DeviceFileEvents.json at commit c0c2dc2, the table definition the repo
+# uses to validate its own KQL), file read directly with curl (not summarised); not from a live workspace.
+# Added 2026-11-07 for the foothold rules (ARTEX Phase 4; ADR 012).
+name: DeviceFileEvents
+siem: sentinel
+source_url: https://github.com/Azure/Azure-Sentinel/blob/c0c2dc267d7b5840299e76e195b0407f3f9c92c8/.script/tests/KqlvalidationsTests/CustomTables/DeviceFileEvents.json
+fetched_on: '2026-11-07'
+provenance: Microsoft Azure-Sentinel repo (MIT) at commit c0c2dc2, file read directly (not summarised); 65 columns.
+fields:
+- ActionType
+- AdditionalFields
+- AppGuardContainerId
+- _BilledSize
+- DeviceId
+- DeviceName
+- FileName
+- FileOriginIP
+- FileOriginReferrerUrl
+- FileOriginUrl
+- FileSize
+- FolderPath
+- InitiatingProcessAccountDomain
+- InitiatingProcessAccountName
+- InitiatingProcessAccountObjectId
+- InitiatingProcessAccountSid
+- InitiatingProcessAccountUpn
+- InitiatingProcessCommandLine
+- InitiatingProcessCreationTime
+- InitiatingProcessFileName
+- InitiatingProcessFileSize
+- InitiatingProcessFolderPath
+- InitiatingProcessId
+- InitiatingProcessIntegrityLevel
+- InitiatingProcessMD5
+- InitiatingProcessParentCreationTime
+- InitiatingProcessParentFileName
+- InitiatingProcessParentId
+- InitiatingProcessRemoteSessionDeviceName
+- InitiatingProcessRemoteSessionIP
+- InitiatingProcessSessionId
+- InitiatingProcessSHA1
+- InitiatingProcessSHA256
+- InitiatingProcessTokenElevation
+- InitiatingProcessUniqueId
+- InitiatingProcessVersionInfoCompanyName
+- InitiatingProcessVersionInfoFileDescription
+- InitiatingProcessVersionInfoInternalFileName
+- InitiatingProcessVersionInfoOriginalFileName
+- InitiatingProcessVersionInfoProductName
+- InitiatingProcessVersionInfoProductVersion
+- IsAzureInfoProtectionApplied
+- _IsBillable
+- IsInitiatingProcessRemoteSession
+- MachineGroup
+- MD5
+- PreviousFileName
+- PreviousFolderPath
+- ReportId
+- RequestAccountDomain
+- RequestAccountName
+- RequestAccountSid
+- RequestProtocol
+- RequestSourceIP
+- RequestSourcePort
+- SensitivityLabel
+- SensitivitySubLabel
+- SHA1
+- SHA256
+- ShareName
+- SourceSystem
+- TenantId
+- TimeGenerated
+- Type
+- Timestamp
+types:
+  ActionType: string
+  AdditionalFields: dynamic
+  AppGuardContainerId: string
+  _BilledSize: real
+  DeviceId: string
+  DeviceName: string
+  FileName: string
+  FileOriginIP: string
+  FileOriginReferrerUrl: string
+  FileOriginUrl: string
+  FileSize: long
+  FolderPath: string
+  InitiatingProcessAccountDomain: string
+  InitiatingProcessAccountName: string
+  InitiatingProcessAccountObjectId: string
+  InitiatingProcessAccountSid: string
+  InitiatingProcessAccountUpn: string
+  InitiatingProcessCommandLine: string
+  InitiatingProcessCreationTime: datetime
+  InitiatingProcessFileName: string
+  InitiatingProcessFileSize: long
+  InitiatingProcessFolderPath: string
+  InitiatingProcessId: long
+  InitiatingProcessIntegrityLevel: string
+  InitiatingProcessMD5: string
+  InitiatingProcessParentCreationTime: datetime
+  InitiatingProcessParentFileName: string
+  InitiatingProcessParentId: long
+  InitiatingProcessRemoteSessionDeviceName: string
+  InitiatingProcessRemoteSessionIP: string
+  InitiatingProcessSessionId: long
+  InitiatingProcessSHA1: string
+  InitiatingProcessSHA256: string
+  InitiatingProcessTokenElevation: string
+  InitiatingProcessUniqueId: string
+  InitiatingProcessVersionInfoCompanyName: string
+  InitiatingProcessVersionInfoFileDescription: string
+  InitiatingProcessVersionInfoInternalFileName: string
+  InitiatingProcessVersionInfoOriginalFileName: string
+  InitiatingProcessVersionInfoProductName: string
+  InitiatingProcessVersionInfoProductVersion: string
+  IsAzureInfoProtectionApplied: bool
+  _IsBillable: string
+  IsInitiatingProcessRemoteSession: bool
+  MachineGroup: string
+  MD5: string
+  PreviousFileName: string
+  PreviousFolderPath: string
+  ReportId: long
+  RequestAccountDomain: string
+  RequestAccountName: string
+  RequestAccountSid: string
+  RequestProtocol: string
+  RequestSourceIP: string
+  RequestSourcePort: int
+  SensitivityLabel: string
+  SensitivitySubLabel: string
+  SHA1: string
+  SHA256: string
+  ShareName: string
+  SourceSystem: string
+  TenantId: string
+  TimeGenerated: datetime
+  Type: string
+  Timestamp: datetime

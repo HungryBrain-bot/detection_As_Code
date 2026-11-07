@@ -54,7 +54,7 @@ import yaml
 
 from dac.rules import REPO_ROOT, load_rules
 
-from . import llm_datasets, mapping
+from . import llm_datasets, mapping, winxml
 from .engines import EngineError, KustoEngine, SplunkEngine, data_dir, epoch
 
 DATASETS_FILE = REPO_ROOT / "harness" / "datasets.yaml"
@@ -145,6 +145,10 @@ def event_files(folder) -> list:
 def read_events(dataset_id: str, catalogue: dict | None = None) -> list[dict]:
     entry = (catalogue if catalogue is not None else load_catalogue()).get(dataset_id, {})
     folder = data_dir() / dataset_id
+    if entry.get("format") == "winevent-xml":
+        if not event_files(folder):
+            raise SystemExit(f"{dataset_id}: not fetched; run `python -m harness fetch`")
+        return winxml.read(folder)
     if entry.get("format"):
         if not any(p for pattern in CONVERTED_FILES for p in folder.glob(pattern)):
             raise SystemExit(f"{dataset_id}: not fetched; run `python -m harness fetch`")

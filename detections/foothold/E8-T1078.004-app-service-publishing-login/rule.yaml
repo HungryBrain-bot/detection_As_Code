@@ -1,0 +1,35 @@
+id: 25944016-4407-408b-a154-70718a09a90a
+name: App Service publishing login (Kudu, FTP, Web Deploy) by an identity outside the pipeline
+version: 1
+status: experimental
+severity: Medium
+tier: targeted
+description: >
+  An App Service publishing login, as recorded in AppServiceAuditLogs
+  (Microsoft: "Login activity via FTP and Kudu"), by a user or publishing
+  identity that is not one of the app's deployment pipeline identities.
+  For apps deployed only by a pipeline, anyone else logging in to the
+  Kudu/SCM site or FTP can run commands and change files there. This rule
+  sees the login, not the commands run after it (ADR 012).
+log_sources: [app-service-audit]
+mapping:
+  attack:
+    techniques: [T1078.004]
+    tactics: [initial-access, persistence]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    AppServiceAuditLogs: [TimeGenerated, _ResourceId, OperationName, Protocol, User, UserAddress, UserDisplayName]
+  query: |
+    // E8: publishing login by an identity outside the pipeline (detections/foothold/E8-T1078.004-app-service-publishing-login/README.md)
+    // Per customer: identities the deployment pipeline logs in as (User or UserDisplayName), compared case-insensitively.
+    let pipeline_identities = dynamic([]);  // lower case, e.g. "$myapp-prod", "deploy-sp@example.test"
+    // Per customer: apps deployed only through the pipeline (resource id substrings). Empty means every app.
+    let pipeline_only_apps = dynamic([]);
+    AppServiceAuditLogs
+    | where array_length(pipeline_only_apps) == 0 or _ResourceId has_any (pipeline_only_apps)
+    | where not(tolower(User) in (pipeline_identities) or tolower(UserDisplayName) in (pipeline_identities))
+    | extend App = tostring(split(_ResourceId, "/")[-1])
+    | project TimeGenerated, App, _ResourceId, OperationName, Protocol, User, UserDisplayName, UserAddress
