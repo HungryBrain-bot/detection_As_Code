@@ -30,6 +30,10 @@ check the request is explicit from the owner (Venu).
 | B5 | identity | One SP credential from Microsoft's network and outside it (2026-11-07) | T1078.004 | Sentinel |
 | B6 | identity | SP sign-in from an ASN new in 14 days (2026-11-07) | T1078.004 | Sentinel |
 | B7 | identity | SP Graph calls unlike its app: new client, enumeration, fix-and-retry (2026-11-07) | T1087.004, T1069.003, T1526 | Sentinel |
+| D1 | recon | Request to a decoy API route; the path is a `Honeytoken_CL` row (2026-11-07) | T1595, T1594 | Sentinel |
+| D2 | recon | Source map / Swagger / config download, then API routes the UI does not call (2026-11-07) | T1594, T1595 | Sentinel |
+| D3 | recon | One client, dozens of distinct paths in minutes, mostly 401/403/404 (2026-11-07) | T1595.003 | Sentinel |
+| D4 | recon | AccessDenied / UnauthorizedOperation burst across AWS services from one principal (2026-11-07) | T1580 | Sentinel |
 | C1 | llm | Prompt-injection patterns | OWASP LLM01 (2025), LLM01:2026; ATLAS AML.T0051.000/.001, T0054, T0056, T0068 | Sentinel |
 | C2 | llm | Canary secret in model output | OWASP LLM02 (2025) (+ LLM07, 2026-10-27), LLM02/LLM08:2026; ATLAS AML.T0056, T0057, T0086 | Sentinel |
 | C3 | llm | Abnormal tool-call volume | OWASP LLM06/LLM10 (2025), LLM03/LLM06:2026; ATLAS AML.T0053, T0034.002 | Sentinel |
@@ -51,6 +55,13 @@ credential sourcing; ADR 009, docs/threats/artex-phase1-credential-sourcing.md),
 hand-written samples; the recorded Splunk tenant data cannot exercise
 them (no ASN, no Key Vault, no Graph baseline). Hunt H1
 (docs/hunts/) is the self-search runbook that goes with them.
+D1-D4 added 2026-11-07 at the owner's explicit request (ARTEX Phase 2,
+recon; ADR 010, docs/threats/artex-phase2-recon.md), `status: test`,
+targeted, Sentinel only, in `detections/recon/`. D1-D3 read App Service
+HTTP logs only and ran in the Kusto emulator on hand-written samples (no
+recorded web access log is loaded); D4 reads CloudTrail, AWS only, and
+also ran on three recorded Splunk attack_data sets (scanner tools in a
+lab, not ARTEX). No Azure Activity branch (the log has no reads).
 Common high-value rules outside this list (brute force, AD changes)
 are parked in BUILD_LOG.md for the owner, not in scope. ATT&CK IDs above were checked against the enterprise
 STIX bundle on 2026-10-27 (all exist, none deprecated). ATLAS IDs were
@@ -101,7 +112,9 @@ flowchart LR
   AADServicePrincipalSignInLogs, AzureDiagnostics with column types from
   Microsoft's Azure-Sentinel repo; MicrosoftGraphActivityLogs from the
   Learn table reference (summarising fetch); `Honeytoken_CL` defined by
-  this project (ADR 009); `LLMAppLog_CL` and
+  this project (ADR 009, `DecoyRoute` rows added by ADR 010);
+  AWSCloudTrail from Azure-Sentinel sample metadata; AppServiceHTTPLogs
+  from the Learn table reference (fetched in full); `LLMAppLog_CL` and
   `LLMCanary_CL`, defined by this project, ADR 008).
 - `log_sources.yaml` - log-source catalogue: owning team key and
   per-SIEM table / source / log type names.
@@ -135,13 +148,14 @@ flowchart LR
   `datasets.yaml` (pinned OTRF and Splunk attack_data datasets),
   `mapping.py` (recorded event -> SecurityEvent / Event / XmlWinEventLog;
   Entra diagnostic records -> AuditLogs / SigninLogs /
-  AADNonInteractiveUserSignInLogs; LLM rows as they are),
+  AADNonInteractiveUserSignInLogs; raw CloudTrail records ->
+  AWSCloudTrail; LLM rows as they are),
   `llm_datasets.py` (JailbreakHub, AgentDojo, BIPIA -> `LLMAppLog_CL`),
   `manifests/` (per-file hashes), `engines.py` (Kusto emulator, Splunk
   container), `python -m harness fetch | run`.
 - `docs/hunts/` - hunts and runbooks that are not rules (H1 leaked-secret
   self-search). `docs/threats/` - per-campaign notes mapping a source to
-  rules, with which claims were verified (ARTEX Phase 1).
+  rules, with which claims were verified (ARTEX Phases 1 and 2).
 - `docs/future/` - design-only notes, unbuilt and not scheduled (RAG
   over the attack docs).
 - `templates/` - attack-doc and rule-doc templates; their `##`
@@ -207,9 +221,9 @@ current MITRE ATT&CK bundle and pinned ATLAS data (v2026.06).
 - Engine tests: `python -m harness run --engine kusto` (also CI job
   `engine-kusto`) and `--engine splunk` (local only).
 
-Last run (2026-11-07): 158 passed, 0 failed; engine tests: A1-A4 pass
+Last run (2026-11-07): 162 passed, 0 failed; engine tests: A1-A4 pass
 in Kusto emulator and Splunk 10.6.1 (Splunk last run 2026-10-28),
-B1-B7 and C1-C3 in the Kusto emulator.
+B1-B7, C1-C3 and D1-D4 in the Kusto emulator.
 
 ## Model usage
 
@@ -224,9 +238,9 @@ conflicting sources).
 - Built: rule schema, validator, three adapters with read-only probes,
   schema check, per-customer log-source gate with file and SMTP
   notifiers, baseline/targeted tiers, coverage layers, CLI, CI
-  workflow, engine harness, component docs, ADRs 001-009, templates,
+  workflow, engine harness, component docs, ADRs 001-010, templates,
   six skills, LLM log-source inventory and feed report; rules A1-A4,
-  B1-B7, C1-C3; hunt H1.
+  B1-B7, C1-C3, D1-D4; hunt H1.
 - Verified: everything in the test suite; ATT&CK IDs for the planned
   rules against the STIX bundle; the first CI workflow ran green on
   GitHub (PR #1); per-customer gate job ran green (PR #2); A1-A4 KQL in
@@ -242,6 +256,14 @@ conflicting sources).
   principal sign-ins; Key Vault `id_s` / `identity_claim_appid_g` format
   in a live vault; `MicrosoftGraphActivityLogs` column types (from a
   summarising fetch).
+- Not verified: D1-D3 against any recorded web access log (all samples
+  hand-written; no decoy, documents-then-routes sequence or path sweep
+  in recorded data); that ARTEX or any agent requests a decoy route or
+  runs a CloudTrail permission burst (no fetched source says so; D4's
+  recorded data is cloudsploit / cloudmapper, 2021); `AppServiceHTTPLogs`
+  against a live app (is `CIp` the proxy behind Front Door?); the AWS
+  connector's `ErrorCode` for denied calls; D2's learned baseline on a
+  low-traffic app. The Wiz post's Storm-0940 attribution is "overlap".
 - Not verified: any live API call (Sentinel, Splunk, SecOps deploy or
   probe, SMTP); Navigator loading of the layers (ATLAS `domain` value
   is a guess); the deploy and coverage CI jobs on `main`; A1-A4 in a

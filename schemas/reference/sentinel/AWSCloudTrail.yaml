@@ -1,0 +1,120 @@
+# Reference schema for the AWSCloudTrail table (AWS CloudTrail events ingested by the Sentinel AWS S3 connector), with column types. See docs/components/schema-check.md.
+# Column names and types are copied from Microsoft's Azure-Sentinel repository
+# (Sample Data/Tables/AWSCloudTrail/metadata.json, "schemaSource": "Microsoft public table schema"),
+# not from a live workspace. The harness creates the Kusto test table from `types`.
+# Added 2026-11-07 for rule E1 (ARTEX Phase 2, recon; ADR 010).
+name: AWSCloudTrail
+siem: sentinel
+source_url: https://github.com/Azure/Azure-Sentinel/blob/c0c2dc267d7b5840299e76e195b0407f3f9c92c8/Sample%20Data/Tables/AWSCloudTrail/metadata.json
+vendor_page: https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/awscloudtrail
+fetched_on: '2026-11-07'
+provenance: Microsoft Azure-Sentinel repo (MIT) at commit c0c2dc2, file read directly with git (not summarised);
+  53 columns.
+fields:
+- APIVersion
+- AWSRegion
+- AdditionalEventData
+- AwsEventId
+- AwsRequestId
+- AwsRequestId_
+- Category
+- CidrIp
+- CipherSuite
+- ClientProvidedHostHeader
+- DestinationPort
+- EC2RoleDelivery
+- ErrorCode
+- ErrorMessage
+- EventName
+- EventSource
+- EventTypeName
+- EventVersion
+- IpProtocol
+- ManagementEvent
+- OperationName
+- ReadOnly
+- RecipientAccountId
+- RequestParameters
+- Resources
+- ResponseElements
+- ServiceEventDetails
+- SessionCreationDate
+- SessionIssuerAccountId
+- SessionIssuerArn
+- SessionIssuerPrincipalId
+- SessionIssuerType
+- SessionIssuerUserName
+- SessionMfaAuthenticated
+- SharedEventId
+- SourceIpAddress
+- SourcePort
+- SourceSystem
+- TenantId
+- TimeGenerated
+- TlsVersion
+- Type
+- UserAgent
+- UserIdentityAccessKeyId
+- UserIdentityAccountId
+- UserIdentityArn
+- UserIdentityInvokedBy
+- UserIdentityPrincipalid
+- UserIdentityStoreArn
+- UserIdentityType
+- UserIdentityUserId
+- UserIdentityUserName
+- VpcEndpointId
+types:
+  APIVersion: string
+  AWSRegion: string
+  AdditionalEventData: string
+  AwsEventId: string
+  AwsRequestId: string
+  AwsRequestId_: string
+  Category: string
+  CidrIp: string
+  CipherSuite: string
+  ClientProvidedHostHeader: string
+  DestinationPort: string
+  EC2RoleDelivery: string
+  ErrorCode: string
+  ErrorMessage: string
+  EventName: string
+  EventSource: string
+  EventTypeName: string
+  EventVersion: string
+  IpProtocol: string
+  ManagementEvent: bool
+  OperationName: string
+  ReadOnly: bool
+  RecipientAccountId: string
+  RequestParameters: string
+  Resources: string
+  ResponseElements: string
+  ServiceEventDetails: string
+  SessionCreationDate: datetime
+  SessionIssuerAccountId: string
+  SessionIssuerArn: string
+  SessionIssuerPrincipalId: string
+  SessionIssuerType: string
+  SessionIssuerUserName: string
+  SessionMfaAuthenticated: bool
+  SharedEventId: string
+  SourceIpAddress: string
+  SourcePort: string
+  SourceSystem: string
+  TenantId: string
+  TimeGenerated: datetime
+  TlsVersion: string
+  Type: string
+  UserAgent: string
+  UserIdentityAccessKeyId: string
+  UserIdentityAccountId: string
+  UserIdentityArn: string
+  UserIdentityInvokedBy: string
+  UserIdentityPrincipalid: string
+  UserIdentityStoreArn: string
+  UserIdentityType: string
+  UserIdentityUserId: string
+  UserIdentityUserName: string
+  VpcEndpointId: string

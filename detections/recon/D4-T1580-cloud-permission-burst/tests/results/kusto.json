@@ -1,0 +1,623 @@
+{
+  "rule_id": "6b7d007b-5a28-47df-96a5-a83983cd94bc",
+  "rule_version": 1,
+  "engine": "Kustainer (ADX engine) 1.0.9796.17726, product 2026.10.27.0942-2643-eb20c9c-master",
+  "date": "2026-11-07",
+  "samples": {
+    "positive_events": 54,
+    "positive_cases": 2,
+    "positive_rows": 2,
+    "negative_events": 193,
+    "negative_rows": 0
+  },
+  "datasets": [
+    {
+      "id": "splunk-aws-accessdenied-discovery",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1580/aws_iam_accessdenied_discovery_events/aws_iam_accessdenied_discovery_events.json",
+      "sha256": "4f52389f17745abf5fa1cf30c055d4f9d34022fcfb8e5c2544c70177da228433"
+    },
+    {
+      "id": "splunk-aws-security-scanner",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1526/aws_security_scanner/aws_security_scanner.json",
+      "sha256": "4c7ba5d7ac8186f61acf60b6a94e5bc6c3b5a3313bc627a35998110e7103021e"
+    },
+    {
+      "id": "splunk-aws-excessive-list",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1580/aws_iam_excessive_list_command_usage/aws_iam_excessive_list_command_usage.json",
+      "sha256": "d0e597bf34919e87ff53d757766a71431847d8788ca80ffe78d8ac23bb498f35"
+    }
+  ],
+  "dataset_events": 6417,
+  "dataset_rows": 11,
+  "matched": [
+    {
+      "TimeGenerated": "2021-04-13T11:33:15Z",
+      "UserIdentityArn": "arn:aws:iam::111111111111:user/cloudsploit",
+      "Window": "2021-04-13T11:33:00Z",
+      "Denied": 130,
+      "Services": 7,
+      "ServiceList": [
+        "ec2.amazonaws.com",
+        "elasticloadbalancing.amazonaws.com",
+        "cloudtrail.amazonaws.com",
+        "config.amazonaws.com",
+        "ssm.amazonaws.com",
+        "redshift.amazonaws.com",
+        "rds.amazonaws.com"
+      ],
+      "Actions": 16,
+      "ActionList": [
+        "DescribeVpcs",
+        "DescribeFlowLogs",
+        "DescribeRouteTables",
+        "DescribeLoadBalancers",
+        "DescribeSubnets",
+        "DescribeSecurityGroups",
+        "DescribeVolumes",
+        "DescribeInstances",
+        "DescribeVpcPeeringConnections",
+        "DescribeTrails",
+        "DescribeConfigurationRecorders",
+        "DescribeConfigurationRecorderStatus",
+        "DescribeParameters",
+        "DescribeClusters",
+        "DescribeDBClusters",
+        "DescribeDBInstances"
+      ],
+      "ErrorCodes": [
+        "Client.UnauthorizedOperation",
+        "AccessDenied"
+      ],
+      "IPAddresses": [
+        "95.90.195.80"
+      ],
+      "UserAgents": [
+        "aws-sdk-nodejs/2.885.0 linux/v14.16.1 callback"
+      ],
+      "FirstSeen": "2021-04-13T11:33:00Z",
+      "LastSeen": "2021-04-13T11:33:15Z"
+    },
+    {
+      "TimeGenerated": "2021-04-13T11:32:59Z",
+      "UserIdentityArn": "arn:aws:iam::111111111111:user/cloudsploit",
+      "Window": "2021-04-13T11:32:00Z",
+      "Denied": 142,
+      "Services": 4,
+      "ServiceList": [
+        "ec2.amazonaws.com",
+        "elasticloadbalancing.amazonaws.com",
+        "config.amazonaws.com",
+        "cloudtrail.amazonaws.com"
+      ],
+      "Actions": 12,
+      "ActionList": [
+        "DescribeVpcs",
+        "DescribeInstances",
+        "DescribeRouteTables",
+        "DescribeSubnets",
+        "DescribeSecurityGroups",
+        "DescribeVolumes",
+        "DescribeLoadBalancers",
+        "DescribeConfigurationRecorderStatus",
+        "DescribeConfigurationRecorders",
+        "DescribeTrails",
+        "DescribeFlowLogs",
+        "DescribeVpcPeeringConnections"
+      ],
+      "ErrorCodes": [
+        "Client.UnauthorizedOperation",
+        "AccessDenied"
+      ],
+      "IPAddresses": [
+        "95.90.195.80"
+      ],
+      "UserAgents": [
+        "aws-sdk-nodejs/2.885.0 linux/v14.16.1 callback"
+      ],
+      "FirstSeen": "2021-04-13T11:32:52Z",
+      "LastSeen": "2021-04-13T11:32:59Z"
+    },
+    {
+      "TimeGenerated": "2021-04-13T11:35:45Z",
+      "UserIdentityArn": "arn:aws:iam::760111141337:user/cloudsploit",
+      "Window": "2021-04-13T11:35:00Z",
+      "Denied": 268,
+      "Services": 23,
+      "ServiceList": [
+        "wafv2.amazonaws.com",
+        "waf-regional.amazonaws.com",
+        "transfer.amazonaws.com",
+        "ssm.amazonaws.com",
+        "sns.amazonaws.com",
+        "secretsmanager.amazonaws.com",
+        "shield.amazonaws.com",
+        "ses.amazonaws.com",
+        "kms.amazonaws.com",
+        "lambda.amazonaws.com",
+        "airflow.amazonaws.com",
+        "s3.amazonaws.com",
+        "route53domains.amazonaws.com",
+        "route53.amazonaws.com",
+        "organizations.amazonaws.com",
+        "firehose.amazonaws.com",
+        "kinesis.amazonaws.com",
+        "guardduty.amazonaws.com",
+        "es.amazonaws.com",
+        "elasticmapreduce.amazonaws.com",
+        "iam.amazonaws.com",
+        "eks.amazonaws.com",
+        "dynamodb.amazonaws.com"
+      ],
+      "Actions": 28,
+      "ActionList": [
+        "ListWebACLs",
+        "ListServers",
+        "ListAssociations",
+        "ListTopics",
+        "ListSecrets",
+        "ListProtections",
+        "ListIdentities",
+        "ListKeys",
+        "ListFunctions20150331",
+        "ListAliases",
+        "ListEnvironments",
+        "ListBuckets",
+        "ListDomains",
+        "ListHostedZones",
+        "ListAccounts",
+        "ListHandshakesForAccount",
+        "ListDeliveryStreams",
+        "ListStreams",
+        "ListDetectors",
+        "ListDomainNames",
+        "ListClusters",
+        "ListVirtualMFADevices",
+        "ListPolicies",
+        "ListGroups",
+        "ListRoles",
+        "ListServerCertificates",
+        "ListUsers",
+        "ListTables"
+      ],
+      "ErrorCodes": [
+        "AccessDenied"
+      ],
+      "IPAddresses": [
+        "95.9.125.40"
+      ],
+      "UserAgents": [
+        "aws-sdk-nodejs/2.885.0 linux/v14.16.1 callback",
+        "[aws-sdk-nodejs/2.885.0 linux/v14.16.1 callback]"
+      ],
+      "FirstSeen": "2021-04-13T11:35:03Z",
+      "LastSeen": "2021-04-13T11:35:45Z"
+    },
+    {
+      "TimeGenerated": "2021-04-13T11:34:58Z",
+      "UserIdentityArn": "arn:aws:iam::760111141337:user/cloudsploit",
+      "Window": "2021-04-13T11:34:00Z",
+      "Denied": 128,
+      "Services": 7,
+      "ServiceList": [
+        "dynamodb.amazonaws.com",
+        "cloudformation.amazonaws.com",
+        "comprehend.amazonaws.com",
+        "acm.amazonaws.com",
+        "devops-guru.amazonaws.com",
+        "athena.amazonaws.com",
+        "cloudfront.amazonaws.com"
+      ],
+      "Actions": 12,
+      "ActionList": [
+        "ListTables",
+        "ListStacks",
+        "ListDocumentClassificationJobs",
+        "ListCertificates",
+        "ListTopicsDetectionJobs",
+        "ListSentimentDetectionJobs",
+        "ListDominantLanguageDetectionJobs",
+        "ListEntitiesDetectionJobs",
+        "ListKeyPhrasesDetectionJobs",
+        "ListNotificationChannels",
+        "ListWorkGroups",
+        "ListDistributions2020_05_31"
+      ],
+      "ErrorCodes": [
+        "AccessDenied"
+      ],
+      "IPAddresses": [
+        "95.9.125.40"
+      ],
+      "UserAgents": [
+        "aws-sdk-nodejs/2.885.0 linux/v14.16.1 callback"
+      ],
+      "FirstSeen": "2021-04-13T11:34:43Z",
+      "LastSeen": "2021-04-13T11:34:58Z"
+    },
+    {
+      "TimeGenerated": "2021-04-13T11:33:13Z",
+      "UserIdentityArn": "arn:aws:iam::760111141337:user/cloudsploit",
+      "Window": "2021-04-13T11:33:00Z",
+      "Denied": 82,
+      "Services": 6,
+      "ServiceList": [
+        "transfer.amazonaws.com",
+        "secretsmanager.amazonaws.com",
+        "kms.amazonaws.com",
+        "lambda.amazonaws.com",
+        "s3.amazonaws.com",
+        "acm.amazonaws.com"
+      ],
+      "Actions": 7,
+      "ActionList": [
+        "ListServers",
+        "ListSecrets",
+        "ListAliases",
+        "ListFunctions20150331",
+        "ListKeys",
+        "ListBuckets",
+        "ListCertificates"
+      ],
+      "ErrorCodes": [
+        "AccessDenied"
+      ],
+      "IPAddresses": [
+        "95.9.125.40"
+      ],
+      "UserAgents": [
+        "aws-sdk-nodejs/2.885.0 linux/v14.16.1 callback",
+        "[aws-sdk-nodejs/2.885.0 linux/v14.16.1 callback]"
+      ],
+      "FirstSeen": "2021-04-13T11:33:00Z",
+      "LastSeen": "2021-04-13T11:33:13Z"
+    },
+    {
+      "TimeGenerated": "2021-04-13T11:35:55Z",
+      "UserIdentityArn": "arn:aws:iam::731544447609:user/cloudsploit",
+      "Window": "2021-04-13T11:35:00Z",
+      "Denied": 609,
+      "Services": 36,
+      "ServiceList": [
+        "iam.amazonaws.com",
+        "wafv2.amazonaws.com",
+        "xray.amazonaws.com",
+        "waf-regional.amazonaws.com",
+        "workspaces.amazonaws.com",
+        "transfer.amazonaws.com",
+        "ssm.amazonaws.com",
+        "sns.amazonaws.com",
+        "secretsmanager.amazonaws.com",
+        "support.amazonaws.com",
+        "shield.amazonaws.com",
+        "tagging.amazonaws.com",
+        "redshift.amazonaws.com",
+        "rds.amazonaws.com",
+        "ses.amazonaws.com",
+        "kms.amazonaws.com",
+        "lambda.amazonaws.com",
+        "airflow.amazonaws.com",
+        "s3.amazonaws.com",
+        "route53domains.amazonaws.com",
+        "route53.amazonaws.com",
+        "organizations.amazonaws.com",
+        "firehose.amazonaws.com",
+        "kinesis.amazonaws.com",
+        "guardduty.amazonaws.com",
+        "glue.amazonaws.com",
+        "es.amazonaws.com",
+        "elasticloadbalancing.amazonaws.com",
+        "elasticmapreduce.amazonaws.com",
+        "ecr.amazonaws.com"
+      ],
+      "Actions": 59,
+      "ActionList": [
+        "GenerateCredentialReport",
+        "ListWebACLs",
+        "GetEncryptionConfig",
+        "DescribeWorkspaceDirectories",
+        "DescribeIpGroups",
+        "DescribeWorkspaces",
+        "ListServers",
+        "DescribeParameters",
+        "DescribeInstanceInformation",
+        "ListAssociations",
+        "ListTopics",
+        "ListSecrets",
+        "DescribeTrustedAdvisorChecks",
+        "DescribeEmergencyContactSettings",
+        "ListProtections",
+        "DescribeSubscription",
+        "GetTagKeys",
+        "DescribeClusterParameterGroups",
+        "DescribeClusters",
+        "DescribeReservedNodes",
+        "DescribeDBInstances",
+        "DescribeDBClusters",
+        "DescribeDBSnapshots",
+        "DescribeDBParameterGroups",
+        "ListIdentities",
+        "ListKeys",
+        "ListFunctions20150331",
+        "ListAliases",
+        "ListEnvironments",
+        "ListBuckets"
+      ],
+      "ErrorCodes": [
+        "AccessDenied"
+      ],
+      "IPAddresses": [
+        "34.12.134.20"
+      ],
+      "UserAgents": [
+        "aws-sdk-nodejs/2.885.0 linux/v14.16.1 callback",
+        "[aws-sdk-nodejs/2.885.0 linux/v14.16.1 callback]"
+      ],
+      "FirstSeen": "2021-04-13T11:35:01Z",
+      "LastSeen": "2021-04-13T11:35:55Z"
+    },
+    {
+      "TimeGenerated": "2021-04-13T11:34:59Z",
+      "UserIdentityArn": "arn:aws:iam::731544447609:user/cloudsploit",
+      "Window": "2021-04-13T11:34:00Z",
+      "Denied": 244,
+      "Services": 15,
+      "ServiceList": [
+        "autoscaling.amazonaws.com",
+        "dax.amazonaws.com",
+        "dlm.amazonaws.com",
+        "config.amazonaws.com",
+        "dms.amazonaws.com",
+        "dynamodb.amazonaws.com",
+        "cloudtrail.amazonaws.com",
+        "cloudformation.amazonaws.com",
+        "comprehend.amazonaws.com",
+        "acm.amazonaws.com",
+        "apigateway.amazonaws.com",
+        "devops-guru.amazonaws.com",
+        "athena.amazonaws.com",
+        "cloudfront.amazonaws.com",
+        "iam.amazonaws.com"
+      ],
+      "Actions": 22,
+      "ActionList": [
+        "DescribeAutoScalingGroups",
+        "DescribeClusters",
+        "GetLifecyclePolicies",
+        "DescribeConfigurationRecorderStatus",
+        "DescribeReplicationInstances",
+        "ListTables",
+        "DescribeConfigurationRecorders",
+        "DescribeTrails",
+        "ListStacks",
+        "DescribeLaunchConfigurations",
+        "ListDocumentClassificationJobs",
+        "ListCertificates",
+        "GetRestApis",
+        "ListTopicsDetectionJobs",
+        "ListSentimentDetectionJobs",
+        "ListDominantLanguageDetectionJobs",
+        "ListEntitiesDetectionJobs",
+        "ListKeyPhrasesDetectionJobs",
+        "ListNotificationChannels",
+        "ListWorkGroups",
+        "ListDistributions2020_05_31",
+        "GenerateCredentialReport"
+      ],
+      "ErrorCodes": [
+        "AccessDenied"
+      ],
+      "IPAddresses": [
+        "34.12.134.20"
+      ],
+      "UserAgents": [
+        "aws-sdk-nodejs/2.885.0 linux/v14.16.1 callback"
+      ],
+      "FirstSeen": "2021-04-13T11:34:02Z",
+      "LastSeen": "2021-04-13T11:34:59Z"
+    },
+    {
+      "TimeGenerated": "2021-04-13T11:33:54Z",
+      "UserIdentityArn": "arn:aws:iam::731544447609:user/cloudsploit",
+      "Window": "2021-04-13T11:33:00Z",
+      "Denied": 178,
+      "Services": 13,
+      "ServiceList": [
+        "iam.amazonaws.com",
+        "ssm.amazonaws.com",
+        "transfer.amazonaws.com",
+        "secretsmanager.amazonaws.com",
+        "redshift.amazonaws.com",
+        "kms.amazonaws.com",
+        "rds.amazonaws.com",
+        "lambda.amazonaws.com",
+        "config.amazonaws.com",
+        "s3.amazonaws.com",
+        "elasticloadbalancing.amazonaws.com",
+        "cloudtrail.amazonaws.com",
+        "acm.amazonaws.com"
+      ],
+      "Actions": 16,
+      "ActionList": [
+        "GenerateCredentialReport",
+        "DescribeParameters",
+        "ListServers",
+        "ListSecrets",
+        "DescribeClusters",
+        "ListAliases",
+        "DescribeDBClusters",
+        "DescribeDBInstances",
+        "ListFunctions20150331",
+        "ListKeys",
+        "DescribeConfigurationRecorders",
+        "DescribeConfigurationRecorderStatus",
+        "ListBuckets",
+        "DescribeLoadBalancers",
+        "DescribeTrails",
+        "ListCertificates"
+      ],
+      "ErrorCodes": [
+        "AccessDenied"
+      ],
+      "IPAddresses": [
+        "34.12.134.20"
+      ],
+      "UserAgents": [
+        "aws-sdk-nodejs/2.885.0 linux/v14.16.1 callback",
+        "[aws-sdk-nodejs/2.885.0 linux/v14.16.1 callback]"
+      ],
+      "FirstSeen": "2021-04-13T11:33:00Z",
+      "LastSeen": "2021-04-13T11:33:54Z"
+    },
+    {
+      "TimeGenerated": "2021-04-13T11:32:59Z",
+      "UserIdentityArn": "arn:aws:iam::731544447609:user/cloudsploit",
+      "Window": "2021-04-13T11:32:00Z",
+      "Denied": 73,
+      "Services": 6,
+      "ServiceList": [
+        "elasticloadbalancing.amazonaws.com",
+        "config.amazonaws.com",
+        "cloudtrail.amazonaws.com",
+        "acm.amazonaws.com",
+        "iam.amazonaws.com",
+        "cloudfront.amazonaws.com"
+      ],
+      "Actions": 10,
+      "ActionList": [
+        "DescribeLoadBalancers",
+        "DescribeConfigurationRecorderStatus",
+        "DescribeConfigurationRecorders",
+        "DescribeTrails",
+        "ListCertificates",
+        "ListPolicies",
+        "GetAccountPasswordPolicy",
+        "ListUsers",
+        "ListGroups",
+        "ListDistributions2020_05_31"
+      ],
+      "ErrorCodes": [
+        "AccessDenied"
+      ],
+      "IPAddresses": [
+        "34.12.134.20"
+      ],
+      "UserAgents": [
+        "aws-sdk-nodejs/2.885.0 linux/v14.16.1 callback"
+      ],
+      "FirstSeen": "2021-04-13T11:32:51Z",
+      "LastSeen": "2021-04-13T11:32:59Z"
+    },
+    {
+      "TimeGenerated": "2021-04-13T11:35:44Z",
+      "UserIdentityArn": "arn:aws:iam::111111111111:user/cloudsploit",
+      "Window": "2021-04-13T11:35:00Z",
+      "Denied": 612,
+      "Services": 13,
+      "ServiceList": [
+        "workspaces.amazonaws.com",
+        "ssm.amazonaws.com",
+        "support.amazonaws.com",
+        "shield.amazonaws.com",
+        "redshift.amazonaws.com",
+        "rds.amazonaws.com",
+        "organizations.amazonaws.com",
+        "ec2.amazonaws.com",
+        "elasticloadbalancing.amazonaws.com",
+        "ecr.amazonaws.com",
+        "dax.amazonaws.com",
+        "dms.amazonaws.com",
+        "config.amazonaws.com"
+      ],
+      "Actions": 45,
+      "ActionList": [
+        "DescribeWorkspaceDirectories",
+        "DescribeIpGroups",
+        "DescribeWorkspaces",
+        "DescribeParameters",
+        "DescribeInstanceInformation",
+        "DescribeTrustedAdvisorChecks",
+        "DescribeEmergencyContactSettings",
+        "DescribeSubscription",
+        "DescribeClusterParameterGroups",
+        "DescribeClusters",
+        "DescribeReservedNodes",
+        "DescribeDBInstances",
+        "DescribeDBClusters",
+        "DescribeDBParameterGroups",
+        "DescribeDBSnapshots",
+        "DescribeDBEngineVersions",
+        "DescribeOrganization",
+        "DescribeNetworkAcls",
+        "DescribeVpnConnections",
+        "DescribeSnapshots",
+        "DescribeRouteTables",
+        "DescribeTags",
+        "DescribeVpcEndpoints",
+        "DescribeNetworkInterfaces",
+        "DescribeVpcEndpointServices",
+        "DescribeLoadBalancers",
+        "DescribeTargetGroups",
+        "DescribeVpnGateways",
+        "DescribeSecurityGroups",
+        "DescribeFlowLogs"
+      ],
+      "ErrorCodes": [
+        "AccessDenied",
+        "Client.UnauthorizedOperation"
+      ],
+      "IPAddresses": [
+        "95.90.195.80"
+      ],
+      "UserAgents": [
+        "aws-sdk-nodejs/2.885.0 linux/v14.16.1 callback"
+      ],
+      "FirstSeen": "2021-04-13T11:35:00Z",
+      "LastSeen": "2021-04-13T11:35:44Z"
+    },
+    {
+      "TimeGenerated": "2021-04-13T11:34:59Z",
+      "UserIdentityArn": "arn:aws:iam::111111111111:user/cloudsploit",
+      "Window": "2021-04-13T11:34:00Z",
+      "Denied": 95,
+      "Services": 6,
+      "ServiceList": [
+        "autoscaling.amazonaws.com",
+        "dax.amazonaws.com",
+        "ec2.amazonaws.com",
+        "config.amazonaws.com",
+        "dms.amazonaws.com",
+        "cloudtrail.amazonaws.com"
+      ],
+      "Actions": 11,
+      "ActionList": [
+        "DescribeAutoScalingGroups",
+        "DescribeClusters",
+        "DescribeAccountAttributes",
+        "DescribeSubnets",
+        "DescribeAddresses",
+        "DescribeVolumes",
+        "DescribeConfigurationRecorderStatus",
+        "DescribeReplicationInstances",
+        "DescribeConfigurationRecorders",
+        "DescribeTrails",
+        "DescribeLaunchConfigurations"
+      ],
+      "ErrorCodes": [
+        "AccessDenied",
+        "Client.UnauthorizedOperation"
+      ],
+      "IPAddresses": [
+        "95.90.195.80"
+      ],
+      "UserAgents": [
+        "aws-sdk-nodejs/2.885.0 linux/v14.16.1 callback"
+      ],
+      "FirstSeen": "2021-04-13T11:34:44Z",
+      "LastSeen": "2021-04-13T11:34:59Z"
+    }
+  ],
+  "columns_dropped_in_mapping": {}
+}

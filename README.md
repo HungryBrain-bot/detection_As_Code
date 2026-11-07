@@ -13,7 +13,7 @@ ID identity rules (B1-B3, Sentinel only) and three LLM application rules
 (C1-C3, Sentinel only). On 2026-11-07 four more identity rules were
 added at the owner's request for the ARTEX Phase 1 blog post (B4-B7,
 leaked app secrets; docs/threats/artex-phase1-credential-sourcing.md),
-with a self-search runbook (docs/hunts/H1). Their KQL (and the endpoint rules' SPL) has been
+with a self-search runbook (docs/hunts/H1), and four recon rules for the Phase 2 post (D1-D4: decoy route, documents then routes the UI does not call, path sweep, AWS permission burst; docs/threats/artex-phase2-recon.md). Their KQL (and the endpoint rules' SPL) has been
 run in local engines (Kusto emulator, Splunk Enterprise container)
 against recorded open-source data; the endpoint rules' YARA-L has not
 run anywhere. **No public recorded LLM-application log exists**: the LLM
@@ -39,6 +39,10 @@ vendor documentation, not verified against a live API.
 | B5 | [One SP credential from Microsoft's network and outside it](detections/identity/B5-T1078.004-credential-two-networks/) | T1078.004 | targeted | KQL ran, but **no recorded SP sign-in has an ASN**; positives hand-written | n/a |
 | B6 | [SP sign-in from an ASN new in 14 days](detections/identity/B6-T1078.004-sp-new-network/) | T1078.004 | targeted | KQL ran, but no recorded ASN or 14-day history; positives hand-written | n/a |
 | B7 | [SP Graph calls unlike its app](detections/identity/B7-T1087.004-sp-unlike-its-app/) | T1087.004, T1069.003, T1526 | targeted | KQL ran; 27 recorded Graph calls, no baseline possible; positives hand-written | n/a |
+| D1 | [Request to a decoy API route](detections/recon/D1-T1595-decoy-route-hit/) | T1595, T1594 | targeted | KQL ran on hand-written samples only; no recorded web access log with a decoy | n/a |
+| D2 | [Source map / Swagger / config download, then routes the UI does not call](detections/recon/D2-T1594-docs-then-novel-api/) | T1594, T1595 | targeted | KQL ran on hand-written samples only (baseline and attack); no recorded web log | n/a |
+| D3 | [One client, dozens of distinct paths in minutes, mostly 401/403/404](detections/recon/D3-T1595.003-failing-path-sweep/) | T1595.003 | targeted | KQL ran on hand-written samples only; thresholds are this project's | n/a |
+| D4 | [AccessDenied burst across AWS services from one principal](detections/recon/D4-T1580-cloud-permission-burst/) | T1580 | targeted | KQL: 11 rows on 6,417 recorded CloudTrail events, all one scanner user (cloudsploit, a lab tool, not ARTEX); ordinary users no rows | n/a |
 | C1 | [Prompt-injection phrasing in prompts and tool / retrieval results](detections/llm/C1-AML.T0051-prompt-injection/) | LLM01:2025, LLM01:2026; AML.T0051, T0054, T0056, T0068 | targeted | KQL on converted research data: JailbreakHub jailbreaks 23% caught, regular prompts 1.9% alerted; AgentDojo 231/231 (in-sample); BIPIA 0/75 | n/a |
 | C2 | [Canary from hidden context in model output or tool arguments](detections/llm/C2-AML.T0057-canary-in-output/) | LLM02/LLM07:2025, LLM02/LLM08:2026; AML.T0056, T0057, T0086 | targeted | KQL: 5 rows, all the registered secret leaving: both real AgentDojo exfiltrations, plus 3 rows where the user asked for it; no dataset has a planted canary | n/a |
 | C3 | [Tool-call volume or loop per agent conversation](detections/llm/C3-AML.T0053-tool-call-volume/) | LLM06/LLM10:2025, LLM03/LLM06:2026; AML.T0053, T0034.002 | targeted | KQL: 0 alerts on 300 real agent runs; positives hand-written (no recorded runaway agent exists) | n/a |

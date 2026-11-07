@@ -1,0 +1,49 @@
+id: c3458c06-4150-41d4-9219-6a03677bb5be
+name: Request to a decoy API route
+version: 1
+status: test
+severity: High
+tier: targeted
+description: >
+  A client requests a route that exists only as bait: it is listed in the
+  app's published OpenAPI spec or planted in a JavaScript bundle, and no
+  real client calls it. Any request means someone read the published map
+  and followed it. An agentic tool such as ARTEX that works from the
+  spec or the bundle will; a browser following the UI will not. The route
+  paths are rows in the honeytoken registry (TokenType DecoyRoute), not
+  constants in the query (ADR 010).
+log_sources: [app-service-http, honeytoken-registry]
+mapping:
+  attack:
+    techniques: [T1595, T1594]
+    tactics: [reconnaissance]
+
+# Sentinel only: App Service HTTP logs are the one web access log with a reference schema here.
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    Honeytoken_CL: [TimeGenerated, TokenType, TokenValue, PlantedIn]
+    AppServiceHTTPLogs: [TimeGenerated, CIp, CsHost, CsMethod, CsUriStem, CsUriQuery, ScStatus, UserAgent, Referer]
+  query: |
+    // D1: decoy route requested (detections/recon/D1-T1595-decoy-route-hit/README.md)
+    // The registry must re-send every active decoy route at least once per query period.
+    // Route paths are compared as lower case with no trailing slash, on the path only (not the query string).
+    let routes = Honeytoken_CL
+    | where TokenType == "DecoyRoute"
+    | summarize arg_max(TimeGenerated, PlantedIn) by Route = trim_end("/", tolower(TokenValue));
+    let decoy_routes = toscalar(routes | summarize make_set(Route));
+    // Your own API test tools and authorised scanners, which may call every route in the spec. Fill per customer.
+    let known_testers = dynamic([]);
+    AppServiceHTTPLogs
+    | where not(CIp in (known_testers))
+    | extend Route = trim_end("/", tolower(CsUriStem))
+    | where Route in (decoy_routes)
+    // Any status: a 404 on a route that exists only in the spec is the expected answer, and still a hit.
+    | summarize FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated), Requests = count(),
+                Methods = make_set(CsMethod, 10), Statuses = make_set(ScStatus, 10),
+                UserAgents = make_set(UserAgent, 10), Hosts = make_set(CsHost, 10), Queries = make_set(CsUriQuery, 5)
+        by CIp, Route
+    | join kind=leftouter routes on Route
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, CIp, Route, PlantedIn, Requests, Methods, Statuses, UserAgents, Hosts, Queries, FirstSeen, LastSeen

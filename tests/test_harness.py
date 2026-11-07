@@ -182,7 +182,7 @@ def test_graph_activity_maps_to_its_table():
 
 
 def test_hand_written_key_vault_and_registry_rows_load_as_they_are():
-    for table in ("AzureDiagnostics", "Honeytoken_CL"):
+    for table in ("AzureDiagnostics", "Honeytoken_CL", "AppServiceHTTPLogs", "AWSCloudTrail"):
         out_table, row = mapping.to_sentinel({"Type": table, "_note": "x", "TimeGenerated": "2026-11-06T12:00:00Z"})
         assert out_table == table and "_note" not in row
 
@@ -356,3 +356,36 @@ def test_score_counts_distinct_units_per_label():
     scores = hmain.score(events, rows, {"column": "ConversationId", "pattern": "^([a-z]+:[a-z]+):"}, "Categories")
     assert scores == {"ds:bad": {"loaded": 2, "matched": 1, "Categories_counts": {"a": 2, "b": 1}},
                       "ds:good": {"loaded": 1, "matched": 0, "Categories_counts": {}}}
+
+
+CLOUDTRAIL_DENIED = {
+    "eventVersion": "1.08", "eventTime": "2021-04-13T11:35:44Z", "eventSource": "workspaces.amazonaws.com",
+    "eventName": "DescribeWorkspaceDirectories", "awsRegion": "ap-southeast-2", "sourceIPAddress": "203.0.113.5",
+    "userAgent": "aws-sdk-nodejs/2.885.0", "errorCode": "AccessDenied", "errorMessage": "not authorized",
+    "recipientAccountId": "111111111111", "requestParameters": {"x": 1},
+    "userIdentity": {"type": "IAMUser", "arn": "arn:aws:iam::111111111111:user/scanner", "userName": "scanner",
+                     "accessKeyId": "AKIAEXAMPLE", "accountId": "111111111111"},
+}
+
+
+def test_raw_cloudtrail_record_maps_to_awscloudtrail_columns():
+    table, row = mapping.to_sentinel(CLOUDTRAIL_DENIED)
+    assert table == "AWSCloudTrail"
+    assert (row["EventSource"], row["EventName"], row["ErrorCode"]) == ("workspaces.amazonaws.com", "DescribeWorkspaceDirectories", "AccessDenied")
+    assert row["UserIdentityArn"] == "arn:aws:iam::111111111111:user/scanner"
+    assert row["SourceIpAddress"] == "203.0.113.5" and row["TimeGenerated"] == "2021-04-13T11:35:44Z"
+    assert "requestParameters" not in row
+
+
+def test_cloudtrail_record_without_error_has_empty_error_code():
+    ok = {k: v for k, v in CLOUDTRAIL_DENIED.items() if k not in ("errorCode", "errorMessage")}
+    assert mapping.to_sentinel(ok)[1]["ErrorCode"] is None
+
+
+def test_an_azure_monitor_record_is_not_taken_for_cloudtrail():
+    assert not mapping.is_cloudtrail_record({"category": "SignInLogs", "properties": {}, "eventName": "x"})
+
+
+def test_kusto_engine_creates_the_recon_tables():
+    from harness.engines import KustoEngine
+    assert {"AppServiceHTTPLogs", "AWSCloudTrail"} <= set(KustoEngine.tables)

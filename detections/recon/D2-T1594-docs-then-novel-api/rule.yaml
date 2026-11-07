@@ -1,0 +1,65 @@
+id: fcb38bdd-ec7c-4d4c-9c52-30cf6c148699
+name: Client downloads API docs or source maps, then calls API routes the UI does not
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >
+  One client downloads a source map, Swagger / OpenAPI document or
+  runtime config file, then within 10 minutes calls at least three
+  distinct API routes that the app's own front-end does not normally
+  call. Real users load the page and call the routes the UI needs; an
+  agent reads the published map first and then follows it. The UI's
+  routes are learned from the app's own traffic (ADR 010).
+log_sources: [app-service-http]
+mapping:
+  attack:
+    techniques: [T1594, T1595]
+    tactics: [reconnaissance]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: P14D
+  required_fields:
+    AppServiceHTTPLogs: [TimeGenerated, CIp, CsHost, CsMethod, CsUriStem, ScStatus, UserAgent]
+  query: |
+    // D2: docs or maps downloaded, then routes the UI does not call (detections/recon/D2-T1594-docs-then-novel-api/README.md)
+    let recent = 1h;                // alert on activity in this window; the rest of the period is baseline
+    let baseline_end = 1d;          // baseline runs from 14 days to 1 day ago, so requests made today do not teach it
+    let min_baseline_clients = 3;   // a route is "the UI's" if at least this many distinct clients called it successfully
+    let follow_window = 10m;        // calls count if they come within this long after the first document download
+    let min_novel_routes = 3;       // distinct novel routes needed
+    // Per app: the path prefix of its API. Change for apps whose API is not under /api/.
+    let api_prefix = @"^/api/";
+    // Published maps and configs (Wiz saw .js.map, /assets/config.json, /env.js, /swagger/?format=openapi).
+    let doc_pattern = @"(?i)(\.(js|css)\.map$|/swagger(\.json|/index\.html|/v[0-9]+/swagger\.json)?/?$|/openapi\.(json|yaml)$|/v[23]/api-docs$|/(runtime-)?config\.json$|/env\.js$|/runtime-config(\.js|\.json)?$)";
+    // Numeric and GUID path segments become {fcb38bdd-ec7c-4d4c-9c52-30cf6c148699}, twice so that /1/2 is handled.
+    let norm = (p: string) {
+        let a = tolower(p);
+        let b = replace_regex(a, @"/([0-9]+|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(/|$)", @"/{fcb38bdd-ec7c-4d4c-9c52-30cf6c148699}\2");
+        replace_regex(b, @"/([0-9]+|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(/|$)", @"/{fcb38bdd-ec7c-4d4c-9c52-30cf6c148699}\2")
+    };
+    let ui_routes = AppServiceHTTPLogs
+    | where TimeGenerated < ago(baseline_end) and ScStatus < 400 and CsUriStem matches regex api_prefix
+    | extend Route = norm(CsUriStem)
+    | summarize Clients = dcount(CIp) by CsHost, Route
+    | where Clients >= min_baseline_clients
+    | project CsHost, Route;
+    let docs = AppServiceHTTPLogs
+    | where TimeGenerated >= ago(recent) and ScStatus < 400 and CsUriStem matches regex doc_pattern
+    | summarize DocTime = min(TimeGenerated), DocFiles = make_set(CsUriStem, 10) by CIp, CsHost;
+    let calls = AppServiceHTTPLogs
+    | where TimeGenerated >= ago(recent) and CsUriStem matches regex api_prefix
+    | extend Route = norm(CsUriStem)
+    | join kind=leftanti ui_routes on CsHost, Route
+    | project CIp, CsHost, CallTime = TimeGenerated, Route, CsMethod, ScStatus, UserAgent;
+    docs
+    | join kind=inner calls on CIp, CsHost
+    | where CallTime between (DocTime .. (DocTime + follow_window))
+    | summarize NovelRoutes = dcount(Route), Routes = make_set(Route, 20), Methods = make_set(CsMethod, 10),
+                Statuses = make_set(ScStatus, 10), UserAgents = make_set(UserAgent, 5), Calls = count(),
+                FirstCall = min(CallTime), LastCall = max(CallTime), DocFiles = take_any(DocFiles)
+        by CIp, CsHost, DocTime
+    | where NovelRoutes >= min_novel_routes
+    | extend TimeGenerated = LastCall
+    | project TimeGenerated, CIp, CsHost, DocFiles, DocTime, NovelRoutes, Routes, Methods, Statuses, UserAgents, Calls, FirstCall, LastCall

@@ -88,3 +88,16 @@ honeytoken-registry:
   owner: detection-team
   siem:
     sentinel: [Honeytoken_CL]
+
+# Added 2026-11-07 for rules D1-D4 (ARTEX Phase 2, recon; ADR 010).
+app-service-http:
+  description: Azure App Service HTTP access log (path, query, status, client IP, user agent, host). Needs the AppServiceHTTPLogs diagnostic setting; apps on other hosts (Application Gateway, Front Door, a VM) are not covered.
+  owner: app-platform-team
+  siem:
+    sentinel: [AppServiceHTTPLogs]
+
+aws-cloudtrail:
+  description: AWS CloudTrail management events in Sentinel (the AWS S3 connector), including failed calls with their error code.
+  owner: cloud-platform-team
+  siem:
+    sentinel: [AWSCloudTrail]

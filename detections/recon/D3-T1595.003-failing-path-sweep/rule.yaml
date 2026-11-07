@@ -1,0 +1,39 @@
+id: e15aafbd-afc5-426c-8bfe-6d3dbcaf829f
+name: One client tries dozens of distinct paths in minutes, mostly failing
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >
+  One client requests at least 30 distinct paths on one host within a
+  5-minute window and at least 70 percent of the responses are 401, 403
+  or 404. That is a path sweep: guessing routes, or walking routes
+  extracted from a script or spec, most of which do not exist or are
+  not allowed. Browsers following a UI request few distinct paths and
+  mostly get 2xx (ADR 010).
+log_sources: [app-service-http]
+mapping:
+  attack:
+    techniques: [T1595.003]
+    tactics: [reconnaissance]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    AppServiceHTTPLogs: [TimeGenerated, CIp, CsHost, CsUriStem, ScStatus, UserAgent]
+  query: |
+    // D3: path sweep with mostly 401/403/404 (detections/recon/D3-T1595.003-failing-path-sweep/README.md)
+    let bin_size = 5m;
+    let min_distinct_paths = 30;
+    let min_error_share = 0.7;
+    AppServiceHTTPLogs
+    | summarize Requests = count(), DistinctPaths = dcount(tolower(CsUriStem)),
+                Errors = countif(ScStatus in (401, 403, 404)),
+                Statuses = make_bag(pack(tostring(ScStatus), 1)), UserAgents = make_set(UserAgent, 5),
+                SamplePaths = make_set(CsUriStem, 10), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+        by CIp, CsHost, Window = bin(TimeGenerated, bin_size)
+    | extend ErrorShare = round(todouble(Errors) / Requests, 2)
+    | where DistinctPaths >= min_distinct_paths and ErrorShare >= min_error_share
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, CIp, CsHost, Window, Requests, DistinctPaths, Errors, ErrorShare, UserAgents, SamplePaths, FirstSeen, LastSeen
