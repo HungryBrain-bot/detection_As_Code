@@ -14,6 +14,18 @@ request for the ARTEX Phase 1 to 4 blog posts. 24 rules are
 `status: test`; the eight Phase 4 foothold rules are
 `status: experimental` (deployed disabled) and have no samples.
 
+**Why the Phase 4 rules have no samples.** While writing the hand-written
+samples and attack docs for the web-shell and process-chain material
+(MySQL `general_log`, web server starting a shell, web-shell file), the
+build was stopped three times by an automated safety classifier. The
+owner then chose to skip samples and ship the eight rules as
+experimental, and dropped the MySQL `general_log` rule (E7). E3, E4 and
+E6 were checked against pinned recorded Splunk attack_data Sysmon sets
+instead; E1, E2, E5, E8 and E9 have only run on empty tables and have
+never matched anything. A rule leaves `experimental` once it has
+positive and negative samples (written by the owner or taken from
+recorded data) and an engine run recorded in its `tests/evidence.md`.
+
 | Track | Rules | Source of evidence |
 |---|---|---|
 | Endpoint | A1-A4 | KQL and SPL on recorded OTRF data; YARA-L not run anywhere |
