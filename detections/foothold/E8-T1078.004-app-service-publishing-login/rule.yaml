@@ -1,7 +1,7 @@
 id: 25944016-4407-408b-a154-70718a09a90a
 name: App Service publishing login (Kudu, FTP, Web Deploy) by an identity outside the pipeline
 version: 1
-status: test
+status: experimental
 severity: Medium
 tier: targeted
 description: >

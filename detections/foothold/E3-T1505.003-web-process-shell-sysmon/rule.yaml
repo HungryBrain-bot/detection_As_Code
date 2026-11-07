@@ -1,7 +1,7 @@
 id: f94519ab-04fd-44c3-b117-56d319767163
 name: Web server or database process starts a shell or download tool (Windows Sysmon)
 version: 1
-status: test
+status: experimental
 severity: High
 tier: targeted
 description: >

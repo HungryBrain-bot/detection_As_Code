@@ -1,7 +1,7 @@
 id: 3ce35248-5fd3-4298-a99b-542ce6d0fe38
 name: New server-side script file in a web root (Defender for Endpoint)
 version: 1
-status: test
+status: experimental
 severity: Medium
 tier: targeted
 description: >

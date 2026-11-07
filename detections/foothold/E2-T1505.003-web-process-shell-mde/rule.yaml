@@ -1,7 +1,7 @@
 id: 6bc4862d-be4d-469e-9a48-0fa6f5640431
 name: Web server or database process starts a shell or download tool (Defender for Endpoint)
 version: 1
-status: test
+status: experimental
 severity: High
 tier: targeted
 description: >

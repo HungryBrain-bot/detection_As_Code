@@ -1,7 +1,7 @@
 id: be40d34d-9e94-42f8-884a-892ce9215ee5
 name: Web server or database process starts a shell or download tool (Sysmon for Linux)
 version: 1
-status: test
+status: experimental
 severity: High
 tier: targeted
 description: >

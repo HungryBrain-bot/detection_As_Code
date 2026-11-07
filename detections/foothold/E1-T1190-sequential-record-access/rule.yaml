@@ -1,7 +1,7 @@
 id: 4cd54acb-b4fa-4fb0-9ee5-f3865d13ef3a
 name: One client reads many record IDs in sequence or with many denials
 version: 1
-status: test
+status: experimental
 severity: Medium
 tier: targeted
 description: >

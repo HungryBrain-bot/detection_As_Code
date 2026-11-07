@@ -1,7 +1,7 @@
 id: 82dbb6fa-063e-4233-9625-0a5b9288ecc2
 name: New server-side script file in a web root (Windows Sysmon)
 version: 1
-status: test
+status: experimental
 severity: Medium
 tier: targeted
 description: >
