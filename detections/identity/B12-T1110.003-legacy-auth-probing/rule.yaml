@@ -1,0 +1,55 @@
+id: a9063132-eeb0-437e-9c6a-f49cc3988a1e
+name: Legacy-protocol or ROPC sign-ins tried on several accounts, or a password accepted over them
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >
+  Entra sign-ins over a legacy client protocol (IMAP4, POP3, SMTP,
+  Exchange ActiveSync, Autodiscover, EWS, ...) or the ROPC password grant,
+  from one source network (IPv4 /24, IPv6 /64) in one hour: against 3 or
+  more accounts; or any of them that succeeded or got as far as an MFA
+  prompt (ResultType 0, 50076, 50079). These protocols take a password
+  without interactive MFA, which is why sprays and probes use them;
+  blocking legacy authentication removes the successes, not the attempts
+  (ADR 011).
+log_sources: [entra-signin]
+mapping:
+  attack:
+    techniques: [T1110.003, T1078.004]
+    tactics: [credential-access, initial-access]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    SigninLogs: [TimeGenerated, ResultType, UserPrincipalName, IPAddress, ClientAppUsed, AuthenticationProtocol, AppDisplayName, UserAgent]
+  query: |
+    // B12: legacy auth / ROPC probing (detections/identity/B12-T1110.003-legacy-auth-probing/README.md)
+    let window = 1h;
+    let min_accounts = 3;
+    // Password accepted: success, or MFA required / MFA registration required after the password step.
+    let password_accepted = dynamic(["0", "50076", "50079"]);
+    // Client app names that Microsoft Sentinel content (Azure-Sentinel c0c2dc2) treats as legacy, compared case-insensitively.
+    let legacy_clients = dynamic(["Authenticated SMTP", "SMTP Auth", "AutoDiscover", "Exchange ActiveSync", "Exchange Online PowerShell",
+        "Exchange Web Services", "IMAP4", "MAPI Over HTTP", "Offline Address Book", "Outlook Anywhere (RPC over HTTP)",
+        "Outlook Service", "POP3", "Reporting Web Services", "Other clients"]);
+    // Per customer: accounts that are allowed to use a legacy protocol (e.g. the SMTP relay account of a scanner). Empty by default.
+    let allowed_legacy_accounts = dynamic([]);
+    let net = (ip: string) { iff(ip contains ":", strcat(substring(parse_ipv6(ip), 0, 19), "::/64"), format_ipv4_mask(ip, 24)) };
+    SigninLogs
+    | where ClientAppUsed in~ (legacy_clients) or AuthenticationProtocol =~ "ropc"
+    | where isnotempty(IPAddress)
+    | extend Account = tolower(UserPrincipalName)
+    | where not(Account in (allowed_legacy_accounts))
+    | extend Network = net(IPAddress), Window = bin(TimeGenerated, window),
+             Channel = iff(AuthenticationProtocol =~ "ropc", "ROPC", ClientAppUsed)
+    | summarize Attempts = count(), Accounts = dcount(Account), SampleAccounts = make_set(Account, 20),
+                AcceptedAccounts = make_set_if(Account, ResultType in (password_accepted), 20),
+                Channels = make_set(Channel, 10), ResultTypes = make_set(ResultType, 10), Apps = make_set(AppDisplayName, 10),
+                IPAddresses = make_set(IPAddress, 10), UserAgents = make_set(UserAgent, 10),
+                FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by Network, Window
+    | where Accounts >= min_accounts or array_length(AcceptedAccounts) > 0
+    | extend Reason = iff(array_length(AcceptedAccounts) > 0, "password accepted over legacy or ROPC", "legacy or ROPC tried on several accounts")
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, Reason, Network, Window, Accounts, Attempts, AcceptedAccounts, Channels, ResultTypes, Apps, SampleAccounts, IPAddresses, UserAgents, FirstSeen, LastSeen

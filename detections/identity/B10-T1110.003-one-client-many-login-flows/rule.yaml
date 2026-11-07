@@ -1,0 +1,72 @@
+id: fbf6cbf8-acd6-44d2-ae8a-71fd919d8f36
+name: One client network works through several Entra login flows within 30 minutes
+version: 1
+status: test
+severity: High
+tier: targeted
+description: >
+  One source network (IPv4 /24 or IPv6 /64) shows two or more of these
+  behaviours in one 30-minute window: wrong-password or lockout failures
+  (50126, 50053) on 3 or more accounts; any legacy-protocol or ROPC
+  sign-in attempt; self-service password reset activity for 2 or more
+  users. A real user follows one flow; an agent working through every
+  exposed flow does several. The two application-side behaviours (OAuth
+  callback and JWT tampering) are rule B13, kept separate because their
+  log is a prerequisite most tenants lack (ADR 011).
+log_sources: [entra-signin, entra-audit]
+mapping:
+  attack:
+    techniques: [T1110.003, T1589]
+    tactics: [credential-access, reconnaissance]
+
+sentinel:
+  query_frequency: PT30M
+  query_period: PT1H
+  required_fields:
+    SigninLogs: [TimeGenerated, ResultType, UserPrincipalName, IPAddress, ClientAppUsed, AuthenticationProtocol, UserAgent, AppDisplayName]
+    AuditLogs: [TimeGenerated, OperationName, InitiatedBy, TargetResources, Result]
+  query: |
+    // B10: one client network, several login flows (detections/identity/B10-T1110.003-one-client-many-login-flows/README.md)
+    let window = 30m;
+    let min_failed_accounts = 3;
+    let min_recovery_users = 2;
+    let min_behaviours = 2;
+    let fail_codes = dynamic(["50126", "50053"]);
+    // Client app names that Microsoft Sentinel content (Azure-Sentinel c0c2dc2) treats as legacy, compared case-insensitively.
+    let legacy_clients = dynamic(["Authenticated SMTP", "SMTP Auth", "AutoDiscover", "Exchange ActiveSync", "Exchange Online PowerShell",
+        "Exchange Web Services", "IMAP4", "MAPI Over HTTP", "Offline Address Book", "Outlook Anywhere (RPC over HTTP)",
+        "Outlook Service", "POP3", "Reporting Web Services", "Other clients"]);
+    let sspr_ops = dynamic(["Self-service password reset flow activity progress", "Reset password (self-service)",
+        "Unlock user account (self-service)", "Blocked from self-service password reset", "User started password reset"]);
+    // Source network: IPv4 /24, IPv6 /64.
+    let net = (ip: string) { iff(ip contains ":", strcat(substring(parse_ipv6(ip), 0, 19), "::/64"), format_ipv4_mask(ip, 24)) };
+    let signins = SigninLogs
+    | where isnotempty(IPAddress)
+    | extend Network = net(IPAddress), Window = bin(TimeGenerated, window), Account = tolower(UserPrincipalName);
+    let failed = signins
+    | where ResultType in (fail_codes)
+    | summarize Accounts = dcount(Account), Sample = make_set(Account, 10), IPs = make_set(IPAddress, 10),
+                UserAgents = make_set(UserAgent, 5), First = min(TimeGenerated), Last = max(TimeGenerated) by Network, Window
+    | where Accounts >= min_failed_accounts
+    | extend Behaviour = "failed sign-ins on several accounts";
+    let legacy = signins
+    | where ClientAppUsed in~ (legacy_clients) or AuthenticationProtocol =~ "ropc"
+    | summarize Accounts = dcount(Account), Sample = make_set(Account, 10), IPs = make_set(IPAddress, 10),
+                UserAgents = make_set(UserAgent, 5), First = min(TimeGenerated), Last = max(TimeGenerated) by Network, Window
+    | extend Behaviour = "legacy protocol or ROPC sign-in";
+    let recovery = AuditLogs
+    | where OperationName in~ (sspr_ops)
+    | extend IPAddress = tostring(InitiatedBy.user.ipAddress), Target = tolower(tostring(TargetResources[0].userPrincipalName))
+    | where isnotempty(IPAddress)
+    | extend Network = net(IPAddress), Window = bin(TimeGenerated, window)
+    | summarize Accounts = dcount(Target), Sample = make_set(Target, 10), IPs = make_set(IPAddress, 10),
+                UserAgents = dynamic([]), First = min(TimeGenerated), Last = max(TimeGenerated) by Network, Window
+    | where Accounts >= min_recovery_users
+    | extend Behaviour = "password reset for several users";
+    union failed, legacy, recovery
+    | summarize Behaviours = make_set(Behaviour), BehaviourCount = dcount(Behaviour), AccountsPerBehaviour = make_bag(bag_pack(Behaviour, Accounts)),
+                SampleAccounts = make_set(Sample, 20), IPAddresses = make_set(IPs, 20), UserAgents = make_set(UserAgents, 10),
+                FirstSeen = min(First), LastSeen = max(Last) by Network, Window
+    | where BehaviourCount >= min_behaviours
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, Network, Window, BehaviourCount, Behaviours, AccountsPerBehaviour, IPAddresses, SampleAccounts, UserAgents, FirstSeen, LastSeen

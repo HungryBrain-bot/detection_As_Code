@@ -50,6 +50,10 @@ The output is `tests/results/<engine>.json` in the rule folder, and
      are counted and not loaded;
    - hand-written `AzureDiagnostics` (Key Vault) and `Honeytoken_CL`
      rows -> loaded as they are (no recorded Key Vault log is available);
+   - raw Okta System Log events (Splunk attack_data) -> `OktaSSO` rows,
+     nested keys flattened with `_` and the column's type suffix added
+     (`from_okta`, 2026-11-07, rule B9; ADR 011); hand-written
+     `AppAuthEvent_CL` rows load as they are (rule B13);
    - raw CloudTrail records (Splunk attack_data) -> `AWSCloudTrail`
      columns (`from_cloudtrail`, 2026-11-07, rule D4); hand-written
      `AppServiceHTTPLogs` and `AWSCloudTrail` rows load as they are (no

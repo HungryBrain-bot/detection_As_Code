@@ -1,0 +1,4916 @@
+[
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00uc2663a4c60a9eb5",
+      "type": "User",
+      "alternateId": "spray.a01@contoso.example",
+      "displayName": "spray.a01",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "192.0.2.20",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx5f742850-8c2f-9815-6"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:00:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "f7f14900-f719-89c1-6",
+      "detail": {}
+    },
+    "uuid": "9a5be298-a58e-0686-6b74-ad25622cd5b9",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "192.0.2.20",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae44768083d926668",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00u9cb17826a32073e",
+      "type": "User",
+      "alternateId": "spray.a02@contoso.example",
+      "displayName": "spray.a02",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "198.51.100.21",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx1452be96-c7b2-9ae3-a"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:02:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "6dd6ca98-3779-d9e2-0",
+      "detail": {}
+    },
+    "uuid": "733b843f-faef-ddc1-8ce8-709e3a4cbc49",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "198.51.100.21",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae77e0e3330918d2b",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00u209a9e95ec9b4f0",
+      "type": "User",
+      "alternateId": "spray.a03@contoso.example",
+      "displayName": "spray.a03",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.22",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxa75fe994-5735-9e6b-c"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:04:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "2a24465f-5274-4110-e",
+      "detail": {}
+    },
+    "uuid": "fb4c703b-0e67-c62a-da77-18d0485ac57a",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.22",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae06678de68602d89",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00uebd493e1ddeb686",
+      "type": "User",
+      "alternateId": "spray.a04@contoso.example",
+      "displayName": "spray.a04",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "192.0.2.23",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx26c976b4-6c46-c8d0-3"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:06:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "321e3ef6-5409-6eea-8",
+      "detail": {}
+    },
+    "uuid": "710f0959-c269-93cc-ed9e-fe5c71cd8ab0",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "192.0.2.23",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae99c967e2c2ba11f",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00uaf0dc49629821f0",
+      "type": "User",
+      "alternateId": "spray.a05@contoso.example",
+      "displayName": "spray.a05",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "198.51.100.24",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxf29724c9-0a53-84b3-3"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:08:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "f44623c7-178e-800e-a",
+      "detail": {}
+    },
+    "uuid": "8caf9ec3-a520-77b7-f9f8-ee2b8d6f6bb0",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "198.51.100.24",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae2c1744ddc2bccda",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00ufe940f22a3081cd",
+      "type": "User",
+      "alternateId": "spray.a06@contoso.example",
+      "displayName": "spray.a06",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.25",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxfde77474-f903-45e1-c"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:10:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "0e40e96c-a87f-e685-4",
+      "detail": {}
+    },
+    "uuid": "0e494583-f6d6-ec5b-85eb-eab5bf018d01",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.25",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae7bfe157f628116b",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00uf5d5280601a2112",
+      "type": "User",
+      "alternateId": "spray.a07@contoso.example",
+      "displayName": "spray.a07",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "192.0.2.26",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxfc6f2058-37aa-6e9e-a"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:12:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "a10d135b-bf3a-ecf0-c",
+      "detail": {}
+    },
+    "uuid": "0ddc7808-059a-7332-4086-8bc8e2ccd70a",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "192.0.2.26",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "laee943c9ca6cb0a37",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00u9db0987d2f80712",
+      "type": "User",
+      "alternateId": "spray.a08@contoso.example",
+      "displayName": "spray.a08",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "198.51.100.27",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx2778c833-f728-aad2-b"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:14:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "b06909b9-5d27-37ef-1",
+      "detail": {}
+    },
+    "uuid": "43957beb-bdf6-4d01-f115-05345112e17d",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "198.51.100.27",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "laec642323425f0a5f",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00u3616cdc815da5ba",
+      "type": "User",
+      "alternateId": "spray.a09@contoso.example",
+      "displayName": "spray.a09",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.28",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx5c2a4e0a-7bcd-55a2-a"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:16:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "852c60cb-3c47-330b-8",
+      "detail": {}
+    },
+    "uuid": "a668443d-2b49-8a55-0812-d8dbb1062667",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.28",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "laeb99c3eab6d27bbf",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00udfbac2174812d33",
+      "type": "User",
+      "alternateId": "spray.a10@contoso.example",
+      "displayName": "spray.a10",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "192.0.2.29",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxfe9a4bd7-ed8b-07e1-7"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:18:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "c1ab2a7e-4a0d-e2a4-f",
+      "detail": {}
+    },
+    "uuid": "04af4111-3866-4aa9-ffc7-896c528f4b36",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "192.0.2.29",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae57aac0717160221",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00u9ec12346ae7fb05",
+      "type": "User",
+      "alternateId": "spray.a11@contoso.example",
+      "displayName": "spray.a11",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "198.51.100.30",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxdba904e5-9d82-bf21-7"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:20:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "fdfdcee6-99a0-8dac-2",
+      "detail": {}
+    },
+    "uuid": "802e0b28-26a0-8f40-f57f-98b85042d1e5",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "198.51.100.30",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae5f309f1a925d7e2",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00u537512d18307525",
+      "type": "User",
+      "alternateId": "spray.a12@contoso.example",
+      "displayName": "spray.a12",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.31",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxf4bafc07-e444-5d4d-e"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:22:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "11c7e2db-b072-076e-f",
+      "detail": {}
+    },
+    "uuid": "5e3a4cf0-2294-7766-fbc2-802acd54f556",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.31",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "laec12cd2087a1f74c",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00u3f8a00cd7a8ae46",
+      "type": "User",
+      "alternateId": "spray.a13@contoso.example",
+      "displayName": "spray.a13",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "192.0.2.32",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxb841b4fb-1685-b48a-f"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:24:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "f46cd889-8cd1-5969-3",
+      "detail": {}
+    },
+    "uuid": "9c6e30bc-ad31-2506-2e89-093b45ecaf79",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "192.0.2.32",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae28f1477b603ba7c",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00u4aa3f9344498165",
+      "type": "User",
+      "alternateId": "spray.a14@contoso.example",
+      "displayName": "spray.a14",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "198.51.100.33",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxea60e9da-e352-9167-a"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:26:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "63eed8f5-ce16-98f0-8",
+      "detail": {}
+    },
+    "uuid": "9606152a-28be-3bce-c715-66aefabd25fa",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "198.51.100.33",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae506a9c1e7f63ffc",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00u4ad563f87f8033b",
+      "type": "User",
+      "alternateId": "spray.a15@contoso.example",
+      "displayName": "spray.a15",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.34",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxf060daf9-d8b6-35f4-8"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:28:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "29c32072-fb98-881d-9",
+      "detail": {}
+    },
+    "uuid": "1cc7f017-4237-0141-6dbd-50c6b5a9b12d",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.34",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "laef258c89ef31413d",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00u07a36a0a78e315c",
+      "type": "User",
+      "alternateId": "spray.a16@contoso.example",
+      "displayName": "spray.a16",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "192.0.2.35",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx5c82a903-7077-0bfe-4"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:30:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "34a5d1cb-f1f9-9f00-e",
+      "detail": {}
+    },
+    "uuid": "335dc0c2-4823-c902-c28c-55c614d04b9c",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "192.0.2.35",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae2f8ee5ad999b37a",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "distributed spray: one wrong-password attempt from a fresh IP",
+    "_case": "breadth-distributed",
+    "actor": {
+      "id": "00uc5f862be987f841",
+      "type": "User",
+      "alternateId": "spray.a17@contoso.example",
+      "displayName": "spray.a17",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "198.51.100.36",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx673b14dc-ff1a-4126-3"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T10:32:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "2b7d6662-e0b7-370f-8",
+      "detail": {}
+    },
+    "uuid": "1242b832-6b36-b1f5-42c7-0493751adb36",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "198.51.100.36",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae2d835048d4f57c7",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "spray from one IP: wrong password (VERIFICATION_ERROR) or lockout, 15 accounts",
+    "_case": "breadth-one-ip",
+    "actor": {
+      "id": "00u88354c0e1e38677",
+      "type": "User",
+      "alternateId": "spray.b01@contoso.example",
+      "displayName": "spray.b01",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.99",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxc144ca06-bf56-2684-e"
+    },
+    "displayMessage": "Max sign in attempts exceeded",
+    "eventType": "user.account.lock",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "LOCKED_OUT"
+    },
+    "published": "2026-11-06T16:00:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "36563b3a-2402-7970-e",
+      "detail": {}
+    },
+    "uuid": "f26af67d-36ba-06d5-dacf-c6ed0205521f",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.99",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae1153ac5361a3084",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "spray from one IP: wrong password (VERIFICATION_ERROR) or lockout, 15 accounts",
+    "_case": "breadth-one-ip",
+    "actor": {
+      "id": "00u8eca612fe922469",
+      "type": "User",
+      "alternateId": "spray.b02@contoso.example",
+      "displayName": "spray.b02",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.99",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxc793fab5-24bd-9cad-c"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "VERIFICATION_ERROR"
+    },
+    "published": "2026-11-06T16:00:07.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "9c97fd1f-a168-6e7e-e",
+      "detail": {}
+    },
+    "uuid": "3867eddf-b68c-38e2-96a4-5189b89cea97",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.99",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae17de896c8dc75b3",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "spray from one IP: wrong password (VERIFICATION_ERROR) or lockout, 15 accounts",
+    "_case": "breadth-one-ip",
+    "actor": {
+      "id": "00u516090ef0f2fd93",
+      "type": "User",
+      "alternateId": "spray.b03@contoso.example",
+      "displayName": "spray.b03",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.99",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx4ec726b2-b7db-b1be-c"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "VERIFICATION_ERROR"
+    },
+    "published": "2026-11-06T16:00:14.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "bacb9e02-7559-333c-4",
+      "detail": {}
+    },
+    "uuid": "4e1a1dd3-117b-3806-a184-e16116c65578",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.99",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae08cb3f00b2738ce",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "spray from one IP: wrong password (VERIFICATION_ERROR) or lockout, 15 accounts",
+    "_case": "breadth-one-ip",
+    "actor": {
+      "id": "00ue8a5c7f15a8893c",
+      "type": "User",
+      "alternateId": "spray.b04@contoso.example",
+      "displayName": "spray.b04",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.99",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxaf66227a-861e-abb9-4"
+    },
+    "displayMessage": "Max sign in attempts exceeded",
+    "eventType": "user.account.lock",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "LOCKED_OUT"
+    },
+    "published": "2026-11-06T16:00:21.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "ff853e64-487c-b6c0-7",
+      "detail": {}
+    },
+    "uuid": "af33b9cd-3a01-d725-f22a-24a74355e922",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.99",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae8a7f2529974f8ae",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "spray from one IP: wrong password (VERIFICATION_ERROR) or lockout, 15 accounts",
+    "_case": "breadth-one-ip",
+    "actor": {
+      "id": "00u969e39d08907dd1",
+      "type": "User",
+      "alternateId": "spray.b05@contoso.example",
+      "displayName": "spray.b05",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.99",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxfc82c257-f21b-764e-6"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "VERIFICATION_ERROR"
+    },
+    "published": "2026-11-06T16:00:28.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "d652d9e5-8839-c2a8-e",
+      "detail": {}
+    },
+    "uuid": "c5bbf801-a355-fbfb-8c3c-f49782c993fd",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.99",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "laec25767a28f24a7b",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "spray from one IP: wrong password (VERIFICATION_ERROR) or lockout, 15 accounts",
+    "_case": "breadth-one-ip",
+    "actor": {
+      "id": "00u5abd527b226bbac",
+      "type": "User",
+      "alternateId": "spray.b06@contoso.example",
+      "displayName": "spray.b06",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.99",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxd7d4dd70-2ac6-b79d-f"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "VERIFICATION_ERROR"
+    },
+    "published": "2026-11-06T16:00:35.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "43aa3838-5586-5498-2",
+      "detail": {}
+    },
+    "uuid": "aebfc319-f654-9045-3d45-570085450be5",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.99",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "laebad6bccbe052f31",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "spray from one IP: wrong password (VERIFICATION_ERROR) or lockout, 15 accounts",
+    "_case": "breadth-one-ip",
+    "actor": {
+      "id": "00u9bcf5f254732b7b",
+      "type": "User",
+      "alternateId": "spray.b07@contoso.example",
+      "displayName": "spray.b07",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.99",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx223805c2-ab06-f4a4-c"
+    },
+    "displayMessage": "Max sign in attempts exceeded",
+    "eventType": "user.account.lock",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "LOCKED_OUT"
+    },
+    "published": "2026-11-06T16:00:42.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "de2d4e5d-3f69-ebf3-d",
+      "detail": {}
+    },
+    "uuid": "19452d65-58d8-65e4-004f-1548b0f19226",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.99",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "laee718ec9ae3a96cb",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "spray from one IP: wrong password (VERIFICATION_ERROR) or lockout, 15 accounts",
+    "_case": "breadth-one-ip",
+    "actor": {
+      "id": "00u9ebebd83a284b88",
+      "type": "User",
+      "alternateId": "spray.b08@contoso.example",
+      "displayName": "spray.b08",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.99",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx7b1e1c3b-e405-3018-2"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "VERIFICATION_ERROR"
+    },
+    "published": "2026-11-06T16:00:49.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "4bbf7018-c039-c5d7-1",
+      "detail": {}
+    },
+    "uuid": "910e2220-86f4-5736-8c3f-5a21a55f58c4",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.99",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae5786146c75c9775",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "spray from one IP: wrong password (VERIFICATION_ERROR) or lockout, 15 accounts",
+    "_case": "breadth-one-ip",
+    "actor": {
+      "id": "00u1b3490a691b498c",
+      "type": "User",
+      "alternateId": "spray.b09@contoso.example",
+      "displayName": "spray.b09",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.99",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxf0706bc7-8223-6287-f"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "VERIFICATION_ERROR"
+    },
+    "published": "2026-11-06T16:00:56.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "2b594bf6-0f47-d460-6",
+      "detail": {}
+    },
+    "uuid": "5fcb7b07-9c10-cb7f-908c-9710c3733fee",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.99",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae1585685a28a8a6a",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "spray from one IP: wrong password (VERIFICATION_ERROR) or lockout, 15 accounts",
+    "_case": "breadth-one-ip",
+    "actor": {
+      "id": "00udf78ea303f9dfa3",
+      "type": "User",
+      "alternateId": "spray.b10@contoso.example",
+      "displayName": "spray.b10",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.99",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxf61fedf9-a95c-6a02-a"
+    },
+    "displayMessage": "Max sign in attempts exceeded",
+    "eventType": "user.account.lock",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "LOCKED_OUT"
+    },
+    "published": "2026-11-06T16:01:03.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "91449740-5ca3-07f2-1",
+      "detail": {}
+    },
+    "uuid": "bbd77641-f665-2d5f-1bb1-13218cdf9dce",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.99",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "laeb38a40d44e2819c",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "spray from one IP: wrong password (VERIFICATION_ERROR) or lockout, 15 accounts",
+    "_case": "breadth-one-ip",
+    "actor": {
+      "id": "00uc8f28d52a28c828",
+      "type": "User",
+      "alternateId": "spray.b11@contoso.example",
+      "displayName": "spray.b11",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.99",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx674607fe-f474-4651-9"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "VERIFICATION_ERROR"
+    },
+    "published": "2026-11-06T16:01:10.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "aaac82c9-ffb0-3c75-e",
+      "detail": {}
+    },
+    "uuid": "904b9e0c-4253-035e-a6b5-44c0f378decd",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.99",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae5b48b827c1c1b89",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "spray from one IP: wrong password (VERIFICATION_ERROR) or lockout, 15 accounts",
+    "_case": "breadth-one-ip",
+    "actor": {
+      "id": "00u6a9c51d77c3a8ff",
+      "type": "User",
+      "alternateId": "spray.b12@contoso.example",
+      "displayName": "spray.b12",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.99",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx592a555a-a163-121e-7"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "VERIFICATION_ERROR"
+    },
+    "published": "2026-11-06T16:01:17.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "3ee68f9e-df51-b8a1-d",
+      "detail": {}
+    },
+    "uuid": "7952427a-9538-51c7-8288-3a136d48b1ed",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.99",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae824dde32620d030",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "spray from one IP: wrong password (VERIFICATION_ERROR) or lockout, 15 accounts",
+    "_case": "breadth-one-ip",
+    "actor": {
+      "id": "00u57b0e712fafc9c1",
+      "type": "User",
+      "alternateId": "spray.b13@contoso.example",
+      "displayName": "spray.b13",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.99",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx6f6be36d-72ff-3685-e"
+    },
+    "displayMessage": "Max sign in attempts exceeded",
+    "eventType": "user.account.lock",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "LOCKED_OUT"
+    },
+    "published": "2026-11-06T16:01:24.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "24526d61-e633-a22b-8",
+      "detail": {}
+    },
+    "uuid": "ceea0913-b969-6b3c-a160-67ba2103720e",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.99",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae709525e79735dd5",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "spray from one IP: wrong password (VERIFICATION_ERROR) or lockout, 15 accounts",
+    "_case": "breadth-one-ip",
+    "actor": {
+      "id": "00u301000d734bead9",
+      "type": "User",
+      "alternateId": "spray.b14@contoso.example",
+      "displayName": "spray.b14",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.99",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxe6a96e2e-bd74-6fa1-f"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "VERIFICATION_ERROR"
+    },
+    "published": "2026-11-06T16:01:31.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "51157a87-b82f-2eb7-1",
+      "detail": {}
+    },
+    "uuid": "f948ac74-972b-5d4d-7dac-6c8cc3191e56",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.99",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae5d23726e7079478",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "spray from one IP: wrong password (VERIFICATION_ERROR) or lockout, 15 accounts",
+    "_case": "breadth-one-ip",
+    "actor": {
+      "id": "00u3b80225fa7d148e",
+      "type": "User",
+      "alternateId": "spray.b15@contoso.example",
+      "displayName": "spray.b15",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.99",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx8c45a51f-f22d-46c8-2"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "VERIFICATION_ERROR"
+    },
+    "published": "2026-11-06T16:01:38.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "10046e9f-3ae1-9483-b",
+      "detail": {}
+    },
+    "uuid": "eaf1b3c0-dd10-e0a8-7239-36b00c27c972",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.99",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae3af973a88713daf",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 1 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u3d56a17bc384efb",
+      "type": "User",
+      "alternateId": "spray.c01@contoso.example",
+      "displayName": "spray.c01",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "192.0.2.100",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx4aad42c7-f958-9175-9"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T12:00:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "ffc6c9e5-be45-54c8-9",
+      "detail": {}
+    },
+    "uuid": "fd35c127-6763-e7bc-b5ae-3d11fb462f67",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "192.0.2.100",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae4c51a098cad5456",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 1 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00ue98de2235eb700a",
+      "type": "User",
+      "alternateId": "spray.c02@contoso.example",
+      "displayName": "spray.c02",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "198.51.100.101",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx5dad2616-d330-810b-f"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T12:03:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "e5f3ffdb-b9cc-2a7a-2",
+      "detail": {}
+    },
+    "uuid": "00eabd4b-03dc-790e-3126-4f700b3c51d7",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "198.51.100.101",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae33f98acdba357ff",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 1 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u38aa7901e5dce85",
+      "type": "User",
+      "alternateId": "spray.c03@contoso.example",
+      "displayName": "spray.c03",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.102",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx3429c7ad-a71a-19c9-5"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T12:06:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "77791eab-dbe1-9c25-a",
+      "detail": {}
+    },
+    "uuid": "c44a6b97-270d-b611-e2b3-08b9cf75d34e",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.102",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae9e8187bf001f19d",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 1 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u048f22a70d64d90",
+      "type": "User",
+      "alternateId": "spray.c04@contoso.example",
+      "displayName": "spray.c04",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "192.0.2.103",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx2d35e6b9-07c5-f765-b"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T12:09:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "d6ab5c9b-f9c5-c7a3-9",
+      "detail": {}
+    },
+    "uuid": "8819bfbd-33ff-d134-6e05-33819157ba78",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "192.0.2.103",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae0e82c667d65e56e",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 1 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u8998aa8669f0d03",
+      "type": "User",
+      "alternateId": "spray.c05@contoso.example",
+      "displayName": "spray.c05",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "198.51.100.104",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx512b7bc1-3642-6099-a"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T12:12:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "6fb335e0-4c4d-1b00-4",
+      "detail": {}
+    },
+    "uuid": "7317ad61-abf5-5309-12bd-3d8025d20048",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "198.51.100.104",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae42c329888d2a944",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 1 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00uf17f46cb3daa285",
+      "type": "User",
+      "alternateId": "spray.c06@contoso.example",
+      "displayName": "spray.c06",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.105",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx9a8d2d54-7ead-3d82-5"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T12:15:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "8e734925-89cf-bfcd-3",
+      "detail": {}
+    },
+    "uuid": "51c3e479-3ae3-b0d4-60eb-84d5cfe999d2",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.105",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "laea2670dfda5c42f2",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 1 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u8c6cc0c9167b854",
+      "type": "User",
+      "alternateId": "spray.c07@contoso.example",
+      "displayName": "spray.c07",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "192.0.2.106",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxc8ccda60-7f4a-65a4-e"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T12:18:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "00dce32e-2310-b5de-a",
+      "detail": {}
+    },
+    "uuid": "bb934647-3cc5-ef7b-f75c-e76b29e56a92",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "192.0.2.106",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae4b34c4da8582095",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 1 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u1877374bde48500",
+      "type": "User",
+      "alternateId": "spray.c08@contoso.example",
+      "displayName": "spray.c08",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "198.51.100.107",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx74db34a4-1821-dd88-a"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T12:21:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "f18879d0-5f42-6a21-5",
+      "detail": {}
+    },
+    "uuid": "196eca4b-fa9d-b65d-0dcc-7acf9de55534",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "198.51.100.107",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae0ff986606957209",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 1 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u48b1050b0e4a2f0",
+      "type": "User",
+      "alternateId": "spray.c09@contoso.example",
+      "displayName": "spray.c09",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.108",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx28954a46-0d75-2286-5"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T12:24:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "ee5fc194-3594-8cfd-1",
+      "detail": {}
+    },
+    "uuid": "fd72c9e6-b294-3545-3df1-10d688ba01d0",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.108",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae3e0eac93687171e",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 1 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u1ab1288a8f4bfd4",
+      "type": "User",
+      "alternateId": "spray.c10@contoso.example",
+      "displayName": "spray.c10",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "192.0.2.109",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx5f3ee366-1cb8-d2a1-5"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T12:27:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "a051f925-fb64-a59d-c",
+      "detail": {}
+    },
+    "uuid": "e7586ac8-c8d9-5c2a-e4da-09c3a1f3ad7f",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "192.0.2.109",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "laeda79ac88c741f28",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 1 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u18243597dbbf766",
+      "type": "User",
+      "alternateId": "spray.c11@contoso.example",
+      "displayName": "spray.c11",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "198.51.100.110",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx4dff1f50-7b3a-fb72-0"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T12:30:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "117c178e-b4c4-1228-2",
+      "detail": {}
+    },
+    "uuid": "d0576101-de70-808b-a5b9-bc637e528fb8",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "198.51.100.110",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "laefa988cc78de9ee3",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 2 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u3d56a17bc384efb",
+      "type": "User",
+      "alternateId": "spray.c01@contoso.example",
+      "displayName": "spray.c01",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "198.51.100.120",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx79bfe643-9a73-4ced-9"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T14:00:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "97c7974c-5a74-7b99-0",
+      "detail": {}
+    },
+    "uuid": "f0309aef-597c-3d03-b6e9-5c5d7abb5348",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "198.51.100.120",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae4c51a098cad5456",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 2 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00ue98de2235eb700a",
+      "type": "User",
+      "alternateId": "spray.c02@contoso.example",
+      "displayName": "spray.c02",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.121",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx9b57c156-4cab-045d-f"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T14:03:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "eb126501-a0ca-7283-4",
+      "detail": {}
+    },
+    "uuid": "472df236-5f9e-bc04-0f3e-f18da9997861",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.121",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae33f98acdba357ff",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 2 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u38aa7901e5dce85",
+      "type": "User",
+      "alternateId": "spray.c03@contoso.example",
+      "displayName": "spray.c03",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "192.0.2.122",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx5866159f-06fe-9134-e"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T14:06:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "23706d48-1f0a-1a08-d",
+      "detail": {}
+    },
+    "uuid": "366f47ac-00b4-4bbc-7559-4b52f8bc93fb",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "192.0.2.122",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae9e8187bf001f19d",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 2 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u048f22a70d64d90",
+      "type": "User",
+      "alternateId": "spray.c04@contoso.example",
+      "displayName": "spray.c04",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "198.51.100.123",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxe94f25f3-463e-c2a1-b"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T14:09:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "154de09d-2e2a-3465-6",
+      "detail": {}
+    },
+    "uuid": "93126f27-1db9-9e5a-db08-61666d95334b",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "198.51.100.123",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae0e82c667d65e56e",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 2 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u8998aa8669f0d03",
+      "type": "User",
+      "alternateId": "spray.c05@contoso.example",
+      "displayName": "spray.c05",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.124",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxca87fa10-70b5-dadc-5"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T14:12:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "0722acff-5e34-d558-5",
+      "detail": {}
+    },
+    "uuid": "a4c7ea94-4928-4d56-e4d7-a309e48cc733",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.124",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae42c329888d2a944",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 2 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00uf17f46cb3daa285",
+      "type": "User",
+      "alternateId": "spray.c06@contoso.example",
+      "displayName": "spray.c06",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "192.0.2.125",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxdf5ff155-95d8-178b-2"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T14:15:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "4027e071-110a-860c-a",
+      "detail": {}
+    },
+    "uuid": "3e90a1e8-86fd-11d1-6707-a778a2238321",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "192.0.2.125",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "laea2670dfda5c42f2",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 2 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u8c6cc0c9167b854",
+      "type": "User",
+      "alternateId": "spray.c07@contoso.example",
+      "displayName": "spray.c07",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "198.51.100.126",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxf6bd8b9b-c6ab-6147-5"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T14:18:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "f1b27b8a-8120-d16d-c",
+      "detail": {}
+    },
+    "uuid": "229aa296-f425-e547-ffc7-5178144c69e1",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "198.51.100.126",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae4b34c4da8582095",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 2 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u1877374bde48500",
+      "type": "User",
+      "alternateId": "spray.c08@contoso.example",
+      "displayName": "spray.c08",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.127",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxaccb23da-0bce-cf1b-a"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T14:21:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "d4910e40-8180-fb5d-1",
+      "detail": {}
+    },
+    "uuid": "7870400c-66f2-df6e-7055-05682c2b6b8c",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.127",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae0ff986606957209",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 2 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u48b1050b0e4a2f0",
+      "type": "User",
+      "alternateId": "spray.c09@contoso.example",
+      "displayName": "spray.c09",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "192.0.2.128",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idxc34dd84c-25c6-451b-2"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T14:24:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "272be5f7-d57a-4458-4",
+      "detail": {}
+    },
+    "uuid": "8493b698-0ddc-4ffa-0c6f-a3b2a45188be",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "192.0.2.128",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "lae3e0eac93687171e",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 2 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u1ab1288a8f4bfd4",
+      "type": "User",
+      "alternateId": "spray.c10@contoso.example",
+      "displayName": "spray.c10",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "198.51.100.129",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx864d247f-d70a-0d50-e"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T14:27:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "8ab61cc6-9d28-675b-b",
+      "detail": {}
+    },
+    "uuid": "18fcadaa-9c58-7e39-ead4-ef44f8cabb04",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "198.51.100.129",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "laeda79ac88c741f28",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "re-targeted spray, round 2 of 2 (11 accounts, below breadth threshold)",
+    "_case": "re-targeted",
+    "actor": {
+      "id": "00u18243597dbbf766",
+      "type": "User",
+      "alternateId": "spray.c11@contoso.example",
+      "displayName": "spray.c11",
+      "detailEntry": null
+    },
+    "client": {
+      "userAgent": {
+        "rawUserAgent": "python-requests/2.34.2",
+        "os": "Unknown",
+        "browser": "UNKNOWN"
+      },
+      "zone": "null",
+      "device": "Unknown",
+      "id": null,
+      "ipAddress": "203.0.113.130",
+      "geographicalContext": {
+        "city": null,
+        "state": null,
+        "country": "United States",
+        "postalCode": null,
+        "geolocation": {
+          "lat": 37.751,
+          "lon": -97.822
+        }
+      }
+    },
+    "device": null,
+    "authenticationContext": {
+      "authenticationProvider": null,
+      "credentialProvider": null,
+      "credentialType": null,
+      "issuer": null,
+      "interface": null,
+      "authenticationStep": 0,
+      "externalSessionId": "idx41b85723-624b-3b65-0"
+    },
+    "displayMessage": "User login to Okta",
+    "eventType": "user.session.start",
+    "outcome": {
+      "result": "FAILURE",
+      "reason": "INVALID_CREDENTIALS"
+    },
+    "published": "2026-11-06T14:30:00.000Z",
+    "securityContext": {
+      "asNumber": 64500,
+      "asOrg": "example hosting",
+      "isp": "example hosting",
+      "domain": "example.test",
+      "isProxy": false
+    },
+    "severity": "WARN",
+    "debugContext": {
+      "debugData": {
+        "requestUri": "/idp/idx/identify",
+        "threatSuspected": "false",
+        "url": "/idp/idx/identify?"
+      }
+    },
+    "legacyEventType": "core.user_auth.login_failed",
+    "transaction": {
+      "type": "WEB",
+      "id": "a5b99f3e-25c7-ad4e-8",
+      "detail": {}
+    },
+    "uuid": "3e4d7b46-18d6-1887-3c5b-19c83d93a7cc",
+    "version": "0",
+    "request": {
+      "ipChain": [
+        {
+          "ip": "203.0.113.130",
+          "version": "V4",
+          "source": null
+        }
+      ]
+    },
+    "target": [
+      {
+        "id": "laefa988cc78de9ee3",
+        "type": "AuthenticatorEnrollment",
+        "alternateId": "unknown",
+        "displayName": "Password",
+        "detailEntry": null
+      }
+    ]
+  }
+]

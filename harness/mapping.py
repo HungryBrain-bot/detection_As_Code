@@ -64,8 +64,16 @@ What is approximated for Entra:
   others) and parses JSON text for a dynamic column.
 - Properties present in both places take the `properties` value
   (AuditLogs Category is "ApplicationManagement", not "AuditLogs").
+
+Okta System Log events (Splunk attack_data, sourcetype OktaIM2:log;
+added 2026-11-07, ADR 011) are the raw API objects. They become OktaSSO
+rows by flattening nested keys with "_" and adding the column's type
+suffix (`from_okta`); see its docstring for what that approximates.
+Hand-written AppAuthEvent_CL rows (a table this project defines, ADR 011)
+load as they are.
 """
 
+import json
 from functools import cache
 from xml.sax.saxutils import escape, quoteattr
 
@@ -213,11 +221,13 @@ def from_azure_monitor(record: dict) -> tuple[str | None, dict]:
 # service principal sign-in and Graph rows are also written in table shape.
 NATIVE_TABLES = ("LLMAppLog_CL", "LLMCanary_CL", "AzureDiagnostics", "Honeytoken_CL",
                  "AADServicePrincipalSignInLogs", "MicrosoftGraphActivityLogs",
-                 "AppServiceHTTPLogs", "AWSCloudTrail",
+                 "AppServiceHTTPLogs", "AWSCloudTrail", "AppAuthEvent_CL",
                  # Foothold track (ADR 012): hand-written Defender for Endpoint, App Service
                  # audit and Syslog rows, and Sysmon for Linux lines from harness/winxml.py.
                  "Syslog", "DeviceProcessEvents", "DeviceFileEvents", "DeviceNetworkEvents",
                  "DeviceInfo", "AppServiceAuditLogs")
+# Suffixes the Okta connector's table adds to a flattened System Log key (ADR 011).
+OKTA_SUFFIXES = ("_s", "_d", "_b", "_g", "_t")
 
 
 def is_cloudtrail_record(event: dict) -> bool:
@@ -245,12 +255,59 @@ def from_cloudtrail(record: dict) -> dict:
     }
 
 
+def is_okta_record(event: dict) -> bool:
+    """A raw Okta System Log event, as the Okta API returns it."""
+    return "eventType" in event and "published" in event and isinstance(event.get("actor"), dict)
+
+
+def _flatten(value, prefix: str, out: dict) -> None:
+    if isinstance(value, dict):
+        for key, inner in value.items():
+            _flatten(inner, f"{prefix}_{key}" if prefix else key, out)
+    else:
+        out[prefix] = value
+
+
+@cache
+def _okta_columns() -> dict[str, str]:
+    """Flattened System Log key -> OktaSSO column (the column name minus its type suffix)."""
+    columns = {}
+    for field in load_reference_schema("sentinel", "OktaSSO")["fields"]:
+        base = field[:-2] if field.endswith(OKTA_SUFFIXES) else field
+        columns[base] = field
+    return columns
+
+
+def from_okta(record: dict) -> dict:
+    """OktaSSO row for a raw Okta System Log event (ADR 011).
+
+    Nested objects are flattened with "_" (actor.alternateId -> actor_alternateId_s), the way the
+    columns of Microsoft's OktaSSO table are named; lists (target, request.ipChain) are kept as
+    JSON text, since their columns are strings. TimeGenerated is `published`. Keys with no column
+    are dropped on load and listed in the result file. The Sentinel connector itself was not run,
+    so this is the column naming applied to the recorded values, not the connector's output.
+    """
+    flat: dict = {}
+    _flatten(record, "", flat)
+    columns = _okta_columns()
+    row = {"TimeGenerated": record.get("published"), "Type": "OktaSSO"}
+    for key, value in flat.items():
+        if value is None:
+            continue
+        if isinstance(value, list):
+            value = json.dumps(value)
+        row[columns.get(key, key)] = value
+    return row
+
+
 def to_sentinel(event: dict) -> tuple[str | None, dict]:
     """(table, row) for one event; table None if no table here holds it."""
     if event.get("Type") in NATIVE_TABLES:
         return event["Type"], {k: v for k, v in event.items() if not k.startswith("_")}
     if is_cloudtrail_record(event):
         return "AWSCloudTrail", from_cloudtrail(event)
+    if is_okta_record(event):
+        return "OktaSSO", from_okta(event)
     if "properties" in event and "category" in event:
         return from_azure_monitor(event)
     if "ActivityDisplayName" in event and "AADOperationType" in event:

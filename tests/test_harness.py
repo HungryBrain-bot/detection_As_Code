@@ -389,3 +389,48 @@ def test_an_azure_monitor_record_is_not_taken_for_cloudtrail():
 def test_kusto_engine_creates_the_recon_tables():
     from harness.engines import KustoEngine
     assert {"AppServiceHTTPLogs", "AWSCloudTrail"} <= set(KustoEngine.tables)
+
+
+# Raw Okta System Log event (shape of Splunk attack_data's OktaIM2:log records), ADR 011.
+OKTA_FAILED_SIGNIN = {
+    "actor": {"id": "00u1", "type": "User", "alternateId": "user1@example.test", "displayName": "user1", "detailEntry": None},
+    "client": {"userAgent": {"rawUserAgent": "python-requests/2.34.2", "os": "Unknown", "browser": "UNKNOWN"},
+               "ipAddress": "203.0.113.9", "geographicalContext": {"country": "United States", "geolocation": {"lat": 1.5, "lon": 2.5}}},
+    "eventType": "user.session.start", "outcome": {"result": "FAILURE", "reason": "INVALID_CREDENTIALS"},
+    "published": "2024-02-28T19:10:32.404Z", "securityContext": {"asNumber": 64500, "isProxy": False},
+    "debugContext": {"debugData": {"requestUri": "/idp/idx/identify", "notAColumn": "x"}},
+    "target": [{"id": "t1", "type": "AppInstance", "alternateId": "Okta Dashboard"}],
+}
+
+
+def test_raw_okta_event_maps_to_oktasso_columns():
+    table, row = mapping.to_sentinel(OKTA_FAILED_SIGNIN)
+    assert table == "OktaSSO" and row["Type"] == "OktaSSO"
+    assert row["TimeGenerated"] == "2024-02-28T19:10:32.404Z"
+    assert (row["eventType_s"], row["outcome_result_s"], row["outcome_reason_s"]) == ("user.session.start", "FAILURE", "INVALID_CREDENTIALS")
+    assert row["actor_alternateId_s"] == "user1@example.test" and row["client_ipAddress_s"] == "203.0.113.9"
+    assert row["client_userAgent_rawUserAgent_s"] == "python-requests/2.34.2"
+    assert row["securityContext_asNumber_d"] == 64500 and row["securityContext_isProxy_b"] is False
+    assert row["client_geographicalContext_geolocation_lat_d"] == 1.5
+
+
+def test_okta_lists_become_json_text_and_unknown_keys_keep_their_flat_name():
+    row = mapping.from_okta(OKTA_FAILED_SIGNIN)
+    assert json.loads(row["target_s"])[0]["alternateId"] == "Okta Dashboard"
+    # Not a column: kept under its flattened name, so the engine drops it on load and the result file lists it.
+    assert row["debugContext_debugData_notAColumn"] == "x"
+
+
+def test_an_okta_event_is_not_taken_for_cloudtrail_or_entra():
+    assert not mapping.is_cloudtrail_record(OKTA_FAILED_SIGNIN)
+    assert not mapping.is_okta_record({"category": "SignInLogs", "properties": {}})
+
+
+def test_app_auth_rows_pass_through_to_their_own_table():
+    row = {"Type": "AppAuthEvent_CL", "TimeGenerated": "2026-11-06T10:00:00Z", "EventType": "jwt_rejected", "_note": "x"}
+    assert mapping.to_sentinel(row) == ("AppAuthEvent_CL", {"Type": "AppAuthEvent_CL", "TimeGenerated": "2026-11-06T10:00:00Z", "EventType": "jwt_rejected"})
+
+
+def test_kusto_engine_creates_the_identity_phase3_tables():
+    from harness.engines import KustoEngine
+    assert {"OktaSSO", "AppAuthEvent_CL"} <= set(KustoEngine.tables)

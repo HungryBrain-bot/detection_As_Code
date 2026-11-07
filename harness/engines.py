@@ -59,8 +59,9 @@ class KustoEngine:
     tables = ("SecurityEvent", "Event", "AuditLogs", "SigninLogs", "AADNonInteractiveUserSignInLogs",
               "LLMAppLog_CL", "LLMCanary_CL", "AADServicePrincipalSignInLogs",
               "MicrosoftGraphActivityLogs", "AzureDiagnostics", "Honeytoken_CL",
-              "AppServiceHTTPLogs", "AWSCloudTrail", "Syslog", "DeviceProcessEvents",
-              "DeviceFileEvents", "DeviceNetworkEvents", "DeviceInfo", "AppServiceAuditLogs")
+              "AppServiceHTTPLogs", "AWSCloudTrail", "OktaSSO", "AppAuthEvent_CL", "Syslog",
+              "DeviceProcessEvents", "DeviceFileEvents", "DeviceNetworkEvents", "DeviceInfo",
+              "AppServiceAuditLogs")
 
     def __init__(self, url: str | None = None, database: str = "NetDefaultDB"):
         self.url = (url or os.environ.get("DAC_KUSTO_URL", "http://localhost:8080")).rstrip("/")

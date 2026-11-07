@@ -1,0 +1,76 @@
+id: c0c0083b-e44f-4177-923b-a226b87f6a0b
+name: Many Okta accounts fail with a wrong password, or the same accounts are sprayed again
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >
+  Counted from the account side, not per source IP. Alerts when, in one
+  hour, at least 15 Okta accounts fail sign-in with a wrong password
+  (user.session.start, INVALID_CREDENTIALS or VERIFICATION_ERROR) or are
+  locked out (user.account.lock) and do not sign in successfully that hour; or
+  when at least 5 accounts fail that way in two or more hours that were
+  each spray hours (10 or more such accounts). Rotating source IPs
+  defeats per-IP limits but not this count. The number of IPs and the
+  failures per IP are reported, not required (ADR 011).
+log_sources: [okta-system-log]
+mapping:
+  attack:
+    techniques: [T1110.003]
+    tactics: [credential-access]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT6H
+  required_fields:
+    OktaSSO: [TimeGenerated, eventType_s, outcome_result_s, outcome_reason_s, actor_alternateId_s, client_ipAddress_s, client_userAgent_rawUserAgent_s]
+  query: |
+    // B9: account-side password spray, Okta (detections/identity/B9-T1110.003-okta-account-side-spray/README.md)
+    let round_size = 1h;
+    let min_accounts = 15;        // breadth: failing accounts in one round
+    let min_spray_round = 10;     // a round with this many failing accounts is a spray round
+    let min_retargeted = 5;       // accounts failing in two or more spray rounds
+    // Wrong-password reasons as read by the Okta spray rule in Azure-Sentinel; lockouts as recorded.
+    let fail_reasons = dynamic(["INVALID_CREDENTIALS", "VERIFICATION_ERROR"]);
+    let attempts = OktaSSO
+    | where (eventType_s == "user.session.start" and (outcome_result_s == "SUCCESS" or outcome_reason_s in (fail_reasons)))
+        or eventType_s == "user.account.lock"
+    | where isnotempty(actor_alternateId_s)
+    | extend Account = tolower(actor_alternateId_s), IPAddress = client_ipAddress_s,
+             Failed = not(eventType_s == "user.session.start" and outcome_result_s == "SUCCESS"),
+             Outcome = strcat(eventType_s, ":", outcome_reason_s), UserAgent = client_userAgent_rawUserAgent_s,
+             Round = bin(TimeGenerated, round_size);
+    // An account counts in a round if it failed and did not also sign in successfully in that round.
+    let failing = attempts
+    | summarize Failures = countif(Failed), Successes = countif(not(Failed)) by Account, Round
+    | where Failures > 0 and Successes == 0
+    | project Account, Round;
+    let failed = attempts | where Failed | join kind=inner failing on Account, Round;
+    let per_ip = failed | summarize IPFailures = count() by Round, IPAddress;
+    let breadth = failed
+    | summarize FailingAccounts = dcount(Account), Accounts = make_set(Account, 50), Failures = count(),
+                DistinctIPs = dcount(IPAddress), Outcomes = make_set(Outcome), UserAgents = make_set(UserAgent, 10),
+                FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+        by Round
+    | where FailingAccounts >= min_accounts
+    | join kind=inner (per_ip | summarize MaxFailuresPerIP = max(IPFailures) by Round) on Round
+    | extend Reason = "breadth", SprayRounds = 1;
+    let spray_rounds = failing | summarize RoundAccounts = dcount(Account) by Round | where RoundAccounts >= min_spray_round;
+    let retargeted_accounts = failing
+    | join kind=inner spray_rounds on Round
+    | summarize SprayRounds = dcount(Round) by Account
+    | where SprayRounds >= 2;
+    let retargeted = failed | join kind=inner retargeted_accounts on Account;
+    let retarget = retargeted
+    | summarize FailingAccounts = dcount(Account), Accounts = make_set(Account, 50), Failures = count(),
+                DistinctIPs = dcount(IPAddress), Outcomes = make_set(Outcome), UserAgents = make_set(UserAgent, 10),
+                SprayRounds = dcount(Round), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+    | where FailingAccounts >= min_retargeted
+    | extend MaxFailuresPerIP = toscalar(retargeted | summarize n = count() by IPAddress | summarize max(n)),
+             Reason = "re-targeted", Round = datetime(null);
+    union breadth, retarget
+    // Distributed: many sources, each with few attempts. Reported, not required.
+    | extend Distributed = DistinctIPs >= 10 and MaxFailuresPerIP <= 3
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, Reason, Round, FailingAccounts, SprayRounds, Failures, DistinctIPs, MaxFailuresPerIP,
+              Distributed, Outcomes, UserAgents, Accounts, FirstSeen, LastSeen

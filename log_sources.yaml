@@ -102,6 +102,19 @@ aws-cloudtrail:
   siem:
     sentinel: [AWSCloudTrail]
 
+# Added 2026-11-07 for rules B8-B13 (ARTEX Phase 3, identity; ADR 011).
+okta-system-log:
+  description: Okta System Log in Sentinel through the Okta Single Sign-On connector, OktaSSO table (sign-in, lockout and other events with actor, client IP, outcome). The connector v2 table OktaV2_CL has different column names and is not covered.
+  owner: identity-team
+  siem:
+    sentinel: [OktaSSO]
+
+app-auth-events:
+  description: Rejected OAuth callbacks (state, redirect_uri, code) and rejected JWTs, written by the application or its auth middleware to AppAuthEvent_CL, a table this project defines (schemas/reference/sentinel/AppAuthEvent_CL.yaml). No vendor log provides this; the app must be changed to send it.
+  owner: app-platform-team
+  siem:
+    sentinel: [AppAuthEvent_CL]
+
 # Added 2026-11-07 for rules E1-E9 (ARTEX Phase 4, initial exploitation and foothold; ADR 012).
 # E1 reads app-service-http (above).
 mde-advanced-hunting:

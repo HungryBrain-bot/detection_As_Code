@@ -1,0 +1,166 @@
+# Reference schema for the OktaSSO table (Okta System Log events ingested by the Sentinel
+# Okta Single Sign-On connector), with column types. See docs/components/schema-check.md.
+# Column names and types are copied from Microsoft's Azure-Sentinel repository
+# (.script/tests/KqlvalidationsTests/CustomTables/OktaSSO.json, the table definition Microsoft's
+# own KQL validation uses for the Okta solution's rules), not from a live workspace. Microsoft's
+# Okta analytic rules (Solutions/Okta Single Sign-On/Analytic Rules/PasswordSpray.yaml, same
+# commit) read this table with these column names. The newer OktaV2_CL table (connector v2,
+# ASIM-style column names) is not covered. The harness creates the Kusto test table from `types`.
+# Added 2026-11-07 for rule B9 (ARTEX Phase 3, identity; ADR 011).
+name: OktaSSO
+siem: sentinel
+source_url: https://github.com/Azure/Azure-Sentinel/blob/c0c2dc267d7b5840299e76e195b0407f3f9c92c8/.script/tests/KqlvalidationsTests/CustomTables/OktaSSO.json
+vendor_page: https://developer.okta.com/docs/reference/api/system-log/
+fetched_on: '2026-11-07'
+provenance: Microsoft Azure-Sentinel repo (MIT) at commit c0c2dc2, file read directly with git (not summarised);
+  74 columns.
+fields:
+- TenantId
+- SourceSystem
+- MG
+- ManagementGroupName
+- TimeGenerated
+- Computer
+- RawData
+- debugContext_debugData_initiationType_s
+- debugContext_debugData_logOnlySecurityData_s
+- debugContext_debugData_threatDetections_s
+- debugContext_debugData_signOnMode_s
+- debugContext_debugData_attributesModified_s
+- debugContext_debugData_attributesAdded_s
+- debugContext_debugData_attributesDeleted_s
+- debugContext_debugData_groupAppAssignmentId_s
+- debugContext_debugData_authnRequestId_s
+- client_userAgent_rawUserAgent_s
+- client_userAgent_os_s
+- client_userAgent_browser_s
+- client_zone_s
+- client_device_s
+- client_ipAddress_s
+- client_geographicalContext_city_s
+- client_geographicalContext_state_s
+- client_geographicalContext_country_s
+- client_geographicalContext_postalCode_s
+- client_geographicalContext_geolocation_lat_d
+- client_geographicalContext_geolocation_lon_d
+- outcome_reason_s
+- securityContext_asNumber_d
+- securityContext_asOrg_s
+- securityContext_isp_s
+- securityContext_domain_s
+- securityContext_isProxy_b
+- debugContext_debugData_loginResult_s
+- debugContext_debugData_requestId_s
+- debugContext_debugData_requestUri_s
+- debugContext_debugData_url_s
+- debugContext_debugData_deviceFingerprint_g
+- authenticationContext_authenticationProvider_s
+- authenticationContext_credentialProvider_s
+- debugContext_debugData_factor_s
+- debugContext_debugData_countryCallingCode_s
+- debugContext_debugData_smsProvider_s
+- debugContext_debugData_transactionId_g
+- authenticationContext_credentialType_s
+- actor_id_s
+- actor_type_s
+- actor_alternateId_s
+- actor_displayName_s
+- authenticationContext_authenticationStep_d
+- authenticationContext_externalSessionId_s
+- displayMessage_s
+- eventType_s
+- outcome_result_s
+- published_t
+- severity_s
+- debugContext_debugData_jobId_s
+- debugContext_debugData_importType_s
+- debugContext_debugData_appname_s
+- debugContext_debugData_importLastToken_s
+- debugContext_debugData_importTrigger_s
+- debugContext_debugData_threatSuspected_s
+- legacyEventType_s
+- transaction_type_s
+- transaction_id_s
+- uuid_g
+- version_s
+- request_ipChain_s
+- target_s
+- debugContext_debugData_detailedmessage_s
+- Type
+- _ResourceId
+- _ItemId
+types:
+  TenantId: string
+  SourceSystem: string
+  MG: string
+  ManagementGroupName: string
+  TimeGenerated: datetime
+  Computer: string
+  RawData: string
+  debugContext_debugData_initiationType_s: string
+  debugContext_debugData_logOnlySecurityData_s: string
+  debugContext_debugData_threatDetections_s: string
+  debugContext_debugData_signOnMode_s: string
+  debugContext_debugData_attributesModified_s: string
+  debugContext_debugData_attributesAdded_s: string
+  debugContext_debugData_attributesDeleted_s: string
+  debugContext_debugData_groupAppAssignmentId_s: string
+  debugContext_debugData_authnRequestId_s: string
+  client_userAgent_rawUserAgent_s: string
+  client_userAgent_os_s: string
+  client_userAgent_browser_s: string
+  client_zone_s: string
+  client_device_s: string
+  client_ipAddress_s: string
+  client_geographicalContext_city_s: string
+  client_geographicalContext_state_s: string
+  client_geographicalContext_country_s: string
+  client_geographicalContext_postalCode_s: string
+  client_geographicalContext_geolocation_lat_d: real
+  client_geographicalContext_geolocation_lon_d: real
+  outcome_reason_s: string
+  securityContext_asNumber_d: real
+  securityContext_asOrg_s: string
+  securityContext_isp_s: string
+  securityContext_domain_s: string
+  securityContext_isProxy_b: bool
+  debugContext_debugData_loginResult_s: string
+  debugContext_debugData_requestId_s: string
+  debugContext_debugData_requestUri_s: string
+  debugContext_debugData_url_s: string
+  debugContext_debugData_deviceFingerprint_g: string
+  authenticationContext_authenticationProvider_s: string
+  authenticationContext_credentialProvider_s: string
+  debugContext_debugData_factor_s: string
+  debugContext_debugData_countryCallingCode_s: string
+  debugContext_debugData_smsProvider_s: string
+  debugContext_debugData_transactionId_g: string
+  authenticationContext_credentialType_s: string
+  actor_id_s: string
+  actor_type_s: string
+  actor_alternateId_s: string
+  actor_displayName_s: string
+  authenticationContext_authenticationStep_d: real
+  authenticationContext_externalSessionId_s: string
+  displayMessage_s: string
+  eventType_s: string
+  outcome_result_s: string
+  published_t: datetime
+  severity_s: string
+  debugContext_debugData_jobId_s: string
+  debugContext_debugData_importType_s: string
+  debugContext_debugData_appname_s: string
+  debugContext_debugData_importLastToken_s: string
+  debugContext_debugData_importTrigger_s: string
+  debugContext_debugData_threatSuspected_s: string
+  legacyEventType_s: string
+  transaction_type_s: string
+  transaction_id_s: string
+  uuid_g: string
+  version_s: string
+  request_ipChain_s: string
+  target_s: string
+  debugContext_debugData_detailedmessage_s: string
+  Type: string
+  _ResourceId: string
+  _ItemId: string

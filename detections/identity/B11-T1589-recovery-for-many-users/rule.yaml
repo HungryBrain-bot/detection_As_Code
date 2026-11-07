@@ -1,0 +1,57 @@
+id: 495e63a6-bfde-40c1-82e1-4c53aab1eacf
+name: Self-service password reset run for several users from one network, or several users throttled
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >
+  Entra self-service password reset (SSPR) activity for 3 or more
+  distinct users from one source network (IPv4 /24, IPv6 /64) in one
+  hour; or 2 or more users blocked from SSPR in one hour from anywhere
+  (Entra blocks a user after more than five reset attempts in 24 hours).
+  A real user resets their own password; one client walking the reset
+  flow for many users is enumerating accounts or testing weak recovery.
+  Okta is not covered: the event that records a self-service reset
+  could not be confirmed (ADR 011).
+log_sources: [entra-audit]
+mapping:
+  attack:
+    techniques: [T1589]
+    tactics: [reconnaissance]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    AuditLogs: [TimeGenerated, OperationName, InitiatedBy, TargetResources, Result, ResultReason]
+  query: |
+    // B11: SSPR for several users from one network (detections/identity/B11-T1589-recovery-for-many-users/README.md)
+    let window = 1h;
+    let min_users_per_network = 3;
+    let min_blocked_users = 2;
+    let sspr_ops = dynamic(["Self-service password reset flow activity progress", "Reset password (self-service)",
+        "Unlock user account (self-service)", "Blocked from self-service password reset", "User started password reset"]);
+    let net = (ip: string) { iff(ip contains ":", strcat(substring(parse_ipv6(ip), 0, 19), "::/64"), format_ipv4_mask(ip, 24)) };
+    let sspr = AuditLogs
+    | where OperationName in~ (sspr_ops)
+    | extend IPAddress = tostring(InitiatedBy.user.ipAddress),
+             Target = tolower(coalesce(tostring(TargetResources[0].userPrincipalName), tostring(InitiatedBy.user.userPrincipalName))),
+             Window = bin(TimeGenerated, window);
+    let by_network = sspr
+    | where isnotempty(IPAddress)
+    | extend Network = net(IPAddress)
+    | summarize Users = dcount(Target), SampleUsers = make_set(Target, 20), IPAddresses = make_set(IPAddress, 10),
+                Operations = make_set(OperationName, 10), Steps = make_set(ResultReason, 10), Completed = countif(OperationName =~ "Reset password (self-service)"),
+                FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by Network, Window
+    | where Users >= min_users_per_network
+    | extend Reason = "SSPR for several users from one network";
+    let blocked = sspr
+    | where OperationName =~ "Blocked from self-service password reset"
+    | summarize Users = dcount(Target), SampleUsers = make_set(Target, 20), IPAddresses = make_set(IPAddress, 10),
+                Operations = make_set(OperationName, 10), Steps = make_set(ResultReason, 10), Completed = 0,
+                FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by Window
+    | where Users >= min_blocked_users
+    | extend Reason = "several users throttled from SSPR", Network = "";
+    union by_network, blocked
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, Reason, Network, Window, Users, Completed, SampleUsers, IPAddresses, Operations, Steps, FirstSeen, LastSeen
