@@ -532,3 +532,20 @@
   four attack docs (dated design note); ADR 007 and ADR 004 mention
   only the rules that existed when they were written (append-only).
 - Tests: 171 passed; yamllint clean.
+
+## 2026-11-07 - Why the Phase 4 rules have no samples
+
+- Docs only. The Phase 4 entry above records that the owner chose to
+  build E1-E6, E8, E9 without samples; it does not say why. Owner's
+  account, from the project thread: the build was stopped three times by
+  an automated safety classifier while hand-written samples and attack
+  docs for the web-shell and process-chain material (MySQL `general_log`,
+  web server starting a shell, web-shell file) were being written, so the
+  owner skipped samples, shipped the rules `experimental` and dropped E7.
+  Not recorded anywhere in the repo before this entry; no classifier log
+  is kept here.
+- README status section now states this, plus what lifts `experimental`
+  (positive and negative samples, owner-written or recorded, then an
+  engine run in `tests/evidence.md`), consistent with ADR 012 decision 7.
+  ADR 012 is unchanged: its "no samples yet" and "build the rules and
+  docs without test samples for now" already agree with the README.
