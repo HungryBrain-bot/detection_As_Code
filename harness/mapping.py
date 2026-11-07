@@ -38,8 +38,10 @@ Entra ID logs (identity rules) come in two shapes:
   `category`, `operationName`, ... at the top and the log entry itself
   under `properties` in camelCase. `category` picks the table
   (AuditLogs -> AuditLogs, SignInLogs -> SigninLogs,
-  NonInteractiveUserSignInLogs -> AADNonInteractiveUserSignInLogs);
-  other categories (service principal sign-ins, Graph activity) have no
+  NonInteractiveUserSignInLogs -> AADNonInteractiveUserSignInLogs,
+  ServicePrincipalSignInLogs -> AADServicePrincipalSignInLogs,
+  MicrosoftGraphActivityLogs -> MicrosoftGraphActivityLogs; the last
+  two added 2026-11-07 for rules B4-B7); other categories have no
   table here and are not loaded, and the result file counts them.
   Each key becomes the table column with the same name ignoring case
   (ipAddress -> IPAddress), after the renames in ENTRA_RENAMES, which
@@ -161,6 +163,8 @@ ENTRA_TABLES = {
     "AuditLogs": "AuditLogs",
     "SignInLogs": "SigninLogs",
     "NonInteractiveUserSignInLogs": "AADNonInteractiveUserSignInLogs",
+    "ServicePrincipalSignInLogs": "AADServicePrincipalSignInLogs",
+    "MicrosoftGraphActivityLogs": "MicrosoftGraphActivityLogs",
 }
 # Diagnostic keys whose column has a different name, per table ("*" = any).
 ENTRA_RENAMES = {
@@ -168,6 +172,7 @@ ENTRA_RENAMES = {
     "AuditLogs": {"operationType": "AADOperationType", "tenantId": "AADTenantId"},
     "SigninLogs": {"location": "LocationDetails", "resourceId": "ResourceIdentity"},
     "AADNonInteractiveUserSignInLogs": {"location": "LocationDetails", "resourceId": "ResourceIdentity"},
+    "AADServicePrincipalSignInLogs": {"location": "LocationDetails", "resourceId": "ResourceIdentity"},
 }
 
 
@@ -203,7 +208,11 @@ def from_azure_monitor(record: dict) -> tuple[str | None, dict]:
 
 # Tables whose rows are written in table shape already (ADR 008): the LLM
 # dataset converters (harness/llm_datasets.py) and hand-written samples.
-NATIVE_TABLES = ("LLMAppLog_CL", "LLMCanary_CL")
+# AzureDiagnostics (Key Vault) and Honeytoken_CL rows are hand-written only:
+# no recorded Key Vault audit log is available here (ADR 009). Hand-written
+# service principal sign-in and Graph rows are also written in table shape.
+NATIVE_TABLES = ("LLMAppLog_CL", "LLMCanary_CL", "AzureDiagnostics", "Honeytoken_CL",
+                 "AADServicePrincipalSignInLogs", "MicrosoftGraphActivityLogs")
 
 
 def to_sentinel(event: dict) -> tuple[str | None, dict]:

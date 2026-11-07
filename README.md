@@ -10,7 +10,10 @@ reports per-customer coverage as ATT&CK / ATLAS Navigator layers.
 **Status (2026-10-27):** the pipeline is built and tested offline, and
 all ten scoped rules are built: four endpoint rules (A1-A4), three Entra
 ID identity rules (B1-B3, Sentinel only) and three LLM application rules
-(C1-C3, Sentinel only). Their KQL (and the endpoint rules' SPL) has been
+(C1-C3, Sentinel only). On 2026-11-07 four more identity rules were
+added at the owner's request for the ARTEX Phase 1 blog post (B4-B7,
+leaked app secrets; docs/threats/artex-phase1-credential-sourcing.md),
+with a self-search runbook (docs/hunts/H1). Their KQL (and the endpoint rules' SPL) has been
 run in local engines (Kusto emulator, Splunk Enterprise container)
 against recorded open-source data; the endpoint rules' YARA-L has not
 run anywhere. **No public recorded LLM-application log exists**: the LLM
@@ -32,6 +35,10 @@ vendor documentation, not verified against a live API.
 | B1 | [OAuth consent with mailbox / file / directory-write scopes](detections/identity/B1-T1528-illicit-oauth-consent/) | T1528 | baseline | KQL: yes, 2 rows of 87 Entra records, both attack | n/a (Sentinel only) |
 | B2 | [Credential or high-risk permission added to an app](detections/identity/B2-T1098.001-app-credential-or-permission/) | T1098.001 | baseline | KQL: yes, 4 rows, all attack or lab test | n/a |
 | B3 | [One sign-in session from two countries](detections/identity/B3-T1550.001-session-token-replay/) | T1550.001, T1550.004 | targeted | KQL ran, but **no recorded sign-in has a SessionId**; positives hand-written | n/a |
+| B4 | [Honeytoken app credential or decoy Key Vault object used](detections/identity/B4-T1078.004-honeytoken-credential-use/) | T1078.004, T1555.006 | targeted | KQL ran; no recorded honeytoken or Key Vault data; positives hand-written | n/a |
+| B5 | [One SP credential from Microsoft's network and outside it](detections/identity/B5-T1078.004-credential-two-networks/) | T1078.004 | targeted | KQL ran, but **no recorded SP sign-in has an ASN**; positives hand-written | n/a |
+| B6 | [SP sign-in from an ASN new in 14 days](detections/identity/B6-T1078.004-sp-new-network/) | T1078.004 | targeted | KQL ran, but no recorded ASN or 14-day history; positives hand-written | n/a |
+| B7 | [SP Graph calls unlike its app](detections/identity/B7-T1087.004-sp-unlike-its-app/) | T1087.004, T1069.003, T1526 | targeted | KQL ran; 27 recorded Graph calls, no baseline possible; positives hand-written | n/a |
 | C1 | [Prompt-injection phrasing in prompts and tool / retrieval results](detections/llm/C1-AML.T0051-prompt-injection/) | LLM01:2025, LLM01:2026; AML.T0051, T0054, T0056, T0068 | targeted | KQL on converted research data: JailbreakHub jailbreaks 23% caught, regular prompts 1.9% alerted; AgentDojo 231/231 (in-sample); BIPIA 0/75 | n/a |
 | C2 | [Canary from hidden context in model output or tool arguments](detections/llm/C2-AML.T0057-canary-in-output/) | LLM02/LLM07:2025, LLM02/LLM08:2026; AML.T0056, T0057, T0086 | targeted | KQL: 5 rows, all the registered secret leaving: both real AgentDojo exfiltrations, plus 3 rows where the user asked for it; no dataset has a planted canary | n/a |
 | C3 | [Tool-call volume or loop per agent conversation](detections/llm/C3-AML.T0053-tool-call-volume/) | LLM06/LLM10:2025, LLM03/LLM06:2026; AML.T0053, T0034.002 | targeted | KQL: 0 alerts on 300 real agent runs; positives hand-written (no recorded runaway agent exists) | n/a |

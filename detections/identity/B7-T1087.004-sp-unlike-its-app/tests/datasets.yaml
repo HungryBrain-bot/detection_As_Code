@@ -1,0 +1,4 @@
+# ago() in the query: timestamps are shifted so the newest event is two minutes old.
+rebase_time: true
+datasets:
+  - splunk-aad-graph-perm-assigned

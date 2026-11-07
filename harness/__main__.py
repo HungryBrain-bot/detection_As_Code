@@ -189,14 +189,27 @@ def trim(row: dict) -> dict:
             for k, v in row.items() if not k.startswith("_") or k == "_time"}
 
 
+def _time_key(event: dict) -> str | None:
+    """The key holding an event's time: TimeGenerated (table-shaped rows) or
+    time (Azure Monitor diagnostic records, which mapping.py turns into TimeGenerated)."""
+    if event.get("TimeGenerated"):
+        return "TimeGenerated"
+    if event.get("time") and "category" in event:
+        return "time"
+    return None
+
+
 def rebase(events: list[dict]) -> list[dict]:
-    """Copies of events shifted so the newest TimeGenerated is two minutes before now."""
-    times = [_parse(e["TimeGenerated"]) for e in events if e.get("TimeGenerated")]
+    """Copies of events shifted so the newest event time is two minutes before now."""
+    times = [_parse(e[k]) for e in events if (k := _time_key(e))]
     if not times:
         return events
     delta = datetime.now(timezone.utc) - timedelta(minutes=2) - max(times)
-    return [dict(e, TimeGenerated=(_parse(e["TimeGenerated"]) + delta).isoformat().replace("+00:00", "Z"))
-            if e.get("TimeGenerated") else e for e in events]
+    shifted = []
+    for e in events:
+        k = _time_key(e)
+        shifted.append(dict(e, **{k: (_parse(e[k]) + delta).isoformat().replace("+00:00", "Z")}) if k else e)
+    return shifted
 
 
 def _parse(value: str) -> datetime:

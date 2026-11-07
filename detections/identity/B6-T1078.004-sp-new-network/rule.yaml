@@ -1,0 +1,52 @@
+id: 1aff631e-05f8-4094-bc47-9d2efaca9bd1
+name: Service principal signs in from a network (ASN) it has not used in 14 days
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >
+  A service principal with an established sign-in history signs in
+  successfully from an autonomous system (ASN) it has not used in the
+  previous 14 days. Grouping by network rather than by IP address means
+  an attacker who rotates through fresh IPs on one VPS or proxy provider
+  still stands out, while an app whose IPs churn inside its own cloud
+  provider does not (ADR 009).
+log_sources: [entra-sp-signin]
+mapping:
+  attack:
+    techniques: [T1078.004]
+    tactics: [initial-access]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: P14D
+  required_fields:
+    AADServicePrincipalSignInLogs: [TimeGenerated, ResultType, AutonomousSystemNumber, IPAddress, ServicePrincipalId, ServicePrincipalName, AppId, ResourceDisplayName, ServicePrincipalCredentialKeyId]
+  query: |
+    // B6: service principal from a new network (detections/identity/B6-T1078.004-sp-new-network/README.md)
+    let recent = 1h;
+    // Below this many baseline sign-ins there is no "normal" to compare with.
+    let min_baseline_signins = 10;
+    let microsoft_asns = dynamic(["8075"]);
+    let signins = AADServicePrincipalSignInLogs
+    | where ResultType == "0" and isnotempty(AutonomousSystemNumber);
+    let baseline = signins
+    | where TimeGenerated < ago(recent)
+    | summarize BaselineSignIns = count(), BaselineASNs = make_set(AutonomousSystemNumber, 100),
+                BaselineSince = min(TimeGenerated)
+        by ServicePrincipalId;
+    signins
+    | where TimeGenerated >= ago(recent)
+    | summarize SignIns = count(), IPAddresses = make_set(IPAddress, 20), Resources = make_set(ResourceDisplayName, 10),
+                CredentialKeyIds = make_set(ServicePrincipalCredentialKeyId, 5),
+                FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+        by ServicePrincipalId, ServicePrincipalName, AppId, NewASN = AutonomousSystemNumber
+    | join kind=inner baseline on ServicePrincipalId
+    | where BaselineSignIns >= min_baseline_signins
+    | where not(set_has_element(BaselineASNs, NewASN))
+    // The case the rule is written for: a credential only ever used from Azure, now elsewhere.
+    | extend BaselineMicrosoftOnly = array_length(set_difference(BaselineASNs, microsoft_asns)) == 0
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, ServicePrincipalName, ServicePrincipalId, AppId, NewASN, SignIns, IPAddresses,
+              BaselineMicrosoftOnly, BaselineASNs, BaselineSignIns, BaselineSince, Resources, CredentialKeyIds,
+              FirstSeen, LastSeen
