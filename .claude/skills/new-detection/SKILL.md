@@ -9,7 +9,7 @@ A rule is five artifacts, written together in one PR. A rule without
 its docs or evidence is not done, and CI rejects it.
 
 ## Before starting
-1. Check CLAUDE.md "Scope": the agreed 10 rules. A rule outside that
+1. Check CLAUDE.md "Scope": the rules the owner has agreed. A rule outside that
    list needs the owner's explicit go-ahead first; park it in
    BUILD_LOG.md otherwise.
 2. Fetch the primary sources for the attack (vendor report, MITRE

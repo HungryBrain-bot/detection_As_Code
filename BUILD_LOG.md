@@ -508,3 +508,27 @@
 - Tests: 171 passed after merging Phase 3 from main (new: tests/test_winxml.py);
   full Kusto harness run: all 27 rules with datasets ok; yamllint clean; `dac
   validate` against the current ATT&CK enterprise bundle clean.
+
+## 2026-11-07 - Docs pass after ARTEX Phases 1 to 4
+
+- Checked against `main` at fc6d3de (PRs #7 to #10 merged). Docs only;
+  no rule, query, sample or code changed.
+- README: status rewritten for 32 rules (24 `status: test`, 8
+  `experimental`) with a per-track table linking each ARTEX threats doc
+  and ADR; ARTEX caveats stated once (attribution only where a fetched
+  source verified it, thresholds in B8-B13, D2, D3, E1 are this
+  project's, all ARTEX rules Sentinel only and targeted). E1, E2, E5,
+  E8, E9 rows said "Not run"; they ran on empty tables only, now said
+  so. Data-source line now names the Okta, CloudTrail and Sysmon lab
+  sets. Docs section lists ADRs 001-012, the threats docs and H1.
+- Found, not fixed (code, owner's call): `dac/coverage.py` does not read
+  a rule's `status`, so a gate-passed experimental rule, deployed
+  disabled, would count as active coverage. README's coverage row now
+  says so.
+- CLAUDE.md: "up to 10 detection rules" and "Next: all ten scoped rules
+  are built" updated. new-detection skill no longer says "the agreed 10
+  rules".
+- Left as is: docs/future/rag-over-attack-docs.md still reasons from
+  four attack docs (dated design note); ADR 007 and ADR 004 mention
+  only the rules that existed when they were written (append-only).
+- Tests: 171 passed; yamllint clean.
