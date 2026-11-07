@@ -13,7 +13,23 @@ likely running commands for someone, whatever the way in was.
 
 ## Detection logic
 ```kql
-// see rule.yaml for the full query
+// E3: web or database process starts a shell or download tool, Sysmon (detections/foothold/E3-T1505.003-web-process-shell-sysmon/README.md)
+let server_parents = @"(?i)\\(w3wp|nginx|httpd|tomcat[0-9]*w?|mysqld|mariadbd)\.exe$";
+let java_parents = @"(?i)\\javaw?\.exe$";
+let java_server_markers = @"(?i)catalina|tomcat|jboss|wildfly|jetty|weblogic|websphere|glassfish";
+let children = @"(?i)\\(cmd|powershell|pwsh|curl|wget|nc|ncat)\.exe$";
+let allowed_child_commands = dynamic([]);
+Event
+| where Source == "Microsoft-Windows-Sysmon" and EventID == 1
+| extend Data = parse_xml(EventData).DataItem.EventData.Data
+| mv-apply d = Data on (summarize Fields = make_bag(bag_pack(tostring(d["@Name"]), tostring(d["#text"]))))
+| extend Image = tostring(Fields.Image), CommandLine = tostring(Fields.CommandLine), User = tostring(Fields.User),
+         ParentImage = tostring(Fields.ParentImage), ParentCommandLine = tostring(Fields.ParentCommandLine)
+| where Image matches regex children
+| where ParentImage matches regex server_parents
+    or (ParentImage matches regex java_parents and ParentCommandLine matches regex java_server_markers)
+| where not(CommandLine in (allowed_child_commands))
+| project TimeGenerated, Computer, ParentImage, ParentCommandLine, Image, CommandLine, User
 ```
 1. Sysmon event 1; child image ends in `\cmd.exe`, `\powershell.exe`,
    `\pwsh.exe`, `\curl.exe`, `\wget.exe`, `\nc.exe` or `\ncat.exe`.
@@ -53,7 +69,7 @@ likely running commands for someone, whatever the way in was.
 - No samples have been run.
 
 ## Test evidence
-Not run on samples. Recorded data pinned for it (not yet run): Splunk attack_data WSUS and CrushFTP Sysmon sets. In them, `w3wp.exe` starting `cmd.exe` is in scope; `wsusservice.exe`, `mmc.exe` and `crushftpservice.exe` starting `cmd.exe` are not, because those parents are not in the list (blind spot). The rule is `experimental`, so it is deployed disabled. See [tests/evidence.md](tests/evidence.md).
+Run on recorded data on 2026-11-07 in the Kusto emulator: 9 recorded Sysmon events from three Splunk attack_data sets (WSUS and CrushFTP exploitation in a lab), 1 row, `w3wp.exe` starting `cmd.exe`. The WSUS and CrushFTP service processes starting `cmd.exe` were not matched, because they are not in the parent list. No hand-written samples, so no negative cases were tested. The rule is `experimental`, so it is deployed disabled. Details: [tests/evidence.md](tests/evidence.md).
 
 ## Blind spots
 - Linux and Defender-only hosts (E2, E4).

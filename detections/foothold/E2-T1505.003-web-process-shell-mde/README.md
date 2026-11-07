@@ -17,7 +17,22 @@ likely running commands for someone, whatever the way in was.
 
 ## Detection logic
 ```kql
-// see rule.yaml for the full query
+// E2: web or database process starts a shell or download tool (detections/foothold/E2-T1505.003-web-process-shell-mde/README.md)
+let server_parents = @"(?i)^(w3wp\.exe|nginx(\.exe)?|httpd(\.exe)?|apache2|tomcat[0-9]*w?(\.exe)?|mysqld(\.exe)?|mariadbd(\.exe)?)$";
+let java_parents = @"(?i)^javaw?(\.exe)?$";
+// Java counts only when its command line names an application server (not a build tool or IDE).
+let java_server_markers = @"(?i)catalina|tomcat|jboss|wildfly|jetty|weblogic|websphere|glassfish";
+let children = @"(?i)^(cmd\.exe|powershell\.exe|pwsh(\.exe)?|sh|bash|dash|zsh|curl(\.exe)?|wget(\.exe)?|nc(\.exe)?|ncat(\.exe)?|netcat)$";
+// Per customer: known parent/child command lines that are part of an app (exact matches).
+let allowed_child_commands = dynamic([]);
+DeviceProcessEvents
+| where FileName matches regex children
+| where InitiatingProcessFileName matches regex server_parents
+    or (InitiatingProcessFileName matches regex java_parents and InitiatingProcessCommandLine matches regex java_server_markers)
+| where not(ProcessCommandLine in (allowed_child_commands))
+| project TimeGenerated, DeviceName, Parent = InitiatingProcessFileName, ParentPath = InitiatingProcessFolderPath,
+          ParentCommandLine = InitiatingProcessCommandLine, ParentAccount = InitiatingProcessAccountName,
+          Child = FileName, ChildPath = FolderPath, ChildCommandLine = ProcessCommandLine, AccountName
 ```
 1. Child is a shell or download utility: cmd, PowerShell/pwsh, sh, bash,
    dash, zsh, curl, wget, nc/ncat/netcat (exact file names).

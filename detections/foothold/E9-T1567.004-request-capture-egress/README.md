@@ -22,7 +22,22 @@ testing whether the server can be made to call out, or sending data out.
 
 ## Detection logic
 ```kql
-// see rule.yaml for the full query
+// E9: server connects to a request-capture service (detections/foothold/E9-T1567.004-request-capture-egress/README.md)
+// Per customer: request-capture domains. defaults are confirmed on each service page (README).
+let capture_domains = dynamic(["webhook.site", "dnshook.site", "oast.pro", "oast.live", "oast.site", "oast.online", "oast.fun", "oast.me"]);
+let servers = DeviceInfo
+| summarize arg_max(TimeGenerated, OSPlatform, DeviceType) by DeviceId
+| where OSPlatform startswith "WindowsServer" or OSPlatform =~ "Linux" or DeviceType =~ "Server"
+| project DeviceId, OSPlatform;
+DeviceNetworkEvents
+| where TimeGenerated >= ago(1h) and isnotempty(RemoteUrl)
+| extend UrlHost = tolower(extract(@"^(?:[A-Za-z][A-Za-z0-9+.-]*://)?([^/:?#]+)", 1, RemoteUrl))
+| where UrlHost has_any (capture_domains)
+| mv-apply Domain = capture_domains to typeof(string) on (where UrlHost == Domain or UrlHost endswith strcat(".", Domain) | take 1)
+| join kind=inner servers on DeviceId
+| project TimeGenerated, DeviceName, OSPlatform, UrlHost, RemoteUrl, RemoteIP, RemotePort, Domain,
+          Process = InitiatingProcessFileName, ProcessCommandLine = InitiatingProcessCommandLine,
+          Account = InitiatingProcessAccountName
 ```
 1. Servers: latest `DeviceInfo` row per device where `OSPlatform` starts
    with `WindowsServer`, is `Linux`, or `DeviceType` is `Server`.

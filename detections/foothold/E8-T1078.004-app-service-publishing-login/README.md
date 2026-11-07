@@ -27,7 +27,16 @@ pipeline, any such login is unexpected.
 
 ## Detection logic
 ```kql
-// see rule.yaml for the full query
+// E8: publishing login by an identity outside the pipeline (detections/foothold/E8-T1078.004-app-service-publishing-login/README.md)
+// Per customer: identities the deployment pipeline logs in as (User or UserDisplayName), compared case-insensitively.
+let pipeline_identities = dynamic([]);  // lower case, e.g. "$myapp-prod", "deploy-sp@example.test"
+// Per customer: apps deployed only through the pipeline (resource id substrings). Empty means every app.
+let pipeline_only_apps = dynamic([]);
+AppServiceAuditLogs
+| where array_length(pipeline_only_apps) == 0 or _ResourceId has_any (pipeline_only_apps)
+| where not(tolower(User) in (pipeline_identities) or tolower(UserDisplayName) in (pipeline_identities))
+| extend App = tostring(split(_ResourceId, "/")[-1])
+| project TimeGenerated, App, _ResourceId, OperationName, Protocol, User, UserDisplayName, UserAddress
 ```
 1. Optionally restrict to the apps listed in `pipeline_only_apps`
    (resource id substrings); empty means every app.

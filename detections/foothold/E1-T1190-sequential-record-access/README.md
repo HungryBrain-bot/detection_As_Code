@@ -27,7 +27,48 @@ own few records.
 
 ## Detection logic
 ```kql
-// see rule.yaml for the full query
+// E1: sequential record access (detections/foothold/E1-T1190-sequential-record-access/README.md)
+let recent = 1h;                  // alert on this window; 14 days to 1 day ago is the volume baseline
+let bin_size = 10m;
+let min_distinct_ids = 20;
+let max_step = 5;                 // an "in order" step: the ID went up by 1 to max_step
+let min_increasing_share = 0.6;   // share of steps that are "in order"
+let min_error_share = 0.3;        // 403/404 share, with at least one 200
+let min_volume_ratio = 10.0;      // bytes received vs the 95th percentile for the host, per client per bin
+// Per app: where the record ID is. Path segment after a record noun, or an *id= query parameter.
+let record_path = @"(?i)/(?:customers?|accounts?|loans?|applications?|orders?|users?|records?|documents?|invoices?|statements?)/([0-9]{1,12})(?:/|$)";
+let record_query = @"(?i)(?:^|[?&])[a-z_]*id=([0-9]{1,12})(?:&|$)";
+let requests = AppServiceHTTPLogs
+| extend IdFromPath = extract(record_path, 1, CsUriStem), IdFromQuery = extract(record_query, 1, CsUriQuery)
+| extend RecordId = tolong(iff(isnotempty(IdFromPath), IdFromPath, IdFromQuery))
+| where isnotnull(RecordId)
+| extend Client = strcat(CIp, "|", iff(isempty(CsUsername), "-", CsUsername)), Window = bin(TimeGenerated, bin_size);
+let baseline = requests
+| where TimeGenerated between (ago(14d) .. ago(1d))
+| summarize Bytes = sum(ScBytes) by CsHost, Client, Window
+| summarize BaselineBytes = percentile(Bytes, 95), BaselineBins = count() by CsHost;
+requests
+| where TimeGenerated >= ago(recent)
+| sort by CsHost asc, Client asc, TimeGenerated asc
+| extend Step = iff(prev(CsHost) == CsHost and prev(Client) == Client and prev(Window) == Window, RecordId - prev(RecordId), long(null))
+| summarize Requests = count(), DistinctIds = dcount(RecordId), Steps = countif(isnotnull(Step)),
+            InOrder = countif(Step between (1 .. max_step)), Ok = countif(ScStatus == 200),
+            Denied = countif(ScStatus in (403, 404)), Bytes = sum(ScBytes), MinId = min(RecordId), MaxId = max(RecordId),
+            CIp = take_any(CIp), User = take_any(CsUsername), UserAgents = make_set(UserAgent, 5),
+            SamplePaths = make_set(CsUriStem, 10), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+    by CsHost, Client, Window
+| join kind=leftouter baseline on CsHost
+| extend IncreasingShare = round(todouble(InOrder) / iff(Steps == 0, 1, Steps), 2),
+         ErrorShare = round(todouble(Denied) / Requests, 2),
+         VolumeRatio = iff(isnull(BaselineBytes) or BaselineBytes <= 0, real(null), round(Bytes / BaselineBytes, 1))
+| extend Reasons = set_difference(pack_array(
+           iff(IncreasingShare >= min_increasing_share, "ids-in-order", ""),
+           iff(ErrorShare >= min_error_share and Ok > 0, "denials-mixed-with-200", ""),
+           iff(VolumeRatio >= min_volume_ratio, "volume-above-baseline", "")), dynamic([""]))
+| where DistinctIds >= min_distinct_ids and array_length(Reasons) > 0
+| extend TimeGenerated = LastSeen
+| project TimeGenerated, CsHost, CIp, User, Window, Requests, DistinctIds, MinId, MaxId, IncreasingShare, ErrorShare,
+          Ok, Denied, Bytes, BaselineBytes, VolumeRatio, Reasons, UserAgents, SamplePaths, FirstSeen, LastSeen
 ```
 1. Extract a record ID from the path (a numeric segment after a record noun
    such as `/loans/`, `/customers/`, `/accounts/`) or from an `...id=`

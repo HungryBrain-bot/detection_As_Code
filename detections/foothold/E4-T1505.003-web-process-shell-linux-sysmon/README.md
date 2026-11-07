@@ -13,7 +13,24 @@ likely running commands for someone, whatever the way in was.
 
 ## Detection logic
 ```kql
-// see rule.yaml for the full query
+// E4: web or database process starts a shell or download tool, Sysmon for Linux (detections/foothold/E4-T1505.003-web-process-shell-linux-sysmon/README.md)
+let server_parents = @"(?i)/(nginx|httpd|apache2|mysqld|mariadbd)$";
+let java_parents = @"(?i)/java$";
+let java_server_markers = @"(?i)catalina|tomcat|jboss|wildfly|jetty|weblogic|websphere|glassfish";
+let children = @"(?i)/(sh|bash|dash|zsh|curl|wget|nc|ncat|netcat)$";
+let allowed_child_commands = dynamic([]);
+Syslog
+| where SyslogMessage has_all ('<Provider Name="Linux-Sysmon"', '<EventID>1</EventID>')
+| extend Image = extract(@'<Data Name="Image">([^<]*)<', 1, SyslogMessage),
+         CommandLine = extract(@'<Data Name="CommandLine">([^<]*)<', 1, SyslogMessage),
+         User = extract(@'<Data Name="User">([^<]*)<', 1, SyslogMessage),
+         ParentImage = extract(@'<Data Name="ParentImage">([^<]*)<', 1, SyslogMessage),
+         ParentCommandLine = extract(@'<Data Name="ParentCommandLine">([^<]*)<', 1, SyslogMessage)
+| where Image matches regex children
+| where ParentImage matches regex server_parents
+    or (ParentImage matches regex java_parents and ParentCommandLine matches regex java_server_markers)
+| where not(CommandLine in (allowed_child_commands))
+| project TimeGenerated, Computer, ParentImage, ParentCommandLine, Image, CommandLine, User
 ```
 1. Sysmon for Linux event 1; child image path ends in `/sh`, `/bash`,
    `/dash`, `/zsh`, `/curl`, `/wget`, `/nc`, `/ncat` or `/netcat`.
@@ -53,7 +70,7 @@ likely running commands for someone, whatever the way in was.
 - No samples have been run.
 
 ## Test evidence
-Not run on samples. Recorded data pinned for it (not yet run): Splunk attack_data `T1190/java/java_spawn_shell_nix.log`, 42 Sysmon for Linux process events in which java (a Maven build) starts `/bin/sh`; the rule is expected to return nothing on it because the Java command line has no app-server marker. The rule is `experimental`, so it is deployed disabled. See [tests/evidence.md](tests/evidence.md).
+Run on recorded data on 2026-11-07 in the Kusto emulator: 42 recorded Sysmon for Linux events (Splunk attack_data, Log4Shell lab host), 0 rows. The recorded java-starts-sh events are a Maven build and are excluded by the app-server marker check, as intended. No recorded or hand-written true positive exists, so the rule has never matched anything. The rule is `experimental`, so it is deployed disabled. Details: [tests/evidence.md](tests/evidence.md).
 
 ## Blind spots
 - Windows hosts (E2, E3). Linux hosts with Defender for Endpoint (E2).

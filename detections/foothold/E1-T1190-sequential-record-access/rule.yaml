@@ -32,7 +32,7 @@ sentinel:
     let max_step = 5;                 // an "in order" step: the ID went up by 1 to max_step
     let min_increasing_share = 0.6;   // share of steps that are "in order"
     let min_error_share = 0.3;        // 403/404 share, with at least one 200
-    let min_volume_ratio = 10.0;      // bytes received vs the host's 95th percentile per client per bin
+    let min_volume_ratio = 10.0;      // bytes received vs the 95th percentile for the host, per client per bin
     // Per app: where the record ID is. Path segment after a record noun, or an *id= query parameter.
     let record_path = @"(?i)/(?:customers?|accounts?|loans?|applications?|orders?|users?|records?|documents?|invoices?|statements?)/([0-9]{1,12})(?:/|$)";
     let record_query = @"(?i)(?:^|[?&])[a-z_]*id=([0-9]{1,12})(?:&|$)";

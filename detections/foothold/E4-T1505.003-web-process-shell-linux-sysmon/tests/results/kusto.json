@@ -1,0 +1,25 @@
+{
+  "rule_id": "be40d34d-9e94-42f8-884a-892ce9215ee5",
+  "rule_version": 1,
+  "engine": "Kustainer (ADX engine) 1.0.9805.13559, product 2026.11.05.0724-2644-79043d5-master",
+  "date": "2026-11-07",
+  "samples": {
+    "positive_events": 0,
+    "positive_cases": 0,
+    "positive_rows": 0,
+    "negative_events": 0,
+    "negative_rows": 0
+  },
+  "datasets": [
+    {
+      "id": "splunk-java-shell-linux-sysmon",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1190/java/java_spawn_shell_nix.log",
+      "sha256": "eab1d19a5fe4cd073270105c69002e0f6e4270ffc7fdbc368a10272db32a1e02"
+    }
+  ],
+  "dataset_events": 42,
+  "dataset_rows": 0,
+  "matched": [],
+  "columns_dropped_in_mapping": {}
+}

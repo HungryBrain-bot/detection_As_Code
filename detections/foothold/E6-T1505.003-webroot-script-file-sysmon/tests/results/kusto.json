@@ -1,0 +1,95 @@
+{
+  "rule_id": "82dbb6fa-063e-4233-9625-0a5b9288ecc2",
+  "rule_version": 1,
+  "engine": "Kustainer (ADX engine) 1.0.9805.13559, product 2026.11.05.0724-2644-79043d5-master",
+  "date": "2026-11-07",
+  "samples": {
+    "positive_events": 0,
+    "positive_cases": 0,
+    "positive_rows": 0,
+    "negative_events": 0,
+    "negative_rows": 0
+  },
+  "datasets": [
+    {
+      "id": "splunk-sharepoint-webshell-sysmon",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1505.003/sharepoint_webshell/sysmon_spinstall0.log",
+      "sha256": "ae25e647c1fc51c2290a5782b620fe923f62f6d9d74dd9df935a7cbed79f930f"
+    },
+    {
+      "id": "splunk-moveit-webshell-sysmon",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1505.003/moveit_windows-sysmon.log",
+      "sha256": "90742ea18f8421e91e0321cadcd02f2e7fae84b22b2b4549b08a24f21b2de931"
+    }
+  ],
+  "dataset_events": 7,
+  "dataset_rows": 7,
+  "matched": [
+    {
+      "TimeGenerated": "2025-07-19T12:34:49.404867Z",
+      "Computer": "win-dc-ctus-attack-range-921.attackrange.local",
+      "TargetFilename": "C:\\Program Files\\Common Files\\Microsoft Shared\\Web Server Extensions\\16\\TEMPLATE\\LAYOUTS\\spinstall0.aspx",
+      "Image": "C:\\Windows\\System32\\inetsrv\\w3wp.exe",
+      "User": "",
+      "WriterIsDatabase": false,
+      "AlertSeverity": "Medium"
+    },
+    {
+      "TimeGenerated": "2021-03-16T22:17:52.2726757Z",
+      "Computer": "win-dc-622.attackrange.local",
+      "TargetFilename": "C:\\MOVEitTransfer\\wwwroot\\human2.aspx",
+      "Image": "System",
+      "User": "",
+      "WriterIsDatabase": false,
+      "AlertSeverity": "Medium"
+    },
+    {
+      "TimeGenerated": "2021-03-16T21:41:42.6733855Z",
+      "Computer": "win-dc-622.attackrange.local",
+      "TargetFilename": "C:\\MOVEitTransfer\\wwwroot\\human2.aspx",
+      "Image": "System",
+      "User": "",
+      "WriterIsDatabase": false,
+      "AlertSeverity": "Medium"
+    },
+    {
+      "TimeGenerated": "2021-03-16T22:17:52.2726757Z",
+      "Computer": "win-dc-622.attackrange.local",
+      "TargetFilename": "C:\\MOVEitTransfer\\wwwroot\\human2.aspx",
+      "Image": "System",
+      "User": "",
+      "WriterIsDatabase": false,
+      "AlertSeverity": "Medium"
+    },
+    {
+      "TimeGenerated": "2021-03-16T22:17:52.2726757Z",
+      "Computer": "win-dc-622.attackrange.local",
+      "TargetFilename": "C:\\MOVEitTransfer\\wwwroot\\human2.aspx",
+      "Image": "System",
+      "User": "",
+      "WriterIsDatabase": false,
+      "AlertSeverity": "Medium"
+    },
+    {
+      "TimeGenerated": "2021-03-16T21:41:42.6733855Z",
+      "Computer": "win-dc-622.attackrange.local",
+      "TargetFilename": "C:\\MOVEitTransfer\\wwwroot\\human2.aspx",
+      "Image": "System",
+      "User": "",
+      "WriterIsDatabase": false,
+      "AlertSeverity": "Medium"
+    },
+    {
+      "TimeGenerated": "2021-03-16T22:17:52.2726757Z",
+      "Computer": "win-dc-622.attackrange.local",
+      "TargetFilename": "C:\\MOVEitTransfer\\wwwroot\\human2.aspx",
+      "Image": "System",
+      "User": "",
+      "WriterIsDatabase": false,
+      "AlertSeverity": "Medium"
+    }
+  ],
+  "columns_dropped_in_mapping": {}
+}

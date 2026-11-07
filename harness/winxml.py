@@ -16,7 +16,7 @@ the shape the rest of the harness already handles:
 
 What is approximated: the System block other than provider, event id, time, channel and
 computer is dropped; Syslog's other columns stay empty. Field values are copied unchanged.
-Lines that are not XML events are skipped and counted by the caller.
+Text that is not an XML event is skipped.
 """
 
 import xml.etree.ElementTree as ET
@@ -30,7 +30,7 @@ def _strip(tag: str) -> str:
 
 
 def parse_line(line: str) -> dict | None:
-    """One XML event line -> harness event dict, or None if the line is not an event."""
+    """One XML event document -> harness event dict, or None if it is not an event."""
     line = line.strip()
     if not line.startswith("<Event"):
         return None
@@ -67,8 +67,11 @@ def read(folder: Path) -> list[dict]:
     """Every XML event line of every *.log file in a dataset folder."""
     events = []
     for path in sorted(folder.glob("*.log")):
-        for line in path.read_text(encoding="utf-8").splitlines():
-            event = parse_line(line)
-            if event is not None:
-                events.append(event)
+        # One event per line, except where a field holds a newline (a command line
+        # with an embedded line break), so split on the closing tag instead of on lines.
+        for chunk in path.read_text(encoding="utf-8").split("</Event>"):
+            if chunk.strip():
+                event = parse_line(chunk + "</Event>")
+                if event is not None:
+                    events.append(event)
     return events

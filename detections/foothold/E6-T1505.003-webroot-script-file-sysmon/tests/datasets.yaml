@@ -1,0 +1,3 @@
+datasets:
+  - splunk-sharepoint-webshell-sysmon
+  - splunk-moveit-webshell-sysmon

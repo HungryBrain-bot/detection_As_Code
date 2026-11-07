@@ -25,7 +25,7 @@ sentinel:
     DeviceInfo: [TimeGenerated, DeviceId, OSPlatform, DeviceType]
   query: |
     // E9: server connects to a request-capture service (detections/foothold/E9-T1567.004-request-capture-egress/README.md)
-    // Per customer: request-capture domains. Defaults are the ones confirmed from the services' own pages (README).
+    // Per customer: request-capture domains. defaults are confirmed on each service page (README).
     let capture_domains = dynamic(["webhook.site", "dnshook.site", "oast.pro", "oast.live", "oast.site", "oast.online", "oast.fun", "oast.me"]);
     let servers = DeviceInfo
     | summarize arg_max(TimeGenerated, OSPlatform, DeviceType) by DeviceId
