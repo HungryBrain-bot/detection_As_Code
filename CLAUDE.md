@@ -2,7 +2,9 @@
 
 ## Project
 
-Detection-as-code portfolio project: up to 10 detection rules, each
+Detection-as-code portfolio project: 32 detection rules (the ten
+originally scoped plus 22 added for the ARTEX Phase 1 to 4 posts at the
+owner's explicit request, 2026-11-07), each
 documented as an attack and as a detection, deployed through one
 pipeline to Microsoft Sentinel (KQL), Splunk (SPL) and Google SecOps
 (YARA-L), per customer (MSSP-style). Before deploying, a schema check
@@ -319,7 +321,9 @@ conflicting sources).
   app logs (none public); `LLMAppLog_CL` / `LLMCanary_CL` in a workspace;
   every LLM normaliser and the canary registry job (designs only); the
   inventory's Vertex AI and Azure OpenAI field entries.
-- Next: all ten scoped rules are built. The four LLM decisions were
+- Next: every rule in Scope is built (32; the eight foothold rules are
+  experimental with no samples, which the owner parked: samples and
+  negative tests for E1-E9 are in BUILD_LOG.md). The four LLM decisions were
   settled on defaults on 2026-10-28 (BUILD_LOG.md); the owner can still
   reverse any. Deploy on `main` runs `--report-only` (blocked rules
   reported, job green); coverage runs after it. Unblocking needs the
