@@ -122,12 +122,6 @@ linux-sysmon-syslog:
   siem:
     sentinel: [Syslog]
 
-mysql-audit-syslog:
-  description: MariaDB Audit Plugin (server_audit) with server_audit_output_type=SYSLOG and server_audit_events including QUERY, sent to Sentinel through the Syslog connector. Self-hosted MySQL/MariaDB only.
-  owner: database-team
-  siem:
-    sentinel: [Syslog]
-
 app-service-audit:
   description: Azure App Service publishing logins (FTP, Kudu, Web Deploy). Needs the AppServiceAuditLogs diagnostic setting on each app.
   owner: app-platform-team

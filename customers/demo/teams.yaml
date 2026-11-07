@@ -32,7 +32,3 @@ detection-team:
 app-platform-team:
   name: Application Platform
   email: ""
-
-database-team:
-  name: Database Operations
-  email: ""
