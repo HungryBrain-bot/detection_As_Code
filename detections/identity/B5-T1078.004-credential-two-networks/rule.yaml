@@ -1,0 +1,47 @@
+id: 948d5edc-6b2f-4e7b-8871-7c08f86670fa
+name: One service principal credential signs in from Microsoft's network and from outside it
+version: 1
+status: test
+severity: High
+tier: targeted
+description: >
+  Successful sign-ins with the same service principal credential
+  (ServicePrincipalCredentialKeyId) from Microsoft's own network (Azure,
+  AS8075) and from another network in the same day. An app that runs in
+  Azure authenticates from Azure; the same secret also used from a VPS or
+  home connection means a second party holds it. The attacker can change
+  IP addresses but cannot make their traffic come from inside the
+  customer's Azure estate (ADR 009).
+log_sources: [entra-sp-signin]
+mapping:
+  attack:
+    techniques: [T1078.004]
+    tactics: [initial-access]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: P1D
+  required_fields:
+    AADServicePrincipalSignInLogs: [TimeGenerated, ResultType, ServicePrincipalCredentialKeyId, AutonomousSystemNumber, IPAddress, ServicePrincipalId, ServicePrincipalName, AppId, ResourceDisplayName]
+  query: |
+    // B5: one credential, two kinds of network (detections/identity/B5-T1078.004-credential-two-networks/README.md)
+    // ASNs the customer workloads sign in from. 8075 is the Microsoft network (Azure);
+    // add the customer own egress ASNs (other clouds, data centre) per deployment.
+    let internal_asns = dynamic(["8075"]);
+    AADServicePrincipalSignInLogs
+    | where ResultType == "0"
+    | where isnotempty(ServicePrincipalCredentialKeyId) and isnotempty(AutonomousSystemNumber)
+    | extend Origin = iff(AutonomousSystemNumber in (internal_asns), "internal", "external")
+    | summarize InternalSignIns = countif(Origin == "internal"), ExternalSignIns = countif(Origin == "external"),
+                InternalIPs = make_set_if(IPAddress, Origin == "internal", 20),
+                ExternalIPs = make_set_if(IPAddress, Origin == "external", 20),
+                ExternalASNs = make_set_if(AutonomousSystemNumber, Origin == "external", 10),
+                Resources = make_set(ResourceDisplayName, 10),
+                FirstExternal = minif(TimeGenerated, Origin == "external"),
+                FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+        by ServicePrincipalId, ServicePrincipalName, AppId, ServicePrincipalCredentialKeyId
+    | where InternalSignIns > 0 and ExternalSignIns > 0
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, ServicePrincipalName, ServicePrincipalId, AppId, ServicePrincipalCredentialKeyId,
+              InternalSignIns, ExternalSignIns, ExternalASNs, ExternalIPs, InternalIPs, Resources,
+              FirstExternal, FirstSeen, LastSeen

@@ -1,0 +1,74 @@
+{
+  "rule_id": "948d5edc-6b2f-4e7b-8871-7c08f86670fa",
+  "rule_version": 1,
+  "engine": "Kustainer (ADX engine) 1.0.9796.17726, product 2026.10.27.0942-2643-eb20c9c-master",
+  "date": "2026-11-07",
+  "samples": {
+    "positive_events": 4,
+    "positive_cases": 1,
+    "positive_rows": 1,
+    "negative_events": 6,
+    "negative_rows": 0
+  },
+  "datasets": [
+    {
+      "id": "splunk-aad-graph-perm-assigned",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1098.003/azure_ad_privileged_graph_perm_assigned/azure_ad_privileged_graph_perm_assigned.log",
+      "sha256": "5cf32a545e51a98ab5cf48be03ad3ad7b465c9ad65c6d48fb8349355134af696"
+    }
+  ],
+  "dataset_events": 52,
+  "dataset_rows": 0,
+  "matched": [],
+  "columns_dropped_in_mapping": {
+    "AuditLogs": [
+      "userAgent"
+    ],
+    "AADNonInteractiveUserSignInLogs": [
+      "ResourceId",
+      "appServicePrincipalId",
+      "appliedConditionalAccessPolicies",
+      "authenticationStrengths",
+      "callerIpAddress",
+      "flaggedForReview",
+      "privateLinkDetails",
+      "processingTimeInMilliseconds",
+      "rngcStatus",
+      "signInTokenProtectionStatus",
+      "ssoExtensionVersion"
+    ],
+    "AADServicePrincipalSignInLogs": [
+      "ResourceId",
+      "appServicePrincipalId",
+      "appliedConditionalAccessPolicies",
+      "authenticationProtocol",
+      "callerIpAddress",
+      "crossTenantAccessType",
+      "flaggedForReview",
+      "incomingTokenType",
+      "isInteractive",
+      "isTenantRestricted",
+      "originalTransferMethod",
+      "processingTimeInMilliseconds",
+      "riskDetail",
+      "riskLevelAggregated",
+      "riskLevelDuringSignIn",
+      "riskState",
+      "signInTokenProtectionStatus",
+      "status",
+      "tokenIssuerType",
+      "userId"
+    ],
+    "MicrosoftGraphActivityLogs": [
+      "Level",
+      "ResourceId",
+      "callerIpAddress",
+      "category",
+      "correlationId",
+      "operationName",
+      "operationVersion",
+      "resultSignature"
+    ]
+  }
+}

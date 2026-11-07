@@ -157,7 +157,43 @@ def test_azure_monitor_signin_record_maps_to_signin_columns():
 
 
 def test_unsupported_category_is_not_loaded():
-    assert mapping.to_sentinel({"category": "MicrosoftGraphActivityLogs", "properties": {}}) == (None, {})
+    assert mapping.to_sentinel({"category": "ADFSSignInLogs", "properties": {}}) == (None, {})
+
+
+def test_service_principal_signin_maps_to_its_table():
+    record = {"time": "2024-01-30T15:24:57.9296831Z", "category": "ServicePrincipalSignInLogs", "resultType": "0",
+              "location": "US", "properties": {"appId": "a", "servicePrincipalCredentialKeyId": "k",
+                                               "ipAddress": "192.0.2.1", "location": {"countryOrRegion": "US"},
+                                               "resourceId": "r"}}
+    table, row = mapping.to_sentinel(record)
+    assert table == "AADServicePrincipalSignInLogs"
+    assert row["ServicePrincipalCredentialKeyId"] == "k" and row["IPAddress"] == "192.0.2.1"
+    assert row["LocationDetails"] == {"countryOrRegion": "US"} and row["ResourceIdentity"] == "r"
+    assert row["TimeGenerated"] == record["time"] and row["Type"] == "AADServicePrincipalSignInLogs"
+
+
+def test_graph_activity_maps_to_its_table():
+    record = {"time": "2024-01-30T15:24:59Z", "category": "MicrosoftGraphActivityLogs",
+              "properties": {"appId": "a", "servicePrincipalId": "s", "requestUri": "https://graph.microsoft.com/v1.0/users",
+                             "responseStatusCode": 200, "userAgent": "python-requests/2.28.1"}}
+    table, row = mapping.to_sentinel(record)
+    assert table == "MicrosoftGraphActivityLogs"
+    assert row["RequestUri"].endswith("/users") and row["ResponseStatusCode"] == 200 and row["UserAgent"].startswith("python")
+
+
+def test_hand_written_key_vault_and_registry_rows_load_as_they_are():
+    for table in ("AzureDiagnostics", "Honeytoken_CL"):
+        out_table, row = mapping.to_sentinel({"Type": table, "_note": "x", "TimeGenerated": "2026-11-06T12:00:00Z"})
+        assert out_table == table and "_note" not in row
+
+
+def test_rebase_shifts_azure_monitor_time_and_table_rows_together():
+    events = [{"TimeGenerated": "2024-01-30T15:00:00Z"},
+              {"time": "2024-01-30T15:10:00Z", "category": "ServicePrincipalSignInLogs"}]
+    shifted = hmain.rebase(events)
+    first = hmain._parse(shifted[0]["TimeGenerated"])
+    second = hmain._parse(shifted[1]["time"])
+    assert (second - first).total_seconds() == 600
 
 
 def test_sentinel_export_row_is_auditlogs_whatever_its_type():

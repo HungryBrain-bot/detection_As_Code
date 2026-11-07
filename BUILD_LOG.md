@@ -315,3 +315,47 @@
   built (they were noted, not raised as choices).
 - Tests: 154 passed (new: deploy `--report-only` exits 0 and still
   writes no plan for blocked rules); yamllint clean.
+
+## 2026-11-07 - ARTEX Phase 1 (credential sourcing): rules B4-B7, hunt H1
+
+- Owner asked, in the project thread, for the Phase 1 post of their
+  agentic-attack blog series to be recorded in the repo and for rules
+  wherever the post suggests one. This is beyond the original ten-rule
+  Scope; the request was explicit, so it is built, and noted here as
+  scope growth: four rules, four tables, four log sources.
+- Built: B4 honeytoken use (decoy app sign-in, decoy Key Vault object
+  read, decoy app calling Key Vault), B5 one credential key id from
+  AS8075 and another ASN in a day, B6 a service principal from an ASN
+  new in 14 days, B7 app-only Graph calls with two of new client /
+  directory enumeration / fix-and-retry within 60 s. Hunt H1 is the
+  self-search runbook (not a rule). ADR 009 records the choices;
+  docs/threats/artex-phase1-credential-sourcing.md maps the post to the
+  rules and lists which of its claims the sources support.
+- Harness: the `ServicePrincipalSignInLogs` and
+  `MicrosoftGraphActivityLogs` categories now load (were skipped);
+  `AzureDiagnostics` and `Honeytoken_CL` hand-written rows load as they
+  are; `rebase_time` also shifts recorded Azure Monitor `time`. Full
+  Kusto run: every rule's counts unchanged. B1-B3's committed result
+  files (2026-10-27) still list those categories as not loaded; not
+  rewritten, since the run they record is what happened then.
+- Kusto emulator (Kustainer 1.0.9796.17726): B4 3/3 positive cases,
+  0/7 negatives; B5 1/1, 0/6; B6 2/2, 0/43; B7 2/2, 0/27. Each negative
+  was shown to match when its clause was loosened. Recorded data
+  (Splunk `splunk-aad-graph-perm-assigned`, 52 records): 0 rows for all
+  four, and it cannot exercise them: no ASN on any of the 10 service
+  principal sign-ins, no Key Vault log, 27 Graph calls in 70 seconds
+  (no baseline). All positives are hand-written.
+- Claims in the post that the sources do not support (details in the
+  threats file): the literal search terms (Microsoft lists none), the
+  March 2026 Microsoft statement, "agents ran most of the operation"
+  across four vendors, ARTEX in Go, 12,000 forks, Hexstrike and CAIRN.
+  Supported: the five-minute Key Vault case, the org-name search
+  pattern, retries 28-80 s after failures, GitGuardian's 28,649,024 and
+  81% (GitGuardian says "public GitHub commits", not "hardcoded").
+- Parked for the owner: alert on a failed service principal sign-in
+  (AADSTS7000215) followed by success, which Microsoft calls urgent;
+  ARM enumeration (no read log in `AzureActivity`); Key Vault
+  resource-specific `AZKVAuditLogs`.
+- Tests: 158 passed (new: SP sign-in and Graph mapping, native Key Vault
+  and registry rows, rebase of `time`); yamllint clean; `dac validate`
+  against ATT&CK 20.1 and ATLAS 2026.06 clean.

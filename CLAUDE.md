@@ -26,6 +26,10 @@ check the request is explicit from the owner (Venu).
 | B1 | identity | Illicit OAuth consent grant | T1528 | Sentinel |
 | B2 | identity | Risky permission or credential added to an app | T1098.001 | Sentinel |
 | B3 | identity | Sign-in pattern consistent with token replay | T1550.001 (+ T1550.004, 2026-10-27) | Sentinel |
+| B4 | identity | Honeytoken app credential or decoy Key Vault object used (2026-11-07) | T1078.004, T1555.006 | Sentinel |
+| B5 | identity | One SP credential from Microsoft's network and outside it (2026-11-07) | T1078.004 | Sentinel |
+| B6 | identity | SP sign-in from an ASN new in 14 days (2026-11-07) | T1078.004 | Sentinel |
+| B7 | identity | SP Graph calls unlike its app: new client, enumeration, fix-and-retry (2026-11-07) | T1087.004, T1069.003, T1526 | Sentinel |
 | C1 | llm | Prompt-injection patterns | OWASP LLM01 (2025), LLM01:2026; ATLAS AML.T0051.000/.001, T0054, T0056, T0068 | Sentinel |
 | C2 | llm | Canary secret in model output | OWASP LLM02 (2025) (+ LLM07, 2026-10-27), LLM02/LLM08:2026; ATLAS AML.T0056, T0057, T0086 | Sentinel |
 | C3 | llm | Abnormal tool-call volume | OWASP LLM06/LLM10 (2025), LLM03/LLM06:2026; ATLAS AML.T0053, T0034.002 | Sentinel |
@@ -41,6 +45,12 @@ SessionId, so B3's positives are hand-written). C1-C3 built
 LLM table (ADR 008); KQL run in the Kusto emulator on converted research
 data (JailbreakHub, AgentDojo, BIPIA). No public recorded LLM-app log
 exists, so their evidence is weaker; C3's positives are all hand-written.
+B4-B7 added 2026-11-07 at the owner's explicit request (ARTEX Phase 1,
+credential sourcing; ADR 009, docs/threats/artex-phase1-credential-sourcing.md),
+`status: test`, targeted, Sentinel only, KQL run in the Kusto emulator on
+hand-written samples; the recorded Splunk tenant data cannot exercise
+them (no ASN, no Key Vault, no Graph baseline). Hunt H1
+(docs/hunts/) is the self-search runbook that goes with them.
 Common high-value rules outside this list (brute force, AD changes)
 are parked in BUILD_LOG.md for the owner, not in scope. ATT&CK IDs above were checked against the enterprise
 STIX bundle on 2026-10-27 (all exist, none deprecated). ATLAS IDs were
@@ -50,7 +60,7 @@ GenAI-Security-Project/GenAI-LLM-Top10 `2026/final/`, commit 9253e38,
 announced 2026-09-01) and renumbers risks, so rules carry both
 `owasp_llm_2025` and `owasp_llm_2026`.
 
-Cut order if behind: Sigma (not started) → C3 → B3. Docs, negative
+Cut order if behind: Sigma (not started) → B7 → C3 → B3. Docs, negative
 tests and evidence are never cut.
 
 ## Architecture
@@ -87,8 +97,11 @@ flowchart LR
   and per-SIEM `required_fields`.
 - `schemas/reference/<siem>/` - vendor-documented table schemas with
   provenance (Sentinel SecurityEvent, Event, Syslog, CommonSecurityLog;
-  AuditLogs, SigninLogs, AADNonInteractiveUserSignInLogs with column
-  types from Microsoft's Azure-Sentinel repo; `LLMAppLog_CL` and
+  AuditLogs, SigninLogs, AADNonInteractiveUserSignInLogs,
+  AADServicePrincipalSignInLogs, AzureDiagnostics with column types from
+  Microsoft's Azure-Sentinel repo; MicrosoftGraphActivityLogs from the
+  Learn table reference (summarising fetch); `Honeytoken_CL` defined by
+  this project (ADR 009); `LLMAppLog_CL` and
   `LLMCanary_CL`, defined by this project, ADR 008).
 - `log_sources.yaml` - log-source catalogue: owning team key and
   per-SIEM table / source / log type names.
@@ -126,6 +139,9 @@ flowchart LR
   `llm_datasets.py` (JailbreakHub, AgentDojo, BIPIA -> `LLMAppLog_CL`),
   `manifests/` (per-file hashes), `engines.py` (Kusto emulator, Splunk
   container), `python -m harness fetch | run`.
+- `docs/hunts/` - hunts and runbooks that are not rules (H1 leaked-secret
+  self-search). `docs/threats/` - per-campaign notes mapping a source to
+  rules, with which claims were verified (ARTEX Phase 1).
 - `docs/future/` - design-only notes, unbuilt and not scheduled (RAG
   over the attack docs).
 - `templates/` - attack-doc and rule-doc templates; their `##`
@@ -191,9 +207,9 @@ current MITRE ATT&CK bundle and pinned ATLAS data (v2026.06).
 - Engine tests: `python -m harness run --engine kusto` (also CI job
   `engine-kusto`) and `--engine splunk` (local only).
 
-Last run (2026-10-28): 154 passed, 0 failed; engine tests: A1-A4 pass
-in Kusto emulator and Splunk 10.6.1, B1-B3 and C1-C3 in the Kusto
-emulator.
+Last run (2026-11-07): 158 passed, 0 failed; engine tests: A1-A4 pass
+in Kusto emulator and Splunk 10.6.1 (Splunk last run 2026-10-28),
+B1-B7 and C1-C3 in the Kusto emulator.
 
 ## Model usage
 
@@ -208,9 +224,9 @@ conflicting sources).
 - Built: rule schema, validator, three adapters with read-only probes,
   schema check, per-customer log-source gate with file and SMTP
   notifiers, baseline/targeted tiers, coverage layers, CLI, CI
-  workflow, engine harness, component docs, ADRs 001-008, templates,
+  workflow, engine harness, component docs, ADRs 001-009, templates,
   six skills, LLM log-source inventory and feed report; rules A1-A4,
-  B1-B3, C1-C3.
+  B1-B7, C1-C3; hunt H1.
 - Verified: everything in the test suite; ATT&CK IDs for the planned
   rules against the STIX bundle; the first CI workflow ran green on
   GitHub (PR #1); per-customer gate job ran green (PR #2); A1-A4 KQL in
@@ -220,6 +236,12 @@ conflicting sources).
   converted research data (C1 recall and alert rates per dataset; C2
   caught both recorded AgentDojo exfiltrations of a registered secret;
   C3 no alert on 300 recorded agent runs).
+- Not verified: B4-B7 against any recorded attack or real tenant (all
+  positives hand-written; the recorded service principal sign-ins have
+  no ASN); whether `AutonomousSystemNumber` is filled for service
+  principal sign-ins; Key Vault `id_s` / `identity_claim_appid_g` format
+  in a live vault; `MicrosoftGraphActivityLogs` column types (from a
+  summarising fetch).
 - Not verified: any live API call (Sentinel, Splunk, SecOps deploy or
   probe, SMTP); Navigator loading of the layers (ATLAS `domain` value
   is a guess); the deploy and coverage CI jobs on `main`; A1-A4 in a

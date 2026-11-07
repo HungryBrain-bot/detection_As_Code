@@ -63,3 +63,28 @@ llm-canary-registry:
   owner: ai-platform-team
   siem:
     sentinel: [LLMCanary_CL]
+
+# Added 2026-11-07 for rules B4-B7 (ARTEX Phase 1, credential sourcing; ADR 009).
+entra-sp-signin:
+  description: Entra ID service principal sign-in log (app-only sign-ins with a client secret or certificate, incl. the credential key id and ASN).
+  owner: identity-team
+  siem:
+    sentinel: [AADServicePrincipalSignInLogs]
+
+entra-graph-activity:
+  description: Microsoft Graph activity log (every Graph API request, with app id, service principal id, method, URI, status and user agent). Needs the MicrosoftGraphActivityLogs diagnostic setting.
+  owner: identity-team
+  siem:
+    sentinel: [MicrosoftGraphActivityLogs]
+
+azure-keyvault-audit:
+  description: Azure Key Vault AuditEvent diagnostic logs in Azure Diagnostics mode (secret, key and vault operations with the caller's app id and IP).
+  owner: cloud-platform-team
+  siem:
+    sentinel: [AzureDiagnostics]
+
+honeytoken-registry:
+  description: Active honeytokens (decoy service principal app ids and decoy Key Vault object names), re-sent at least hourly (schemas/reference/sentinel/Honeytoken_CL.yaml).
+  owner: detection-team
+  siem:
+    sentinel: [Honeytoken_CL]

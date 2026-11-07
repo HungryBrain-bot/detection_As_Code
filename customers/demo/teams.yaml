@@ -20,3 +20,11 @@ identity-team:
 ai-platform-team:
   name: AI Platform
   email: ""
+
+cloud-platform-team:
+  name: Cloud Platform
+  email: ""
+
+detection-team:
+  name: Detection Engineering
+  email: ""

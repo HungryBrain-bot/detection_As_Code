@@ -44,9 +44,12 @@ The output is `tests/results/<engine>.json` in the rule folder, and
      attack_data) -> `AuditLogs`, `SigninLogs` or
      `AADNonInteractiveUserSignInLogs` by `category`, with each
      camelCase property mapped to the column of the same name (a few
-     renames, listed in the module); categories with no table here
-     (service principal sign-ins, Graph activity) are counted and not
-     loaded;
+     renames, listed in the module); since 2026-11-07 also service
+     principal sign-ins -> `AADServicePrincipalSignInLogs` and Graph
+     activity -> `MicrosoftGraphActivityLogs` (ADR 009); other categories
+     are counted and not loaded;
+   - hand-written `AzureDiagnostics` (Key Vault) and `Honeytoken_CL`
+     rows -> loaded as they are (no recorded Key Vault log is available);
    - OTRF's Sentinel `AuditLogs` export -> `AuditLogs` as exported;
    - rows already shaped as `LLMAppLog_CL` or `LLMCanary_CL` (LLM
      samples and converted LLM datasets) -> loaded as they are.
@@ -73,7 +76,8 @@ The output is `tests/results/<engine>.json` in the rule folder, and
    result file small when thousands of rows match), `extra_events`
    (hand-written lookup rows loaded with the datasets, e.g. a canary
    registry), and `rebase_time` (shift timestamps so the newest row is
-   two minutes old, for queries using `ago()`).
+   two minutes old, for queries using `ago()`; recorded Azure Monitor
+   records are shifted by their `time`).
 
 ## Why this method
 - The owner has no Azure Data Explorer cluster, Log Analytics workspace

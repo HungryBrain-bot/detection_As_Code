@@ -1,0 +1,62 @@
+id: 851fc5c9-525c-45ed-a4eb-2755dd8885f0
+name: Honeytoken app credential or decoy Key Vault object used
+version: 1
+status: test
+severity: High
+tier: targeted
+description: >
+  A decoy app registration (honeytoken) signs in to Entra ID, or a decoy
+  Key Vault secret or key is read, or the decoy app calls Key Vault. A
+  honeytoken has no legitimate user, so any use means someone found the
+  planted secret (a public repo, a .env file, a pipeline variable) and
+  tried it. Agentic attack tools try every credential they find, which
+  makes this a reliable tripwire (ADR 009).
+log_sources: [entra-sp-signin, azure-keyvault-audit, honeytoken-registry]
+mapping:
+  attack:
+    techniques: [T1078.004, T1555.006]
+    tactics: [initial-access, credential-access]
+
+# Sentinel only: the Entra and Key Vault tables exist in Sentinel.
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    Honeytoken_CL: [TimeGenerated, TokenType, TokenValue, PlantedIn]
+    AADServicePrincipalSignInLogs: [TimeGenerated, AppId, ResultType, IPAddress, AutonomousSystemNumber, ServicePrincipalName, ServicePrincipalCredentialKeyId, ResourceDisplayName]
+    AzureDiagnostics: [TimeGenerated, ResourceProvider, Category, OperationName, ResultType, CallerIPAddress, id_s, requestUri_s, identity_claim_appid_g, Resource, clientInfo_s]
+  query: |
+    // B4: honeytoken used (detections/identity/B4-T1078.004-honeytoken-credential-use/README.md)
+    // The registry must re-send every active honeytoken at least once per query period.
+    let honeytokens = Honeytoken_CL
+    | summarize arg_max(TimeGenerated, PlantedIn) by TokenType, Token = tolower(TokenValue);
+    let decoy_apps = toscalar(honeytokens | where TokenType == "ServicePrincipalAppId" | summarize make_set(Token));
+    let decoy_objects = toscalar(honeytokens | where TokenType == "KeyVaultObject" | summarize make_set(Token));
+    union
+        (AADServicePrincipalSignInLogs
+        // Any result: a failed sign-in with the decoy app id is still someone trying it.
+        | where tolower(AppId) in (decoy_apps)
+        | project TimeGenerated, Token = tolower(AppId), Surface = "Entra service principal sign-in",
+                  Operation = "sign-in", Result = ResultType, IP = IPAddress, ASN = AutonomousSystemNumber,
+                  CallerAppId = AppId, KeyId = ServicePrincipalCredentialKeyId, Target = ResourceDisplayName,
+                  Client = ServicePrincipalName),
+        (AzureDiagnostics
+        | where ResourceProvider == "MICROSOFT.KEYVAULT" and Category == "AuditEvent"
+        // Object name from the object URI: https://<vault>.vault.azure.net/secrets/<name>/<version>
+        | extend ObjectName = tolower(extract(@"/(?:secrets|keys)/([^/?]+)", 1, iff(isnotempty(id_s), id_s, requestUri_s))),
+                 CallerAppId = tostring(identity_claim_appid_g)
+        | where ObjectName in (decoy_objects) or tolower(CallerAppId) in (decoy_apps)
+        | project TimeGenerated, Token = iff(ObjectName in (decoy_objects), ObjectName, tolower(CallerAppId)),
+                  Surface = "Key Vault", Operation = OperationName, Result = ResultType, IP = CallerIPAddress,
+                  ASN = "", CallerAppId, KeyId = "", Target = Resource, Client = clientInfo_s)
+    | summarize FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated), Events = count(),
+                Operations = make_set(Operation, 20), Results = make_set(Result, 10),
+                IPAddresses = make_set_if(IP, isnotempty(IP), 20), ASNs = make_set_if(ASN, isnotempty(ASN), 10),
+                CallerAppIds = make_set_if(CallerAppId, isnotempty(CallerAppId), 10),
+                CredentialKeyIds = make_set_if(KeyId, isnotempty(KeyId), 10),
+                Targets = make_set_if(Target, isnotempty(Target), 10), Clients = make_set_if(Client, isnotempty(Client), 10)
+        by Token, Surface
+    | join kind=leftouter (honeytokens | project Token, TokenType, PlantedIn) on Token
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, Token, TokenType, PlantedIn, Surface, Events, Operations, Results, IPAddresses, ASNs,
+              CallerAppIds, CredentialKeyIds, Targets, Clients, FirstSeen, LastSeen

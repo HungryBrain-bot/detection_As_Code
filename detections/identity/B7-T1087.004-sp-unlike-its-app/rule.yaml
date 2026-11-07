@@ -1,0 +1,71 @@
+id: b5da6875-a365-4f5f-a76c-b02587f2f905
+name: Service principal's Graph calls stop looking like its app (new client, enumeration, fix-and-retry)
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >
+  In the last hour, an app's app-only Microsoft Graph calls show at
+  least two of three behaviours its own code does not: a client
+  (user-agent family) not seen for that app in 14 days, listing two or
+  more directory collections (users, groups, service principals,
+  applications, roles), and a failed call corrected and retried within
+  60 seconds. Production code does not experiment; an agent driving a
+  stolen credential does (ADR 009).
+log_sources: [entra-graph-activity]
+mapping:
+  attack:
+    techniques: [T1087.004, T1069.003, T1526]
+    tactics: [discovery]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: P14D
+  required_fields:
+    MicrosoftGraphActivityLogs: [TimeGenerated, AppId, ServicePrincipalId, UserId, UserAgent, RequestUri, RequestMethod, ResponseStatusCode, IPAddress]
+  query: |
+    // B7: app-only Graph use unlike the app (detections/identity/B7-T1087.004-sp-unlike-its-app/README.md)
+    let recent = 1h;
+    let retry_window = 60s;
+    // Listing a directory collection (not reading one object): /users, /users?$filter=..., /groups, ...
+    let enumeration = @"^https://graph\.microsoft\.com/(v1\.0|beta)/(users|groups|serviceprincipals|applications|directoryroles|devices|rolemanagement/directory/roleassignments)/?$";
+    let graph = MicrosoftGraphActivityLogs
+    // App-only calls: a service principal and no signed-in user.
+    | where isnotempty(ServicePrincipalId) and isempty(UserId)
+    | extend Client = tolower(tostring(split(UserAgent, "/")[0])),
+             Path = tolower(tostring(split(RequestUri, "?")[0]))
+    // Object ids and UPNs replaced, so /users/<a> and /users/<b> are the same endpoint.
+    | extend Endpoint = replace_regex(Path, @"/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|[^/]+@[^/]+)", "/{id}");
+    let baseline = graph
+    | where TimeGenerated < ago(recent)
+    | summarize BaselineClients = make_set(Client, 50), BaselineCalls = count() by AppId;
+    let now_calls = graph
+    | where TimeGenerated >= ago(recent);
+    let retries = now_calls
+    | where ResponseStatusCode in (400, 403, 404)
+    | project AppId, RequestMethod, Endpoint, FailTime = TimeGenerated, FailedUri = RequestUri
+    | join kind=inner (now_calls
+        | where ResponseStatusCode between (200 .. 299)
+        | project AppId, RequestMethod, Endpoint, OkTime = TimeGenerated, OkUri = RequestUri)
+        on AppId, RequestMethod, Endpoint
+    | where OkTime > FailTime and OkTime <= FailTime + retry_window and OkUri != FailedUri
+    | summarize FixedRetries = dcount(FailedUri), RetryExamples = make_set(strcat(FailedUri, " -> ", OkUri), 5) by AppId;
+    now_calls
+    | summarize Calls = count(), Clients = make_set(Client, 10), UserAgents = make_set(UserAgent, 10),
+                IPAddresses = make_set(IPAddress, 20), ServicePrincipalId = take_any(ServicePrincipalId),
+                EnumeratedCollections = make_set_if(Path, RequestMethod == "GET" and Path matches regex enumeration, 20),
+                Failures = countif(ResponseStatusCode >= 400),
+                FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+        by AppId
+    | join kind=inner baseline on AppId
+    | join kind=leftouter retries on AppId
+    | extend NewClients = set_difference(Clients, BaselineClients), FixedRetries = coalesce(FixedRetries, 0)
+    | extend NewClient = array_length(NewClients) > 0,
+             Enumeration = array_length(EnumeratedCollections) >= 2,
+             FixAndRetry = FixedRetries > 0
+    | extend Signals = toint(NewClient) + toint(Enumeration) + toint(FixAndRetry)
+    | where Signals >= 2
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, AppId, ServicePrincipalId, Signals, NewClient, NewClients, Enumeration, EnumeratedCollections,
+              FixAndRetry, FixedRetries, RetryExamples, Calls, Failures, UserAgents, IPAddresses, BaselineClients, BaselineCalls,
+              FirstSeen, LastSeen
