@@ -34,6 +34,11 @@ check the request is explicit from the owner (Venu).
 | D2 | recon | Source map / Swagger / config download, then API routes the UI does not call (2026-11-07) | T1594, T1595 | Sentinel |
 | D3 | recon | One client, dozens of distinct paths in minutes, mostly 401/403/404 (2026-11-07) | T1595.003 | Sentinel |
 | D4 | recon | AccessDenied / UnauthorizedOperation burst across AWS services from one principal (2026-11-07) | T1580 | Sentinel |
+| E1 | foothold | One client reads 20+ record IDs in 10 minutes: in order, denials mixed with 200s, or volume above baseline (2026-11-07) | T1190 | Sentinel |
+| E2-E4 | foothold | Web server or database process starts a shell or download tool: Defender for Endpoint, Windows Sysmon, Sysmon for Linux (2026-11-07) | T1505.003, T1059 (E4 T1059.004) | Sentinel |
+| E5-E6 | foothold | New .jsp/.aspx/.php file in a web root, High when written by a database process: Defender for Endpoint, Windows Sysmon (2026-11-07) | T1505.003 | Sentinel |
+| E8 | foothold | App Service publishing login (Kudu, FTP, Web Deploy) by a non-pipeline identity (2026-11-07) | T1078.004 | Sentinel |
+| E9 | foothold | Server connects to a request-capture service (webhook.site, interactsh) (2026-11-07) | T1567.004 | Sentinel |
 | C1 | llm | Prompt-injection patterns | OWASP LLM01 (2025), LLM01:2026; ATLAS AML.T0051.000/.001, T0054, T0056, T0068 | Sentinel |
 | C2 | llm | Canary secret in model output | OWASP LLM02 (2025) (+ LLM07, 2026-10-27), LLM02/LLM08:2026; ATLAS AML.T0056, T0057, T0086 | Sentinel |
 | C3 | llm | Abnormal tool-call volume | OWASP LLM06/LLM10 (2025), LLM03/LLM06:2026; ATLAS AML.T0053, T0034.002 | Sentinel |
@@ -62,6 +67,13 @@ HTTP logs only and ran in the Kusto emulator on hand-written samples (no
 recorded web access log is loaded); D4 reads CloudTrail, AWS only, and
 also ran on three recorded Splunk attack_data sets (scanner tools in a
 lab, not ARTEX). No Azure Activity branch (the log has no reads).
+E1-E6, E8, E9 added 2026-11-07 at the owner's explicit request (ARTEX
+Phase 4, foothold; ADR 012, docs/threats/artex-phase4-foothold.md),
+`status: experimental` (deployed disabled), targeted, Sentinel only, in
+`detections/foothold/`. No samples (owner: rules and docs first). All
+eight queries ran in the Kusto emulator on empty tables; E3, E4 and E6
+ran on recorded Splunk attack_data Sysmon sets (lab, not ARTEX). E7
+(MySQL general_log) dropped by the owner.
 Common high-value rules outside this list (brute force, AD changes)
 are parked in BUILD_LOG.md for the owner, not in scope. ATT&CK IDs above were checked against the enterprise
 STIX bundle on 2026-10-27 (all exist, none deprecated). ATLAS IDs were
@@ -99,7 +111,7 @@ flowchart LR
     RULE --> HAR
 ```
 
-- `detections/<endpoint|identity|llm>/<#>-<ATT&CK ID>-<name>/` (e.g.
+- `detections/<endpoint|identity|llm|recon|foothold>/<#>-<ATT&CK ID>-<name>/` (e.g.
   `A1-T1059.001-encoded-powershell`) - one folder per rule: `rule.yaml`,
   `README.md` (rule doc), `attack.md` (attack doc),
   `tests/positive.json`, `tests/negative.json`, `tests/evidence.md`,
@@ -223,7 +235,8 @@ current MITRE ATT&CK bundle and pinned ATLAS data (v2026.06).
 
 Last run (2026-11-07): 162 passed, 0 failed; engine tests: A1-A4 pass
 in Kusto emulator and Splunk 10.6.1 (Splunk last run 2026-10-28),
-B1-B7, C1-C3 and D1-D4 in the Kusto emulator.
+B1-B7, C1-C3 and D1-D4 in the Kusto emulator. 2026-11-07 (Phase 4
+branch): 166 passed; E3, E4, E6 on recorded data only.
 
 ## Model usage
 
@@ -238,9 +251,9 @@ conflicting sources).
 - Built: rule schema, validator, three adapters with read-only probes,
   schema check, per-customer log-source gate with file and SMTP
   notifiers, baseline/targeted tiers, coverage layers, CLI, CI
-  workflow, engine harness, component docs, ADRs 001-010, templates,
+  workflow, engine harness, component docs, ADRs 001-010 and 012, templates,
   six skills, LLM log-source inventory and feed report; rules A1-A4,
-  B1-B7, C1-C3, D1-D4; hunt H1.
+  B1-B7, C1-C3, D1-D4; E1-E6, E8, E9 (experimental, no samples); hunt H1.
 - Verified: everything in the test suite; ATT&CK IDs for the planned
   rules against the STIX bundle; the first CI workflow ran green on
   GitHub (PR #1); per-customer gate job ran green (PR #2); A1-A4 KQL in
@@ -256,6 +269,12 @@ conflicting sources).
   principal sign-ins; Key Vault `id_s` / `identity_claim_appid_g` format
   in a live vault; `MicrosoftGraphActivityLogs` column types (from a
   summarising fetch).
+- Not verified: E1-E6, E8, E9 on any sample (none exist); E1, E2, E5,
+  E8, E9 have never matched anything; Defender `ActionType`, `OSPlatform`
+  and `DeviceType` values; `AppServiceAuditLogs` `Protocol` values for
+  Kudu and Web Deploy, and whether failed logins are recorded; whether
+  Kudu commands are logged anywhere. The draft's MySQL `general_log` and
+  Kudu claims have no fetched source.
 - Not verified: D1-D3 against any recorded web access log (all samples
   hand-written; no decoy, documents-then-routes sequence or path sweep
   in recorded data); that ARTEX or any agent requests a decoy route or

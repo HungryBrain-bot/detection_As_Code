@@ -54,6 +54,12 @@ The output is `tests/results/<engine>.json` in the rule folder, and
      columns (`from_cloudtrail`, 2026-11-07, rule D4); hand-written
      `AppServiceHTTPLogs` and `AWSCloudTrail` rows load as they are (no
      recorded web access log is loaded; ADR 010);
+   - Splunk attack_data Sysmon as Windows event XML (`format:
+     winevent-xml`, `harness/winxml.py`, 2026-11-07, ADR 012): Windows
+     channels -> the same `Event` / `SecurityEvent` rows as OTRF data;
+     Sysmon for Linux -> `Syslog` rows with the XML in `SyslogMessage`;
+     hand-written Defender for Endpoint (`Device*`), `AppServiceAuditLogs`
+     and `Syslog` rows load as they are;
    - OTRF's Sentinel `AuditLogs` export -> `AuditLogs` as exported;
    - rows already shaped as `LLMAppLog_CL` or `LLMCanary_CL` (LLM
      samples and converted LLM datasets) -> loaded as they are.

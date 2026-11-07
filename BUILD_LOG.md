@@ -407,3 +407,49 @@
 - Tests: 162 passed (new: CloudTrail record mapping, native recon rows,
   the engine's table list); yamllint clean; `dac validate` against the
   current ATT&CK enterprise bundle clean.
+
+## 2026-11-07 - ARTEX Phase 4 (initial exploitation and foothold): rules E1-E6, E8, E9
+
+- Owner asked, in the project thread, for the Phase 4 post to be recorded
+  with rules for six detections and the hardening list as guidance. Beyond
+  the original Scope; explicit request, so built, and noted here as scope
+  growth: eight rules, six tables, four log sources, a new
+  `detections/foothold/` folder.
+- Owner then decided the same day to drop the MySQL `general_log` rule
+  (E7) and to build the rules and docs without samples for now. All eight
+  are `status: experimental` (deployed disabled); positive.json and
+  negative.json are empty. This breaks the convention that a rule ships
+  with samples; recorded here so it is not mistaken for tested.
+- Built: E1 IDOR record walking (`AppServiceHTTPLogs`); E2-E4 web or
+  database process starting a shell or download tool (Defender for
+  Endpoint, Windows Sysmon, Sysmon for Linux); E5-E6 script file in a web
+  root (Defender, Windows Sysmon); E8 App Service publishing login by a
+  non-pipeline identity (`AppServiceAuditLogs`; the login, not Kudu
+  commands); E9 server to request-capture service (Defender network
+  events). ADR 012; docs/threats/artex-phase4-foothold.md.
+- Kusto emulator (Kustainer 1.0.9805.13559): all eight queries run on
+  empty tables. Recorded Splunk attack_data (commit b52ee68, Apache-2.0,
+  six Sysmon sets pinned): E3 1 row of 9 events (w3wp starting cmd; WSUS
+  and CrushFTP service parents not in the list), E4 0 of 42 (Maven java
+  starting sh, excluded as intended), E6 7 of 7 (SharePoint, MOVEit web
+  shell files). E1, E2, E5, E8, E9: never run on data.
+- Harness: `harness/winxml.py` (Windows event XML lines, split on
+  `</Event>` because some command lines hold newlines); tables `Syslog`,
+  `DeviceProcessEvents`, `DeviceFileEvents`, `DeviceNetworkEvents`,
+  `DeviceInfo`, `AppServiceAuditLogs`. Reference schemas for the four
+  Defender tables from the Azure-Sentinel repo (commit c0c2dc2, read
+  directly), `AppServiceAuditLogs` from Microsoft Learn (fetch tool).
+- Claims the sources do not support (details in the threats file): the
+  JSP web shell through MySQL `general_log` and the Kudu API abuse (no
+  fetched source mentions MySQL, JSP or Kudu); IDOR by ARTEX or Storm-3358;
+  "most reliable detection in the series"; "treat any ... as a confirmed
+  incident". Supported: Storm-3358's anonymous file upload and SSRF, ARTEX
+  agents using netcat and curl to download WISP, vshell and AdaptixC2
+  (Microsoft 2026-11-06, which resolves at the cited URL).
+- Parked for the owner: the MySQL general_log rule; App Service
+  publishing-credential reads in `AzureActivity` (operation names not
+  verified); DNS-log branch for E9; php-fpm, node and Python app servers as
+  E2-E4 parents; a sliding window for E1; samples and negative tests for
+  all eight.
+- Tests: 166 passed (new: tests/test_winxml.py); yamllint clean; `dac
+  validate` against the current ATT&CK enterprise bundle clean.
