@@ -1,0 +1,38 @@
+{
+  "rule_id": "c0c0083b-e44f-4177-923b-a226b87f6a0b",
+  "rule_version": 1,
+  "engine": "Kustainer (ADX engine) 1.0.9796.17726, product 2026.10.27.0942-2643-eb20c9c-master",
+  "date": "2026-11-07",
+  "samples": {
+    "positive_events": 54,
+    "positive_cases": 3,
+    "positive_rows": 3,
+    "negative_events": 114,
+    "negative_rows": 0
+  },
+  "datasets": [
+    {
+      "id": "splunk-okta-spray-one-ip",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1110.003/okta_multiple_users_from_ip/okta_multiple_users_from_ip.log",
+      "sha256": "7c37e04ca34ea47c8bc3120573bb33a767feec758aead237c58f2e1a20087ac7"
+    },
+    {
+      "id": "splunk-okta-accounts-lockout",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1110/okta_multiple_accounts_lockout/okta_multiple_accounts_lockout.log",
+      "sha256": "7d2c4716df07ec5044ebae5f17fa81d48d3e915343ab337a5aea236e8e8bf330"
+    }
+  ],
+  "dataset_events": 20,
+  "dataset_rows": 0,
+  "matched": [],
+  "columns_dropped_in_mapping": {
+    "OktaSSO": [
+      "debugContext_debugData_authenticatorMethodChallengeTime",
+      "debugContext_debugData_dtHash",
+      "debugContext_debugData_factorIntent",
+      "debugContext_debugData_oktaUserAgentExtended"
+    ]
+  }
+}

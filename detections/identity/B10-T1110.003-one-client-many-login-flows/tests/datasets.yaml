@@ -1,0 +1,16 @@
+# Recorded datasets this rule is run against (ids from harness/datasets.yaml):
+# the recorded sprays, the MFASweep ROPC attempts, an admin password reset and
+# the other Entra sign-in and audit sets already pinned. No recorded set has
+# self-service password reset activity.
+datasets:
+  - splunk-aad-distributed-spray
+  - splunk-aad-spray-one-ip
+  - splunk-aad-bruteforce-one-user
+  - splunk-aad-multiple-appids-useragents
+  - splunk-aad-enable-and-reset
+  - splunk-aad-session-cookie-replay
+  - splunk-aad-success-different-ips
+  - splunk-aad-consent-granted
+  - splunk-aad-consent-declined
+  - splunk-aad-consent-blocked
+  - splunk-aad-graph-perm-assigned

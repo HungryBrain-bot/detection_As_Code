@@ -1,0 +1,51 @@
+id: 842afbc5-27ef-4a06-befc-1f928dab7bef
+name: Unsigned JWT, or repeated OAuth callback and token tampering from one client network (schema-dependent)
+version: 1
+status: test
+severity: High
+tier: targeted
+description: >
+  SCHEMA-DEPENDENT: reads AppAuthEvent_CL, a table this project defines,
+  which exists only if the application (or its auth middleware) writes a
+  row for each rejected OAuth callback and each rejected JWT. Alerts on
+  any JWT rejected because its header says alg "none", and, per source
+  network (IPv4 /24, IPv6 /64) and 30 minutes, on 3 or more tampering
+  rejections (state mismatch, unregistered redirect_uri, refused code,
+  invalid signature or algorithm, malformed token) or rejections of 2 or
+  more kinds. Expired tokens are not counted. No vendor log provides
+  these rows (ADR 011).
+log_sources: [app-auth-events]
+mapping:
+  attack:
+    techniques: [T1606, T1190]
+    tactics: [credential-access, initial-access]
+
+sentinel:
+  query_frequency: PT30M
+  query_period: PT30M
+  required_fields:
+    AppAuthEvent_CL: [TimeGenerated, AppName, ClientIp, UserAgent, EventType, Reason, JwtAlg, RequestPath, RedirectUri]
+  query: |
+    // B13: OAuth callback / JWT tampering, schema-dependent (detections/identity/B13-T1606-oauth-jwt-tampering/README.md)
+    let window = 30m;
+    let min_rejections = 3;
+    let min_kinds = 2;
+    let oauth_types = dynamic(["oauth_state_mismatch", "oauth_redirect_rejected", "oauth_code_rejected"]);
+    // Token rejections a valid client does not cause. expired, issuer, audience and key_not_found are left out:
+    // stale tokens and misconfigured clients cause them.
+    let tampering_jwt = dynamic(["alg_none", "signature_invalid", "alg_not_allowed", "malformed"]);
+    let net = (ip: string) { iff(ip contains ":", strcat(substring(parse_ipv6(ip), 0, 19), "::/64"), format_ipv4_mask(ip, 24)) };
+    AppAuthEvent_CL
+    | where isnotempty(ClientIp)
+    | extend AlgNone = EventType == "jwt_rejected" and (Reason == "alg_none" or JwtAlg =~ "none")
+    | where EventType in (oauth_types) or (EventType == "jwt_rejected" and (Reason in (tampering_jwt) or AlgNone))
+    | extend Kind = iff(EventType == "jwt_rejected", strcat("jwt_", iff(AlgNone, "alg_none", Reason)), EventType)
+    | extend Network = net(ClientIp), Window = bin(TimeGenerated, window)
+    | summarize Rejections = count(), Kinds = make_set(Kind), KindCount = dcount(Kind), AlgNoneTokens = countif(AlgNone),
+                Apps = make_set(AppName, 10), Paths = make_set(RequestPath, 20), RedirectUris = make_set_if(RedirectUri, isnotempty(RedirectUri), 10),
+                IPAddresses = make_set(ClientIp, 10), UserAgents = make_set(UserAgent, 10),
+                FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by Network, Window
+    | where AlgNoneTokens > 0 or Rejections >= min_rejections or KindCount >= min_kinds
+    | extend Reason = case(AlgNoneTokens > 0, "unsigned JWT (alg none) presented", KindCount >= min_kinds, "several kinds of tampering", "repeated tampering")
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, Reason, Network, Window, Rejections, KindCount, Kinds, AlgNoneTokens, Apps, Paths, RedirectUris, IPAddresses, UserAgents, FirstSeen, LastSeen

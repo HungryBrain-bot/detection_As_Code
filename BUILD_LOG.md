@@ -407,3 +407,58 @@
 - Tests: 162 passed (new: CloudTrail record mapping, native recon rows,
   the engine's table list); yamllint clean; `dac validate` against the
   current ATT&CK enterprise bundle clean.
+
+## 2026-11-07 - ARTEX Phase 3 (identity): rules B8-B13
+
+- Owner asked, in the project thread, for the Phase 3 post of their
+  agentic-attack blog series to be recorded in the repo with rules for
+  five detections and the hardening list as guidance. Beyond the original
+  ten-rule Scope; the request was explicit, so it is built, and noted here
+  as scope growth: six rules, two tables (`OktaSSO`, `AppAuthEvent_CL`),
+  two log sources (`okta-system-log`, `app-auth-events`).
+- Built: B8 Entra spray and B9 Okta spray, both counted per account (15
+  accounts failing without success in an hour, or 5 accounts in two spray
+  rounds); B10 one source network across two or more Entra login flows in
+  30 minutes; B11 SSPR for several users from one network, or several users
+  throttled; B12 legacy protocol / ROPC on several accounts or with a
+  password accepted; B13 unsigned JWT or repeated OAuth / JWT tampering,
+  schema-dependent on `AppAuthEvent_CL`. ADR 011 records the choices;
+  docs/threats/artex-phase3-identity.md maps the post to the rules, lists
+  which claims the sources support, gives corrected wording and holds the
+  hardening guidance.
+- The owner's (a) became two rules and (b) lost its two app behaviours to
+  B13: the gate needs every source a rule reads, so one rule over Entra,
+  Okta and app logs would be held back for every customer missing one.
+- Claims the sources do not support (details in the threats file): "many
+  IPs that each make only a few attempts" (Microsoft's spray came from one
+  Storm-0940 address at up to 2,900 failures per minute; Wiz says IPs
+  rotated "when blocked"); Smart Lockout and ThreatInsight "don't depend
+  on the attacker's IPs" (ThreatInsight is IP reputation); Okta
+  `user.account.reset_password` as the recovery-abuse event (Microsoft's
+  own hunting query treats it as an admin reset; Okta catalog not read);
+  `/autodiscover`, `/EWS`, ROPC and `redirect_uri` as observed (not in
+  Wiz or Microsoft); "cluster" (Wiz says "overlap"). Supported: spraying
+  Okta and Entra ID, OAuth callback and `state` tampering, unsigned JWTs
+  (alg none), SSO and Microsoft 365 endpoint probing as worded, account
+  recovery abuse on app and Cognito endpoints.
+- Harness: `OktaSSO` (Microsoft's KQL validation table definition,
+  Azure-Sentinel c0c2dc2) and `AppAuthEvent_CL` tables; raw Okta System
+  Log events map to `OktaSSO` (`from_okta`); six Splunk attack_data sets
+  pinned. Kusto emulator (Kustainer 1.0.9796.17726): B8 3/3 positive cases,
+  0/132 negatives; B9 3/3, 0/114; B10 4/4, 0/40; B11 3/3, 0/25; B12 4/4,
+  0/20; B13 4/4, 0/21. Each negative scenario was shown to match when its
+  clause was loosened. Recorded data: B8 caught both Entra sprays (31
+  accounts from 30 IPs; 31 from one IP), not the one-account brute force;
+  B12 caught the MFASweep ROPC attempts (50076); B9 0 rows on the only
+  recorded Okta spray (10 accounts, below threshold; not lowered to fit);
+  B10, B11 and B13 have no recorded data.
+- Parked for the owner: an Okta recovery rule (once the event is
+  confirmed); an Okta leg for B10; correlating B10 and B13 per network in
+  a Sentinel incident; a feed or rule from `ApiManagementGatewayLogs`
+  (validate-jwt errors; reason-to-column link undocumented); `OktaV2_CL`;
+  AADSTS50034 (unknown account) as a spray signal; a per-tenant baseline
+  for B8's account threshold; Sentinel alert grouping for B8/B9 re-alerts.
+- Tests: 167 passed (new: Okta event mapping, list and unknown-key
+  handling, `AppAuthEvent_CL` pass-through, the engine's table list);
+  yamllint clean; `dac validate` against the current ATT&CK enterprise
+  bundle clean.

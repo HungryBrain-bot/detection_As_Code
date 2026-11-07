@@ -1,0 +1,6 @@
+# Recorded datasets this rule is run against (ids from harness/datasets.yaml).
+# The only recorded Okta sign-in data available: a 10-account spray and a
+# 7-account lockout from one IP, on different days.
+datasets:
+  - splunk-okta-spray-one-ip
+  - splunk-okta-accounts-lockout

@@ -30,6 +30,12 @@ check the request is explicit from the owner (Venu).
 | B5 | identity | One SP credential from Microsoft's network and outside it (2026-11-07) | T1078.004 | Sentinel |
 | B6 | identity | SP sign-in from an ASN new in 14 days (2026-11-07) | T1078.004 | Sentinel |
 | B7 | identity | SP Graph calls unlike its app: new client, enumeration, fix-and-retry (2026-11-07) | T1087.004, T1069.003, T1526 | Sentinel |
+| B8 | identity | Entra password spray counted per account: 15 accounts in an hour, or the same accounts in two spray rounds (2026-11-07) | T1110.003 | Sentinel |
+| B9 | identity | Okta password spray, same logic as B8 (2026-11-07) | T1110.003 | Sentinel |
+| B10 | identity | One source network, two or more Entra login flows in 30 minutes: failures on several accounts, legacy/ROPC, SSPR for several users (2026-11-07) | T1110.003, T1589 | Sentinel |
+| B11 | identity | SSPR for 3+ users from one network, or 2+ users throttled from SSPR (2026-11-07) | T1589 | Sentinel |
+| B12 | identity | Legacy protocol or ROPC sign-ins on several accounts, or a password accepted over them (2026-11-07) | T1110.003, T1078.004 | Sentinel |
+| B13 | identity | Unsigned JWT or repeated OAuth callback / JWT tampering; schema-dependent, `AppAuthEvent_CL` (2026-11-07) | T1606, T1190 | Sentinel |
 | D1 | recon | Request to a decoy API route; the path is a `Honeytoken_CL` row (2026-11-07) | T1595, T1594 | Sentinel |
 | D2 | recon | Source map / Swagger / config download, then API routes the UI does not call (2026-11-07) | T1594, T1595 | Sentinel |
 | D3 | recon | One client, dozens of distinct paths in minutes, mostly 401/403/404 (2026-11-07) | T1595.003 | Sentinel |
@@ -62,6 +68,15 @@ HTTP logs only and ran in the Kusto emulator on hand-written samples (no
 recorded web access log is loaded); D4 reads CloudTrail, AWS only, and
 also ran on three recorded Splunk attack_data sets (scanner tools in a
 lab, not ARTEX). No Azure Activity branch (the log has no reads).
+B8-B13 added 2026-11-07 at the owner's explicit request (ARTEX Phase 3,
+identity; ADR 011, docs/threats/artex-phase3-identity.md), `status: test`,
+targeted, Sentinel only, in `detections/identity/`. One rule per log-source
+set the gate can confirm (Entra and Okta sprays are separate rules; the
+OAuth/JWT behaviours are B13, not in B10). B8 caught both recorded Entra
+sprays and B12 the recorded MFASweep ROPC attempts; B9's only recorded
+Okta spray (10 accounts) is below its threshold; B10, B11 and B13 rest on
+hand-written samples. B13 reads a table this project defines and does
+nothing until an app writes it. No Okta recovery rule (event unverified).
 Common high-value rules outside this list (brute force, AD changes)
 are parked in BUILD_LOG.md for the owner, not in scope. ATT&CK IDs above were checked against the enterprise
 STIX bundle on 2026-10-27 (all exist, none deprecated). ATLAS IDs were
@@ -114,7 +129,9 @@ flowchart LR
   Learn table reference (summarising fetch); `Honeytoken_CL` defined by
   this project (ADR 009, `DecoyRoute` rows added by ADR 010);
   AWSCloudTrail from Azure-Sentinel sample metadata; AppServiceHTTPLogs
-  from the Learn table reference (fetched in full); `LLMAppLog_CL` and
+  from the Learn table reference (fetched in full); OktaSSO from
+  Microsoft's KQL validation table definition (Azure-Sentinel c0c2dc2);
+  `AppAuthEvent_CL` defined by this project (ADR 011); `LLMAppLog_CL` and
   `LLMCanary_CL`, defined by this project, ADR 008).
 - `log_sources.yaml` - log-source catalogue: owning team key and
   per-SIEM table / source / log type names.
@@ -149,13 +166,13 @@ flowchart LR
   `mapping.py` (recorded event -> SecurityEvent / Event / XmlWinEventLog;
   Entra diagnostic records -> AuditLogs / SigninLogs /
   AADNonInteractiveUserSignInLogs; raw CloudTrail records ->
-  AWSCloudTrail; LLM rows as they are),
+  AWSCloudTrail; raw Okta System Log events -> OktaSSO; LLM rows as they are),
   `llm_datasets.py` (JailbreakHub, AgentDojo, BIPIA -> `LLMAppLog_CL`),
   `manifests/` (per-file hashes), `engines.py` (Kusto emulator, Splunk
   container), `python -m harness fetch | run`.
 - `docs/hunts/` - hunts and runbooks that are not rules (H1 leaked-secret
   self-search). `docs/threats/` - per-campaign notes mapping a source to
-  rules, with which claims were verified (ARTEX Phases 1 and 2).
+  rules, with which claims were verified (ARTEX Phases 1 to 3).
 - `docs/future/` - design-only notes, unbuilt and not scheduled (RAG
   over the attack docs).
 - `templates/` - attack-doc and rule-doc templates; their `##`
@@ -221,9 +238,9 @@ current MITRE ATT&CK bundle and pinned ATLAS data (v2026.06).
 - Engine tests: `python -m harness run --engine kusto` (also CI job
   `engine-kusto`) and `--engine splunk` (local only).
 
-Last run (2026-11-07): 162 passed, 0 failed; engine tests: A1-A4 pass
+Last run (2026-11-07): 167 passed, 0 failed; engine tests: A1-A4 pass
 in Kusto emulator and Splunk 10.6.1 (Splunk last run 2026-10-28),
-B1-B7, C1-C3 and D1-D4 in the Kusto emulator.
+B1-B13, C1-C3 and D1-D4 in the Kusto emulator.
 
 ## Model usage
 
@@ -238,9 +255,9 @@ conflicting sources).
 - Built: rule schema, validator, three adapters with read-only probes,
   schema check, per-customer log-source gate with file and SMTP
   notifiers, baseline/targeted tiers, coverage layers, CLI, CI
-  workflow, engine harness, component docs, ADRs 001-010, templates,
+  workflow, engine harness, component docs, ADRs 001-011, templates,
   six skills, LLM log-source inventory and feed report; rules A1-A4,
-  B1-B7, C1-C3, D1-D4; hunt H1.
+  B1-B13, C1-C3, D1-D4; hunt H1.
 - Verified: everything in the test suite; ATT&CK IDs for the planned
   rules against the STIX bundle; the first CI workflow ran green on
   GitHub (PR #1); per-customer gate job ran green (PR #2); A1-A4 KQL in
@@ -264,6 +281,13 @@ conflicting sources).
   against a live app (is `CIp` the proxy behind Front Door?); the AWS
   connector's `ErrorCode` for denied calls; D2's learned baseline on a
   low-traffic app. The Wiz post's Storm-0940 attribution is "overlap".
+- Not verified: B10, B11, B13 against any recorded data (all hand-written);
+  that SSPR audit records carry the initiator IP (B10, B11 read it); the
+  `OktaSSO` column names in a live workspace and Okta's own definitions of
+  INVALID_CREDENTIALS / VERIFICATION_ERROR; which Okta event records a
+  self-service reset; that 50076/50079 always follow a correct password;
+  any app writing `AppAuthEvent_CL`; any B8-B13 threshold against a real
+  tenant.
 - Not verified: any live API call (Sentinel, Splunk, SecOps deploy or
   probe, SMTP); Navigator loading of the layers (ATLAS `domain` value
   is a guess); the deploy and coverage CI jobs on `main`; A1-A4 in a

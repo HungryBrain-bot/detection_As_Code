@@ -1,0 +1,60 @@
+# Reference schema for AppAuthEvent_CL, read by rule B13 (ARTEX Phase 3, identity;
+# docs/decisions/011-identity-attack-rules.md). Not a vendor table: defined by this
+# project. No vendor log records a failed OAuth `state` check or an unregistered
+# `redirect_uri` in an application's own OAuth client, and a gateway that validates
+# JWTs does not log the token's `alg` header, so the application (or its auth
+# middleware) has to write these rows. Sent through the Logs Ingestion API.
+#
+# One row per rejected authentication input. EventType is one of:
+#   oauth_state_mismatch     - the callback's `state` is missing, malformed or does not match
+#                              the value stored for this browser session
+#   oauth_redirect_rejected  - an authorization request or callback named a redirect_uri that
+#                              is not an exact match for a registered one
+#   oauth_code_rejected      - the callback's authorization code was refused by the token
+#                              endpoint (invalid, expired or already used)
+#   jwt_rejected             - a bearer token failed validation
+# Reason, for jwt_rejected: alg_none, signature_invalid, alg_not_allowed, malformed,
+# expired, issuer, audience, key_not_found. For the oauth_* types it is free text.
+# JwtAlg is the `alg` value from the token header exactly as received (never the token).
+# Never log the token, the code or the state value itself.
+#
+# One documented feed for jwt_rejected rows: Azure API Management's validate-jwt policy
+# reports the error Source `validate-jwt` with reasons TokenNotPresent,
+# TokenSignatureInvalid, TokenExpired, JwtInvalid and others (Microsoft Learn,
+# api-management-error-handling-policies, fetched 2026-11-07), and the
+# ApiManagementGatewayLogs table has LastErrorSource / LastErrorReason columns. That the
+# predefined reasons appear in those columns is an inference; Microsoft does not say so,
+# and APIM logs no `alg`. Not built (docs/threats/artex-phase3-identity.md).
+name: AppAuthEvent_CL
+siem: sentinel
+source_url: https://learn.microsoft.com/en-us/azure/api-management/api-management-error-handling-policies
+vendor_page: https://learn.microsoft.com/en-us/azure/azure-monitor/logs/logs-ingestion-api-overview
+fetched_on: '2026-11-07'
+provenance: Defined by this project (ADR 011); not based on any vendor schema. The APIM
+  error-reason page (source_url) was read for the reason names only.
+fields:
+- TimeGenerated
+- AppName
+- ClientIp
+- UserAgent
+- SessionId
+- EventType
+- Reason
+- JwtAlg
+- RequestPath
+- RedirectUri
+- TargetUser
+- Type
+types:
+  TimeGenerated: datetime
+  AppName: string
+  ClientIp: string
+  UserAgent: string
+  SessionId: string
+  EventType: string
+  Reason: string
+  JwtAlg: string
+  RequestPath: string
+  RedirectUri: string
+  TargetUser: string
+  Type: string
