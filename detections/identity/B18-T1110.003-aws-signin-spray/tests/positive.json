@@ -1,0 +1,2538 @@
+[
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:05:00Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "580d6e61-2fb6-5ba0-a220-3e60cdeea6b6",
+      "CredentialType": "PASSWORD",
+      "UserName": "user00@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:05:02Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "580d6e61-2fb6-5ba0-a220-3e60cdeea6b6",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:05:20Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "3d6a46fb-497b-5684-b47f-d999827c9810",
+      "CredentialType": "PASSWORD",
+      "UserName": "user01@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:05:22Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "3d6a46fb-497b-5684-b47f-d999827c9810",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:05:40Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "be4edf4f-31b2-5386-9e91-57d3f53fe34d",
+      "CredentialType": "PASSWORD",
+      "UserName": "user02@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:05:42Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "be4edf4f-31b2-5386-9e91-57d3f53fe34d",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:06:00Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "11bb6ad3-ef8f-5167-b852-4095c0cda6a5",
+      "CredentialType": "PASSWORD",
+      "UserName": "user03@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:06:02Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "11bb6ad3-ef8f-5167-b852-4095c0cda6a5",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:06:20Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "1c93f109-f16c-5013-b655-41711e44f5c8",
+      "CredentialType": "PASSWORD",
+      "UserName": "user04@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:06:22Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "1c93f109-f16c-5013-b655-41711e44f5c8",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:06:40Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "747e37c9-80a8-59bb-8583-672e07efb4a3",
+      "CredentialType": "PASSWORD",
+      "UserName": "user05@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:06:42Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "747e37c9-80a8-59bb-8583-672e07efb4a3",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:07:00Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "e7b68b77-fc21-555e-b08d-b123a117bff4",
+      "CredentialType": "PASSWORD",
+      "UserName": "user06@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:07:02Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "e7b68b77-fc21-555e-b08d-b123a117bff4",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:07:20Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "c3ed89fd-c95a-58db-901a-1b657615e92e",
+      "CredentialType": "PASSWORD",
+      "UserName": "user07@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:07:22Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "c3ed89fd-c95a-58db-901a-1b657615e92e",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:07:40Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "cab030ff-5a55-5b30-95fd-53534183c03c",
+      "CredentialType": "PASSWORD",
+      "UserName": "user08@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:07:42Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "cab030ff-5a55-5b30-95fd-53534183c03c",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:08:00Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "c69b3fd2-440d-5d41-ace6-ad3efd43fae1",
+      "CredentialType": "PASSWORD",
+      "UserName": "user09@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:08:02Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "c69b3fd2-440d-5d41-ace6-ad3efd43fae1",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:08:20Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "9ea7371b-575e-56d9-8314-b4695eabe9be",
+      "CredentialType": "PASSWORD",
+      "UserName": "user10@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:08:22Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "9ea7371b-575e-56d9-8314-b4695eabe9be",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:08:40Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "e828a1e7-9f7a-56fc-a628-e3ef67d76e5d",
+      "CredentialType": "PASSWORD",
+      "UserName": "user11@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:08:42Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "e828a1e7-9f7a-56fc-a628-e3ef67d76e5d",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:09:00Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "4fd9e036-147c-5673-a378-15ceb3062ed9",
+      "CredentialType": "PASSWORD",
+      "UserName": "user12@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:09:02Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "4fd9e036-147c-5673-a378-15ceb3062ed9",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:09:20Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "b9f236ba-e868-5cb6-9b5a-e30df06ef7e2",
+      "CredentialType": "PASSWORD",
+      "UserName": "user13@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:09:22Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "b9f236ba-e868-5cb6-9b5a-e30df06ef7e2",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:09:40Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "1042b7f6-8333-5001-a961-811b160ea5cf",
+      "CredentialType": "PASSWORD",
+      "UserName": "user14@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:09:42Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "1042b7f6-8333-5001-a961-811b160ea5cf",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:10:00Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "10a1eed9-9e88-54eb-9a35-b7236f7d9fdc",
+      "CredentialType": "PASSWORD",
+      "UserName": "user15@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "sso-breadth",
+    "_provenance": "hand-written",
+    "_note": "Identity Center spray, 16 users: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "203.0.113.90",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T09:10:02Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "10a1eed9-9e88-54eb-9a35-b7236f7d9fdc",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "console part of a mixed spray, 8 IAM users, one address each",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "ops-0"
+    },
+    "eventTime": "2026-11-20T14:10:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.100",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.120",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:10:15Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "6eb3cc32-53e6-5b3d-a4aa-93224592f923",
+      "CredentialType": "PASSWORD",
+      "UserName": "staff0@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.120",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:10:17Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "6eb3cc32-53e6-5b3d-a4aa-93224592f923",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "console part of a mixed spray, 8 IAM users, one address each",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "ops-1"
+    },
+    "eventTime": "2026-11-20T14:10:40Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.101",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.121",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:10:55Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "ea9a203e-a907-5889-9c21-f8e1a1339bfe",
+      "CredentialType": "PASSWORD",
+      "UserName": "staff1@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.121",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:10:57Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "ea9a203e-a907-5889-9c21-f8e1a1339bfe",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "console part of a mixed spray, 8 IAM users, one address each",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "ops-2"
+    },
+    "eventTime": "2026-11-20T14:11:20Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.102",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.122",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:11:35Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "0396fb57-b79a-5d1d-9fe7-7f8b54c4e6ca",
+      "CredentialType": "PASSWORD",
+      "UserName": "staff2@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.122",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:11:37Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "0396fb57-b79a-5d1d-9fe7-7f8b54c4e6ca",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "console part of a mixed spray, 8 IAM users, one address each",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "ops-3"
+    },
+    "eventTime": "2026-11-20T14:12:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.103",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.123",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:12:15Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "5435e6a4-ef1d-54f1-9cef-1269f5ebbe5c",
+      "CredentialType": "PASSWORD",
+      "UserName": "staff3@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.123",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:12:17Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "5435e6a4-ef1d-54f1-9cef-1269f5ebbe5c",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "console part of a mixed spray, 8 IAM users, one address each",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "ops-4"
+    },
+    "eventTime": "2026-11-20T14:12:40Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.104",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.124",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:12:55Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "b12c186f-938b-5d67-9559-7f790b478830",
+      "CredentialType": "PASSWORD",
+      "UserName": "staff4@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.124",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:12:57Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "b12c186f-938b-5d67-9559-7f790b478830",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "console part of a mixed spray, 8 IAM users, one address each",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "ops-5"
+    },
+    "eventTime": "2026-11-20T14:13:20Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.105",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.125",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:13:35Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "7cff7264-6c4d-53de-a06b-3cabe1c47585",
+      "CredentialType": "PASSWORD",
+      "UserName": "staff5@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.125",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:13:37Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "7cff7264-6c4d-53de-a06b-3cabe1c47585",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "console part of a mixed spray, 8 IAM users, one address each",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "ops-6"
+    },
+    "eventTime": "2026-11-20T14:14:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.106",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.126",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:14:15Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "8ef505db-d0db-5175-9875-b7def9a187cd",
+      "CredentialType": "PASSWORD",
+      "UserName": "staff6@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.126",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:14:17Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "8ef505db-d0db-5175-9875-b7def9a187cd",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "console part of a mixed spray, 8 IAM users, one address each",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "ops-7"
+    },
+    "eventTime": "2026-11-20T14:14:40Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.107",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: challenge (carries the user name)",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.127",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:14:55Z",
+    "eventName": "CredentialChallenge",
+    "additionalEventData": {
+      "AuthWorkflowID": "0df78eb0-d303-5a31-989f-c65af1c04cd8",
+      "CredentialType": "PASSWORD",
+      "UserName": "staff7@example.test"
+    },
+    "serviceEventDetails": {
+      "CredentialChallenge": "Success"
+    }
+  },
+  {
+    "_case": "mixed",
+    "_provenance": "hand-written",
+    "_note": "Identity Center part of a mixed spray: password failure",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "Unknown",
+      "arn": "",
+      "accountId": "111111111111",
+      "accessKeyId": ""
+    },
+    "eventSource": "signin.amazonaws.com",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "198.51.100.127",
+    "userAgent": "python-requests/2.32.3",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsServiceEvent",
+    "managementEvent": true,
+    "eventCategory": "Management",
+    "recipientAccountId": "111111111111",
+    "eventTime": "2026-11-20T14:14:57Z",
+    "eventName": "CredentialVerification",
+    "additionalEventData": {
+      "AuthWorkflowID": "0df78eb0-d303-5a31-989f-c65af1c04cd8",
+      "CredentialType": "PASSWORD"
+    },
+    "serviceEventDetails": {
+      "CredentialVerification": "Failure"
+    }
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 1: 12 accounts",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-0"
+    },
+    "eventTime": "2026-11-21T01:05:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.55",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 1: 12 accounts",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-1"
+    },
+    "eventTime": "2026-11-21T01:05:30Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.55",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 1: 12 accounts",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-2"
+    },
+    "eventTime": "2026-11-21T01:06:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.55",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 1: 12 accounts",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-3"
+    },
+    "eventTime": "2026-11-21T01:06:30Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.55",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 1: 12 accounts",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-4"
+    },
+    "eventTime": "2026-11-21T01:07:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.55",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 1: 12 accounts",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-5"
+    },
+    "eventTime": "2026-11-21T01:07:30Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.55",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 1: 12 accounts",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-6"
+    },
+    "eventTime": "2026-11-21T01:08:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.55",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 1: 12 accounts",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-7"
+    },
+    "eventTime": "2026-11-21T01:08:30Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.55",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 1: 12 accounts",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-8"
+    },
+    "eventTime": "2026-11-21T01:09:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.55",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 1: 12 accounts",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-9"
+    },
+    "eventTime": "2026-11-21T01:09:30Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.55",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 1: 12 accounts",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-10"
+    },
+    "eventTime": "2026-11-21T01:10:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.55",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 1: 12 accounts",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-11"
+    },
+    "eventTime": "2026-11-21T01:10:30Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.55",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 2: 12 accounts, 6 seen in round 1",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-6"
+    },
+    "eventTime": "2026-11-21T02:08:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.56",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 2: 12 accounts, 6 seen in round 1",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-7"
+    },
+    "eventTime": "2026-11-21T02:08:30Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.56",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 2: 12 accounts, 6 seen in round 1",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-8"
+    },
+    "eventTime": "2026-11-21T02:09:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.56",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 2: 12 accounts, 6 seen in round 1",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-9"
+    },
+    "eventTime": "2026-11-21T02:09:30Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.56",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 2: 12 accounts, 6 seen in round 1",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-10"
+    },
+    "eventTime": "2026-11-21T02:10:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.56",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 2: 12 accounts, 6 seen in round 1",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-11"
+    },
+    "eventTime": "2026-11-21T02:10:30Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.56",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 2: 12 accounts, 6 seen in round 1",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-12"
+    },
+    "eventTime": "2026-11-21T02:11:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.56",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 2: 12 accounts, 6 seen in round 1",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-13"
+    },
+    "eventTime": "2026-11-21T02:11:30Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.56",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 2: 12 accounts, 6 seen in round 1",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-14"
+    },
+    "eventTime": "2026-11-21T02:12:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.56",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 2: 12 accounts, 6 seen in round 1",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-15"
+    },
+    "eventTime": "2026-11-21T02:12:30Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.56",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 2: 12 accounts, 6 seen in round 1",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-16"
+    },
+    "eventTime": "2026-11-21T02:13:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.56",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  },
+  {
+    "_case": "retarget",
+    "_provenance": "hand-written",
+    "_note": "re-targeted, round 2: 12 accounts, 6 seen in round 1",
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "accountId": "111111111111",
+      "accessKeyId": "",
+      "userName": "svc-17"
+    },
+    "eventTime": "2026-11-21T02:13:30Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "192.0.2.56",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.0.0 Safari/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Failure"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/console/home",
+      "MobileVersion": "No",
+      "MFAUsed": "No"
+    },
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorMessage": "Failed authentication"
+  }
+]

@@ -1,0 +1,5 @@
+datasets:
+  - splunk-aws-console-spray
+  - splunk-aws-console-unknown-user
+  - splunk-aws-console-login-failure
+  - splunk-aws-root-login-two-ips
