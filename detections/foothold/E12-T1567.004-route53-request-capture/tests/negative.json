@@ -1,0 +1,170 @@
+[
+  {
+    "_provenance": "hand-written",
+    "_note": "look-alike: ends with the name but not at a label boundary",
+    "TimeGenerated": "2026-11-20T12:00:00.0000000Z",
+    "Type": "AWSRoute53Resolver",
+    "Version": "1.100000",
+    "AccountId": "111111111111",
+    "Region": "eu-west-1",
+    "VpcId": "vpc-0123456789abcdef0",
+    "QueryName": "notwebhook.site.",
+    "QueryType": "A",
+    "QueryClass": "IN",
+    "Rcode": "NOERROR",
+    "SrcAddr": "10.0.12.34",
+    "SrcPort": "53211",
+    "Transport": "UDP",
+    "SrcIds": {
+      "instance": "i-0a1b2c3d4e5f60718"
+    },
+    "LogType": "ResolverQueryLogs",
+    "Answers": [
+      {
+        "Rdata": "203.0.113.200",
+        "Type": "A",
+        "Class": "IN"
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "the name inside another domain",
+    "TimeGenerated": "2026-11-20T12:00:00.0000000Z",
+    "Type": "AWSRoute53Resolver",
+    "Version": "1.100000",
+    "AccountId": "111111111111",
+    "Region": "eu-west-1",
+    "VpcId": "vpc-0123456789abcdef0",
+    "QueryName": "webhook.site.example.test.",
+    "QueryType": "A",
+    "QueryClass": "IN",
+    "Rcode": "NOERROR",
+    "SrcAddr": "10.0.12.34",
+    "SrcPort": "53211",
+    "Transport": "UDP",
+    "SrcIds": {
+      "instance": "i-0a1b2c3d4e5f60718"
+    },
+    "LogType": "ResolverQueryLogs",
+    "Answers": [
+      {
+        "Rdata": "203.0.113.200",
+        "Type": "A",
+        "Class": "IN"
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "look-alike TLD",
+    "TimeGenerated": "2026-11-20T12:00:00.0000000Z",
+    "Type": "AWSRoute53Resolver",
+    "Version": "1.100000",
+    "AccountId": "111111111111",
+    "Region": "eu-west-1",
+    "VpcId": "vpc-0123456789abcdef0",
+    "QueryName": "oast.pros.",
+    "QueryType": "A",
+    "QueryClass": "IN",
+    "Rcode": "NOERROR",
+    "SrcAddr": "10.0.12.34",
+    "SrcPort": "53211",
+    "Transport": "UDP",
+    "SrcIds": {
+      "instance": "i-0a1b2c3d4e5f60718"
+    },
+    "LogType": "ResolverQueryLogs",
+    "Answers": [
+      {
+        "Rdata": "203.0.113.200",
+        "Type": "A",
+        "Class": "IN"
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "hyphenated look-alike",
+    "TimeGenerated": "2026-11-20T12:00:00.0000000Z",
+    "Type": "AWSRoute53Resolver",
+    "Version": "1.100000",
+    "AccountId": "111111111111",
+    "Region": "eu-west-1",
+    "VpcId": "vpc-0123456789abcdef0",
+    "QueryName": "docs.webhook-site.example.test.",
+    "QueryType": "A",
+    "QueryClass": "IN",
+    "Rcode": "NOERROR",
+    "SrcAddr": "10.0.12.34",
+    "SrcPort": "53211",
+    "Transport": "UDP",
+    "SrcIds": {
+      "instance": "i-0a1b2c3d4e5f60718"
+    },
+    "LogType": "ResolverQueryLogs",
+    "Answers": [
+      {
+        "Rdata": "203.0.113.200",
+        "Type": "A",
+        "Class": "IN"
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "ordinary AWS endpoint",
+    "TimeGenerated": "2026-11-20T12:00:00.0000000Z",
+    "Type": "AWSRoute53Resolver",
+    "Version": "1.100000",
+    "AccountId": "111111111111",
+    "Region": "eu-west-1",
+    "VpcId": "vpc-0123456789abcdef0",
+    "QueryName": "ssm.eu-west-1.amazonaws.com.",
+    "QueryType": "A",
+    "QueryClass": "IN",
+    "Rcode": "NOERROR",
+    "SrcAddr": "10.0.12.34",
+    "SrcPort": "53211",
+    "Transport": "UDP",
+    "SrcIds": {
+      "instance": "i-0a1b2c3d4e5f60718"
+    },
+    "LogType": "ResolverQueryLogs",
+    "Answers": [
+      {
+        "Rdata": "203.0.113.200",
+        "Type": "A",
+        "Class": "IN"
+      }
+    ]
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "the interactsh project site (not a capture server in the default list)",
+    "TimeGenerated": "2026-11-20T12:00:00.0000000Z",
+    "Type": "AWSRoute53Resolver",
+    "Version": "1.100000",
+    "AccountId": "111111111111",
+    "Region": "eu-west-1",
+    "VpcId": "vpc-0123456789abcdef0",
+    "QueryName": "interact.sh.",
+    "QueryType": "A",
+    "QueryClass": "IN",
+    "Rcode": "NOERROR",
+    "SrcAddr": "10.0.12.34",
+    "SrcPort": "53211",
+    "Transport": "UDP",
+    "SrcIds": {
+      "instance": "i-0a1b2c3d4e5f60718"
+    },
+    "LogType": "ResolverQueryLogs",
+    "Answers": [
+      {
+        "Rdata": "203.0.113.200",
+        "Type": "A",
+        "Class": "IN"
+      }
+    ]
+  }
+]

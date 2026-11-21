@@ -1,0 +1,118 @@
+[
+  {
+    "_case": "webhook",
+    "_provenance": "hand-written",
+    "_note": "SSRF check: app server resolves webhook.site (trailing dot)",
+    "TimeGenerated": "2026-11-20T12:00:00.0000000Z",
+    "Type": "AWSRoute53Resolver",
+    "Version": "1.100000",
+    "AccountId": "111111111111",
+    "Region": "eu-west-1",
+    "VpcId": "vpc-0123456789abcdef0",
+    "QueryName": "webhook.site.",
+    "QueryType": "A",
+    "QueryClass": "IN",
+    "Rcode": "NOERROR",
+    "SrcAddr": "10.0.12.34",
+    "SrcPort": "53211",
+    "Transport": "UDP",
+    "SrcIds": {
+      "instance": "i-0a1b2c3d4e5f60718"
+    },
+    "LogType": "ResolverQueryLogs",
+    "Answers": [
+      {
+        "Rdata": "203.0.113.200",
+        "Type": "A",
+        "Class": "IN"
+      }
+    ]
+  },
+  {
+    "_case": "webhook",
+    "_provenance": "hand-written",
+    "_note": "same, upper case, no trailing dot",
+    "TimeGenerated": "2026-11-20T12:00:01.0000000Z",
+    "Type": "AWSRoute53Resolver",
+    "Version": "1.100000",
+    "AccountId": "111111111111",
+    "Region": "eu-west-1",
+    "VpcId": "vpc-0123456789abcdef0",
+    "QueryName": "WEBHOOK.SITE",
+    "QueryType": "A",
+    "QueryClass": "IN",
+    "Rcode": "NOERROR",
+    "SrcAddr": "10.0.12.34",
+    "SrcPort": "53211",
+    "Transport": "UDP",
+    "SrcIds": {
+      "instance": "i-0a1b2c3d4e5f60718"
+    },
+    "LogType": "ResolverQueryLogs",
+    "Answers": [
+      {
+        "Rdata": "203.0.113.200",
+        "Type": "A",
+        "Class": "IN"
+      }
+    ]
+  },
+  {
+    "_case": "interactsh",
+    "_provenance": "hand-written",
+    "_note": "interactsh callback name",
+    "TimeGenerated": "2026-11-20T12:03:00.0000000Z",
+    "Type": "AWSRoute53Resolver",
+    "Version": "1.100000",
+    "AccountId": "111111111111",
+    "Region": "eu-west-1",
+    "VpcId": "vpc-0123456789abcdef0",
+    "QueryName": "c58bduhe008dovpvhvugcfemp9yyyyyyn.oast.fun.",
+    "QueryType": "A",
+    "QueryClass": "IN",
+    "Rcode": "NOERROR",
+    "SrcAddr": "10.0.40.7",
+    "SrcPort": "53211",
+    "Transport": "UDP",
+    "SrcIds": {
+      "instance": "i-0fedcba9876543210"
+    },
+    "LogType": "ResolverQueryLogs",
+    "Answers": [
+      {
+        "Rdata": "203.0.113.200",
+        "Type": "A",
+        "Class": "IN"
+      }
+    ]
+  },
+  {
+    "_case": "lambda",
+    "_provenance": "hand-written",
+    "_note": "DNS capture subdomain, queried from a VPC Lambda (no instance id)",
+    "TimeGenerated": "2026-11-20T12:07:00.0000000Z",
+    "Type": "AWSRoute53Resolver",
+    "Version": "1.100000",
+    "AccountId": "111111111111",
+    "Region": "eu-west-1",
+    "VpcId": "vpc-0123456789abcdef0",
+    "QueryName": "x1y2z3.dnshook.site.",
+    "QueryType": "TXT",
+    "QueryClass": "IN",
+    "Rcode": "NOERROR",
+    "SrcAddr": "10.0.50.9",
+    "SrcPort": "53211",
+    "Transport": "UDP",
+    "SrcIds": {
+      "resolver_endpoint": "rslvr-in-0123456789abcdef0"
+    },
+    "LogType": "ResolverQueryLogs",
+    "Answers": [
+      {
+        "Rdata": "203.0.113.200",
+        "Type": "A",
+        "Class": "IN"
+      }
+    ]
+  }
+]

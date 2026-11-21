@@ -8,10 +8,11 @@ confirmed (and tells the owning team exactly what is missing), and
 reports per-customer coverage as ATT&CK / ATLAS Navigator layers.
 
 **Status (2026-11-21):** the pipeline is built and tested offline, and
-36 rules are built: the ten originally scoped (A1-A4 endpoint, B1-B3
+42 rules are built: the ten originally scoped (A1-A4 endpoint, B1-B3
 Entra ID identity, C1-C3 LLM application), 22 added at the owner's
-request for the ARTEX Phase 1 to 4 blog posts, and 4 AWS ports of the
-Phase 1 rules (B14-B17, 2026-11-21). 28 rules are
+request for the ARTEX Phase 1 to 4 blog posts, 4 AWS ports of the
+Phase 1 rules (B14-B17) and 6 AWS / API Gateway ports of Phases 2-4
+(D5, D6, B18, E10-E12), both 2026-11-21. 34 rules are
 `status: test`; the eight Phase 4 foothold rules are
 `status: experimental` (deployed disabled) and have no samples.
 
@@ -33,6 +34,7 @@ recorded data) and an engine run recorded in its `tests/evidence.md`.
 | Identity (original) | B1-B3 | KQL on recorded Entra logs; B3's positives hand-written |
 | ARTEX Phase 1, credential sourcing | B4-B7, hunt [H1](docs/hunts/H1-leaked-secrets-self-search.md) | hand-written samples only ([threats doc](docs/threats/artex-phase1-credential-sourcing.md), [ADR 009](docs/decisions/009-workload-identity-rules.md)) |
 | ARTEX Phase 1, AWS port | B14-B17 | hand-written samples only; 0 rows on recorded lab CloudTrail; B15/B16 need an IP-to-ASN table whose loader is not built ([threats doc, AWS port](docs/threats/artex-phase1-credential-sourcing.md#aws-port-2026-11-21), [ADR 013](docs/decisions/013-aws-workload-identity-rules.md)) |
+| ARTEX Phases 2-4, AWS and API Gateway port | D5, D6, B18, E10-E12 | B18 caught a recorded console spray, E11 a recorded Instance Connect set; D5 ran on Microsoft's ingested WAF sample; D6, E10, E12 hand-written only; D6 and E10 need an API Gateway access log format this project defines ([ADR 014](docs/decisions/014-aws-and-api-gateway-ports-phases-2-4.md), [format](docs/components/apigateway-access-log.md)) |
 | ARTEX Phase 2, recon | D1-D4 | D1-D3 hand-written only; D4 also on recorded lab CloudTrail ([threats doc](docs/threats/artex-phase2-recon.md), [ADR 010](docs/decisions/010-recon-rules.md)) |
 | ARTEX Phase 3, identity | B8-B13 | B8 and B12 matched recorded attacks; B9 missed the only recorded Okta spray; B10, B11, B13 hand-written only ([threats doc](docs/threats/artex-phase3-identity.md), [ADR 011](docs/decisions/011-identity-attack-rules.md)) |
 | ARTEX Phase 4, foothold | E1-E6, E8, E9 (experimental) | no samples; E3, E4, E6 ran on recorded lab Sysmon sets, the rest never ran on data ([threats doc](docs/threats/artex-phase4-foothold.md), [ADR 012](docs/decisions/012-foothold-rules.md)) |
@@ -45,10 +47,13 @@ which only partly, and which not at all, and only the verified ones
 are the basis for attribution. Second, the thresholds in B8-B13, D2,
 D3 and E1 are this project's own choices (their ADRs and threats docs
 say so), not numbers from a source or from a real tenant. Third, every
-ARTEX rule is `targeted` and Sentinel only; B9 reads Okta, and D4 and
-B14-B17 AWS CloudTrail, through their Sentinel connectors. No fetched
-source shows ARTEX on AWS: B14-B17 detect the Phase 1 behaviour there,
-nothing more.
+ARTEX rule is `targeted` and Sentinel only; B9 reads Okta, and D4,
+B14-B18, E11 AWS CloudTrail, D5 AWS WAF, D6 and E10 API Gateway access
+logs and E12 Route 53 Resolver, through their Sentinel connectors. No
+fetched source shows ARTEX on AWS: the AWS rules detect each phase's
+behaviour there, nothing more. 12 candidate ports were not built
+because the AWS log lacks the field they need or the rule would be a
+copy (ADR 014).
 
 The endpoint rules' KQL and SPL ran in local engines (Kusto emulator,
 Splunk Enterprise container) on recorded open-source data. **No public
@@ -86,10 +91,13 @@ verified against a live API.
 | B15 | [AWS: one access key inside and outside AWS](detections/identity/B15-T1078.004-aws-key-two-networks/) | T1078.004 | targeted | KQL ran (ADX `ipv4_lookup`, Log Analytics not checked); needs `IpAsn_CL`; positives hand-written | n/a |
 | B16 | [AWS: IAM user or role from a new ASN](detections/identity/B16-T1078.004-aws-principal-new-network/) | T1078.004 | targeted | as B15 | n/a |
 | B17 | [AWS: IAM user or role unlike its workload](detections/identity/B17-T1087.004-aws-principal-unlike-its-app/) | T1087.004, T1526, T1580 | targeted | KQL ran; 0 rows on 6,417 recorded CloudTrail events (lab scanners have no history to compare); positives hand-written | n/a |
+| B18 | [AWS: console and Identity Center spray counted per account](detections/identity/B18-T1110.003-aws-signin-spray/) | T1110.003 | targeted | KQL: 1 row on 74 recorded sign-ins, the recorded spray (31 IAM users, one address); Identity Center samples hand-written | n/a |
 | D1 | [Request to a decoy API route](detections/recon/D1-T1595-decoy-route-hit/) | T1595, T1594 | targeted | KQL ran on hand-written samples only; no recorded web access log with a decoy | n/a |
 | D2 | [Source map / Swagger / config download, then routes the UI does not call](detections/recon/D2-T1594-docs-then-novel-api/) | T1594, T1595 | targeted | KQL ran on hand-written samples only (baseline and attack); no recorded web log | n/a |
 | D3 | [One client, dozens of distinct paths in minutes, mostly 401/403/404](detections/recon/D3-T1595.003-failing-path-sweep/) | T1595.003 | targeted | KQL ran on hand-written samples only; thresholds are this project's | n/a |
 | D4 | [AccessDenied burst across AWS services from one principal](detections/recon/D4-T1580-cloud-permission-burst/) | T1580 | targeted | KQL: 11 rows on 6,417 recorded CloudTrail events, all one scanner user (cloudsploit, a lab tool, not ARTEX); ordinary users no rows | n/a |
+| D5 | [AWS: decoy API route seen by AWS WAF](detections/recon/D5-T1595-aws-waf-decoy-route-hit/) | T1595, T1594 | targeted | KQL: 0 rows on Microsoft's 200-row ingested WAF sample (no decoy); positives hand-written | n/a |
+| D6 | [API Gateway: dozens of distinct paths, mostly 401/403/404](detections/recon/D6-T1595.003-apigw-failing-path-sweep/) | T1595.003 | targeted | KQL ran on hand-written samples only; no recorded API Gateway log | n/a |
 | E1 | [One client reads many record IDs in sequence or with many denials](detections/foothold/E1-T1190-sequential-record-access/) | T1190 | targeted, experimental | Query ran on empty tables only; no samples, never run on data | n/a |
 | E2 | [Web or database process starts a shell or download tool (Defender)](detections/foothold/E2-T1505.003-web-process-shell-mde/) | T1505.003, T1059 | targeted, experimental | Query ran on empty tables only; no samples, never run on data | n/a |
 | E3 | [Same, Windows Sysmon](detections/foothold/E3-T1505.003-web-process-shell-sysmon/) | T1505.003, T1059 | targeted, experimental | KQL: 1 row on 9 recorded Sysmon events (w3wp starting cmd, WSUS lab); no samples | n/a |
@@ -98,6 +106,9 @@ verified against a live API.
 | E6 | [Script file in a web root (Windows Sysmon)](detections/foothold/E6-T1505.003-webroot-script-file-sysmon/) | T1505.003 | targeted, experimental | KQL: 7 rows on 7 recorded events (SharePoint, MOVEit web shell files); no false-positive data | n/a |
 | E8 | [App Service publishing login by a non-pipeline identity](detections/foothold/E8-T1078.004-app-service-publishing-login/) | T1078.004 | targeted, experimental | Query ran on empty tables only; no samples, never run on data | n/a |
 | E9 | [Server connects to a request-capture service](detections/foothold/E9-T1567.004-request-capture-egress/) | T1567.004 | targeted, experimental | Query ran on empty tables only; no samples, never run on data | n/a |
+| E10 | [API Gateway: many record IDs in sequence or with denials](detections/foothold/E10-T1190-apigw-sequential-record-access/) | T1190 | targeted | KQL ran on hand-written samples only (one positive per reason) | n/a |
+| E11 | [AWS: shell opened through SSM / Instance Connect outside the admin list](detections/foothold/E11-T1021.008-aws-shell-outside-admins/) | T1021.008 | targeted | KQL: 1 row on the recorded Instance Connect set (12 key pushes, one role); other positives hand-written | n/a |
+| E12 | [AWS: VPC DNS lookup of a request-capture service](detections/foothold/E12-T1567.004-route53-request-capture/) | T1567.004 | targeted | KQL ran on hand-written samples only; no recorded Route 53 Resolver log | n/a |
 | C1 | [Prompt-injection phrasing in prompts and tool / retrieval results](detections/llm/C1-AML.T0051-prompt-injection/) | LLM01:2025, LLM01:2026; AML.T0051, T0054, T0056, T0068 | targeted | KQL on converted research data: JailbreakHub jailbreaks 23% caught, regular prompts 1.9% alerted; AgentDojo 231/231 (in-sample); BIPIA 0/75 | n/a |
 | C2 | [Canary from hidden context in model output or tool arguments](detections/llm/C2-AML.T0057-canary-in-output/) | LLM02/LLM07:2025, LLM02/LLM08:2026; AML.T0056, T0057, T0086 | targeted | KQL: 5 rows, all the registered secret leaving: both real AgentDojo exfiltrations, plus 3 rows where the user asked for it; no dataset has a planted canary | n/a |
 | C3 | [Tool-call volume or loop per agent conversation](detections/llm/C3-AML.T0053-tool-call-volume/) | LLM06/LLM10:2025, LLM03/LLM06:2026; AML.T0053, T0034.002 | targeted | KQL: 0 alerts on 300 real agent runs; positives hand-written (no recorded runaway agent exists) | n/a |

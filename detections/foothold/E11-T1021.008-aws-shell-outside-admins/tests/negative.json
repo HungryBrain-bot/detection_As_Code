@@ -1,0 +1,171 @@
+[
+  {
+    "_provenance": "hand-written",
+    "_note": "resuming a session (not an opening)",
+    "eventVersion": "1.09",
+    "userIdentity": {
+      "type": "IAMUser",
+      "principalId": "AIDAEXAMPLEUSER",
+      "arn": "arn:aws:iam::111111111111:user/dev-jdoe",
+      "accountId": "111111111111",
+      "accessKeyId": "AKIAEXAMPLEKEY000001",
+      "userName": "dev-jdoe"
+    },
+    "eventTime": "2026-11-20T12:00:00Z",
+    "eventSource": "ssm.amazonaws.com",
+    "eventName": "ResumeSession",
+    "awsRegion": "eu-west-1",
+    "sourceIPAddress": "198.51.100.77",
+    "userAgent": "aws-cli/2.22.0 md/command#resumesession",
+    "requestParameters": {
+      "sessionId": "dev-jdoe-0abc123"
+    },
+    "responseElements": null,
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "ending a session",
+    "eventVersion": "1.09",
+    "userIdentity": {
+      "type": "IAMUser",
+      "principalId": "AIDAEXAMPLEUSER",
+      "arn": "arn:aws:iam::111111111111:user/dev-jdoe",
+      "accountId": "111111111111",
+      "accessKeyId": "AKIAEXAMPLEKEY000001",
+      "userName": "dev-jdoe"
+    },
+    "eventTime": "2026-11-20T12:00:00Z",
+    "eventSource": "ssm.amazonaws.com",
+    "eventName": "TerminateSession",
+    "awsRegion": "eu-west-1",
+    "sourceIPAddress": "198.51.100.77",
+    "userAgent": "aws-cli/2.22.0 md/command#terminatesession",
+    "requestParameters": {
+      "sessionId": "dev-jdoe-0abc123"
+    },
+    "responseElements": null,
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "patch automation runs a command (not interactive; out of scope)",
+    "eventVersion": "1.09",
+    "userIdentity": {
+      "type": "AssumedRole",
+      "principalId": "AROAEXAMPLEROLE:run-1",
+      "arn": "arn:aws:sts::111111111111:assumed-role/patch-automation/run-1",
+      "accountId": "111111111111",
+      "accessKeyId": "ASIAEXAMPLEKEY000001",
+      "sessionContext": {
+        "sessionIssuer": {
+          "type": "Role",
+          "principalId": "AROAEXAMPLEROLE",
+          "arn": "arn:aws:iam::111111111111:role/patch-automation",
+          "accountId": "111111111111",
+          "userName": "patch-automation"
+        }
+      }
+    },
+    "eventTime": "2026-11-20T12:00:00Z",
+    "eventSource": "ssm.amazonaws.com",
+    "eventName": "SendCommand",
+    "awsRegion": "eu-west-1",
+    "sourceIPAddress": "198.51.100.77",
+    "userAgent": "aws-cli/2.22.0 md/command#sendcommand",
+    "requestParameters": {
+      "instanceIds": [
+        "i-0a1b2c3d4e5f60718"
+      ],
+      "documentName": "AWS-RunPatchBaseline"
+    },
+    "responseElements": null,
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "listing managed instances",
+    "eventVersion": "1.09",
+    "userIdentity": {
+      "type": "IAMUser",
+      "principalId": "AIDAEXAMPLEUSER",
+      "arn": "arn:aws:iam::111111111111:user/dev-jdoe",
+      "accountId": "111111111111",
+      "accessKeyId": "AKIAEXAMPLEKEY000001",
+      "userName": "dev-jdoe"
+    },
+    "eventTime": "2026-11-20T12:00:00Z",
+    "eventSource": "ssm.amazonaws.com",
+    "eventName": "DescribeInstanceInformation",
+    "awsRegion": "eu-west-1",
+    "sourceIPAddress": "198.51.100.77",
+    "userAgent": "aws-cli/2.22.0 md/command#describeinstanceinformation",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "checking whether the serial console is enabled",
+    "eventVersion": "1.09",
+    "userIdentity": {
+      "type": "IAMUser",
+      "principalId": "AIDAEXAMPLEUSER",
+      "arn": "arn:aws:iam::111111111111:user/dev-jdoe",
+      "accountId": "111111111111",
+      "accessKeyId": "AKIAEXAMPLEKEY000001",
+      "userName": "dev-jdoe"
+    },
+    "eventTime": "2026-11-20T12:00:00Z",
+    "eventSource": "ec2.amazonaws.com",
+    "eventName": "GetSerialConsoleAccessStatus",
+    "awsRegion": "eu-west-1",
+    "sourceIPAddress": "198.51.100.77",
+    "userAgent": "aws-cli/2.22.0 md/command#getserialconsoleaccessstatus",
+    "requestParameters": null,
+    "responseElements": null,
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "importing an EC2 key pair (not Instance Connect)",
+    "eventVersion": "1.09",
+    "userIdentity": {
+      "type": "IAMUser",
+      "principalId": "AIDAEXAMPLEUSER",
+      "arn": "arn:aws:iam::111111111111:user/dev-jdoe",
+      "accountId": "111111111111",
+      "accessKeyId": "AKIAEXAMPLEKEY000001",
+      "userName": "dev-jdoe"
+    },
+    "eventTime": "2026-11-20T12:00:00Z",
+    "eventSource": "ec2.amazonaws.com",
+    "eventName": "ImportKeyPair",
+    "awsRegion": "eu-west-1",
+    "sourceIPAddress": "198.51.100.77",
+    "userAgent": "aws-cli/2.22.0 md/command#importkeypair",
+    "requestParameters": {
+      "keyName": "jdoe"
+    },
+    "responseElements": null,
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management"
+  }
+]

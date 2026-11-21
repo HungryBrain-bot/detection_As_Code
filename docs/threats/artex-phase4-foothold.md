@@ -91,6 +91,29 @@ were not checked character by character.
    roots (separate hosts or file-system permissions), and give application
    database accounts no rights to change global server settings.
 
+## AWS and API Gateway port (2026-11-21)
+
+Ported where an AWS log records the same behaviour (ADR 014).
+**No fetched source shows ARTEX, or any agent in the Phase 4 sources, acting on AWS**; the ports detect the same behaviour on AWS and nothing more. Unlike E1-E9, the ports have samples and are
+`status: test`.
+
+| Rule | AWS rule | Reads | Notes |
+|---|---|---|---|
+| [E1](../../detections/foothold/E1-T1190-sequential-record-access/) IDOR walk | [E10](../../detections/foothold/E10-T1190-apigw-sequential-record-access/) | `AWSCloudWatch` (API Gateway access log) | same reasons and thresholds; record ID from the path only (no query string in API Gateway's variables) |
+| [E8](../../detections/foothold/E8-T1078.004-app-service-publishing-login/) publishing login | [E11](../../detections/foothold/E11-T1021.008-aws-shell-outside-admins/) | `AWSCloudTrail` | Session Manager, Instance Connect and serial console openings outside an admin list; T1021.008; caught the recorded Instance Connect set |
+| [E9](../../detections/foothold/E9-T1567.004-request-capture-egress/) request-capture egress | [E12](../../detections/foothold/E12-T1567.004-route53-request-capture/) | `AWSRoute53Resolver` | E9's domain list on VPC DNS; covers workloads with no sensor |
+| E2-E6 | not ported | | Defender for Endpoint and Sysmon run on EC2 unchanged; a copy would be a duplicate |
+
+AWS facts the ports rely on (fetched 2026-11-21 through a fetch tool):
+API Gateway access log variables; Systems Manager's CloudTrail page
+(`StartSession` logged); the StartSession and Instance Connect API
+references; the EC2 CloudTrail page (Instance Connect audit,
+`ec2-instance-connect.amazonaws.com`); Route 53 Resolver query log
+format (`srcids`); the AWSRoute53Resolver table reference; ATT&CK 20.1
+T1021.008 (names EC2 Instance Connect and Systems Manager). Not found:
+a CloudTrail example of `StartSession` or `SendSerialConsoleSSHPublicKey`;
+whether `QueryName` keeps the trailing dot.
+
 ## Sources
 
 - Microsoft Threat Intelligence, "ARTEX abuse expands as cybercriminals target financial sector", 2026-11-06, https://www.microsoft.com/en-us/security/blog/2026/11/06/artex-abuse-expands-as-cybercriminals-target-financial-sector/ (fetched 2026-11-07)

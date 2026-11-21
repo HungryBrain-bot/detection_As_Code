@@ -1,0 +1,53 @@
+id: be2fd71d-fe5c-4888-9faa-8ab57ff140b7
+name: EC2 shell opened through AWS by an identity outside the admin list
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >
+  AWS counterpart of E8 (ADR 014). An identity that is not on the
+  customer's list of administrators opens interactive access to an
+  instance through the AWS control plane: Systems Manager StartSession,
+  EC2 Instance Connect SendSSHPublicKey, or SendSerialConsoleSSHPublicKey.
+  With these, anyone holding the right IAM permission gets a shell
+  without a network path or an SSH key of their own. Denied calls count
+  too. This rule sees the session being opened, not the commands run in
+  it.
+log_sources: [aws-cloudtrail]
+mapping:
+  attack:
+    techniques: [T1021.008]
+    tactics: [lateral-movement]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    AWSCloudTrail: [TimeGenerated, EventSource, EventName, ErrorCode, RequestParameters, UserIdentityArn, SessionIssuerArn, SourceIpAddress, UserAgent, RecipientAccountId, AWSRegion]
+  query: |
+    // E11: instance shell opened through AWS by an identity outside the admin list (detections/foothold/E11-T1021.008-aws-shell-outside-admins/README.md)
+    // Per customer: identities allowed to open shells, lower case. Roles by role ARN (arn:aws:iam::<acct>:role/<name>),
+    // users by user ARN. Empty means every shell opened through AWS alerts.
+    let admin_identities = dynamic([]);
+    AWSCloudTrail
+    // AWS documentation shows "SendSSHPublicKey " with a trailing space in one example; trimmed.
+    | extend Operation = trim(@"\s+", EventName)
+    | where (EventSource == "ssm.amazonaws.com" and Operation == "StartSession")
+        or (EventSource == "ec2-instance-connect.amazonaws.com" and Operation in ("SendSSHPublicKey", "SendSerialConsoleSSHPublicKey"))
+    // Sessions of one role are one identity: the role, not the per-session ARN.
+    | extend Identity = tolower(iff(isnotempty(SessionIssuerArn), SessionIssuerArn, UserIdentityArn))
+    | where not(Identity in (admin_identities))
+    | extend Params = parse_json(RequestParameters)
+    // The instance id wherever it is in the request (target, instanceId); key names differ between AWS examples.
+    | extend Target = extract(@"\b(m?i-[0-9a-f]{8,17})\b", 1, RequestParameters),
+             OsUser = coalesce(tostring(Params.instanceOSUser), tostring(Params.osUser)),
+             Document = tostring(Params.documentName)
+    | summarize FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated), Calls = count(),
+                Operations = make_set(Operation, 5), Targets = make_set(Target, 20), OsUsers = make_set_if(OsUser, isnotempty(OsUser), 10),
+                Documents = make_set_if(Document, isnotempty(Document), 10), ErrorCodes = make_set_if(ErrorCode, isnotempty(ErrorCode), 10),
+                IPAddresses = make_set(SourceIpAddress, 10), UserAgents = make_set(UserAgent, 5), Regions = make_set(AWSRegion, 5),
+                CallerArns = make_set(UserIdentityArn, 10)
+        by Identity, Account = RecipientAccountId
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, Identity, Account, Calls, Operations, Targets, OsUsers, Documents, ErrorCodes, IPAddresses,
+              UserAgents, Regions, CallerArns, FirstSeen, LastSeen
