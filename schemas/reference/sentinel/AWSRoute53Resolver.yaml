@@ -1,0 +1,59 @@
+# Reference schema for the AWSRoute53Resolver table (Route 53 Resolver query logs, Sentinel's
+# Amazon Web Services Route 53 solution connector). See docs/components/schema-check.md.
+# Columns and types from the Learn table reference (fetched 2026-11-21 through a fetch tool;
+# 23 columns, of which TenantId, _BilledSize and _IsBillable are not used here).
+# Learn: QueryName "The domain name that was queried"; SrcAddr "The source IP address of the
+# instance that made the query"; SrcIds "Identifiers related to the source instance where the
+# DNS query originated from or passed through". AWS's query log format page (fetched the same
+# day) says srcids holds the `instance`, `resolver_endpoint` and `resolver_network_interface`
+# ids. Whether QueryName keeps the DNS trailing dot was not found on either page; rules strip it.
+# Added 2026-11-21 for rule E12 (AWS port of ARTEX Phase 4; ADR 014).
+name: AWSRoute53Resolver
+siem: sentinel
+source_url: https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/awsroute53resolver
+vendor_page: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-query-logs-format.html
+fetched_on: '2026-11-21'
+provenance: Microsoft Learn table reference, read through a fetch tool (the column list was reported verbatim,
+  not checked character by character).
+fields:
+- AccountId
+- Answers
+- FirewallDomainListId
+- FirewallRuleAction
+- FirewallRuleGroupId
+- LogType
+- QueryClass
+- QueryName
+- QueryType
+- Rcode
+- Region
+- SourceSystem
+- SrcAddr
+- SrcIds
+- SrcPort
+- TimeGenerated
+- Transport
+- Type
+- Version
+- VpcId
+types:
+  AccountId: string
+  Answers: dynamic
+  FirewallDomainListId: string
+  FirewallRuleAction: string
+  FirewallRuleGroupId: string
+  LogType: string
+  QueryClass: string
+  QueryName: string
+  QueryType: string
+  Rcode: string
+  Region: string
+  SourceSystem: string
+  SrcAddr: string
+  SrcIds: dynamic
+  SrcPort: string
+  TimeGenerated: datetime
+  Transport: string
+  Type: string
+  Version: string
+  VpcId: string

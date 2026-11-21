@@ -1,0 +1,1605 @@
+[
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:03:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179600000-1463\",\"requestTimeEpoch\":\"1795179600000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss0\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:03:04.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179604000-7713\",\"requestTimeEpoch\":\"1795179604000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss1\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:03:08.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179608000-1371\",\"requestTimeEpoch\":\"1795179608000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss2\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:03:12.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179612000-4189\",\"requestTimeEpoch\":\"1795179612000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss3\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:03:16.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179616000-1806\",\"requestTimeEpoch\":\"1795179616000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss4\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:03:20.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179620000-8296\",\"requestTimeEpoch\":\"1795179620000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss5\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:03:24.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179624000-4354\",\"requestTimeEpoch\":\"1795179624000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss6\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:03:28.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179628000-3716\",\"requestTimeEpoch\":\"1795179628000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss7\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:03:32.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179632000-9445\",\"requestTimeEpoch\":\"1795179632000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss8\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:03:36.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179636000-3651\",\"requestTimeEpoch\":\"1795179636000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss9\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:03:40.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179640000-1544\",\"requestTimeEpoch\":\"1795179640000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss10\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:03:44.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179644000-5598\",\"requestTimeEpoch\":\"1795179644000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss11\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:03:48.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179648000-1092\",\"requestTimeEpoch\":\"1795179648000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss12\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:03:52.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179652000-9538\",\"requestTimeEpoch\":\"1795179652000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss13\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:03:56.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179656000-4273\",\"requestTimeEpoch\":\"1795179656000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss14\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:04:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179660000-551\",\"requestTimeEpoch\":\"1795179660000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss15\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:04:04.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179664000-5725\",\"requestTimeEpoch\":\"1795179664000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss16\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:04:08.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179668000-1003\",\"requestTimeEpoch\":\"1795179668000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss17\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:04:12.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179672000-4906\",\"requestTimeEpoch\":\"1795179672000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss18\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:04:16.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179676000-3468\",\"requestTimeEpoch\":\"1795179676000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss19\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:04:20.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179680000-3371\",\"requestTimeEpoch\":\"1795179680000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss20\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:04:24.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179684000-1229\",\"requestTimeEpoch\":\"1795179684000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss21\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:04:28.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179688000-9303\",\"requestTimeEpoch\":\"1795179688000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss22\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:04:32.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179692000-7057\",\"requestTimeEpoch\":\"1795179692000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss23\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:04:36.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179696000-4514\",\"requestTimeEpoch\":\"1795179696000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss24\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:04:40.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179700000-4756\",\"requestTimeEpoch\":\"1795179700000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss25\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:04:44.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179704000-3118\",\"requestTimeEpoch\":\"1795179704000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss26\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:04:48.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179708000-9560\",\"requestTimeEpoch\":\"1795179708000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss27\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "29 distinct failing paths (one under the threshold)",
+    "TimeGenerated": "2026-11-20T13:04:52.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179712000-3673\",\"requestTimeEpoch\":\"1795179712000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.10\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/miss28\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:03:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179600000-2896\",\"requestTimeEpoch\":\"1795179600000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page0\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:03:04.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179604000-7798\",\"requestTimeEpoch\":\"1795179604000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page1\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:03:08.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179608000-5532\",\"requestTimeEpoch\":\"1795179608000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page2\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:03:12.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179612000-6250\",\"requestTimeEpoch\":\"1795179612000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page3\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:03:16.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179616000-1545\",\"requestTimeEpoch\":\"1795179616000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page4\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:03:20.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179620000-1103\",\"requestTimeEpoch\":\"1795179620000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page5\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:03:24.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179624000-4629\",\"requestTimeEpoch\":\"1795179624000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page6\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:03:28.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179628000-1763\",\"requestTimeEpoch\":\"1795179628000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page7\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:03:32.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179632000-914\",\"requestTimeEpoch\":\"1795179632000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page8\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:03:36.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179636000-2468\",\"requestTimeEpoch\":\"1795179636000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page9\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:03:40.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179640000-3238\",\"requestTimeEpoch\":\"1795179640000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page10\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:03:44.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179644000-3888\",\"requestTimeEpoch\":\"1795179644000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page11\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:03:48.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179648000-8282\",\"requestTimeEpoch\":\"1795179648000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page12\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:03:52.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179652000-636\",\"requestTimeEpoch\":\"1795179652000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page13\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:03:56.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179656000-3823\",\"requestTimeEpoch\":\"1795179656000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page14\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:04:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179660000-6697\",\"requestTimeEpoch\":\"1795179660000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page15\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:04:04.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179664000-2355\",\"requestTimeEpoch\":\"1795179664000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page16\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:04:08.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179668000-1541\",\"requestTimeEpoch\":\"1795179668000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page17\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:04:12.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179672000-2084\",\"requestTimeEpoch\":\"1795179672000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page18\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:04:16.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179676000-7250\",\"requestTimeEpoch\":\"1795179676000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page19\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:04:20.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179680000-8757\",\"requestTimeEpoch\":\"1795179680000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page20\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:04:24.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179684000-2707\",\"requestTimeEpoch\":\"1795179684000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page21\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:04:28.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179688000-1913\",\"requestTimeEpoch\":\"1795179688000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page22\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:04:32.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179692000-3071\",\"requestTimeEpoch\":\"1795179692000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page23\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:04:36.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179696000-764\",\"requestTimeEpoch\":\"1795179696000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page24\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:04:40.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179700000-7098\",\"requestTimeEpoch\":\"1795179700000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page25\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:04:44.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179704000-4944\",\"requestTimeEpoch\":\"1795179704000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page26\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:04:48.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179708000-4790\",\"requestTimeEpoch\":\"1795179708000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page27\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:04:52.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179712000-791\",\"requestTimeEpoch\":\"1795179712000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page28\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:04:56.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179716000-9121\",\"requestTimeEpoch\":\"1795179716000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page29\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:05:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179720000-2644\",\"requestTimeEpoch\":\"1795179720000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page30\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:05:04.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179724000-9730\",\"requestTimeEpoch\":\"1795179724000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page31\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:05:08.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179728000-696\",\"requestTimeEpoch\":\"1795179728000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page32\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:05:12.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179732000-7934\",\"requestTimeEpoch\":\"1795179732000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page33\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:05:16.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179736000-1581\",\"requestTimeEpoch\":\"1795179736000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page34\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:05:20.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179740000-43\",\"requestTimeEpoch\":\"1795179740000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page35\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:05:24.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179744000-7809\",\"requestTimeEpoch\":\"1795179744000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page36\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:05:28.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179748000-2727\",\"requestTimeEpoch\":\"1795179748000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page37\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:05:32.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179752000-7622\",\"requestTimeEpoch\":\"1795179752000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page38\",\"route\":\"-\",\"status\":\"403\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 distinct paths, half failing (a crawler of real routes)",
+    "TimeGenerated": "2026-11-20T13:05:36.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179756000-2656\",\"requestTimeEpoch\":\"1795179756000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.11\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/page39\",\"route\":\"-\",\"status\":\"200\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179600000-4735\",\"requestTimeEpoch\":\"1795179600000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split0\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:04.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179604000-4089\",\"requestTimeEpoch\":\"1795179604000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split1\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:08.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179608000-2179\",\"requestTimeEpoch\":\"1795179608000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split2\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:12.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179612000-3237\",\"requestTimeEpoch\":\"1795179612000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split3\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:16.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179616000-4262\",\"requestTimeEpoch\":\"1795179616000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split4\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:20.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179620000-7920\",\"requestTimeEpoch\":\"1795179620000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split5\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:24.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179624000-5226\",\"requestTimeEpoch\":\"1795179624000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split6\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:28.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179628000-5196\",\"requestTimeEpoch\":\"1795179628000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split7\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:32.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179632000-3053\",\"requestTimeEpoch\":\"1795179632000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split8\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:36.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179636000-9003\",\"requestTimeEpoch\":\"1795179636000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split9\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:40.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179640000-109\",\"requestTimeEpoch\":\"1795179640000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split10\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:44.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179644000-139\",\"requestTimeEpoch\":\"1795179644000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split11\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:48.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179648000-9153\",\"requestTimeEpoch\":\"1795179648000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split12\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:52.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179652000-5495\",\"requestTimeEpoch\":\"1795179652000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split13\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:56.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179656000-8836\",\"requestTimeEpoch\":\"1795179656000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split14\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179660000-7778\",\"requestTimeEpoch\":\"1795179660000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split15\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:04.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179664000-4392\",\"requestTimeEpoch\":\"1795179664000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split16\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:08.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179668000-5038\",\"requestTimeEpoch\":\"1795179668000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split17\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:12.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179672000-5807\",\"requestTimeEpoch\":\"1795179672000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split18\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:16.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179676000-5609\",\"requestTimeEpoch\":\"1795179676000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split19\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:20.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179680000-2782\",\"requestTimeEpoch\":\"1795179680000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split20\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:24.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179684000-3784\",\"requestTimeEpoch\":\"1795179684000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split21\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:28.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179688000-6450\",\"requestTimeEpoch\":\"1795179688000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split22\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:32.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179692000-964\",\"requestTimeEpoch\":\"1795179692000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split23\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:36.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179696000-1223\",\"requestTimeEpoch\":\"1795179696000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split24\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:40.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179700000-8705\",\"requestTimeEpoch\":\"1795179700000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split25\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:44.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179704000-3867\",\"requestTimeEpoch\":\"1795179704000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split26\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:48.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179708000-8557\",\"requestTimeEpoch\":\"1795179708000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split27\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:52.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179712000-4380\",\"requestTimeEpoch\":\"1795179712000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split28\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:56.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179716000-5290\",\"requestTimeEpoch\":\"1795179716000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split29\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179720000-7759\",\"requestTimeEpoch\":\"1795179720000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split30\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:04.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179724000-1545\",\"requestTimeEpoch\":\"1795179724000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split31\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:08.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179728000-4499\",\"requestTimeEpoch\":\"1795179728000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split32\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:12.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179732000-4741\",\"requestTimeEpoch\":\"1795179732000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split33\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:16.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179736000-8134\",\"requestTimeEpoch\":\"1795179736000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split34\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:20.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179740000-1680\",\"requestTimeEpoch\":\"1795179740000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split35\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:24.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179744000-6698\",\"requestTimeEpoch\":\"1795179744000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split36\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:28.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179748000-396\",\"requestTimeEpoch\":\"1795179748000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split37\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:32.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179752000-7309\",\"requestTimeEpoch\":\"1795179752000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.12\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split38\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths split over two addresses (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:36.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179756000-8859\",\"requestTimeEpoch\":\"1795179756000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.13\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/split39\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:03:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179600000-7670\",\"requestTimeEpoch\":\"1795179600000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow0\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:03:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179630000-1264\",\"requestTimeEpoch\":\"1795179630000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow1\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:04:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179660000-4202\",\"requestTimeEpoch\":\"1795179660000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow2\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:04:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179690000-7228\",\"requestTimeEpoch\":\"1795179690000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow3\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:05:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179720000-7407\",\"requestTimeEpoch\":\"1795179720000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow4\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:05:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179750000-953\",\"requestTimeEpoch\":\"1795179750000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow5\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:06:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179780000-3539\",\"requestTimeEpoch\":\"1795179780000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow6\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:06:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179810000-5669\",\"requestTimeEpoch\":\"1795179810000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow7\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:07:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179840000-868\",\"requestTimeEpoch\":\"1795179840000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow8\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:07:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179870000-6706\",\"requestTimeEpoch\":\"1795179870000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow9\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:08:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179900000-7832\",\"requestTimeEpoch\":\"1795179900000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow10\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:08:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179930000-862\",\"requestTimeEpoch\":\"1795179930000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow11\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:09:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179960000-596\",\"requestTimeEpoch\":\"1795179960000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow12\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:09:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179990000-66\",\"requestTimeEpoch\":\"1795179990000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow13\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:10:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180020000-2369\",\"requestTimeEpoch\":\"1795180020000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow14\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:10:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180050000-3079\",\"requestTimeEpoch\":\"1795180050000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow15\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:11:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180080000-9645\",\"requestTimeEpoch\":\"1795180080000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow16\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:11:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180110000-491\",\"requestTimeEpoch\":\"1795180110000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow17\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:12:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180140000-4378\",\"requestTimeEpoch\":\"1795180140000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow18\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:12:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180170000-3084\",\"requestTimeEpoch\":\"1795180170000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow19\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:13:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180200000-2795\",\"requestTimeEpoch\":\"1795180200000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow20\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:13:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180230000-5981\",\"requestTimeEpoch\":\"1795180230000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow21\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:14:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180260000-4535\",\"requestTimeEpoch\":\"1795180260000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow22\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:14:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180290000-6961\",\"requestTimeEpoch\":\"1795180290000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow23\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:15:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180320000-4290\",\"requestTimeEpoch\":\"1795180320000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow24\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:15:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180350000-5316\",\"requestTimeEpoch\":\"1795180350000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow25\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:16:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180380000-7006\",\"requestTimeEpoch\":\"1795180380000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow26\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:16:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180410000-2664\",\"requestTimeEpoch\":\"1795180410000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow27\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:17:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180440000-2521\",\"requestTimeEpoch\":\"1795180440000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow28\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:17:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180470000-1263\",\"requestTimeEpoch\":\"1795180470000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow29\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:18:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180500000-7418\",\"requestTimeEpoch\":\"1795180500000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow30\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:18:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180530000-6684\",\"requestTimeEpoch\":\"1795180530000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow31\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:19:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180560000-8022\",\"requestTimeEpoch\":\"1795180560000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow32\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:19:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180590000-3584\",\"requestTimeEpoch\":\"1795180590000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow33\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:20:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180620000-5843\",\"requestTimeEpoch\":\"1795180620000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow34\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:20:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180650000-1941\",\"requestTimeEpoch\":\"1795180650000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow35\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:21:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180680000-4575\",\"requestTimeEpoch\":\"1795180680000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow36\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:21:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180710000-2361\",\"requestTimeEpoch\":\"1795180710000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow37\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:22:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180740000-104\",\"requestTimeEpoch\":\"1795180740000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow38\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over 20 minutes (10 per window)",
+    "TimeGenerated": "2026-11-20T13:22:30.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795180770000-7070\",\"requestTimeEpoch\":\"1795180770000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.14\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/slow39\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179600000-546\",\"requestTimeEpoch\":\"1795179600000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost0\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:04.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179604000-9364\",\"requestTimeEpoch\":\"1795179604000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost1\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:08.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179608000-7038\",\"requestTimeEpoch\":\"1795179608000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost2\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:12.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179612000-280\",\"requestTimeEpoch\":\"1795179612000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost3\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:16.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179616000-7083\",\"requestTimeEpoch\":\"1795179616000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost4\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:20.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179620000-8221\",\"requestTimeEpoch\":\"1795179620000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost5\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:24.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179624000-1751\",\"requestTimeEpoch\":\"1795179624000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost6\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:28.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179628000-3617\",\"requestTimeEpoch\":\"1795179628000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost7\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:32.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179632000-4160\",\"requestTimeEpoch\":\"1795179632000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost8\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:36.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179636000-7302\",\"requestTimeEpoch\":\"1795179636000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost9\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:40.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179640000-5634\",\"requestTimeEpoch\":\"1795179640000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost10\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:44.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179644000-2036\",\"requestTimeEpoch\":\"1795179644000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost11\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:48.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179648000-7310\",\"requestTimeEpoch\":\"1795179648000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost12\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:52.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179652000-7896\",\"requestTimeEpoch\":\"1795179652000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost13\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:03:56.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179656000-491\",\"requestTimeEpoch\":\"1795179656000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost14\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179660000-7789\",\"requestTimeEpoch\":\"1795179660000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost15\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:04.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179664000-3383\",\"requestTimeEpoch\":\"1795179664000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost16\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:08.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179668000-4017\",\"requestTimeEpoch\":\"1795179668000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost17\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:12.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179672000-8240\",\"requestTimeEpoch\":\"1795179672000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost18\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:16.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179676000-4678\",\"requestTimeEpoch\":\"1795179676000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost19\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:20.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179680000-801\",\"requestTimeEpoch\":\"1795179680000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost20\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:24.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179684000-2487\",\"requestTimeEpoch\":\"1795179684000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost21\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:28.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179688000-3645\",\"requestTimeEpoch\":\"1795179688000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost22\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:32.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179692000-6859\",\"requestTimeEpoch\":\"1795179692000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost23\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:36.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179696000-5816\",\"requestTimeEpoch\":\"1795179696000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost24\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:40.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179700000-1086\",\"requestTimeEpoch\":\"1795179700000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost25\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:44.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179704000-1956\",\"requestTimeEpoch\":\"1795179704000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost26\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:48.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179708000-514\",\"requestTimeEpoch\":\"1795179708000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost27\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:52.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179712000-6467\",\"requestTimeEpoch\":\"1795179712000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost28\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:04:56.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179716000-8309\",\"requestTimeEpoch\":\"1795179716000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost29\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179720000-3648\",\"requestTimeEpoch\":\"1795179720000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost30\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:04.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179724000-4966\",\"requestTimeEpoch\":\"1795179724000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost31\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:08.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179728000-8124\",\"requestTimeEpoch\":\"1795179728000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost32\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:12.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179732000-2490\",\"requestTimeEpoch\":\"1795179732000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost33\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:16.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179736000-4585\",\"requestTimeEpoch\":\"1795179736000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost34\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:20.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179740000-495\",\"requestTimeEpoch\":\"1795179740000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost35\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:24.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179744000-9509\",\"requestTimeEpoch\":\"1795179744000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost36\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:28.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179748000-227\",\"requestTimeEpoch\":\"1795179748000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost37\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:32.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179752000-130\",\"requestTimeEpoch\":\"1795179752000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"partner-api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost38\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "40 failing paths over two API domains (20 each)",
+    "TimeGenerated": "2026-11-20T13:05:36.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"requestId\":\"req-1795179756000-8036\",\"requestTimeEpoch\":\"1795179756000\",\"apiId\":\"a1b2c3d4e5\",\"stage\":\"prod\",\"domainName\":\"api.example.test\",\"sourceIp\":\"198.51.100.15\",\"userAgent\":\"python-requests/2.32.3\",\"httpMethod\":\"GET\",\"path\":\"/prod/api/twohost39\",\"route\":\"-\",\"status\":\"404\",\"responseLength\":\"120\",\"authorizerError\":\"-\",\"errorType\":\"-\",\"user\":\"-\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #0 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x0\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x0\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #1 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x1\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x1\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #2 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x2\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x2\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #3 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x3\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x3\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #4 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x4\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x4\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #5 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x5\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x5\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #6 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x6\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x6\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #7 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x7\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x7\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #8 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x8\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x8\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #9 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x9\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x9\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #10 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x10\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x10\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #11 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x11\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x11\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #12 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x12\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x12\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #13 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x13\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x13\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #14 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x14\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x14\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #15 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x15\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x15\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #16 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x16\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x16\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #17 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x17\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x17\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #18 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x18\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x18\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #19 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x19\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x19\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #20 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x20\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x20\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #21 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x21\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x21\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #22 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x22\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x22\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #23 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x23\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x23\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #24 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x24\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x24\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #25 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x25\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x25\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #26 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x26\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x26\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #27 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x27\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x27\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #28 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x28\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x28\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #29 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x29\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x29\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #30 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x30\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x30\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #31 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x31\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x31\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #32 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x32\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x32\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #33 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x33\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x33\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #34 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x34\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x34\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #35 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x35\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x35\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #36 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x36\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x36\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #37 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x37\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x37\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #38 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x38\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x38\", \"domainName\": \"api.example.test\"}"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "non-API-Gateway JSON log line #39 that mentions apiId (must be skipped: no status)",
+    "TimeGenerated": "2026-11-20T13:00:00.0000000Z",
+    "Type": "AWSCloudWatch",
+    "Message": "{\"level\": \"info\", \"apiId\": \"a1b2c3d4e5\", \"requestTimeEpoch\": \"1795179600000\", \"msg\": \"cache miss /prod/api/x39\", \"sourceIp\": \"198.51.100.16\", \"path\": \"/prod/api/x39\", \"domainName\": \"api.example.test\"}"
+  }
+]

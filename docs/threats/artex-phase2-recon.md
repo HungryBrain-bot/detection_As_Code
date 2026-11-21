@@ -90,6 +90,30 @@ customer records.
 - Mapping Splunk attack_data's web access logs for D3 background.
 - A build-time route registry for D2's baseline.
 
+## AWS and API Gateway port (2026-11-21)
+
+At the owner's request ("the same for all the phases considering aws
+based scenarios and api scenarios"), the recon rules were checked for
+what is Azure-specific and ported where an AWS log records the same
+behaviour (ADR 014). **No fetched source shows ARTEX, or any agent in the Phase 2 sources, acting on AWS**; the ports detect the same behaviour on AWS and nothing more.
+
+| Rule | AWS rule | Reads | Notes |
+|---|---|---|---|
+| [D1](../../detections/recon/D1-T1595-decoy-route-hit/) decoy route | [D5](../../detections/recon/D5-T1595-aws-waf-decoy-route-hit/) | `AWSWAF`, `Honeytoken_CL` | same decoy rows; CloudFront, ALB, API Gateway REST and other WAF-protected front doors; any WAF action |
+| [D3](../../detections/recon/D3-T1595.003-failing-path-sweep/) path sweep | [D6](../../detections/recon/D6-T1595.003-apigw-failing-path-sweep/) | `AWSCloudWatch` (API Gateway access log, [format](../components/apigateway-access-log.md)) | same thresholds; WAF has no response status, so API Gateway |
+| [D2](../../detections/recon/D2-T1594-docs-then-novel-api/) docs then routes | not ported | | documents and API calls are in two different AWS logs; parked (ADR 014) |
+| [D4](../../detections/recon/D4-T1580-cloud-permission-burst/) | already AWS | | |
+
+AWS facts the ports rely on (fetched 2026-11-21 through a fetch tool):
+WAF log fields (`uri`, `args`, `clientIp`, `httpSourceName`;
+`responseCodeSent` only "with a custom response") and the resource
+types WAF protects (API Gateway REST APIs, not HTTP APIs); API Gateway
+access log variables (no variable for the query string); the Sentinel
+AWSWAF and AWSCloudWatch table references; Microsoft's ingested AWSWAF
+sample (Azure-Sentinel c3361d9, read with git: request only in
+`HttpRequest`). Not found: whether API Gateway logs unmatched or
+throttled requests; whether WAF's `uri` carries the API stage.
+
 ## Sources
 - Wiz Research, "ARTEX in the Wild: Storm-0940 Expands Targeting of IT and Software Vendors", 2026-10-22, https://www.wiz.io/blog/artex-in-the-wild-storm-0940-expands-targeting-of-it-and-software-vendors
 - Microsoft Threat Intelligence and Microsoft Security Research, "AI-driven, large-scale nation-state campaign using ARTEX enables supply chain compromise", 2026-10-21, https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/

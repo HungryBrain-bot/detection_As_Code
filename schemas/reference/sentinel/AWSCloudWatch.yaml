@@ -1,0 +1,32 @@
+# Reference schema for the AWSCloudWatch table (CloudWatch Logs exported to S3 and read by
+# Sentinel's AWS S3 connector, "AWS CloudWatch - CloudWatch logs"). See docs/components/schema-check.md.
+# Columns and types from the Learn table reference (fetched 2026-11-21 through a fetch tool;
+# 8 columns, of which TenantId, _BilledSize and _IsBillable are not used here). Learn:
+# Message is "The data contained within logs from CloudWatch"; TimeGenerated "equals to
+# 'ExtractedTime' when included in message", otherwise (per the page) the ingestion time.
+# Added 2026-11-21 for rules D6 and E10 (ADR 014): their API Gateway access log lines are
+# JSON text in Message, in the format ADR 014 defines (docs/components/apigateway-access-log.md).
+#
+# Microsoft's Lambda functions that move CloudWatch log events to S3 for this connector
+# (Azure-Sentinel c3361d9, DataConnectors/AWS-S3/CloudWatchLambdaFunction.py and
+# CloudWatchPushBasedLambdaFunction.py) write each event's `message` as one line and drop the
+# CloudWatch timestamp, so Message is the access log line as API Gateway wrote it.
+name: AWSCloudWatch
+siem: sentinel
+source_url: https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/awscloudwatch
+vendor_page: https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/awscloudwatch
+fetched_on: '2026-11-21'
+provenance: Microsoft Learn table reference, read through a fetch tool (the column list was reported verbatim,
+  not checked character by character).
+fields:
+- ExtractedTime
+- Message
+- SourceSystem
+- TimeGenerated
+- Type
+types:
+  ExtractedTime: datetime
+  Message: string
+  SourceSystem: string
+  TimeGenerated: datetime
+  Type: string

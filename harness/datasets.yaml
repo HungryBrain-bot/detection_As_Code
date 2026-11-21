@@ -340,3 +340,64 @@ datasets:
     sha256: eab1d19a5fe4cd073270105c69002e0f6e4270ffc7fdbc368a10272db32a1e02
     format: winevent-xml
     license: Apache-2.0
+
+  # ---- AWS and API Gateway ports of Phases 2-4 (ADR 014).
+  # Raw CloudTrail records (Splunk attack_data) map through from_cloudtrail as for D4 and
+  # B14-B17. The WAF file is a Sentinel table export (CSV), read by format
+  # sentinel-table-csv (harness/mapping.py from_sentinel_csv).
+
+  sentinel-awswaf-ingested-sample:
+    description: >-
+      Microsoft's sample of 200 AWSWAF rows as ingested by the Sentinel connector (ALB 151,
+      CloudFront 26, API Gateway 23; 198 ALLOW, 2 BLOCK), added with the AWS WAF ASIM parser
+      (commit b9f5479, 2026-11-16). Host names and paths are anonymised (contoso, word
+      substitution); where the requests came from is not stated. Background for D5, not attack
+      data. MIT License, Azure-Sentinel LICENSE (fetched 2026-11-21).
+    source: github
+    repo: Azure/Azure-Sentinel
+    commit: c3361d9ff34320e7fe3314d5f9063e15470ca53e
+    format: sentinel-table-csv
+    table: AWSWAF
+    path: Sample Data/ASIM/AWS_WAF_WebSession_AWSWAF_IngestedLogs.csv
+    sha256: 7349dcea857ab82b8a44fd71fa716ad2ca4ef24e5d7f9112abeda27b07240379
+    license: MIT
+
+  splunk-aws-console-spray:
+    description: 31 failed AWS console sign-ins for 31 IAM users (user1-user31) from one address in 80 seconds, errorMessage "Failed authentication". Recorded positive for B18.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1110.003/aws_mulitple_failed_console_login/aws_cloudtrail.json
+    sha256: 2933759d957ae69868dcd693567a3ffe1d335cdf20f06fee5173249d9f171fbd
+    license: Apache-2.0
+
+  splunk-aws-console-unknown-user:
+    description: 28 failed console sign-ins from one address, 27 with userName HIDDEN_DUE_TO_SECURITY_REASONS and errorMessage "No username found in supplied account", 1 for an existing user. Background for B18.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1110.003/aws_multiple_login_fail_per_user/cloudtrail.json
+    sha256: c0a030b82103f8065913a3dd0285d0534ef421b807e06febbe73537f4f11b2e7
+    license: Apache-2.0
+
+  splunk-aws-console-login-failure:
+    description: 7 failed console sign-ins (4 unknown user, 3 existing users) from four addresses. Background for B18.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1110.001/aws_login_failure/aws_cloudtrail_events.json
+    sha256: d9d0ebbaf9a6aebd504b03f665eb1f35dfee4e34c0c6a5cf1c5318b7a12c1e9b
+    license: Apache-2.0
+
+  splunk-aws-root-login-two-ips:
+    description: 8 root console sign-ins (6 success, 2 failure) from two addresses. Background for B18.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1586.003/aws_console_login_multiple_ips/cloudtrail.json
+    sha256: d34e9b8c2623885b2599176297e7983ef474e022fa44808d7bd38f9f3bea631f
+    license: Apache-2.0
+
+  splunk-aws-instance-connect-keys:
+    description: 12 EC2 Instance Connect SendSSHPublicKey calls by one assumed role (SecurityResearchRole) to one instance, 2026-09-23. Recorded positive for E11.
+    source: splunk-attack-data
+    commit: *splunk
+    path: datasets/attack_techniques/T1021.008/aws_ec2_multiple_ssh_public_keys_uploaded/aws_ec2_multiple_ssh_public_keys_uploaded.json
+    sha256: 0d20787d8db59111b0e07ecbf35092c18e68a0909f531e3d8474ccf573092052
+    license: Apache-2.0
