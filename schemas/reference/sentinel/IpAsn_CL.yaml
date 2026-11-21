@@ -1,0 +1,41 @@
+# Reference schema for IpAsn_CL, the IP-range-to-ASN lookup read by rules B15 and B16
+# (docs/decisions/013-aws-workload-identity-rules.md). Not a vendor table: defined by
+# this project, because CloudTrail (AWSCloudTrail) records SourceIpAddress but no ASN.
+#
+# One row per IPv4 network in CIDR form (Network, e.g. "203.0.113.0/24"), with the
+# ASN that announces it (digits only, as a string, e.g. "16509") and the AS name.
+# The rules read it with the ipv4_lookup plugin, which needs CIDR (or single-address)
+# keys and non-overlapping ranges for a deterministic match.
+#
+# Suggested source: iptoasn.com's ip2asn-v4.tsv ("Licensed under Public Domain (PDDL
+# v1.0)", "Updated hourly", fetched 2026-11-21). Its rows are start-end ranges; the
+# loading job converts each range to CIDRs (Python ipaddress.summarize_address_range)
+# and drops rows whose AS number is 0 ("not routed"). MaxMind GeoLite2 ASN is an
+# alternative under its own licence (not checked here). The job must re-send the whole
+# table at least once per day, so B15's one-day period always holds every network;
+# B16 takes the latest row per network over 14 days.
+#
+# A Sentinel watchlist or an externaldata() call is the usual place for a lookup this
+# size; it is a table here because the harness's Kusto emulator has no _GetWatchlist and
+# runs offline. Switching is a one-line change to the rules' `asn_lookup` let.
+name: IpAsn_CL
+siem: sentinel
+source_url: https://iptoasn.com/
+vendor_page: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/ipv4-lookup-plugin
+fetched_on: '2026-11-21'
+provenance: Defined by this project (ADR 013); not based on any vendor schema. iptoasn.com
+  (source_url) was read for the data format and licence only.
+fields:
+- TimeGenerated
+- Network
+- ASN
+- AsName
+- Source
+- Type
+types:
+  TimeGenerated: datetime
+  Network: string
+  ASN: string
+  AsName: string
+  Source: string
+  Type: string

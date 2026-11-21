@@ -2,9 +2,10 @@
 
 ## Project
 
-Detection-as-code portfolio project: 32 detection rules (the ten
+Detection-as-code portfolio project: 36 detection rules (the ten
 originally scoped plus 22 added for the ARTEX Phase 1 to 4 posts at the
-owner's explicit request, 2026-11-07), each
+owner's explicit request, 2026-11-07, and 4 AWS ports of Phase 1,
+2026-11-21), each
 documented as an attack and as a detection, deployed through one
 pipeline to Microsoft Sentinel (KQL), Splunk (SPL) and Google SecOps
 (YARA-L), per customer (MSSP-style). Before deploying, a schema check
@@ -38,6 +39,10 @@ check the request is explicit from the owner (Venu).
 | B11 | identity | SSPR for 3+ users from one network, or 2+ users throttled from SSPR (2026-11-07) | T1589 | Sentinel |
 | B12 | identity | Legacy protocol or ROPC sign-ins on several accounts, or a password accepted over them (2026-11-07) | T1110.003, T1078.004 | Sentinel |
 | B13 | identity | Unsigned JWT or repeated OAuth callback / JWT tampering; schema-dependent, `AppAuthEvent_CL` (2026-11-07) | T1606, T1190 | Sentinel |
+| B14 | identity | AWS: decoy access key used, or decoy Secrets Manager / SSM secret named (2026-11-21, port of B4) | T1078.004, T1555.006 | Sentinel |
+| B15 | identity | AWS: one access key from inside AWS and outside it in a day; needs `IpAsn_CL` (2026-11-21, port of B5) | T1078.004 | Sentinel |
+| B16 | identity | AWS: IAM user or role from an ASN new in 14 days; needs `IpAsn_CL` (2026-11-21, port of B6) | T1078.004 | Sentinel |
+| B17 | identity | AWS: IAM user or role unlike its workload: new client, new discovery calls, fix-and-retry (2026-11-21, port of B7) | T1087.004, T1526, T1580 | Sentinel |
 | D1 | recon | Request to a decoy API route; the path is a `Honeytoken_CL` row (2026-11-07) | T1595, T1594 | Sentinel |
 | D2 | recon | Source map / Swagger / config download, then API routes the UI does not call (2026-11-07) | T1594, T1595 | Sentinel |
 | D3 | recon | One client, dozens of distinct paths in minutes, mostly 401/403/404 (2026-11-07) | T1595.003 | Sentinel |
@@ -91,6 +96,13 @@ Phase 4, foothold; ADR 012, docs/threats/artex-phase4-foothold.md),
 eight queries ran in the Kusto emulator on empty tables; E3, E4 and E6
 ran on recorded Splunk attack_data Sysmon sets (lab, not ARTEX). E7
 (MySQL general_log) dropped by the owner.
+B14-B17 added 2026-11-21 at the owner's explicit request (Phase 1 "in aws
+env"; ADR 013, docs/threats/artex-phase1-credential-sourcing.md, "AWS
+port"), `status: test`, targeted, Sentinel only, in `detections/identity/`,
+all on `AWSCloudTrail`. KQL ran in the Kusto emulator on hand-written
+samples; 0 rows on the recorded lab CloudTrail. No source shows ARTEX on
+AWS. B15 and B16 read `IpAsn_CL` (project-defined IP-to-ASN lookup,
+`ipv4_lookup`); its loader is not built, so they do nothing yet.
 Common high-value rules outside this list (brute force, AD changes)
 are parked in BUILD_LOG.md for the owner, not in scope. ATT&CK IDs above were checked against the enterprise
 STIX bundle on 2026-10-27 (all exist, none deprecated). ATLAS IDs were
@@ -145,7 +157,8 @@ flowchart LR
   AWSCloudTrail from Azure-Sentinel sample metadata; AppServiceHTTPLogs
   from the Learn table reference (fetched in full); OktaSSO from
   Microsoft's KQL validation table definition (Azure-Sentinel c0c2dc2);
-  `AppAuthEvent_CL` defined by this project (ADR 011); `LLMAppLog_CL` and
+  `AppAuthEvent_CL` defined by this project (ADR 011); `IpAsn_CL` defined
+  by this project (ADR 013; `Honeytoken_CL` AWS token types too); `LLMAppLog_CL` and
   `LLMCanary_CL`, defined by this project, ADR 008).
 - `log_sources.yaml` - log-source catalogue: owning team key and
   per-SIEM table / source / log type names.
@@ -256,6 +269,8 @@ Last run (2026-11-07): 167 passed, 0 failed; engine tests: A1-A4 pass
 in Kusto emulator and Splunk 10.6.1 (Splunk last run 2026-10-28),
 B1-B13, C1-C3 and D1-D4 in the Kusto emulator. 2026-11-07 (Phase 4
 branch, after merging Phase 3): 171 passed; E3, E4, E6 on recorded data only.
+2026-11-21 (AWS port): 174 passed; B14-B17 and D4 in the Kusto emulator
+(Kustainer 1.0.9820.14516).
 
 ## Model usage
 
@@ -270,9 +285,9 @@ conflicting sources).
 - Built: rule schema, validator, three adapters with read-only probes,
   schema check, per-customer log-source gate with file and SMTP
   notifiers, baseline/targeted tiers, coverage layers, CLI, CI
-  workflow, engine harness, component docs, ADRs 001-012, templates,
+  workflow, engine harness, component docs, ADRs 001-013, templates,
   six skills, LLM log-source inventory and feed report; rules A1-A4,
-  B1-B13, C1-C3, D1-D4; E1-E6, E8, E9 (experimental, no
+  B1-B17, C1-C3, D1-D4; E1-E6, E8, E9 (experimental, no
   samples); hunt H1.
 - Verified: everything in the test suite; ATT&CK IDs for the planned
   rules against the STIX bundle; the first CI workflow ran green on
@@ -289,6 +304,13 @@ conflicting sources).
   principal sign-ins; Key Vault `id_s` / `identity_claim_appid_g` format
   in a live vault; `MicrosoftGraphActivityLogs` column types (from a
   summarising fetch).
+- Not verified: B14-B17 against any recorded attack or real account (all
+  positives hand-written); `ipv4_lookup` in Log Analytics (Learn lists
+  ADX and Fabric only); any `IpAsn_CL` loader (not built); whether every
+  AWS key-validation call is in CloudTrail; SSM `requestParameters` key
+  names; the Secrets Manager ARN suffix; that Amazon's address space is
+  announced from AS16509 / AS14618. B15 and B16 miss attackers who run
+  from AWS.
 - Not verified: E1-E6, E8, E9 on any sample (none exist); E1, E2, E5,
   E8, E9 have never matched anything; Defender `ActionType`, `OSPlatform`
   and `DeviceType` values; `AppServiceAuditLogs` `Protocol` values for
@@ -321,7 +343,7 @@ conflicting sources).
   app logs (none public); `LLMAppLog_CL` / `LLMCanary_CL` in a workspace;
   every LLM normaliser and the canary registry job (designs only); the
   inventory's Vertex AI and Azure OpenAI field entries.
-- Next: every rule in Scope is built (32; the eight foothold rules are
+- Next: every rule in Scope is built (36; the eight foothold rules are
   experimental with no samples, which the owner parked: samples and
   negative tests for E1-E9 are in BUILD_LOG.md). The four LLM decisions were
   settled on defaults on 2026-10-28 (BUILD_LOG.md); the owner can still

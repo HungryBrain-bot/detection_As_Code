@@ -58,6 +58,9 @@ The output is `tests/results/<engine>.json` in the rule folder, and
      columns (`from_cloudtrail`, 2026-11-07, rule D4); hand-written
      `AppServiceHTTPLogs` and `AWSCloudTrail` rows load as they are (no
      recorded web access log is loaded; ADR 010);
+     since 2026-11-21 also the session issuer, VPC endpoint, invokedBy
+     and request parameters (rules B14-B17), and hand-written `IpAsn_CL`
+     lookup rows load as they are (ADR 013);
    - Splunk attack_data Sysmon as Windows event XML (`format:
      winevent-xml`, `harness/winxml.py`, 2026-11-07, ADR 012): Windows
      channels -> the same `Event` / `SecurityEvent` rows as OTRF data;
@@ -91,7 +94,8 @@ The output is `tests/results/<engine>.json` in the rule folder, and
    (hand-written lookup rows loaded with the datasets, e.g. a canary
    registry), and `rebase_time` (shift timestamps so the newest row is
    two minutes old, for queries using `ago()`; recorded Azure Monitor
-   records are shifted by their `time`).
+   records are shifted by their `time`, raw CloudTrail records by
+   `eventTime` since 2026-11-21).
 
 ## Why this method
 - The owner has no Azure Data Explorer cluster, Log Analytics workspace

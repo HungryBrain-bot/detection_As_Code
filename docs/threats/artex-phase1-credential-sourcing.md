@@ -72,3 +72,30 @@ character by character.
 - Recorded Future, https://www.recordedfuture.com/blog/tag-217-artex-south-korean-banks (2026-10-16).
 - Azure-Sentinel HoneyTokens solution, https://github.com/Azure/Azure-Sentinel/tree/master/Solutions/HoneyTokens (commit c0c2dc2).
 All fetched 2026-11-07.
+
+## AWS port (2026-11-21)
+
+At the owner's request, the four Phase 1 rules were ported to AWS
+CloudTrail (ADR 013). **No fetched source shows ARTEX or the agents in
+Microsoft's report using AWS keys**; the ports detect the same behaviour
+on AWS and nothing more.
+
+| Azure rule | AWS rule | Reads | Notes |
+|---|---|---|---|
+| [B4](../../detections/identity/B4-T1078.004-honeytoken-credential-use/) honeytoken | [B14](../../detections/identity/B14-T1078.004-aws-honeytoken-key-use/) | `AWSCloudTrail`, `Honeytoken_CL` | decoy access key used (any result) or decoy Secrets Manager / SSM name in a request |
+| [B5](../../detections/identity/B5-T1078.004-credential-two-networks/) two networks | [B15](../../detections/identity/B15-T1078.004-aws-key-two-networks/) | `AWSCloudTrail`, `IpAsn_CL` | per access key id; needs the IP-to-ASN table (CloudTrail has no ASN) |
+| [B6](../../detections/identity/B6-T1078.004-sp-new-network/) new ASN | [B16](../../detections/identity/B16-T1078.004-aws-principal-new-network/) | `AWSCloudTrail`, `IpAsn_CL` | per IAM user or role; 50 baseline calls |
+| [B7](../../detections/identity/B7-T1087.004-sp-unlike-its-app/) unlike its app | [B17](../../detections/identity/B17-T1087.004-aws-principal-unlike-its-app/) | `AWSCloudTrail` | new client, 5+ new discovery calls, fix-and-retry; differs from D4 (README) |
+
+AWS facts the ports rely on, fetched 2026-11-21 through a fetch tool:
+CloudTrail record contents (`sourceIPAddress` is a DNS name for AWS
+services and "usually `AWS Internal/#`" for AWS-originated events;
+`vpcEndpointId`); userIdentity (`accessKeyId`, `sessionIssuer.arn`);
+Secrets Manager's CloudTrail entries (GetSecretValue logged, also for
+BatchGetSecretValue); SSM GetParameter (`ParameterNotFound` "is *not*
+recorded"); AWS IP ranges (published only for commonly filtered
+services); PeeringDB (AS16509, AS14618: Amazon.com, Inc.); iptoasn.com
+(PDDL); `ipv4_lookup` (Learn page lists ADX and Fabric, not Log
+Analytics). Not found in a fetched source: whether
+`sts:GetCallerIdentity` is always logged; the AKIA / ASIA prefix
+meanings.

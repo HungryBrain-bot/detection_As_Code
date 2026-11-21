@@ -7,10 +7,11 @@ and fields the rule reads, holds back rules whose data is not
 confirmed (and tells the owning team exactly what is missing), and
 reports per-customer coverage as ATT&CK / ATLAS Navigator layers.
 
-**Status (2026-11-07):** the pipeline is built and tested offline, and
-32 rules are built: the ten originally scoped (A1-A4 endpoint, B1-B3
-Entra ID identity, C1-C3 LLM application) and 22 added at the owner's
-request for the ARTEX Phase 1 to 4 blog posts. 24 rules are
+**Status (2026-11-21):** the pipeline is built and tested offline, and
+36 rules are built: the ten originally scoped (A1-A4 endpoint, B1-B3
+Entra ID identity, C1-C3 LLM application), 22 added at the owner's
+request for the ARTEX Phase 1 to 4 blog posts, and 4 AWS ports of the
+Phase 1 rules (B14-B17, 2026-11-21). 28 rules are
 `status: test`; the eight Phase 4 foothold rules are
 `status: experimental` (deployed disabled) and have no samples.
 
@@ -31,6 +32,7 @@ recorded data) and an engine run recorded in its `tests/evidence.md`.
 | Endpoint | A1-A4 | KQL and SPL on recorded OTRF data; YARA-L not run anywhere |
 | Identity (original) | B1-B3 | KQL on recorded Entra logs; B3's positives hand-written |
 | ARTEX Phase 1, credential sourcing | B4-B7, hunt [H1](docs/hunts/H1-leaked-secrets-self-search.md) | hand-written samples only ([threats doc](docs/threats/artex-phase1-credential-sourcing.md), [ADR 009](docs/decisions/009-workload-identity-rules.md)) |
+| ARTEX Phase 1, AWS port | B14-B17 | hand-written samples only; 0 rows on recorded lab CloudTrail; B15/B16 need an IP-to-ASN table whose loader is not built ([threats doc, AWS port](docs/threats/artex-phase1-credential-sourcing.md#aws-port-2026-11-21), [ADR 013](docs/decisions/013-aws-workload-identity-rules.md)) |
 | ARTEX Phase 2, recon | D1-D4 | D1-D3 hand-written only; D4 also on recorded lab CloudTrail ([threats doc](docs/threats/artex-phase2-recon.md), [ADR 010](docs/decisions/010-recon-rules.md)) |
 | ARTEX Phase 3, identity | B8-B13 | B8 and B12 matched recorded attacks; B9 missed the only recorded Okta spray; B10, B11, B13 hand-written only ([threats doc](docs/threats/artex-phase3-identity.md), [ADR 011](docs/decisions/011-identity-attack-rules.md)) |
 | ARTEX Phase 4, foothold | E1-E6, E8, E9 (experimental) | no samples; E3, E4, E6 ran on recorded lab Sysmon sets, the rest never ran on data ([threats doc](docs/threats/artex-phase4-foothold.md), [ADR 012](docs/decisions/012-foothold-rules.md)) |
@@ -43,8 +45,10 @@ which only partly, and which not at all, and only the verified ones
 are the basis for attribution. Second, the thresholds in B8-B13, D2,
 D3 and E1 are this project's own choices (their ADRs and threats docs
 say so), not numbers from a source or from a real tenant. Third, every
-ARTEX rule is `targeted` and Sentinel only; B9 reads Okta and D4 AWS
-CloudTrail through their Sentinel connectors.
+ARTEX rule is `targeted` and Sentinel only; B9 reads Okta, and D4 and
+B14-B17 AWS CloudTrail, through their Sentinel connectors. No fetched
+source shows ARTEX on AWS: B14-B17 detect the Phase 1 behaviour there,
+nothing more.
 
 The endpoint rules' KQL and SPL ran in local engines (Kusto emulator,
 Splunk Enterprise container) on recorded open-source data. **No public
@@ -78,6 +82,10 @@ verified against a live API.
 | B11 | [SSPR for several users from one network](detections/identity/B11-T1589-recovery-for-many-users/) | T1589 | targeted | KQL ran on hand-written samples only; no recorded SSPR event | n/a |
 | B12 | [Legacy auth / ROPC probing](detections/identity/B12-T1110.003-legacy-auth-probing/) | T1110.003, T1078.004 | targeted | KQL: 1 row on recorded data, the MFASweep ROPC attempts (password accepted, MFA required); legacy branch hand-written | n/a |
 | B13 | [Unsigned JWT / OAuth callback tampering](detections/identity/B13-T1606-oauth-jwt-tampering/) | T1606, T1190 | targeted | **Schema-dependent**: reads `AppAuthEvent_CL`, which an app must write; KQL ran on hand-written samples only | n/a |
+| B14 | [AWS: decoy access key or decoy secret used](detections/identity/B14-T1078.004-aws-honeytoken-key-use/) | T1078.004, T1555.006 | targeted | KQL ran; no recorded decoy; positives hand-written | n/a |
+| B15 | [AWS: one access key inside and outside AWS](detections/identity/B15-T1078.004-aws-key-two-networks/) | T1078.004 | targeted | KQL ran (ADX `ipv4_lookup`, Log Analytics not checked); needs `IpAsn_CL`; positives hand-written | n/a |
+| B16 | [AWS: IAM user or role from a new ASN](detections/identity/B16-T1078.004-aws-principal-new-network/) | T1078.004 | targeted | as B15 | n/a |
+| B17 | [AWS: IAM user or role unlike its workload](detections/identity/B17-T1087.004-aws-principal-unlike-its-app/) | T1087.004, T1526, T1580 | targeted | KQL ran; 0 rows on 6,417 recorded CloudTrail events (lab scanners have no history to compare); positives hand-written | n/a |
 | D1 | [Request to a decoy API route](detections/recon/D1-T1595-decoy-route-hit/) | T1595, T1594 | targeted | KQL ran on hand-written samples only; no recorded web access log with a decoy | n/a |
 | D2 | [Source map / Swagger / config download, then routes the UI does not call](detections/recon/D2-T1594-docs-then-novel-api/) | T1594, T1595 | targeted | KQL ran on hand-written samples only (baseline and attack); no recorded web log | n/a |
 | D3 | [One client, dozens of distinct paths in minutes, mostly 401/403/404](detections/recon/D3-T1595.003-failing-path-sweep/) | T1595.003 | targeted | KQL ran on hand-written samples only; thresholds are this project's | n/a |
@@ -183,7 +191,8 @@ python -m harness fetch && python -m harness run --engine kusto
   [009 workload identity rules](docs/decisions/009-workload-identity-rules.md),
   [010 recon rules](docs/decisions/010-recon-rules.md),
   [011 identity attack rules](docs/decisions/011-identity-attack-rules.md),
-  [012 foothold rules](docs/decisions/012-foothold-rules.md)
+  [012 foothold rules](docs/decisions/012-foothold-rules.md),
+  [013 AWS port of the Phase 1 rules](docs/decisions/013-aws-workload-identity-rules.md)
 - ARTEX threat notes (which blog claims a fetched source verified, and
   which rules map to them): [Phase 1](docs/threats/artex-phase1-credential-sourcing.md),
   [Phase 2](docs/threats/artex-phase2-recon.md),

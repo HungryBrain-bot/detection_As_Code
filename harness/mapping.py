@@ -225,7 +225,9 @@ NATIVE_TABLES = ("LLMAppLog_CL", "LLMCanary_CL", "AzureDiagnostics", "Honeytoken
                  # Foothold track (ADR 012): hand-written Defender for Endpoint, App Service
                  # audit and Syslog rows, and Sysmon for Linux lines from harness/winxml.py.
                  "Syslog", "DeviceProcessEvents", "DeviceFileEvents", "DeviceNetworkEvents",
-                 "DeviceInfo", "AppServiceAuditLogs")
+                 "DeviceInfo", "AppServiceAuditLogs",
+                 # AWS port of Phase 1 (ADR 013): the hand-written IP-to-ASN lookup.
+                 "IpAsn_CL")
 # Suffixes the Okta connector's table adds to a flattened System Log key (ADR 011).
 OKTA_SUFFIXES = ("_s", "_d", "_b", "_g", "_t")
 
@@ -238,11 +240,15 @@ def is_cloudtrail_record(event: dict) -> bool:
 def from_cloudtrail(record: dict) -> dict:
     """AWSCloudTrail row for a raw CloudTrail record (ADR 010).
 
-    Only the columns rule D4 reads, plus a few identifying ones, are mapped; every other
+    Only the columns rules D4 and B14-B17 read, plus a few identifying ones, are mapped (the
+    session issuer, VPC endpoint, invoked-by and request parameters added 2026-11-21 for
+    B14-B17, ADR 013; RequestParameters is kept as JSON text); every other
     column of Sentinel's table stays empty. Sentinel's AWS S3 connector fills these from the
     same record fields (names follow Microsoft's column list); the connector itself was not run.
     """
     identity = record.get("userIdentity") or {}
+    issuer = (identity.get("sessionContext") or {}).get("sessionIssuer") or {}
+    params = record.get("requestParameters")
     return {
         "TimeGenerated": record.get("eventTime"), "Type": "AWSCloudTrail",
         "EventName": record.get("eventName"), "EventSource": record.get("eventSource"),
@@ -252,6 +258,9 @@ def from_cloudtrail(record: dict) -> dict:
         "RecipientAccountId": record.get("recipientAccountId"),
         "UserIdentityArn": identity.get("arn"), "UserIdentityType": identity.get("type"),
         "UserIdentityUserName": identity.get("userName"), "UserIdentityAccessKeyId": identity.get("accessKeyId"),
+        "UserIdentityInvokedBy": identity.get("invokedBy"), "SessionIssuerArn": issuer.get("arn"),
+        "SessionIssuerType": issuer.get("type"), "VpcEndpointId": record.get("vpcEndpointId"),
+        "RequestParameters": json.dumps(params) if isinstance(params, (dict, list)) else params,
     }
 
 

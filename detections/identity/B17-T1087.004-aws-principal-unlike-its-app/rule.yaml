@@ -1,0 +1,76 @@
+id: 87e1af93-a3c9-4291-a190-2d9a3d28c634
+name: AWS IAM user or role stops looking like its workload (new client, new discovery calls, fix-and-retry)
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >
+  In the last hour, an IAM user or role shows at least two of three
+  behaviours its own code does not: a client (user-agent family) not
+  seen for it in 14 days, five or more discovery calls (List*,
+  Describe*, GetCallerIdentity, GetAccountAuthorizationDetails) it has
+  not made in 14 days, and a failed call corrected and retried
+  successfully within 60 seconds. Production code does not experiment;
+  something driving a stolen key does. Baseline-relative, unlike D4's
+  fixed denial burst (ADR 013). AWS port of B7.
+log_sources: [aws-cloudtrail]
+mapping:
+  attack:
+    techniques: [T1087.004, T1526, T1580]
+    tactics: [discovery]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: P14D
+  required_fields:
+    AWSCloudTrail: [TimeGenerated, EventName, EventSource, ErrorCode, UserIdentityArn, UserIdentityType, SessionIssuerArn, UserIdentityInvokedBy, UserAgent, RequestParameters, SourceIpAddress]
+  query: |
+    // B17: IAM user or role unlike its workload (detections/identity/B17-T1087.004-aws-principal-unlike-its-app/README.md)
+    let recent = 1h;
+    let retry_window = 60s;
+    let min_new_discovery = 5;
+    let calls = AWSCloudTrail
+    | where UserIdentityType in ("IAMUser", "AssumedRole") and isempty(UserIdentityInvokedBy)
+    | extend Principal = iff(UserIdentityType == "AssumedRole", SessionIssuerArn, UserIdentityArn)
+    | where isnotempty(Principal)
+    // Some SDK user agents are logged wrapped in brackets ("[aws-cli/2...]"): stripped before taking the family.
+    | extend Client = tolower(trim_start(@"\[", tostring(split(UserAgent, "/")[0]))),
+             Api = strcat(EventSource, ":", EventName)
+    | extend Discovery = EventName startswith "List" or EventName startswith "Describe"
+                         or EventName in ("GetCallerIdentity", "GetAccountAuthorizationDetails");
+    let baseline = calls
+    | where TimeGenerated < ago(recent)
+    | summarize BaselineClients = make_set(Client, 50), BaselineApis = make_set(Api), BaselineCalls = count() by Principal;
+    let now_calls = calls
+    | where TimeGenerated >= ago(recent);
+    // A failed call, then the same API succeeding with different parameters within the window.
+    // Throttling is excluded: SDKs retry it themselves with the same parameters.
+    let retries = now_calls
+    | where isnotempty(ErrorCode) and ErrorCode !contains "Throttl"
+    | project Principal, Api, FailTime = TimeGenerated, FailedParams = RequestParameters, FailedError = ErrorCode
+    | join kind=inner (now_calls
+        | where isempty(ErrorCode)
+        | project Principal, Api, OkTime = TimeGenerated, OkParams = RequestParameters)
+        on Principal, Api
+    | where OkTime > FailTime and OkTime <= FailTime + retry_window and OkParams != FailedParams
+    | summarize FixedRetries = dcount(strcat(Api, FailedParams)), RetryExamples = make_set(strcat(Api, " ", FailedError), 5) by Principal;
+    now_calls
+    | summarize Calls = count(), Clients = make_set(Client, 10), UserAgents = make_set(UserAgent, 10),
+                IPAddresses = make_set(SourceIpAddress, 20), UserIdentityType = take_any(UserIdentityType),
+                DiscoveryApis = make_set_if(Api, Discovery, 100), Failures = countif(isnotempty(ErrorCode)),
+                FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+        by Principal
+    | join kind=inner baseline on Principal
+    | join kind=leftouter retries on Principal
+    | extend NewClients = set_difference(Clients, BaselineClients),
+             NewDiscoveryApis = set_difference(DiscoveryApis, BaselineApis),
+             FixedRetries = coalesce(FixedRetries, 0)
+    | extend NewClient = array_length(NewClients) > 0,
+             Enumeration = array_length(NewDiscoveryApis) >= min_new_discovery,
+             FixAndRetry = FixedRetries > 0
+    | extend Signals = toint(NewClient) + toint(Enumeration) + toint(FixAndRetry)
+    | where Signals >= 2
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, Principal, UserIdentityType, Signals, NewClient, NewClients, Enumeration, NewDiscoveryApis,
+              FixAndRetry, FixedRetries, RetryExamples, Calls, Failures, UserAgents, IPAddresses, BaselineClients, BaselineCalls,
+              FirstSeen, LastSeen

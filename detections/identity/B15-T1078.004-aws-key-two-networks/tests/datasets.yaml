@@ -1,0 +1,4 @@
+datasets:
+  - splunk-aws-accessdenied-discovery
+  - splunk-aws-security-scanner
+  - splunk-aws-excessive-list

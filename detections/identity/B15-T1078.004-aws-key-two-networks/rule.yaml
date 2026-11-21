@@ -1,0 +1,58 @@
+id: d4688408-5c3b-48fb-a8ca-401f80ea29e7
+name: One AWS access key used from AWS's network and from outside it
+version: 1
+status: test
+severity: High
+tier: targeted
+description: >
+  Successful CloudTrail calls with the same access key id from inside
+  AWS (an AWS ASN, a VPC endpoint or a private address) and from another
+  network in the same day. A workload that runs in AWS calls AWS from
+  AWS; the same key also used from a VPS or home connection means a
+  second party holds it. CloudTrail has no ASN column, so the network
+  comes from IpAsn_CL, an IP-range-to-ASN table this project defines
+  (ADR 013). AWS port of B5.
+log_sources: [aws-cloudtrail, ip-asn-lookup]
+mapping:
+  attack:
+    techniques: [T1078.004]
+    tactics: [initial-access]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: P1D
+  required_fields:
+    IpAsn_CL: [TimeGenerated, Network, ASN, AsName]
+    AWSCloudTrail: [TimeGenerated, ErrorCode, UserIdentityAccessKeyId, UserIdentityArn, UserIdentityType, SourceIpAddress, VpcEndpointId, EventSource, EventName, UserAgent]
+  query: |
+    // B15: one access key, two kinds of network (detections/identity/B15-T1078.004-aws-key-two-networks/README.md)
+    // ASNs the customer workloads call AWS from. 16509 and 14618 are registered to Amazon.com (PeeringDB);
+    // add the customer own egress ASNs (data centre, other clouds) per deployment.
+    let internal_asns = dynamic(["16509", "14618"]);
+    let asn_lookup = IpAsn_CL | summarize arg_max(TimeGenerated, ASN, AsName) by Network
+    // Keep only these: a TimeGenerated column here replaces the event time after ipv4_lookup (seen in the emulator).
+    | project Network, ASN, AsName;
+    AWSCloudTrail
+    | where isempty(ErrorCode) and isnotempty(UserIdentityAccessKeyId)
+    // IPv4 only. AWS services acting for the caller log a DNS name or "AWS Internal" instead of an IP: skipped.
+    | where isnotnull(parse_ipv4(SourceIpAddress))
+    | evaluate ipv4_lookup(asn_lookup, SourceIpAddress, Network, return_unmatched = true)
+    | extend ViaVpcEndpoint = isnotempty(VpcEndpointId) and VpcEndpointId !startswith "AWS Internal"
+    | extend Origin = case(ViaVpcEndpoint or ipv4_is_private(SourceIpAddress) or ASN in (internal_asns), "internal",
+                           isnotempty(ASN), "external",
+                           "unknown")
+    // No ASN for the address (lookup missing or stale): not counted on either side.
+    | where Origin != "unknown"
+    | summarize InternalCalls = countif(Origin == "internal"), ExternalCalls = countif(Origin == "external"),
+                InternalIPs = make_set_if(SourceIpAddress, Origin == "internal", 20),
+                ExternalIPs = make_set_if(SourceIpAddress, Origin == "external", 20),
+                ExternalASNs = make_set_if(strcat(ASN, " ", AsName), Origin == "external", 10),
+                ExternalCallsList = make_set_if(strcat(EventSource, ":", EventName), Origin == "external", 20),
+                ExternalUserAgents = make_set_if(UserAgent, Origin == "external", 10),
+                FirstExternal = minif(TimeGenerated, Origin == "external"),
+                FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+        by UserIdentityAccessKeyId, UserIdentityArn, UserIdentityType
+    | where InternalCalls > 0 and ExternalCalls > 0
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, UserIdentityArn, UserIdentityType, UserIdentityAccessKeyId, InternalCalls, ExternalCalls,
+              ExternalASNs, ExternalIPs, InternalIPs, ExternalCallsList, ExternalUserAgents, FirstExternal, FirstSeen, LastSeen
