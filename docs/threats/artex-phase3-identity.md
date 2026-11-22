@@ -101,6 +101,31 @@ application and audit reviews, not these.
 - `OktaV2_CL` (Okta connector v2 table, different column names).
 - AADSTS50034 (unknown account) as a spray signal: left out of B8 to match the draft's codes; a spray with a bad user list shows as 50034.
 
+## AWS port (2026-11-21)
+
+Ported where AWS records the same behaviour with the fields a rule
+needs (ADR 014). **No fetched source shows ARTEX, or any agent in the Phase 3 sources, acting on AWS**; the ports detect the same behaviour on AWS and nothing more.
+
+| Rule | AWS rule | Notes |
+|---|---|---|
+| [B8](../../detections/identity/B8-T1110.003-entra-account-side-spray/) Entra spray | [B18](../../detections/identity/B18-T1110.003-aws-signin-spray/) | console sign-ins of IAM users and root, and IAM Identity Center password checks, counted per account as B8; caught the recorded Splunk console spray (31 users) |
+| B9 Okta spray | not ported | Okta is not AWS; B9 covers Okta in front of AWS |
+| B10 several login flows | not ported | the only AWS password flows are B18's; the rest has no AWS counterpart |
+| B11 recovery for many users | not ported | no Identity Center reset event in AWS's list; Cognito logs the user's `sub`, not the user name, and no `ForgotPassword` example was found |
+| B12 legacy / ROPC | not ported | no legacy path on AWS sign-in; Cognito `USER_PASSWORD_AUTH` not distinguishable in fetched pages |
+| B13 OAuth / JWT tampering | not ported | B13's app-written table already works on AWS; API Gateway authorizer error texts not documented |
+
+AWS facts B18 relies on (fetched 2026-11-21 through a fetch tool):
+the ConsoleLogin failure example (`"errorMessage": "Failed
+authentication"`, `responseElements.ConsoleLogin`); Identity Center
+`CredentialChallenge` / `CredentialVerification` / `UserAuthentication`
+and the failed-password example (`serviceEventDetails`); the user name
+rule (`HIDDEN_DUE_TO_SECURITY_REASONS` for a wrong user name). The
+recorded sets (Splunk attack_data) also show "No username found in
+supplied account" for hidden names. Not found: a recorded Identity
+Center event; where exactly `CredentialType` sits (AWS's text and
+example differ).
+
 ## Sources
 - Wiz Research, "ARTEX in the Wild: Storm-0940 Expands Targeting of IT and Software Vendors", 2026-10-22 (Sapir Federovsky, Rami McCarthy), https://www.wiz.io/blog/artex-in-the-wild-storm-0940-expands-targeting-of-it-and-software-vendors
 - Microsoft Threat Intelligence and Microsoft Security Research, "AI-driven, large-scale nation-state campaign using ARTEX enables supply chain compromise", 2026-10-21, https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/

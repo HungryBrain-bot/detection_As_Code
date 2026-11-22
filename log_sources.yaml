@@ -148,3 +148,23 @@ app-service-audit:
   owner: app-platform-team
   siem:
     sentinel: [AppServiceAuditLogs]
+
+# Added 2026-11-21 for the AWS and API Gateway ports of Phases 2-4 (ADR 014).
+# B18 and E11 read aws-cloudtrail (above); D5 also reads honeytoken-registry.
+aws-waf:
+  description: AWS WAF web ACL logs (CloudFront, Application Load Balancer, API Gateway REST APIs, AppSync, Cognito and other WAF-protected resources) in Sentinel through the AWS S3 WAF connector, AWSWAF table. The request is in the HttpRequest column; WAF does not record the origin's response status.
+  owner: app-platform-team
+  siem:
+    sentinel: [AWSWAF]
+
+aws-apigateway-access:
+  description: Amazon API Gateway access logs (REST and HTTP APIs) in the JSON format defined in docs/components/apigateway-access-log.md, written to CloudWatch Logs and brought into Sentinel's AWSCloudWatch table (Message) by a CloudWatch-to-S3 Lambda and the AWS S3 connector. Each API stage needs access logging on with that format.
+  owner: app-platform-team
+  siem:
+    sentinel: [AWSCloudWatch]
+
+aws-route53-resolver:
+  description: Route 53 Resolver query logs (DNS queries from VPCs) in Sentinel through the Amazon Web Services Route 53 connector, AWSRoute53Resolver table. Each VPC needs a query logging configuration.
+  owner: cloud-platform-team
+  siem:
+    sentinel: [AWSRoute53Resolver]

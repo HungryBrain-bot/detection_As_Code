@@ -1,0 +1,24 @@
+{
+  "rule_id": "7f80019a-3148-445f-aa09-6000fe752900",
+  "rule_version": 1,
+  "engine": "Kustainer (ADX engine) 1.0.9820.14516, product 2026.11.20.0756-2646-8369074-master",
+  "date": "2026-11-21",
+  "samples": {
+    "positive_events": 6,
+    "positive_cases": 3,
+    "positive_rows": 3,
+    "negative_events": 7,
+    "negative_rows": 0
+  },
+  "datasets": [
+    {
+      "id": "sentinel-awswaf-ingested-sample",
+      "commit": "c3361d9ff34320e7fe3314d5f9063e15470ca53e",
+      "files": 1
+    }
+  ],
+  "dataset_events": 200,
+  "dataset_rows": 0,
+  "matched": [],
+  "columns_dropped_in_mapping": {}
+}

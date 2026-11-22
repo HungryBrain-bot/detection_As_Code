@@ -1,0 +1,210 @@
+[
+  {
+    "_provenance": "hand-written",
+    "_note": "registry row",
+    "TimeGenerated": "2026-11-20T11:30:00.0000000Z",
+    "Type": "Honeytoken_CL",
+    "TokenType": "DecoyRoute",
+    "TokenValue": "/api/internal/v1/export-customers",
+    "PlantedIn": "openapi.json served at /docs/openapi.json (shop-prod)"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "registry row",
+    "TimeGenerated": "2026-11-20T11:30:00.0000000Z",
+    "Type": "Honeytoken_CL",
+    "TokenType": "DecoyRoute",
+    "TokenValue": "/api/v2/admin/tenants/export",
+    "PlantedIn": "main.3f9a.js bundle (shop-prod)"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "real route whose name starts with the decoy's",
+    "TimeGenerated": "2026-11-20T12:00:00.0000000Z",
+    "Type": "AWSWAF",
+    "Action": "ALLOW",
+    "HttpRequest": {
+      "clientIp": "198.51.100.50",
+      "country": "NL",
+      "headers": [
+        {
+          "name": "Host",
+          "value": "shop.example.test"
+        },
+        {
+          "name": "User-Agent",
+          "value": "python-httpx/0.28.1"
+        },
+        {
+          "name": "Accept",
+          "value": "*/*"
+        }
+      ],
+      "uri": "/api/internal/v1/export-customers-v2",
+      "args": "",
+      "httpVersion": "HTTP/1.1",
+      "httpMethod": "GET",
+      "requestId": "r-301227420",
+      "scheme": "https",
+      "host": "shop.example.test"
+    },
+    "HttpSourceName": "ALB",
+    "HttpSourceId": "111111111111-app/shop-prod/0123456789abcdef",
+    "WebAclId": "arn:aws:wafv2:us-east-1:111111111111:regional/webacl/shop-prod/1a2b3c4d",
+    "TerminatingRuleId": "Default_Action",
+    "TerminatingRuleType": "REGULAR",
+    "FormatVersion": "1"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "decoy path under two extra segments (only one stage segment is stripped)",
+    "TimeGenerated": "2026-11-20T12:00:00.0000000Z",
+    "Type": "AWSWAF",
+    "Action": "ALLOW",
+    "HttpRequest": {
+      "clientIp": "198.51.100.51",
+      "country": "NL",
+      "headers": [
+        {
+          "name": "Host",
+          "value": "shop.example.test"
+        },
+        {
+          "name": "User-Agent",
+          "value": "python-httpx/0.28.1"
+        },
+        {
+          "name": "Accept",
+          "value": "*/*"
+        }
+      ],
+      "uri": "/app/prod/api/internal/v1/export-customers",
+      "args": "",
+      "httpVersion": "HTTP/1.1",
+      "httpMethod": "GET",
+      "requestId": "r-4247817882",
+      "scheme": "https",
+      "host": "shop.example.test"
+    },
+    "HttpSourceName": "ALB",
+    "HttpSourceId": "111111111111-app/shop-prod/0123456789abcdef",
+    "WebAclId": "arn:aws:wafv2:us-east-1:111111111111:regional/webacl/shop-prod/1a2b3c4d",
+    "TerminatingRuleId": "Default_Action",
+    "TerminatingRuleType": "REGULAR",
+    "FormatVersion": "1"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "decoy path only in the query string",
+    "TimeGenerated": "2026-11-20T12:00:00.0000000Z",
+    "Type": "AWSWAF",
+    "Action": "ALLOW",
+    "HttpRequest": {
+      "clientIp": "198.51.100.52",
+      "country": "NL",
+      "headers": [
+        {
+          "name": "Host",
+          "value": "shop.example.test"
+        },
+        {
+          "name": "User-Agent",
+          "value": "python-httpx/0.28.1"
+        },
+        {
+          "name": "Accept",
+          "value": "*/*"
+        }
+      ],
+      "uri": "/search",
+      "args": "q=/api/internal/v1/export-customers",
+      "httpVersion": "HTTP/1.1",
+      "httpMethod": "GET",
+      "requestId": "r-4023999108",
+      "scheme": "https",
+      "host": "shop.example.test"
+    },
+    "HttpSourceName": "ALB",
+    "HttpSourceId": "111111111111-app/shop-prod/0123456789abcdef",
+    "WebAclId": "arn:aws:wafv2:us-east-1:111111111111:regional/webacl/shop-prod/1a2b3c4d",
+    "TerminatingRuleId": "Default_Action",
+    "TerminatingRuleType": "REGULAR",
+    "FormatVersion": "1"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "real route, a prefix of the decoy",
+    "TimeGenerated": "2026-11-20T12:00:00.0000000Z",
+    "Type": "AWSWAF",
+    "Action": "ALLOW",
+    "HttpRequest": {
+      "clientIp": "198.51.100.53",
+      "country": "NL",
+      "headers": [
+        {
+          "name": "Host",
+          "value": "shop.example.test"
+        },
+        {
+          "name": "User-Agent",
+          "value": "python-httpx/0.28.1"
+        },
+        {
+          "name": "Accept",
+          "value": "*/*"
+        }
+      ],
+      "uri": "/api/internal/v1/export",
+      "args": "",
+      "httpVersion": "HTTP/1.1",
+      "httpMethod": "GET",
+      "requestId": "r-3302304864",
+      "scheme": "https",
+      "host": "shop.example.test"
+    },
+    "HttpSourceName": "ALB",
+    "HttpSourceId": "111111111111-app/shop-prod/0123456789abcdef",
+    "WebAclId": "arn:aws:wafv2:us-east-1:111111111111:regional/webacl/shop-prod/1a2b3c4d",
+    "TerminatingRuleId": "Default_Action",
+    "TerminatingRuleType": "REGULAR",
+    "FormatVersion": "1"
+  },
+  {
+    "_provenance": "hand-written",
+    "_note": "the bundle that carries the decoy, downloaded by a browser",
+    "TimeGenerated": "2026-11-20T12:00:00.0000000Z",
+    "Type": "AWSWAF",
+    "Action": "ALLOW",
+    "HttpRequest": {
+      "clientIp": "198.51.100.54",
+      "country": "NL",
+      "headers": [
+        {
+          "name": "Host",
+          "value": "shop.example.test"
+        },
+        {
+          "name": "User-Agent",
+          "value": "Mozilla/5.0 (Windows NT 10.0)"
+        },
+        {
+          "name": "Accept",
+          "value": "*/*"
+        }
+      ],
+      "uri": "/static/js/main.3f9a.js",
+      "args": "",
+      "httpVersion": "HTTP/1.1",
+      "httpMethod": "GET",
+      "requestId": "r-1353021391",
+      "scheme": "https",
+      "host": "shop.example.test"
+    },
+    "HttpSourceName": "CF",
+    "HttpSourceId": "E2EXAMPLE1234",
+    "WebAclId": "arn:aws:wafv2:us-east-1:111111111111:regional/webacl/shop-prod/1a2b3c4d",
+    "TerminatingRuleId": "Default_Action",
+    "TerminatingRuleType": "REGULAR",
+    "FormatVersion": "1"
+  }
+]

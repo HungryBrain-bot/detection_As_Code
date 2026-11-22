@@ -61,6 +61,14 @@ The output is `tests/results/<engine>.json` in the rule folder, and
      since 2026-11-21 also the session issuer, VPC endpoint, invokedBy
      and request parameters (rules B14-B17), and hand-written `IpAsn_CL`
      lookup rows load as they are (ADR 013);
+     since 2026-11-21 (ADR 014) also `ResponseElements`,
+     `AdditionalEventData` and `ServiceEventDetails` (rules B18, E11);
+     hand-written `AWSWAF`, `AWSCloudWatch` and `AWSRoute53Resolver`
+     rows load as they are;
+   - Sentinel table exports as CSV (`format: sentinel-table-csv`, with
+     `table:`; Microsoft's ingested AWSWAF sample, rule D5) -> rows of
+     that table: the day-first `TimeGenerated [UTC]` column converted,
+     empty cells dropped, dynamic JSON parsed (`from_sentinel_csv`);
    - Splunk attack_data Sysmon as Windows event XML (`format:
      winevent-xml`, `harness/winxml.py`, 2026-11-07, ADR 012): Windows
      channels -> the same `Event` / `SecurityEvent` rows as OTRF data;

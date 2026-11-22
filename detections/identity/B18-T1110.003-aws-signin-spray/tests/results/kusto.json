@@ -1,0 +1,99 @@
+{
+  "rule_id": "aecdfc7b-d0f0-492f-918d-c35599737030",
+  "rule_version": 1,
+  "engine": "Kustainer (ADX engine) 1.0.9820.14516, product 2026.11.20.0756-2646-8369074-master",
+  "date": "2026-11-21",
+  "samples": {
+    "positive_events": 80,
+    "positive_cases": 3,
+    "positive_rows": 3,
+    "negative_events": 158,
+    "negative_rows": 0
+  },
+  "datasets": [
+    {
+      "id": "splunk-aws-console-spray",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1110.003/aws_mulitple_failed_console_login/aws_cloudtrail.json",
+      "sha256": "2933759d957ae69868dcd693567a3ffe1d335cdf20f06fee5173249d9f171fbd"
+    },
+    {
+      "id": "splunk-aws-console-unknown-user",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1110.003/aws_multiple_login_fail_per_user/cloudtrail.json",
+      "sha256": "c0a030b82103f8065913a3dd0285d0534ef421b807e06febbe73537f4f11b2e7"
+    },
+    {
+      "id": "splunk-aws-console-login-failure",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1110.001/aws_login_failure/aws_cloudtrail_events.json",
+      "sha256": "d9d0ebbaf9a6aebd504b03f665eb1f35dfee4e34c0c6a5cf1c5318b7a12c1e9b"
+    },
+    {
+      "id": "splunk-aws-root-login-two-ips",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1586.003/aws_console_login_multiple_ips/cloudtrail.json",
+      "sha256": "d34e9b8c2623885b2599176297e7983ef474e022fa44808d7bd38f9f3bea631f"
+    }
+  ],
+  "dataset_events": 74,
+  "dataset_rows": 1,
+  "matched": [
+    {
+      "TimeGenerated": "2022-09-26T16:24:51Z",
+      "Reason": "breadth",
+      "Round": "2022-09-26T16:00:00Z",
+      "FailingAccounts": 31,
+      "SprayRounds": 1,
+      "Failures": 31,
+      "DistinctIPs": 1,
+      "MaxFailuresPerIP": 31,
+      "Distributed": false,
+      "Surfaces": [
+        "console"
+      ],
+      "Details": [
+        "Failed authentication"
+      ],
+      "UserAgents": [
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"
+      ],
+      "Accounts": [
+        "111111111111/user1",
+        "111111111111/user2",
+        "111111111111/user3",
+        "111111111111/user4",
+        "111111111111/user5",
+        "111111111111/user6",
+        "111111111111/user7",
+        "111111111111/user8",
+        "111111111111/user9",
+        "111111111111/user10",
+        "111111111111/user11",
+        "111111111111/user12",
+        "111111111111/user13",
+        "111111111111/user14",
+        "111111111111/user15",
+        "111111111111/user16",
+        "111111111111/user17",
+        "111111111111/user18",
+        "111111111111/user19",
+        "111111111111/user20",
+        "111111111111/user21",
+        "111111111111/user22",
+        "111111111111/user23",
+        "111111111111/user24",
+        "111111111111/user25",
+        "111111111111/user26",
+        "111111111111/user27",
+        "111111111111/user28",
+        "111111111111/user29",
+        "111111111111/user30",
+        "111111111111/user31"
+      ],
+      "FirstSeen": "2022-09-26T16:23:31Z",
+      "LastSeen": "2022-09-26T16:24:51Z"
+    }
+  ],
+  "columns_dropped_in_mapping": {}
+}

@@ -1,0 +1,51 @@
+id: 46254339-d312-486d-84ef-d02eb7ecfb96
+name: One client tries dozens of distinct API Gateway paths in minutes, mostly failing
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >
+  AWS port of D3 (ADR 014). One client address requests at least 30
+  distinct paths on one API Gateway domain within a 5-minute window and
+  at least 70 percent of the answers are 401, 403 or 404, as recorded in
+  API Gateway access logs. That is a path sweep against an API: guessing
+  routes, or walking routes taken from a spec or a script. Reads the
+  access log format this project defines
+  (docs/components/apigateway-access-log.md).
+log_sources: [aws-apigateway-access]
+mapping:
+  attack:
+    techniques: [T1595.003]
+    tactics: [reconnaissance]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    AWSCloudWatch: [TimeGenerated, Message]
+  query: |
+    // D6: API path sweep with mostly 401/403/404 (detections/recon/D6-T1595.003-apigw-failing-path-sweep/README.md)
+    let bin_size = 5m;
+    let min_distinct_paths = 30;
+    let min_error_share = 0.7;
+    AWSCloudWatch
+    // API Gateway access log lines in the JSON format of this project; other CloudWatch logs are skipped.
+    | where Message startswith "{" and Message has "apiId" and Message has "requestTimeEpoch"
+    | extend L = parse_json(Message)
+    | where isnotempty(tostring(L.apiId)) and isnotempty(tostring(L.status))
+    // requestTimeEpoch is milliseconds on REST APIs; the HTTP API page gives no unit, so seconds are accepted too.
+    | extend Epoch = tolong(L.requestTimeEpoch)
+    | extend RequestTime = iff(Epoch > 100000000000, unixtime_milliseconds_todatetime(Epoch), unixtime_seconds_todatetime(Epoch))
+    | extend ClientIp = tostring(L.sourceIp), Host = tostring(L.domainName), Path = tolower(tostring(L.path)),
+             Status = toint(L.status), UserAgent = tostring(L.userAgent), ApiId = tostring(L.apiId)
+    | summarize Requests = count(), DistinctPaths = dcount(Path), Errors = countif(Status in (401, 403, 404)),
+                Statuses = make_bag(bag_pack(tostring(Status), 1)), UserAgents = make_set(UserAgent, 5),
+                SamplePaths = make_set(Path, 10), Apis = make_set(ApiId, 5),
+                AuthorizerErrors = make_set_if(tostring(L.authorizerError), tostring(L.authorizerError) !in ("", "-"), 5),
+                FirstSeen = min(RequestTime), LastSeen = max(RequestTime)
+        by ClientIp, Host, Window = bin(RequestTime, bin_size)
+    | extend ErrorShare = round(todouble(Errors) / Requests, 2)
+    | where DistinctPaths >= min_distinct_paths and ErrorShare >= min_error_share
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, ClientIp, Host, Window, Requests, DistinctPaths, Errors, ErrorShare, Statuses, UserAgents,
+              SamplePaths, Apis, AuthorizerErrors, FirstSeen, LastSeen

@@ -40,10 +40,12 @@ See docs/components/engine-tests.md.
 """
 
 import argparse
+import csv
 import hashlib
 import io
 import json
 import sys
+import urllib.parse
 import urllib.request
 import re
 import zipfile
@@ -85,7 +87,8 @@ def files_of(entry: dict) -> list[tuple[str, str]]:
 
 
 def download(entry: dict, path: str, sha256: str) -> bytes:
-    url = SOURCES[entry.get("source", "otrf")].format(**dict(entry, path=path))
+    # Paths are URL-quoted (Azure-Sentinel's "Sample Data/..." has a space); "/" is kept.
+    url = SOURCES[entry.get("source", "otrf")].format(**dict(entry, path=urllib.parse.quote(path)))
     with urllib.request.urlopen(url, timeout=300) as response:
         blob = response.read()
     digest = hashlib.sha256(blob).hexdigest()
@@ -100,7 +103,7 @@ def fetch(catalogue: dict) -> None:
         files = files_of(entry)
         multi = len(files) > 1 or "manifest" in entry or "files" in entry
         if target.exists() and (all((target / safe_name(p)).exists() for p, _ in files) if multi
-                                else event_files(target)):
+                                else event_files(target) or any(target.glob("*.csv"))):
             print(f"{dataset_id}: present")
             continue
         if multi:
@@ -149,6 +152,13 @@ def read_events(dataset_id: str, catalogue: dict | None = None) -> list[dict]:
         if not event_files(folder):
             raise SystemExit(f"{dataset_id}: not fetched; run `python -m harness fetch`")
         return winxml.read(folder)
+    if entry.get("format") == "sentinel-table-csv":
+        # A Sentinel table exported to CSV (Azure-Sentinel sample data, ADR 014); `table` names it.
+        files = sorted(folder.glob("*.csv"))
+        if not files:
+            raise SystemExit(f"{dataset_id}: not fetched; run `python -m harness fetch`")
+        rows = [r for path in files for r in csv.DictReader(io.StringIO(path.read_text(encoding="utf-8-sig"), newline=""))]
+        return mapping.from_sentinel_csv(entry["table"], rows)
     if entry.get("format"):
         if not any(p for pattern in CONVERTED_FILES for p in folder.glob(pattern)):
             raise SystemExit(f"{dataset_id}: not fetched; run `python -m harness fetch`")

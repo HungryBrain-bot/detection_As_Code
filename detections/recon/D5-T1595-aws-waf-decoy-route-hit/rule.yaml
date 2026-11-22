@@ -1,0 +1,60 @@
+id: 7f80019a-3148-445f-aa09-6000fe752900
+name: Request to a decoy API route, seen by AWS WAF
+version: 1
+status: test
+severity: High
+tier: targeted
+description: >
+  AWS port of D1 (ADR 014). A client requests a route that exists only as
+  bait (listed in a published OpenAPI spec or planted in a JavaScript
+  bundle), as recorded by AWS WAF in front of CloudFront, an Application
+  Load Balancer, an API Gateway REST API or another WAF-protected
+  resource. Any request, allowed or blocked, means someone followed the
+  published map. The route paths are DecoyRoute rows in the honeytoken
+  registry, the same rows D1 reads.
+log_sources: [aws-waf, honeytoken-registry]
+mapping:
+  attack:
+    techniques: [T1595, T1594]
+    tactics: [reconnaissance]
+
+# Sentinel only: AWSWAF is the AWS web log with a reference schema here.
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    Honeytoken_CL: [TimeGenerated, TokenType, TokenValue, PlantedIn]
+    AWSWAF: [TimeGenerated, HttpRequest, HttpSourceName, HttpSourceId, Action, WebAclId]
+  query: |
+    // D5: decoy route requested, AWS WAF (detections/recon/D5-T1595-aws-waf-decoy-route-hit/README.md)
+    // The registry must re-send every active decoy route at least once per query period.
+    // Paths are compared as lower case with no trailing slash, without the query string (WAF logs it in args).
+    let routes = Honeytoken_CL
+    | where TokenType == "DecoyRoute"
+    | summarize arg_max(TimeGenerated, PlantedIn) by Route = trim_end("/", tolower(TokenValue));
+    let decoy_routes = toscalar(routes | summarize make_set(Route));
+    // Your own API test tools and authorised scanners, which may call every route in the spec. Fill per customer.
+    let known_testers = dynamic([]);
+    AWSWAF
+    // The request is in HttpRequest; the top-level ClientIp / Uri columns were empty in the Microsoft ingested sample.
+    | extend ClientIp = tostring(HttpRequest.clientIp), Uri = tostring(HttpRequest.uri)
+    | where not(ClientIp in (known_testers))
+    | extend Path = trim_end("/", tolower(Uri))
+    // API Gateway REST paths may carry the stage as their first segment: also compare without it.
+    | extend PathWithoutStage = trim_end("/", extract(@"^/[^/]+(/.*)$", 1, Path))
+    | extend Route = iff(Path in (decoy_routes), Path, PathWithoutStage)
+    | where Route in (decoy_routes)
+    | mv-apply Header = iff(array_length(HttpRequest.headers) > 0, HttpRequest.headers, dynamic([{}])) on (
+        summarize UserAgent = take_anyif(tostring(Header.value), tostring(Header.name) =~ "user-agent"),
+                  HostHeader = take_anyif(tostring(Header.value), tostring(Header.name) =~ "host"))
+    // Any action: a BLOCK on a decoy route is still someone following the map.
+    | summarize FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated), Requests = count(),
+                Methods = make_set(tostring(HttpRequest.httpMethod), 10), Actions = make_set(Action, 5),
+                UserAgents = make_set(UserAgent, 10), Hosts = make_set(coalesce(tostring(HttpRequest.host), HostHeader), 10),
+                Paths = make_set(Uri, 10), Queries = make_set(tostring(HttpRequest.args), 5),
+                Sources = make_set(strcat(HttpSourceName, " ", HttpSourceId), 5), WebAcls = make_set(WebAclId, 5)
+        by ClientIp, Route
+    | join kind=leftouter routes on Route
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, ClientIp, Route, PlantedIn, Requests, Methods, Actions, UserAgents, Hosts, Paths, Queries,
+              Sources, WebAcls, FirstSeen, LastSeen

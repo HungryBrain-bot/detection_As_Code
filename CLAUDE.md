@@ -2,10 +2,10 @@
 
 ## Project
 
-Detection-as-code portfolio project: 36 detection rules (the ten
+Detection-as-code portfolio project: 42 detection rules (the ten
 originally scoped plus 22 added for the ARTEX Phase 1 to 4 posts at the
-owner's explicit request, 2026-11-07, and 4 AWS ports of Phase 1,
-2026-11-21), each
+owner's explicit request, 2026-11-07, 4 AWS ports of Phase 1 and 6
+AWS / API Gateway ports of Phases 2-4, 2026-11-21), each
 documented as an attack and as a detection, deployed through one
 pipeline to Microsoft Sentinel (KQL), Splunk (SPL) and Google SecOps
 (YARA-L), per customer (MSSP-style). Before deploying, a schema check
@@ -43,15 +43,21 @@ check the request is explicit from the owner (Venu).
 | B15 | identity | AWS: one access key from inside AWS and outside it in a day; needs `IpAsn_CL` (2026-11-21, port of B5) | T1078.004 | Sentinel |
 | B16 | identity | AWS: IAM user or role from an ASN new in 14 days; needs `IpAsn_CL` (2026-11-21, port of B6) | T1078.004 | Sentinel |
 | B17 | identity | AWS: IAM user or role unlike its workload: new client, new discovery calls, fix-and-retry (2026-11-21, port of B7) | T1087.004, T1526, T1580 | Sentinel |
+| B18 | identity | AWS: console (IAM user, root) and IAM Identity Center password spray counted per account, as B8 (2026-11-21, port of B8) | T1110.003 | Sentinel |
 | D1 | recon | Request to a decoy API route; the path is a `Honeytoken_CL` row (2026-11-07) | T1595, T1594 | Sentinel |
 | D2 | recon | Source map / Swagger / config download, then API routes the UI does not call (2026-11-07) | T1594, T1595 | Sentinel |
 | D3 | recon | One client, dozens of distinct paths in minutes, mostly 401/403/404 (2026-11-07) | T1595.003 | Sentinel |
 | D4 | recon | AccessDenied / UnauthorizedOperation burst across AWS services from one principal (2026-11-07) | T1580 | Sentinel |
+| D5 | recon | AWS: decoy API route requested, seen by AWS WAF (2026-11-21, port of D1) | T1595, T1594 | Sentinel |
+| D6 | recon | API Gateway: one client, 30+ distinct paths in 5 minutes, mostly 401/403/404 (2026-11-21, port of D3) | T1595.003 | Sentinel |
 | E1 | foothold | One client reads 20+ record IDs in 10 minutes: in order, denials mixed with 200s, or volume above baseline (2026-11-07) | T1190 | Sentinel |
 | E2-E4 | foothold | Web server or database process starts a shell or download tool: Defender for Endpoint, Windows Sysmon, Sysmon for Linux (2026-11-07) | T1505.003, T1059 (E4 T1059.004) | Sentinel |
 | E5-E6 | foothold | New .jsp/.aspx/.php file in a web root, High when written by a database process: Defender for Endpoint, Windows Sysmon (2026-11-07) | T1505.003 | Sentinel |
 | E8 | foothold | App Service publishing login (Kudu, FTP, Web Deploy) by a non-pipeline identity (2026-11-07) | T1078.004 | Sentinel |
 | E9 | foothold | Server connects to a request-capture service (webhook.site, interactsh) (2026-11-07) | T1567.004 | Sentinel |
+| E10 | foothold | API Gateway: one client reads 20+ record IDs in 10 minutes, as E1 (path only) (2026-11-21, port of E1) | T1190 | Sentinel |
+| E11 | foothold | AWS: Session Manager / Instance Connect / serial console shell by an identity outside an admin list (2026-11-21, counterpart of E8) | T1021.008 | Sentinel |
+| E12 | foothold | AWS: VPC DNS lookup of a request-capture service, Route 53 Resolver (2026-11-21, counterpart of E9) | T1567.004 | Sentinel |
 | C1 | llm | Prompt-injection patterns | OWASP LLM01 (2025), LLM01:2026; ATLAS AML.T0051.000/.001, T0054, T0056, T0068 | Sentinel |
 | C2 | llm | Canary secret in model output | OWASP LLM02 (2025) (+ LLM07, 2026-10-27), LLM02/LLM08:2026; ATLAS AML.T0056, T0057, T0086 | Sentinel |
 | C3 | llm | Abnormal tool-call volume | OWASP LLM06/LLM10 (2025), LLM03/LLM06:2026; ATLAS AML.T0053, T0034.002 | Sentinel |
@@ -103,6 +109,18 @@ all on `AWSCloudTrail`. KQL ran in the Kusto emulator on hand-written
 samples; 0 rows on the recorded lab CloudTrail. No source shows ARTEX on
 AWS. B15 and B16 read `IpAsn_CL` (project-defined IP-to-ASN lookup,
 `ipv4_lookup`); its loader is not built, so they do nothing yet.
+D5, D6, B18, E10, E11, E12 added 2026-11-21 at the owner's explicit
+request ("the same for all the phases considering aws based scenarios
+and api scenarios"; ADR 014, "AWS ... port" sections of the Phase 2-4
+threats docs), `status: test`, targeted, Sentinel only. D5 reads
+`AWSWAF`; D6 and E10 read API Gateway access logs in a format this
+project defines (docs/components/apigateway-access-log.md) from
+`AWSCloudWatch.Message`; B18 and E11 read CloudTrail; E12 reads
+`AWSRoute53Resolver`. B18 caught the recorded Splunk console spray and
+E11 the recorded Instance Connect set; D5 ran on Microsoft's ingested
+WAF sample (0 rows); D6, E10, E12 hand-written only. Not ported, with
+reasons in ADR 014: D2, B9-B13, Cognito, E2-E6. No source shows ARTEX
+on AWS.
 Common high-value rules outside this list (brute force, AD changes)
 are parked in BUILD_LOG.md for the owner, not in scope. ATT&CK IDs above were checked against the enterprise
 STIX bundle on 2026-10-27 (all exist, none deprecated). ATLAS IDs were
@@ -158,7 +176,10 @@ flowchart LR
   from the Learn table reference (fetched in full); OktaSSO from
   Microsoft's KQL validation table definition (Azure-Sentinel c0c2dc2);
   `AppAuthEvent_CL` defined by this project (ADR 011); `IpAsn_CL` defined
-  by this project (ADR 013; `Honeytoken_CL` AWS token types too); `LLMAppLog_CL` and
+  by this project (ADR 013; `Honeytoken_CL` AWS token types too); AWSWAF
+  from Azure-Sentinel sample metadata (read with git); AWSCloudWatch and
+  AWSRoute53Resolver from the Learn table references (fetch tool; ADR
+  014); `LLMAppLog_CL` and
   `LLMCanary_CL`, defined by this project, ADR 008).
 - `log_sources.yaml` - log-source catalogue: owning team key and
   per-SIEM table / source / log type names.
@@ -193,7 +214,8 @@ flowchart LR
   `mapping.py` (recorded event -> SecurityEvent / Event / XmlWinEventLog;
   Entra diagnostic records -> AuditLogs / SigninLogs /
   AADNonInteractiveUserSignInLogs; raw CloudTrail records ->
-  AWSCloudTrail; raw Okta System Log events -> OktaSSO; LLM rows as they are),
+  AWSCloudTrail; raw Okta System Log events -> OktaSSO; Sentinel table
+  CSV exports -> their table, e.g. AWSWAF (ADR 014); LLM rows as they are),
   `llm_datasets.py` (JailbreakHub, AgentDojo, BIPIA -> `LLMAppLog_CL`),
   `manifests/` (per-file hashes), `engines.py` (Kusto emulator, Splunk
   container), `python -m harness fetch | run`.
@@ -270,7 +292,8 @@ in Kusto emulator and Splunk 10.6.1 (Splunk last run 2026-10-28),
 B1-B13, C1-C3 and D1-D4 in the Kusto emulator. 2026-11-07 (Phase 4
 branch, after merging Phase 3): 171 passed; E3, E4, E6 on recorded data only.
 2026-11-21 (AWS port): 174 passed; B14-B17 and D4 in the Kusto emulator
-(Kustainer 1.0.9820.14516).
+(Kustainer 1.0.9820.14516). 2026-11-21 (Phases 2-4 AWS / API port):
+179 passed; all 42 rules in the Kusto emulator.
 
 ## Model usage
 
@@ -285,9 +308,9 @@ conflicting sources).
 - Built: rule schema, validator, three adapters with read-only probes,
   schema check, per-customer log-source gate with file and SMTP
   notifiers, baseline/targeted tiers, coverage layers, CLI, CI
-  workflow, engine harness, component docs, ADRs 001-013, templates,
+  workflow, engine harness, component docs, ADRs 001-014, templates,
   six skills, LLM log-source inventory and feed report; rules A1-A4,
-  B1-B17, C1-C3, D1-D4; E1-E6, E8, E9 (experimental, no
+  B1-B18, C1-C3, D1-D6, E10-E12; E1-E6, E8, E9 (experimental, no
   samples); hunt H1.
 - Verified: everything in the test suite; ATT&CK IDs for the planned
   rules against the STIX bundle; the first CI workflow ran green on
@@ -311,6 +334,13 @@ conflicting sources).
   names; the Secrets Manager ARN suffix; that Amazon's address space is
   announced from AS16509 / AS14618. B15 and B16 miss attackers who run
   from AWS.
+- Not verified: D5, D6, B18, E10-E12 on a real account or workspace;
+  the AWS WAF, Route 53 and CloudWatch connectors and the CloudWatch-to-S3
+  Lambda; whether API Gateway logs unmatched, throttled or WAF-blocked
+  requests; whether WAF's `uri` carries the API stage; `QueryName`
+  trailing dot; any IAM Identity Center event as AWS writes it (samples
+  follow AWS's example); that `SendSerialConsoleSSHPublicKey` reaches
+  CloudTrail. D6, E10, E12 have no recorded data.
 - Not verified: E1-E6, E8, E9 on any sample (none exist); E1, E2, E5,
   E8, E9 have never matched anything; Defender `ActionType`, `OSPlatform`
   and `DeviceType` values; `AppServiceAuditLogs` `Protocol` values for
@@ -343,7 +373,7 @@ conflicting sources).
   app logs (none public); `LLMAppLog_CL` / `LLMCanary_CL` in a workspace;
   every LLM normaliser and the canary registry job (designs only); the
   inventory's Vertex AI and Azure OpenAI field entries.
-- Next: every rule in Scope is built (36; the eight foothold rules are
+- Next: every rule in Scope is built (42; the eight foothold rules are
   experimental with no samples, which the owner parked: samples and
   negative tests for E1-E9 are in BUILD_LOG.md). The four LLM decisions were
   settled on defaults on 2026-10-28 (BUILD_LOG.md); the owner can still

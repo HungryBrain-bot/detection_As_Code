@@ -1,0 +1,43 @@
+id: 5e78e86b-aebf-4bca-8ccb-d1589f8bc510
+name: AWS workload looks up a request-capture service (webhook.site, interactsh) in DNS
+version: 1
+status: test
+severity: High
+tier: targeted
+description: >
+  AWS counterpart of E9 (ADR 014). A DNS query from a VPC, as recorded by
+  Route 53 Resolver query logging, for a name that is, or is under, a
+  request-capture service: webhook.site and its DNS capture domain, or
+  ProjectDiscovery's public interactsh servers. Attackers use these to
+  confirm SSRF and blind command execution and to post data out. Covers
+  EC2, Lambda in a VPC, ECS and EKS workloads that resolve through the
+  VPC resolver, with or without an endpoint agent. Same domain list as
+  E9, a per-customer parameter.
+log_sources: [aws-route53-resolver]
+mapping:
+  attack:
+    techniques: [T1567.004]
+    tactics: [exfiltration]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    AWSRoute53Resolver: [TimeGenerated, QueryName, QueryType, Rcode, SrcAddr, SrcIds, VpcId, AccountId, Region, FirewallRuleAction]
+  query: |
+    // E12: VPC DNS query for a request-capture service (detections/foothold/E12-T1567.004-route53-request-capture/README.md)
+    // Per customer: request-capture domains. Defaults are the list of E9, confirmed on each service page (E9 README).
+    let capture_domains = dynamic(["webhook.site", "dnshook.site", "oast.pro", "oast.live", "oast.site", "oast.online", "oast.fun", "oast.me"]);
+    AWSRoute53Resolver
+    // Lower case, without the DNS trailing dot (whether the connector keeps it was not confirmed).
+    | extend Name = trim_end(@"\.", tolower(QueryName))
+    | where Name has_any (capture_domains)
+    | mv-apply Domain = capture_domains to typeof(string) on (where Name == Domain or Name endswith strcat(".", Domain) | take 1)
+    | extend Instance = tostring(SrcIds.instance)
+    | summarize FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated), Queries = count(),
+                Names = make_set(Name, 20), QueryTypes = make_set(QueryType, 5), Rcodes = make_set(Rcode, 5),
+                FirewallActions = make_set_if(FirewallRuleAction, isnotempty(FirewallRuleAction), 5)
+        by SrcAddr, Instance, VpcId, AccountId, Region, Domain
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, Domain, SrcAddr, Instance, VpcId, AccountId, Region, Queries, Names, QueryTypes, Rcodes,
+              FirewallActions, FirstSeen, LastSeen

@@ -462,3 +462,59 @@ def test_app_auth_rows_pass_through_to_their_own_table():
 def test_kusto_engine_creates_the_identity_phase3_tables():
     from harness.engines import KustoEngine
     assert {"OktaSSO", "AppAuthEvent_CL"} <= set(KustoEngine.tables)
+
+
+def test_cloudtrail_record_maps_response_and_event_details_for_b18_and_e11():
+    # ADR 014: B18 reads the console result, Identity Center's AuthWorkflowID / UserName and the
+    # CredentialVerification result; all three are JSON text, as RequestParameters is.
+    record = dict(CLOUDTRAIL_DENIED, responseElements={"ConsoleLogin": "Failure"},
+                  additionalEventData={"AuthWorkflowID": "w-1", "UserName": "u@example.test"},
+                  serviceEventDetails={"CredentialVerification": "Failure"})
+    row = mapping.to_sentinel(record)[1]
+    assert json.loads(row["ResponseElements"]) == {"ConsoleLogin": "Failure"}
+    assert json.loads(row["AdditionalEventData"])["UserName"] == "u@example.test"
+    assert json.loads(row["ServiceEventDetails"]) == {"CredentialVerification": "Failure"}
+    assert mapping.to_sentinel(dict(CLOUDTRAIL_DENIED, responseElements=None))[1]["ResponseElements"] is None
+
+
+def test_sentinel_csv_export_rows_become_table_rows():
+    # ADR 014: Microsoft's ingested AWSWAF sample; day-first time, empty cells dropped, dynamic JSON parsed.
+    rows = mapping.from_sentinel_csv("AWSWAF", [{
+        "TenantId": "t", "Action": "ALLOW", "ClientIp": "", "TimeGenerated [UTC]": "15/06/2026, 11:38:23.423",
+        "HttpRequest": '{"clientIp":"192.0.2.1","uri":"/a"}', "Type": "AWSWAF"}])
+    assert rows == [{"Type": "AWSWAF", "Action": "ALLOW", "TimeGenerated": "2026-06-15T11:38:23.423000Z",
+                     "HttpRequest": {"clientIp": "192.0.2.1", "uri": "/a"}}]
+
+
+def test_sentinel_table_csv_dataset_is_read_with_its_table(tmp_path, monkeypatch):
+    folder = tmp_path / "waf"
+    folder.mkdir()
+    (folder / "sample.csv").write_text('Action,TimeGenerated [UTC],HttpRequest\nBLOCK,"08/06/2026, 12:14:49.302","{""uri"":""/x""}"\n',
+                                       encoding="utf-8")
+    monkeypatch.setattr(hmain, "data_dir", lambda: tmp_path)
+    events = hmain.read_events("waf", {"waf": {"format": "sentinel-table-csv", "table": "AWSWAF"}})
+    assert events == [{"Type": "AWSWAF", "Action": "BLOCK", "TimeGenerated": "2026-06-08T12:14:49.302000Z",
+                       "HttpRequest": {"uri": "/x"}}]
+    assert mapping.to_sentinel(events[0])[0] == "AWSWAF"
+
+
+def test_aws_web_and_dns_rows_load_as_they_are():
+    from harness.engines import KustoEngine
+    for table in ("AWSWAF", "AWSCloudWatch", "AWSRoute53Resolver"):
+        assert mapping.to_sentinel({"Type": table, "_note": "x"}) == (table, {"Type": table})
+        assert table in KustoEngine.tables
+
+
+def test_download_quotes_a_path_with_a_space(monkeypatch):
+    seen = []
+
+    class Response(io.BytesIO):
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+    monkeypatch.setattr(hmain.urllib.request, "urlopen", lambda url, timeout: seen.append(url) or Response(b"a"))
+    hmain.download({"source": "github", "repo": "o/r", "commit": "c"}, "Sample Data/x.csv", hashlib.sha256(b"a").hexdigest())
+    assert seen == ["https://raw.githubusercontent.com/o/r/c/Sample%20Data/x.csv"]

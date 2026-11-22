@@ -1,0 +1,18 @@
+{
+  "rule_id": "46254339-d312-486d-84ef-d02eb7ecfb96",
+  "rule_version": 1,
+  "engine": "Kustainer (ADX engine) 1.0.9820.14516, product 2026.11.20.0756-2646-8369074-master",
+  "date": "2026-11-21",
+  "samples": {
+    "positive_events": 42,
+    "positive_cases": 1,
+    "positive_rows": 1,
+    "negative_events": 229,
+    "negative_rows": 0
+  },
+  "datasets": [],
+  "dataset_events": 0,
+  "dataset_rows": 0,
+  "matched": [],
+  "columns_dropped_in_mapping": {}
+}

@@ -74,6 +74,7 @@ load as they are.
 """
 
 import json
+from datetime import datetime
 from functools import cache
 from xml.sax.saxutils import escape, quoteattr
 
@@ -227,7 +228,11 @@ NATIVE_TABLES = ("LLMAppLog_CL", "LLMCanary_CL", "AzureDiagnostics", "Honeytoken
                  "Syslog", "DeviceProcessEvents", "DeviceFileEvents", "DeviceNetworkEvents",
                  "DeviceInfo", "AppServiceAuditLogs",
                  # AWS port of Phase 1 (ADR 013): the hand-written IP-to-ASN lookup.
-                 "IpAsn_CL")
+                 "IpAsn_CL",
+                 # AWS ports of Phases 2-4 (ADR 014): WAF, CloudWatch (API Gateway access log
+                 # lines in Message) and Route 53 Resolver rows, hand-written or from
+                 # Microsoft's ingested-sample CSV (from_sentinel_csv).
+                 "AWSWAF", "AWSCloudWatch", "AWSRoute53Resolver")
 # Suffixes the Okta connector's table adds to a flattened System Log key (ADR 011).
 OKTA_SUFFIXES = ("_s", "_d", "_b", "_g", "_t")
 
@@ -242,7 +247,9 @@ def from_cloudtrail(record: dict) -> dict:
 
     Only the columns rules D4 and B14-B17 read, plus a few identifying ones, are mapped (the
     session issuer, VPC endpoint, invoked-by and request parameters added 2026-11-21 for
-    B14-B17, ADR 013; RequestParameters is kept as JSON text); every other
+    B14-B17, ADR 013; RequestParameters is kept as JSON text; ResponseElements,
+    AdditionalEventData and ServiceEventDetails added 2026-11-21 for B18 and E11, ADR 014,
+    also as JSON text, the way RequestParameters is); every other
     column of Sentinel's table stays empty. Sentinel's AWS S3 connector fills these from the
     same record fields (names follow Microsoft's column list); the connector itself was not run.
     """
@@ -260,8 +267,45 @@ def from_cloudtrail(record: dict) -> dict:
         "UserIdentityUserName": identity.get("userName"), "UserIdentityAccessKeyId": identity.get("accessKeyId"),
         "UserIdentityInvokedBy": identity.get("invokedBy"), "SessionIssuerArn": issuer.get("arn"),
         "SessionIssuerType": issuer.get("type"), "VpcEndpointId": record.get("vpcEndpointId"),
-        "RequestParameters": json.dumps(params) if isinstance(params, (dict, list)) else params,
+        "RequestParameters": _json_text(params),
+        "ResponseElements": _json_text(record.get("responseElements")),
+        "AdditionalEventData": _json_text(record.get("additionalEventData")),
+        "ServiceEventDetails": _json_text(record.get("serviceEventDetails")),
     }
+
+
+def _json_text(value):
+    """A nested CloudTrail element as JSON text (the AWSCloudTrail columns are strings)."""
+    return json.dumps(value) if isinstance(value, (dict, list)) else value
+
+
+# Microsoft's ingested-sample CSVs (Azure-Sentinel "Sample Data/ASIM/*_IngestedLogs.csv")
+# write TimeGenerated as "TimeGenerated [UTC]" in "DD/MM/YYYY, HH:MM:SS.fff" form (day first: the 200-row WAF sample has 15/06/2026).
+CSV_TIME_COLUMN = "TimeGenerated [UTC]"
+
+
+def from_sentinel_csv(table: str, rows: list[dict]) -> list[dict]:
+    """Rows of a Sentinel table export (CSV) -> table rows (ADR 014).
+
+    Empty cells are dropped (the export writes an empty cell for a null), the time column is
+    renamed and converted to ISO 8601, and cells of dynamic columns that hold JSON text are
+    parsed. Values are otherwise copied unchanged; nothing is added.
+    """
+    types = (load_reference_schema("sentinel", table) or {}).get("types", {})
+    out = []
+    for raw in rows:
+        row = {"Type": table}
+        for key, value in raw.items():
+            if value in ("", None) or key in ("Type", "TenantId"):
+                continue
+            if key == CSV_TIME_COLUMN:
+                key = "TimeGenerated"
+                value = datetime.strptime(value, "%d/%m/%Y, %H:%M:%S.%f").isoformat() + "Z"
+            elif types.get(key) == "dynamic" and value[:1] in "[{":
+                value = json.loads(value)
+            row[key] = value
+        out.append(row)
+    return out
 
 
 def is_okta_record(event: dict) -> bool:

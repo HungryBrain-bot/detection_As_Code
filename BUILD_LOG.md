@@ -587,3 +587,70 @@
 - Parked for the owner: a loader for `IpAsn_CL`; whether to restrict
   B16 to workload principals; GuardDuty findings as an alternative to
   B15 where customers run it.
+
+## 2026-11-21 - ARTEX Phases 2-4 ported to AWS and API Gateway (D5, D6, B18, E10-E12)
+
+- Owner's request in the project thread: "create the same for all the
+  phases considering aws based scenarios and api scenarios". The
+  coordinator asked for one PR per phase, ports only where something is
+  Azure-specific, and no guessed or duplicate rules. This thread can
+  push one branch only, so it is one PR with a commit per phase,
+  stacked on PR #13 (ADR 014).
+- Built (6): D5 decoy route on AWS WAF; D6 API path sweep on API
+  Gateway access logs; B18 AWS console / IAM Identity Center spray per
+  account; E10 IDOR walk on API Gateway access logs; E11 Session
+  Manager / Instance Connect / serial console shell outside an admin
+  list; E12 VPC DNS lookups of request-capture services. All
+  `status: test`, targeted, Sentinel only, with samples. 42 rules in
+  total.
+- Not built (12 candidates), reasons in ADR 014: D2 (two logs, no
+  status in WAF), D4 (already AWS), B9-B13 (Okta not AWS; no AWS
+  counterpart, or the AWS logs lack the user name or the error text),
+  Cognito spray and recovery (CloudTrail has the `sub`, not the user
+  name), E2-E6 (endpoint sensors work on EC2 unchanged).
+- New: API Gateway access log format (docs/components/apigateway-access-log.md),
+  log sources `aws-waf`, `aws-apigateway-access`, `aws-route53-resolver`;
+  reference schemas `AWSWAF` (Azure-Sentinel metadata, read with git),
+  `AWSCloudWatch` and `AWSRoute53Resolver` (Learn, fetch tool).
+- Harness: `from_cloudtrail` maps `ResponseElements`,
+  `AdditionalEventData`, `ServiceEventDetails`; new tables load as they
+  are; `sentinel-table-csv` dataset format; dataset URLs quoted. Five
+  datasets added (Microsoft's ingested AWSWAF sample; four Splunk
+  attack_data CloudTrail sets). Tests: 5 added.
+- Found while testing: in Microsoft's AWSWAF sample the top-level
+  request columns are empty (request only in `HttpRequest`), so D5
+  reads `HttpRequest`; the sample's time column is day-first
+  (`15/06/2026`), which the first CSV reader got wrong. E10's first
+  negative run had one case 75 minutes long, which pushed the others out
+  of the 1-hour `ago()` window: every loosening "passed" for the wrong
+  reason. Shortened to 53 minutes and rerun; every E10 loosening then
+  bit.
+- Engine runs (Kustainer 1.0.9820.14516, 2026-11-21): D5 3/3 positive
+  cases, 0 rows on the 200-row WAF sample; D6 1/1; B18 3/3, 1 row on 74
+  recorded sign-ins (the recorded 31-user spray), nothing on the other
+  three sets; E10 3/3 (one per reason); E11 3/3, 1 row on the recorded
+  Instance Connect set; E12 3/3. 0 negatives everywhere. Loosening each
+  clause made a negative match, except: D6's `status` filter, B18's
+  hidden-name and `PASSWORD` filters, and E12's label check (covered by
+  the earlier `has_any`); each is written up in the rule's evidence.
+  Full emulator run of all 42 rules: all ok, committed counts unchanged.
+- Not verified: the WAF, Route 53 and CloudWatch connectors and the
+  CloudWatch-to-S3 Lambda; whether API Gateway logs unmatched,
+  throttled or WAF-blocked requests; WAF `uri` and the API stage;
+  `QueryName` trailing dot; any Identity Center event as AWS writes it;
+  that `SendSerialConsoleSSHPublicKey` reaches CloudTrail; any
+  false-positive rate; Log Analytics.
+- Tests: 179 passed; yamllint clean; `python -m dac validate` with
+  ATT&CK 20.1 and ATLAS v2026.06: 42 rules, 0 errors. T1021.008 (new
+  to this repo) exists and is not deprecated.
+- Parked for the owner: D2 on AWS (CloudFront + API Gateway join);
+  a per-address count of hidden-user-name console failures (sprays of
+  non-existent names); Cognito via threat-protection user activity logs;
+  an `ssm:SendCommand` rule with its own allow list; API Gateway
+  authorizer-error rule once error texts are confirmed; ALB / CloudFront
+  access logs (no Sentinel table here).
+- Over-building note, for the owner: this is the sixth rule batch since
+  2026-11-07 and takes the project from 10 scoped rules to 42. Every
+  new rule adds a log source someone must confirm and a set of
+  unverified vendor facts. The time box ends around 2026-11-17 by the
+  original three weeks; it has passed.

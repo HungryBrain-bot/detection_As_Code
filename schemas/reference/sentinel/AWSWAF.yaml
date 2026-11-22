@@ -1,0 +1,91 @@
+# Reference schema for the AWSWAF table (AWS WAF web ACL logs, Sentinel's AWS S3 WAF
+# connector), with column types. See docs/components/schema-check.md.
+# Column names and types are copied from Microsoft's Azure-Sentinel repository
+# (Sample Data/Tables/AWSWAF/metadata.json, "schemaSource": "Microsoft public table schema"),
+# read directly with git (not summarised); the same 36 columns are on the Learn table page.
+# Added 2026-11-21 for rule D5 (AWS port of ARTEX Phase 2; ADR 014).
+#
+# In Microsoft's ingested sample (Sample Data/ASIM/AWS_WAF_WebSession_AWSWAF_IngestedLogs.csv,
+# same commit, 200 rows) the top-level ClientIp, Uri, HttpMethod, Headers and Args columns are
+# empty on every row; the request is in HttpRequest (clientIp, uri, args, headers, httpMethod,
+# host). Microsoft's ASIM parser (Parsers/ASimWebSession/Parsers/ASimWebSessionAWSWAF.yaml) reads
+# HttpRequest too, and says "AWS WAF populates ResponseCodeSent only when a custom block response
+# is configured". Rules read HttpRequest.
+name: AWSWAF
+siem: sentinel
+source_url: https://github.com/Azure/Azure-Sentinel/blob/c3361d9ff34320e7fe3314d5f9063e15470ca53e/Sample%20Data/Tables/AWSWAF/metadata.json
+vendor_page: https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/awswaf
+fetched_on: '2026-11-21'
+provenance: Microsoft Azure-Sentinel repo (MIT) at commit c3361d9, file read directly with git (not summarised);
+  34 columns plus _BilledSize and _IsBillable on the Learn page (fetched through a fetch tool), which
+  are not used.
+fields:
+- Action
+- Args
+- CaptchaResponse
+- ChallengeResponse
+- ClientIp
+- Country
+- ExcludedRules
+- FormatVersion
+- Headers
+- HttpMethod
+- HttpRequest
+- HttpSourceId
+- HttpSourceName
+- HttpVersion
+- Ja3Fingerprint
+- Labels
+- NonTerminatingMatchingRules
+- OversizeFields
+- RateBasedRuleList
+- RequestHeadersInserted
+- RequestId
+- ResponseCodeSent
+- RuleGroupId
+- RuleGroupList
+- SourceSystem
+- TenantId
+- TerminatingRule
+- TerminatingRuleId
+- TerminatingRuleMatchDetails
+- TerminatingRuleType
+- TimeGenerated
+- Type
+- Uri
+- WebAclId
+types:
+  Action: string
+  Args: string
+  CaptchaResponse: dynamic
+  ChallengeResponse: dynamic
+  ClientIp: string
+  Country: string
+  ExcludedRules: dynamic
+  FormatVersion: string
+  Headers: dynamic
+  HttpMethod: string
+  HttpRequest: dynamic
+  HttpSourceId: string
+  HttpSourceName: string
+  HttpVersion: string
+  Ja3Fingerprint: string
+  Labels: dynamic
+  NonTerminatingMatchingRules: dynamic
+  OversizeFields: dynamic
+  RateBasedRuleList: dynamic
+  RequestHeadersInserted: dynamic
+  RequestId: string
+  ResponseCodeSent: int
+  RuleGroupId: string
+  RuleGroupList: dynamic
+  SourceSystem: string
+  TenantId: string
+  TerminatingRule: dynamic
+  TerminatingRuleId: string
+  TerminatingRuleMatchDetails: dynamic
+  TerminatingRuleType: string
+  TimeGenerated: datetime
+  Type: string
+  Uri: string
+  WebAclId: string

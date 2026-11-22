@@ -1,0 +1,178 @@
+[
+  {
+    "_case": "spec-route",
+    "_provenance": "hand-written",
+    "_note": "registry row",
+    "TimeGenerated": "2026-11-20T11:30:00.0000000Z",
+    "Type": "Honeytoken_CL",
+    "TokenType": "DecoyRoute",
+    "TokenValue": "/api/internal/v1/export-customers",
+    "PlantedIn": "openapi.json served at /docs/openapi.json (shop-prod)"
+  },
+  {
+    "_case": "spec-route",
+    "_provenance": "hand-written",
+    "_note": "registry row",
+    "TimeGenerated": "2026-11-20T11:30:00.0000000Z",
+    "Type": "Honeytoken_CL",
+    "TokenType": "DecoyRoute",
+    "TokenValue": "/api/v2/admin/tenants/export",
+    "PlantedIn": "main.3f9a.js bundle (shop-prod)"
+  },
+  {
+    "_case": "spec-route",
+    "_provenance": "hand-written",
+    "_note": "decoy route via ALB, allowed (origin answers 404)",
+    "TimeGenerated": "2026-11-20T12:00:00.0000000Z",
+    "Type": "AWSWAF",
+    "Action": "ALLOW",
+    "HttpRequest": {
+      "clientIp": "198.51.100.23",
+      "country": "NL",
+      "headers": [
+        {
+          "name": "Host",
+          "value": "shop.example.test"
+        },
+        {
+          "name": "User-Agent",
+          "value": "python-httpx/0.28.1"
+        },
+        {
+          "name": "Accept",
+          "value": "*/*"
+        }
+      ],
+      "uri": "/api/internal/v1/export-customers",
+      "args": "",
+      "httpVersion": "HTTP/1.1",
+      "httpMethod": "GET",
+      "requestId": "r-2759108506",
+      "scheme": "https",
+      "host": "shop.example.test"
+    },
+    "HttpSourceName": "ALB",
+    "HttpSourceId": "111111111111-app/shop-prod/0123456789abcdef",
+    "WebAclId": "arn:aws:wafv2:us-east-1:111111111111:regional/webacl/shop-prod/1a2b3c4d",
+    "TerminatingRuleId": "Default_Action",
+    "TerminatingRuleType": "REGULAR",
+    "FormatVersion": "1"
+  },
+  {
+    "_case": "spec-route",
+    "_provenance": "hand-written",
+    "_note": "same client, a real route, for context",
+    "TimeGenerated": "2026-11-20T12:00:00.0000000Z",
+    "Type": "AWSWAF",
+    "Action": "ALLOW",
+    "HttpRequest": {
+      "clientIp": "198.51.100.23",
+      "country": "NL",
+      "headers": [
+        {
+          "name": "Host",
+          "value": "shop.example.test"
+        },
+        {
+          "name": "User-Agent",
+          "value": "python-httpx/0.28.1"
+        },
+        {
+          "name": "Accept",
+          "value": "*/*"
+        }
+      ],
+      "uri": "/api/internal/v1/customers",
+      "args": "",
+      "httpVersion": "HTTP/1.1",
+      "httpMethod": "GET",
+      "requestId": "r-2900590185",
+      "scheme": "https",
+      "host": "shop.example.test"
+    },
+    "HttpSourceName": "ALB",
+    "HttpSourceId": "111111111111-app/shop-prod/0123456789abcdef",
+    "WebAclId": "arn:aws:wafv2:us-east-1:111111111111:regional/webacl/shop-prod/1a2b3c4d",
+    "TerminatingRuleId": "Default_Action",
+    "TerminatingRuleType": "REGULAR",
+    "FormatVersion": "1"
+  },
+  {
+    "_case": "stage-prefix",
+    "_provenance": "hand-written",
+    "_note": "decoy route through API Gateway REST, stage in path, blocked by a rate rule",
+    "TimeGenerated": "2026-11-20T12:05:00.0000000Z",
+    "Type": "AWSWAF",
+    "Action": "BLOCK",
+    "HttpRequest": {
+      "clientIp": "203.0.113.40",
+      "country": "NL",
+      "headers": [
+        {
+          "name": "Host",
+          "value": "shop.example.test"
+        },
+        {
+          "name": "User-Agent",
+          "value": "python-httpx/0.28.1"
+        },
+        {
+          "name": "Accept",
+          "value": "*/*"
+        }
+      ],
+      "uri": "/prod/api/v2/admin/tenants/export",
+      "args": "",
+      "httpVersion": "HTTP/1.1",
+      "httpMethod": "GET",
+      "requestId": "r-300260247",
+      "scheme": "https",
+      "host": "shop.example.test"
+    },
+    "HttpSourceName": "APIGW",
+    "HttpSourceId": "111111111111:a1b2c3d4e5:prod",
+    "WebAclId": "arn:aws:wafv2:us-east-1:111111111111:regional/webacl/shop-prod/1a2b3c4d",
+    "TerminatingRuleId": "Default_Action",
+    "TerminatingRuleType": "REGULAR",
+    "FormatVersion": "1"
+  },
+  {
+    "_case": "case-and-slash",
+    "_provenance": "hand-written",
+    "_note": "upper case and trailing slash via CloudFront",
+    "TimeGenerated": "2026-11-20T12:09:00.0000000Z",
+    "Type": "AWSWAF",
+    "Action": "ALLOW",
+    "HttpRequest": {
+      "clientIp": "192.0.2.77",
+      "country": "NL",
+      "headers": [
+        {
+          "name": "Host",
+          "value": "shop.example.test"
+        },
+        {
+          "name": "User-Agent",
+          "value": "Mozilla/5.0 (X11; Linux x86_64)"
+        },
+        {
+          "name": "Accept",
+          "value": "*/*"
+        }
+      ],
+      "uri": "/API/Internal/V1/Export-Customers/",
+      "args": "",
+      "httpVersion": "HTTP/1.1",
+      "httpMethod": "GET",
+      "requestId": "r-429771873",
+      "scheme": "https",
+      "host": "shop.example.test"
+    },
+    "HttpSourceName": "CF",
+    "HttpSourceId": "E2EXAMPLE1234",
+    "WebAclId": "arn:aws:wafv2:us-east-1:111111111111:regional/webacl/shop-prod/1a2b3c4d",
+    "TerminatingRuleId": "Default_Action",
+    "TerminatingRuleType": "REGULAR",
+    "FormatVersion": "1"
+  }
+]

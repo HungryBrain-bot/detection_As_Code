@@ -1,0 +1,116 @@
+[
+  {
+    "_case": "ssm-user",
+    "_provenance": "hand-written",
+    "_note": "developer opens a Session Manager shell",
+    "eventVersion": "1.09",
+    "userIdentity": {
+      "type": "IAMUser",
+      "principalId": "AIDAEXAMPLEUSER",
+      "arn": "arn:aws:iam::111111111111:user/dev-jdoe",
+      "accountId": "111111111111",
+      "accessKeyId": "AKIAEXAMPLEKEY000001",
+      "userName": "dev-jdoe"
+    },
+    "eventTime": "2026-11-20T12:00:00Z",
+    "eventSource": "ssm.amazonaws.com",
+    "eventName": "StartSession",
+    "awsRegion": "eu-west-1",
+    "sourceIPAddress": "198.51.100.77",
+    "userAgent": "aws-cli/2.22.0 md/command#startsession",
+    "requestParameters": {
+      "target": "i-0a1b2c3d4e5f60718"
+    },
+    "responseElements": {
+      "sessionId": "dev-jdoe-0abc123"
+    },
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management"
+  },
+  {
+    "_case": "serial-console",
+    "_provenance": "hand-written",
+    "_note": "CI role pushes a key to the serial console, denied",
+    "eventVersion": "1.09",
+    "userIdentity": {
+      "type": "AssumedRole",
+      "principalId": "AROAEXAMPLEROLE:build-4411",
+      "arn": "arn:aws:sts::111111111111:assumed-role/ci-runner/build-4411",
+      "accountId": "111111111111",
+      "accessKeyId": "ASIAEXAMPLEKEY000001",
+      "sessionContext": {
+        "sessionIssuer": {
+          "type": "Role",
+          "principalId": "AROAEXAMPLEROLE",
+          "arn": "arn:aws:iam::111111111111:role/ci-runner",
+          "accountId": "111111111111",
+          "userName": "ci-runner"
+        }
+      }
+    },
+    "eventTime": "2026-11-20T12:05:00Z",
+    "eventSource": "ec2-instance-connect.amazonaws.com",
+    "eventName": "SendSerialConsoleSSHPublicKey",
+    "awsRegion": "eu-west-1",
+    "sourceIPAddress": "198.51.100.77",
+    "userAgent": "aws-cli/2.22.0 md/command#sendserialconsolesshpublickey",
+    "requestParameters": {
+      "instanceId": "i-0fedcba9876543210",
+      "serialPort": 0,
+      "sSHPublicKey": "ssh-ed25519 AAAAEXAMPLE"
+    },
+    "responseElements": null,
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management",
+    "errorCode": "AccessDenied",
+    "errorMessage": "User is not authorized to perform this operation"
+  },
+  {
+    "_case": "port-forward",
+    "_provenance": "hand-written",
+    "_note": "support role opens a port-forwarding session to a database port",
+    "eventVersion": "1.09",
+    "userIdentity": {
+      "type": "AssumedRole",
+      "principalId": "AROAEXAMPLEROLE:alice",
+      "arn": "arn:aws:sts::111111111111:assumed-role/app-support/alice",
+      "accountId": "111111111111",
+      "accessKeyId": "ASIAEXAMPLEKEY000001",
+      "sessionContext": {
+        "sessionIssuer": {
+          "type": "Role",
+          "principalId": "AROAEXAMPLEROLE",
+          "arn": "arn:aws:iam::111111111111:role/app-support",
+          "accountId": "111111111111",
+          "userName": "app-support"
+        }
+      }
+    },
+    "eventTime": "2026-11-20T12:09:00Z",
+    "eventSource": "ssm.amazonaws.com",
+    "eventName": "StartSession",
+    "awsRegion": "eu-west-1",
+    "sourceIPAddress": "198.51.100.77",
+    "userAgent": "aws-cli/2.22.0 md/command#startsession",
+    "requestParameters": {
+      "target": "i-0a1b2c3d4e5f60718",
+      "documentName": "AWS-StartPortForwardingSession",
+      "parameters": {
+        "portNumber": [
+          "5432"
+        ]
+      }
+    },
+    "responseElements": {
+      "sessionId": "alice-0def456"
+    },
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "111111111111",
+    "eventCategory": "Management"
+  }
+]
