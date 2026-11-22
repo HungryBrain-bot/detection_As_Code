@@ -1,0 +1,38 @@
+{
+  "rule_id": "10ae3568-387e-4f4f-979e-ebcb7c6f0839",
+  "rule_version": 1,
+  "engine": "Kustainer (ADX engine) 1.0.9820.14516, product 2026.11.20.0756-2646-8369074-master",
+  "date": "2026-11-21",
+  "samples": {
+    "positive_events": 126,
+    "positive_cases": 2,
+    "positive_rows": 2,
+    "negative_events": 98,
+    "negative_rows": 0
+  },
+  "datasets": [
+    {
+      "id": "splunk-aws-accessdenied-discovery",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1580/aws_iam_accessdenied_discovery_events/aws_iam_accessdenied_discovery_events.json",
+      "sha256": "4f52389f17745abf5fa1cf30c055d4f9d34022fcfb8e5c2544c70177da228433"
+    },
+    {
+      "id": "splunk-aws-security-scanner",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1526/aws_security_scanner/aws_security_scanner.json",
+      "sha256": "4c7ba5d7ac8186f61acf60b6a94e5bc6c3b5a3313bc627a35998110e7103021e"
+    },
+    {
+      "id": "splunk-aws-excessive-list",
+      "commit": "b52ee687423a305c677ef9db42c1656e73cce210",
+      "path": "datasets/attack_techniques/T1580/aws_iam_excessive_list_command_usage/aws_iam_excessive_list_command_usage.json",
+      "sha256": "d0e597bf34919e87ff53d757766a71431847d8788ca80ffe78d8ac23bb498f35"
+    }
+  ],
+  "dataset_events": 6417,
+  "dataset_rows": 0,
+  "time_rebased": true,
+  "matched": [],
+  "columns_dropped_in_mapping": {}
+}

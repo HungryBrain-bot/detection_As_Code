@@ -1,0 +1,63 @@
+id: 2ba6c1de-7104-4b58-82ab-b9bcefc75685
+name: Honeytoken AWS access key used, or decoy Secrets Manager / Parameter Store secret read
+version: 1
+status: test
+severity: High
+tier: targeted
+description: >
+  Any CloudTrail event made with a decoy IAM access key (a honeytoken
+  planted in a repo, .env file or pipeline variable), or any CloudTrail
+  event naming a decoy Secrets Manager secret or SSM parameter. A
+  honeytoken has no legitimate user, so one event is enough. AWS port of
+  B4 (ADR 013); the behaviour is ARTEX's on Azure, no source shows it on
+  AWS.
+log_sources: [aws-cloudtrail, honeytoken-registry]
+mapping:
+  attack:
+    techniques: [T1078.004, T1555.006]
+    tactics: [initial-access, credential-access]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: PT1H
+  required_fields:
+    Honeytoken_CL: [TimeGenerated, TokenType, TokenValue, PlantedIn]
+    AWSCloudTrail: [TimeGenerated, EventName, EventSource, ErrorCode, UserIdentityAccessKeyId, UserIdentityArn, SourceIpAddress, UserAgent, RequestParameters, RecipientAccountId]
+  query: |
+    // B14: AWS honeytoken used (detections/identity/B14-T1078.004-aws-honeytoken-key-use/README.md)
+    // The registry must re-send every active honeytoken at least once per query period.
+    let honeytokens = Honeytoken_CL
+    | summarize arg_max(TimeGenerated, PlantedIn) by TokenType, Token = trim_start("/", tolower(TokenValue));
+    let decoy_keys = toscalar(honeytokens | where TokenType == "AwsAccessKeyId" | summarize make_set(Token));
+    let decoy_secrets = toscalar(honeytokens | where TokenType == "AwsSecretName" | summarize make_set(Token));
+    union
+        (AWSCloudTrail
+        // Any result: a denied call made with the decoy key is still someone using it.
+        | where tolower(UserIdentityAccessKeyId) in (decoy_keys)
+        | extend Token = tolower(UserIdentityAccessKeyId), Surface = "decoy access key used"),
+        (AWSCloudTrail
+        | where EventSource in ("secretsmanager.amazonaws.com", "ssm.amazonaws.com")
+        | extend Params = parse_json(RequestParameters)
+        // secretId (Secrets Manager), name (SSM GetParameter), names (SSM GetParameters).
+        | extend Ref = array_concat(pack_array(tostring(Params.secretId), tostring(Params.name)),
+                                    iff(isnull(Params.names), dynamic([]), Params.names))
+        | mv-expand Ref to typeof(string)
+        | where isnotempty(Ref)
+        // An ARN is reduced to the name: Secrets Manager appends -<6 characters> to the secret name in its ARN.
+        | extend Token = trim_start("/", tolower(case(
+              Ref startswith "arn:" and Ref has ":secret:", extract(@":secret:(.+)-[A-Za-z0-9]{6}$", 1, Ref),
+              Ref startswith "arn:" and Ref has ":parameter", extract(@":parameter/?(.+)$", 1, Ref),
+              Ref)))
+        | where Token in (decoy_secrets)
+        | extend Surface = "decoy secret named")
+    | summarize FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated), Events = count(),
+                Operations = make_set(strcat(EventSource, ":", EventName), 20),
+                ErrorCodes = make_set_if(ErrorCode, isnotempty(ErrorCode), 10),
+                IPAddresses = make_set(SourceIpAddress, 20), UserAgents = make_set(UserAgent, 10),
+                Callers = make_set(UserIdentityArn, 10), AccessKeyIds = make_set(UserIdentityAccessKeyId, 10),
+                Accounts = make_set(RecipientAccountId, 5)
+        by Token, Surface
+    | join kind=leftouter (honeytokens | project Token, TokenType, PlantedIn) on Token
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, Token, TokenType, PlantedIn, Surface, Events, Operations, ErrorCodes, IPAddresses,
+              UserAgents, Callers, AccessKeyIds, Accounts, FirstSeen, LastSeen

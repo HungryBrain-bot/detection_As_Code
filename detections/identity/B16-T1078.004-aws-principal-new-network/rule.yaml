@@ -1,0 +1,59 @@
+id: 10ae3568-387e-4f4f-979e-ebcb7c6f0839
+name: AWS IAM user or role calls from a network (ASN) it has not used in 14 days
+version: 1
+status: test
+severity: Medium
+tier: targeted
+description: >
+  An IAM user or role with an established CloudTrail history makes
+  successful calls from an autonomous system (ASN) it has not used in
+  the previous 14 days. Grouping by network rather than IP means an
+  attacker rotating through fresh IPs on one VPS or proxy provider still
+  stands out, while a workload whose IPs churn inside AWS does not. The
+  ASN comes from IpAsn_CL (ADR 013). AWS port of B6.
+log_sources: [aws-cloudtrail, ip-asn-lookup]
+mapping:
+  attack:
+    techniques: [T1078.004]
+    tactics: [initial-access]
+
+sentinel:
+  query_frequency: PT1H
+  query_period: P14D
+  required_fields:
+    IpAsn_CL: [TimeGenerated, Network, ASN, AsName]
+    AWSCloudTrail: [TimeGenerated, ErrorCode, UserIdentityArn, UserIdentityType, SessionIssuerArn, SourceIpAddress, UserIdentityAccessKeyId, EventSource, EventName]
+  query: |
+    // B16: IAM user or role from a new network (detections/identity/B16-T1078.004-aws-principal-new-network/README.md)
+    let recent = 1h;
+    // Below this many baseline calls there is no "normal" to compare with.
+    let min_baseline_calls = 50;
+    let aws_asns = dynamic(["16509", "14618"]);
+    let asn_lookup = IpAsn_CL | summarize arg_max(TimeGenerated, ASN, AsName) by Network
+    // Keep only these: a TimeGenerated column here replaces the event time after ipv4_lookup (seen in the emulator).
+    | project Network, ASN, AsName;
+    let calls = AWSCloudTrail
+    | where isempty(ErrorCode) and UserIdentityType in ("IAMUser", "AssumedRole")
+    | where isnotnull(parse_ipv4(SourceIpAddress)) and not(ipv4_is_private(SourceIpAddress))
+    // All sessions of a role count as the role (arn:aws:iam::<account>:role/<name>), not per session.
+    | extend Principal = iff(UserIdentityType == "AssumedRole", SessionIssuerArn, UserIdentityArn)
+    | where isnotempty(Principal)
+    | evaluate ipv4_lookup(asn_lookup, SourceIpAddress, Network);
+    let baseline = calls
+    | where TimeGenerated < ago(recent)
+    | summarize BaselineCalls = count(), BaselineASNs = make_set(ASN, 100), BaselineSince = min(TimeGenerated)
+        by Principal;
+    calls
+    | where TimeGenerated >= ago(recent)
+    | summarize Calls = count(), IPAddresses = make_set(SourceIpAddress, 20), AsName = take_any(AsName),
+                Actions = make_set(strcat(EventSource, ":", EventName), 20),
+                AccessKeyIds = make_set(UserIdentityAccessKeyId, 10), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+        by Principal, UserIdentityType, NewASN = ASN
+    | join kind=inner baseline on Principal
+    | where BaselineCalls >= min_baseline_calls
+    | where not(set_has_element(BaselineASNs, NewASN))
+    // The case the rule is written for: a principal only ever seen from AWS, now elsewhere.
+    | extend BaselineAwsOnly = array_length(set_difference(BaselineASNs, aws_asns)) == 0
+    | extend TimeGenerated = LastSeen
+    | project TimeGenerated, Principal, UserIdentityType, NewASN, AsName, Calls, IPAddresses, Actions, BaselineAwsOnly,
+              BaselineASNs, BaselineCalls, BaselineSince, AccessKeyIds, FirstSeen, LastSeen

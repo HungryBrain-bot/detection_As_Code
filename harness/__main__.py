@@ -194,12 +194,17 @@ def trim(row: dict) -> dict:
 
 
 def _time_key(event: dict) -> str | None:
-    """The key holding an event's time: TimeGenerated (table-shaped rows) or
-    time (Azure Monitor diagnostic records, which mapping.py turns into TimeGenerated)."""
+    """The key holding an event's time: TimeGenerated (table-shaped rows), time (Azure
+    Monitor diagnostic records) or eventTime (raw CloudTrail records); mapping.py turns the
+    last two into TimeGenerated."""
     if event.get("TimeGenerated"):
         return "TimeGenerated"
     if event.get("time") and "category" in event:
         return "time"
+    # Raw CloudTrail records (mapping.py turns eventTime into TimeGenerated); added 2026-11-21
+    # for B16 and B17, whose ago() windows otherwise see nothing in 2021 recordings (ADR 013).
+    if event.get("eventTime") and mapping.is_cloudtrail_record(event):
+        return "eventTime"
     return None
 
 

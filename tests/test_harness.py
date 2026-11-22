@@ -382,6 +382,34 @@ def test_cloudtrail_record_without_error_has_empty_error_code():
     assert mapping.to_sentinel(ok)[1]["ErrorCode"] is None
 
 
+def test_cloudtrail_record_maps_session_issuer_endpoint_and_request_for_b14_to_b17():
+    # ADR 013: B14-B17 read the role behind a session, the VPC endpoint, invokedBy and the request.
+    record = dict(CLOUDTRAIL_DENIED, vpcEndpointId="vpce-0a1b2c3d", requestParameters={"secretId": "prod/x"},
+                  userIdentity={"type": "AssumedRole", "arn": "arn:aws:sts::111111111111:assumed-role/app/i-1",
+                                "accessKeyId": "ASIAEXAMPLE", "invokedBy": "cloudformation.amazonaws.com",
+                                "sessionContext": {"sessionIssuer": {"type": "Role",
+                                                                     "arn": "arn:aws:iam::111111111111:role/app"}}})
+    row = mapping.to_sentinel(record)[1]
+    assert row["SessionIssuerArn"] == "arn:aws:iam::111111111111:role/app" and row["SessionIssuerType"] == "Role"
+    assert row["VpcEndpointId"] == "vpce-0a1b2c3d" and row["UserIdentityInvokedBy"] == "cloudformation.amazonaws.com"
+    assert json.loads(row["RequestParameters"]) == {"secretId": "prod/x"}
+    assert mapping.to_sentinel(CLOUDTRAIL_DENIED)[1]["SessionIssuerArn"] is None
+
+
+def test_rebase_shifts_raw_cloudtrail_event_time():
+    shifted = hmain.rebase([CLOUDTRAIL_DENIED, dict(CLOUDTRAIL_DENIED, eventTime="2021-04-13T11:25:44Z")])
+    newest = hmain._parse(shifted[0]["eventTime"])
+    assert abs((datetime.now(timezone.utc) - timedelta(minutes=2) - newest).total_seconds()) < 5
+    assert newest - hmain._parse(shifted[1]["eventTime"]) == timedelta(minutes=10)
+
+
+def test_ip_asn_lookup_rows_load_as_they_are():
+    from harness.engines import KustoEngine
+    row = {"Type": "IpAsn_CL", "Network": "203.0.113.0/24", "ASN": "64512", "_note": "x"}
+    assert mapping.to_sentinel(row) == ("IpAsn_CL", {"Type": "IpAsn_CL", "Network": "203.0.113.0/24", "ASN": "64512"})
+    assert "IpAsn_CL" in KustoEngine.tables
+
+
 def test_an_azure_monitor_record_is_not_taken_for_cloudtrail():
     assert not mapping.is_cloudtrail_record({"category": "SignInLogs", "properties": {}, "eventName": "x"})
 

@@ -549,3 +549,41 @@
   engine run in `tests/evidence.md`), consistent with ADR 012 decision 7.
   ADR 012 is unchanged: its "no samples yet" and "build the rules and
   docs without test samples for now" already agree with the README.
+
+## 2026-11-21 - ARTEX Phase 1 ported to AWS (B14-B17)
+
+- Owner's request in the project thread: the Phase 1 rules "in aws
+  env". The coordinator proposed four ports and suggested dropping the
+  B7 port (overlap with D4); the owner said "create PR for this phase"
+  without choosing, so all four were built (ADR 013).
+- B14 decoy key / decoy secret, B15 one key inside and outside AWS, B16
+  new ASN for a user or role, B17 unlike its workload. Sentinel only,
+  `targeted`, `status: test`, hand-written samples only. No source shows
+  ARTEX on AWS; every doc says so.
+- New: `IpAsn_CL` (project-defined IP-to-ASN lookup) and log source
+  `ip-asn-lookup` (detection team); `Honeytoken_CL` TokenTypes
+  `AwsAccessKeyId`, `AwsSecretName`. The job that loads `IpAsn_CL` is
+  not built; until it exists B15 and B16 do nothing.
+- Harness: `from_cloudtrail` maps session issuer, VPC endpoint,
+  invokedBy and request parameters; `rebase_time` now shifts raw
+  CloudTrail `eventTime` (B16 and B17's recorded runs were looking at
+  2021 data with a one-hour window). Tests: 3 added.
+- Found while testing: in the ADX emulator, a `TimeGenerated` column in
+  an `ipv4_lookup` table replaced the event time (B16's positives failed
+  until the lookup was projected); recorded CloudTrail has user agents
+  in brackets (`[aws-cli/...]`), which B17 strips.
+- Engine runs (Kustainer 1.0.9820.14516, 2026-11-21): B14 4/4 positive
+  cases, B15 2/2, B16 2/2, B17 2/2; 0 negatives; 0 rows on 6,417
+  recorded CloudTrail events each. Every negative was shown to match
+  when its clause was loosened, except B16's private-address negative
+  (the lookup drops it first; the filter is a guard). D4 re-run
+  unchanged (11 rows).
+- Not verified: `ipv4_lookup` in Log Analytics (Learn lists ADX and
+  Fabric only); whether every key-validation call is logged; SSM
+  `requestParameters` key names; Secrets Manager ARN suffix format; that
+  Amazon's address space is announced from AS16509 / AS14618.
+- Tests: 174 passed; yamllint clean; `python -m dac validate` with
+  ATT&CK 20.1 and ATLAS v2026.06: 36 rules, 0 errors.
+- Parked for the owner: a loader for `IpAsn_CL`; whether to restrict
+  B16 to workload principals; GuardDuty findings as an alternative to
+  B15 where customers run it.

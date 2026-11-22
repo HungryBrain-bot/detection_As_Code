@@ -84,7 +84,7 @@ azure-keyvault-audit:
     sentinel: [AzureDiagnostics]
 
 honeytoken-registry:
-  description: Active honeytokens (decoy service principal app ids and decoy Key Vault object names), re-sent at least hourly (schemas/reference/sentinel/Honeytoken_CL.yaml).
+  description: Active honeytokens (decoy service principal app ids, decoy Key Vault object names, decoy API routes, decoy AWS access key ids and decoy AWS secret / parameter names), re-sent at least hourly (schemas/reference/sentinel/Honeytoken_CL.yaml).
   owner: detection-team
   siem:
     sentinel: [Honeytoken_CL]
@@ -101,6 +101,14 @@ aws-cloudtrail:
   owner: cloud-platform-team
   siem:
     sentinel: [AWSCloudTrail]
+
+# Added 2026-11-21 for rules B15-B16 (AWS port of ARTEX Phase 1; ADR 013).
+# B14 reads aws-cloudtrail and honeytoken-registry; B17 reads aws-cloudtrail.
+ip-asn-lookup:
+  description: IPv4 network (CIDR) to ASN lookup, IpAsn_CL, a table this project defines (schemas/reference/sentinel/IpAsn_CL.yaml), loaded at least daily from an IP-to-ASN dataset (e.g. iptoasn.com, PDDL). CloudTrail has no ASN; without this table B15 and B16 match nothing.
+  owner: detection-team
+  siem:
+    sentinel: [IpAsn_CL]
 
 # Added 2026-11-07 for rules B8-B13 (ARTEX Phase 3, identity; ADR 011).
 okta-system-log:
